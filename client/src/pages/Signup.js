@@ -65,7 +65,7 @@ const Signup = () => {
     }
   }
   return (
-    <div>
+    <div className="sign-up-form">
       <form className={classes.form} noValidate autoComplete="off">
         <TextField
           required
