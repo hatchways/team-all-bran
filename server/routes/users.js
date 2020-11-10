@@ -8,8 +8,6 @@ const validateRegister = require("../user-validation/register");
 const validateLogin = require("../user-validation/login");
 
 const User = require("../models/User");
-const { hash } = require("bcrypt");
-const passport = require("passport");
 
 // POST /users/register
 router.post("/register", (req, res) => {
@@ -26,7 +24,8 @@ router.post("/register", (req, res) => {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       const newUser = new User({
-        name: req.body.name,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
       });
@@ -36,9 +35,28 @@ router.post("/register", (req, res) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
+
           newUser
             .save()
-            .then((user) => res.json(user))
+            .then((user) => {
+              const payload = user;
+
+              // Sign token
+              // Save key to an env file later
+              jwt.sign(
+                payload,
+                "secret",
+                {
+                  expiresIn: 31556926, // 1 year in seconds
+                },
+                (err, token) => {
+                  res
+                    .status(201)
+                    .cookie("token", token, { httpOnly: true })
+                    .json(user);
+                }
+              );
+            })
             .catch((err) => console.log(err));
         });
       });
@@ -70,12 +88,10 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         // User matched
         // Create JWT Payload
-        const payload = {
-          id: user.id,
-          name: user.name,
-        };
+        const payload = user;
 
         // Sign token
+        // Save key to an env file later
         jwt.sign(
           payload,
           "secret",
@@ -83,10 +99,7 @@ router.post("/login", (req, res) => {
             expiresIn: 31556926, // 1 year in seconds
           },
           (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token,
-            });
+            res.cookie("token", token, { httpOnly: true }).json(user);
           }
         );
       } else {

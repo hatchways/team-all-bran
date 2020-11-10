@@ -5,13 +5,18 @@ module.exports = function validateRegister(data) {
   let errors = {};
 
   // Convert empty fields to empty string
-  data.name = !isEmpty(data.name) ? data.name : "";
+  data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
+  data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
 
   // Check for empty strings and make sure valid data is given
-  if (Validator.isEmpty(data.name)) {
-    errors.name = "Name is required";
+  if (Validator.isEmpty(data.firstName)) {
+    errors.name = "First name is required";
+  }
+
+  if (Validator.isEmpty(data.lastName)) {
+    errors.lastName = "Last name is required";
   }
 
   if (Validator.isEmpty(data.email)) {
