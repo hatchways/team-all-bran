@@ -119,7 +119,7 @@ const Signup = () => {
   }
 
   const emailIsValid = () => {
-    return (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email)
+    return (/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(email)
   }
 
   const passwordsAreTheSame = () => {
@@ -163,7 +163,7 @@ const Signup = () => {
               color='primary'
             />
             <TextField
-              error={!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email) && email.length !== 0}
+              error={!emailIsValid() && email.length !== 0}
               id="standard-error-helper-text"
               name="email"
               variant="outlined"
