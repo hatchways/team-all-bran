@@ -12,8 +12,8 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
-        <Route exact path="/" component={Signup} />
-        <Route exact path="/Login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/login" component={Login} />
       </BrowserRouter>
     </MuiThemeProvider>
   );

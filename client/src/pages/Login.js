@@ -82,7 +82,7 @@ const Login = () => {
           <div className='already-have-account'>Don't have an account?</div>
           <Link
             style={{ textDecoration: 'none' }}
-            to={{ pathname: '/' }}>
+            to={{ pathname: '/signup' }}>
             <SignupButton size="small">SIGN UP</SignupButton>
           </Link>
         </div>
