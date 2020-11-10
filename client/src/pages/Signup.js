@@ -29,6 +29,15 @@ const Signup = () => {
   const signUp = (e) => {
     e.preventDefault()
   }
+
+  const passwordIsValid = () => {
+    if (password.length >= 6) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
     <div>
       <form onSubmit={signUp}>
