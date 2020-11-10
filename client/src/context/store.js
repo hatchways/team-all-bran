@@ -1,5 +1,11 @@
 import React, { createContext, useReducer } from 'react';
-import { AUTH_ERROR, LOGOUT, UPDATE_USER, USER_LOADED } from './types';
+import {
+  AUTH_ERROR,
+  LOGOUT,
+  USER_LOADED,
+  REGISTER_SUCCESS,
+  LOGIN_SUCCESS,
+} from './types';
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -14,14 +20,26 @@ const { Provider } = store;
 const StateProvider = ({ children }) => {
   const [state, dispatch] = useReducer(({ state }, { type, payload }) => {
     switch (type) {
-      case UPDATE_USER:
-        return { ...state, ...payload };
       case USER_LOADED:
         return {
           ...state,
           isAuthenticated: true,
           loading: false,
           user: payload,
+        };
+      case REGISTER_SUCCESS:
+        return {
+          ...state,
+          ...payload,
+          isAuthenticated: true,
+          loading: false,
+        };
+      case LOGIN_SUCCESS:
+        return {
+          ...state,
+          ...payload,
+          isAuthenticated: true,
+          loading: false,
         };
       case AUTH_ERROR:
       case LOGOUT:

@@ -1,18 +1,7 @@
-import axios from 'axios';
+import { LOGOUT } from './types';
 
-export const loadUser = () => async (dispatch) => {
-  try {
-    const res = await api.get('/auth');
-
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: AUTH_ERROR,
-    });
-  }
+export const loadUser = () => {
+  // async api call to get most up to date version of user
 };
 
 export const logout = () => ({ type: LOGOUT });
