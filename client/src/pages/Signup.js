@@ -38,6 +38,14 @@ const Signup = () => {
     }
   }
 
+  const areAllFieldsCompleted = () => {
+    if (firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+
   return (
     <div>
       <form onSubmit={signUp}>
