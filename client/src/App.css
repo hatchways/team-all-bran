@@ -33,8 +33,48 @@
 }
 
 .sign-up-form {
+  float:left;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+
+.login-image {
+  float:left;
+  padding-right: 40px;
+}
+
+.login-sign-up-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.get-started {
+  color: #484848;
+  margin-left: 10px;
+}
+
+.login-container {
+  width: inherit;
+  top: 0;
+  float: right;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.already-have-account {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
