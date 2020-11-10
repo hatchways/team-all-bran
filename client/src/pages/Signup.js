@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import * as imageURL from '../images/login-photo.png'
 import { Link } from 'react-router-dom'
+import Snackbar from '@material-ui/core/Snackbar'
+import SnackbarContent from '@material-ui/core/SnackbarContent'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -41,6 +43,12 @@ const LoginButton = withStyles({
   },
 })(Button);
 
+const styles = {
+  root: {
+    background: 'red'
+  }
+};
+
 const Signup = () => {
 
   const classes = useStyles();
@@ -52,7 +60,24 @@ const Signup = () => {
     password: ''
   });
 
+  const [state, setState] = useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'center',
+    message: null
+  });
+
+  const { vertical, horizontal, open, message } = state;
+
   const { firstName, lastName, email, password } = formData;
+
+  const showAlert = (newState) => {
+    setState({ open: true, ...newState });
+  }
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  }
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,6 +85,13 @@ const Signup = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     // login(email, password);
+
+    if (!passwordIsValid()) {
+      showAlert({ vertical: 'bottom', horizontal: 'center', message: "Password is invalid!" })
+    }
+    if (!areAllFieldsCompleted()) {
+      showAlert({ vertical: 'bottom', horizontal: 'center', message: "Must fill out every field!" })
+    }
   };
 
   const passwordIsValid = () => {
@@ -138,6 +170,21 @@ const Signup = () => {
           </form>
         </div>
       </div>
+      {open &&
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message={message}
+          key={vertical + horizontal}
+        >
+          <SnackbarContent style={{
+            backgroundColor: 'red',
+            fontSize: '20px'
+          }}
+            message={message}
+          />
+        </Snackbar>}
     </div>
   )
 }
