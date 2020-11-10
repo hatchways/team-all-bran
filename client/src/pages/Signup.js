@@ -110,32 +110,22 @@ const Signup = () => {
   };
 
   const passwordIsValid = () => {
-    if (password.length >= 6) {
-      return true
-    } else {
-      return false
-    }
+    return password.length >= 6
   }
 
   const areAllFieldsCompleted = () => {
-    if (firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0) {
-      return false
-    } else {
-      return true
-    }
+    return !(firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0)
+
   }
 
   const emailIsValid = () => {
-    if ((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email)) {
-      return true
-    } else {
-      return false
-    }
+    return (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email)
   }
 
   const passwordsAreTheSame = () => {
     return password === confirmPassword
   }
+
   return (
     <div className='login-sign-up-container'>
       <img className='login-image' src={imageURL}></img>
