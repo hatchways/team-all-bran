@@ -1,6 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+      length: '400ch',
+      display: 'flex',
+      flexDirection: 'column',
+      marginBottom: '30px'
+    }
+  },
+}));
 
 const Signup = () => {
+
+  const classes = useStyles();
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -11,9 +28,9 @@ const Signup = () => {
 
   const { firstName, lastName, email, password } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
+  }
   const onSubmit = async (e) => {
     e.preventDefault();
     // login(email, password);
@@ -34,14 +51,51 @@ const Signup = () => {
       return true
     }
   }
-
+  console.log(email)
+  console.log((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email))
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <input type="text" name="firstName" placeholder="First name" value={firstName} onChange={onChange} />
-        <input type="text" name="lastName" placeholder="Last name" value={lastName} onChange={onChange} />
-        <input type="text" name="email" placeholder="E-mail" value={email} onChange={onChange} />
-        <input type="text" name="password" placeholder="Password" value={password} onChange={onChange} />
+      <form className={classes.form} noValidate autoComplete="off" onSubmit={onSubmit}>
+        <TextField
+          required
+          className={classes.textField}
+          id="outlined-required"
+          label="First name"
+          variant="outlined"
+          name="firstName"
+          onChange={onChange}
+          color='secondary'
+        />
+        <TextField
+          required
+          id="outlined-required"
+          label="Last name"
+          variant="outlined"
+          name="lastName"
+          onChange={onChange}
+          color='primary'
+        />
+        <TextField
+          error={!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email) && email.length !== 0}
+          id="standard-error-helper-text"
+          name="email"
+          variant="outlined"
+          label='E-mail'
+          onChange={onChange}
+          helperText={"Must enter a valid e-mail address"}
+          color='primary'
+        />
+        <TextField
+          error={password.length > 0 && password.length < 6}
+          id="standard-error-helper-text"
+          name="password"
+          type="password"
+          variant="outlined"
+          label='Password'
+          helperText={"Password must be at least 6 characters long."}
+          onChange={onChange}
+          color='primary'
+        />
         <button>Submit</button>
       </form>
     </div>
