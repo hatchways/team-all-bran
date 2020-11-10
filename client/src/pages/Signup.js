@@ -1,34 +1,23 @@
 import React, { useState } from 'react'
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
-  const updateFirstName = (e) => {
-    const firstName = e.target.value
-    setFirstName(firstName)
-  }
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  });
 
-  const updateLastName = (e) => {
-    const lastName = e.target.value
-    setLastName(lastName)
-  }
+  const { firstName, lastName, email, password } = formData;
 
-  const updateEmail = (e) => {
-    const email = e.target.value
-    setEmail(email)
-  }
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const updatePassword = (e) => {
-    const password = e.target.value
-    setPassword(password)
-  }
-
-  const signUp = (e) => {
-    e.preventDefault()
-  }
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    // login(email, password);
+  };
 
   const passwordIsValid = () => {
     if (password.length >= 6) {
@@ -39,7 +28,7 @@ const Signup = () => {
   }
 
   const areAllFieldsCompleted = () => {
-    if (firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0) {
+    if (firstName.length === 0 || firstName.length === 0 || firstName.length === 0 || firstName.length === 0) {
       return false
     } else {
       return true
@@ -48,11 +37,11 @@ const Signup = () => {
 
   return (
     <div>
-      <form onSubmit={signUp}>
-        <input type="text" name="firstName" placeholder="First name" value={firstName} onChange={updateFirstName} />
-        <input type="text" name="lastName" placeholder="Last name" value={lastName} onChange={updateLastName} />
-        <input type="text" name="email" placeholder="E-mail" value={email} onChange={updateEmail} />
-        <input type="text" name="password" placeholder="Password" value={password} onChange={updatePassword} />
+      <form onSubmit={onSubmit}>
+        <input type="text" name="firstName" placeholder="First name" value={firstName} onChange={onChange} />
+        <input type="text" name="lastName" placeholder="Last name" value={lastName} onChange={onChange} />
+        <input type="text" name="email" placeholder="E-mail" value={email} onChange={onChange} />
+        <input type="text" name="password" placeholder="Password" value={password} onChange={onChange} />
         <button>Submit</button>
       </form>
     </div>
