@@ -39,7 +39,7 @@ router.post("/register", (req, res) => {
           newUser
             .save()
             .then((user) => {
-              const payload = user;
+              const payload = { user };
 
               // Sign token
               // Save key to an env file later
@@ -88,7 +88,7 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         // User matched
         // Create JWT Payload
-        const payload = user;
+        const payload = { user };
 
         // Sign token
         // Save key to an env file later
