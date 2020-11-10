@@ -71,8 +71,8 @@ const Signup = () => {
 
   const { firstName, lastName, email, password } = formData;
 
-  const showAlert = (newState) => {
-    setState({ open: true, ...newState });
+  const showAlert = ({ message }) => {
+    setState({ open: true, vertical: vertical, horizontal: horizontal, message });
   }
 
   const handleClose = () => {
@@ -86,12 +86,23 @@ const Signup = () => {
     e.preventDefault();
     // login(email, password);
 
-    if (!passwordIsValid()) {
-      showAlert({ vertical: 'bottom', horizontal: 'center', message: "Password is invalid!" })
-    }
     if (!areAllFieldsCompleted()) {
-      showAlert({ vertical: 'bottom', horizontal: 'center', message: "Must fill out every field!" })
+      showAlert({ message: "Must fill out every field!" })
+      return
     }
+    if (!passwordIsValid() && !emailIsValid()) {
+      showAlert({ message: "Password & E-mail are invalid!" })
+      return
+    }
+    if (!passwordIsValid() && password.length !== 0) {
+      showAlert({ message: "Password is invalid!" })
+      return
+    }
+    if (!emailIsValid() && email.length !== 0) {
+      showAlert({ message: "E-mail is invalid!" })
+      return
+    }
+
   };
 
   const passwordIsValid = () => {
@@ -103,10 +114,18 @@ const Signup = () => {
   }
 
   const areAllFieldsCompleted = () => {
-    if (firstName.length === 0 || firstName.length === 0 || firstName.length === 0 || firstName.length === 0) {
+    if (firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0) {
       return false
     } else {
       return true
+    }
+  }
+
+  const emailIsValid = () => {
+    if ((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email)) {
+      return true
+    } else {
+      return false
     }
   }
   return (
@@ -143,7 +162,7 @@ const Signup = () => {
               variant="outlined"
               name="lastName"
               onChange={onChange}
-              color='primary'
+              color='secondary'
             />
             <TextField
               error={!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email) && email.length !== 0}
@@ -153,7 +172,7 @@ const Signup = () => {
               label='E-mail'
               onChange={onChange}
               helperText={"Must enter a valid e-mail address"}
-              color='primary'
+              color='seconday'
             />
             <TextField
               error={password.length > 0 && password.length < 6}
@@ -164,7 +183,7 @@ const Signup = () => {
               label='Password'
               helperText={"Password must be at least 6 characters long."}
               onChange={onChange}
-              color='primary'
+              color='secondary'
             />
             <ContinueButton onClick={onSubmit}>Continue</ContinueButton>
           </form>
