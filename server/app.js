@@ -3,11 +3,20 @@ const express = require("express");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
 const pingRouter = require("./routes/ping");
 
 const { json, urlencoded } = express;
+
+const db = "mongodb://localhost:27017/all_bran"; // To be changed to get from env
+
+// Connect to MongoDB
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log("Connected to database"))
+  .catch((err) => console.log(err));
 
 var app = express();
 
@@ -21,12 +30,12 @@ app.use("/", indexRouter);
 app.use("/ping", pingRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
