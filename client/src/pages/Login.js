@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import * as imageURL from '../images/login-photo.png'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -79,7 +80,11 @@ const Login = () => {
       <div className="sign-up-form ">
         <div className="login-container">
           <div className='already-have-account'>Don't have an account?</div>
-          <SignupButton size="small">SIGN UP</SignupButton>
+          <Link
+            style={{ textDecoration: 'none' }}
+            to={{ pathname: '/' }}>
+            <SignupButton size="small">SIGN UP</SignupButton>
+          </Link>
         </div>
         <div>
           <div className='get-started'>
