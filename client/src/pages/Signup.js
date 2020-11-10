@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react'
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -14,6 +16,17 @@ const useStyles = makeStyles((theme) => ({
     }
   },
 }));
+
+const StyledButton = withStyles({
+  root: {
+    background: 'linear-gradient(45deg, rgba(73, 94, 203, .8) 30%, rgba(73, 145, 203, .8) 90%)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(125, 123, 135, .3)',
+    marginLeft: '10px'
+  },
+})(Button);
 
 const Signup = () => {
 
@@ -51,11 +64,9 @@ const Signup = () => {
       return true
     }
   }
-  console.log(email)
-  console.log((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email))
   return (
     <div>
-      <form className={classes.form} noValidate autoComplete="off" onSubmit={onSubmit}>
+      <form className={classes.form} noValidate autoComplete="off">
         <TextField
           required
           className={classes.textField}
@@ -96,7 +107,7 @@ const Signup = () => {
           onChange={onChange}
           color='primary'
         />
-        <button>Submit</button>
+        <StyledButton onClick={onSubmit}>Continue</StyledButton>
       </form>
     </div>
   )
