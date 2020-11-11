@@ -9,7 +9,7 @@ import Navbar from './Components/Navbar';
 import Blog from './pages/Blog';
 import Faq from './pages/Faq';
 import Profile from './pages/Profile';
-import { store } from './context/store';
+import { StateProvider, store } from './context/store';
 import { AUTH_ERROR, USER_LOADED } from './context/types';
 
 function App() {
@@ -47,15 +47,17 @@ function App() {
   }, [loadUser]);
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Navbar />
-        <Route exact path='/dashboard' component={DashBoard} />
-        <Route exact path='/profile' component={Profile} />
-        <Route exact path='/blog' component={Blog} />
-        <Route exact path='/faq' component={Faq} />
-      </BrowserRouter>
-    </MuiThemeProvider>
+    <StateProvider value={store}>
+      <MuiThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Navbar />
+          <Route exact path='/dashboard' component={DashBoard} />
+          <Route exact path='/profile' component={Profile} />
+          <Route exact path='/blog' component={Blog} />
+          <Route exact path='/faq' component={Faq} />
+        </BrowserRouter>
+      </MuiThemeProvider>
+    </StateProvider>
   );
 }
 
