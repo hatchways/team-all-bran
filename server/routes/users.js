@@ -50,10 +50,11 @@ router.post("/register", (req, res) => {
                   expiresIn: 31556926, // 1 year in seconds
                 },
                 (err, token) => {
+                  let responseObj = { user: user, token: `Bearer ${token}` };
                   res
                     .status(201)
                     .cookie("token", token, { httpOnly: true })
-                    .json(user);
+                    .json(responseObj);
                 }
               );
             })
@@ -99,7 +100,8 @@ router.post("/login", (req, res) => {
             expiresIn: 31556926, // 1 year in seconds
           },
           (err, token) => {
-            res.cookie("token", token, { httpOnly: true }).json(user);
+            let responseObj = { user: user, token: `Bearer ${token}` };
+            res.cookie("token", token, { httpOnly: true }).json(responseObj);
           }
         );
       } else {
