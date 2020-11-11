@@ -11,7 +11,7 @@ const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   loading: true,
-  user: { email: 'test@test.com' },
+  user: { email: 'test@test.com', firstName: 'John', lastName: 'Doe' },
 };
 
 const store = createContext(initialState);
