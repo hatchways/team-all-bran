@@ -45,6 +45,10 @@ const Signup = () => {
     e.preventDefault();
     // login(email, password);
 
+    displayAlertMessage()
+  };
+
+  const displayAlertMessage = () => {
     if (!areAllFieldsCompleted()) {
       showAlert({ message: "Must fill out every field!" })
       return
@@ -65,7 +69,7 @@ const Signup = () => {
       showAlert({ vertical: 'bottom', horizontal: 'center', message: "Passwords must match!" })
       return
     }
-  };
+  }
 
   const passwordIsValid = () => {
     return password.length >= 6
