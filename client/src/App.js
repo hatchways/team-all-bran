@@ -40,8 +40,10 @@ function App() {
   };
 
   useEffect(() => {
-    setAuthToken(localStorage.token);
-    loadUser();
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+      loadUser();
+    }
   }, [loadUser]);
 
   return (

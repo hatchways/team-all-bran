@@ -44,12 +44,10 @@ const navLinks = [
 
 const Navbar = () => {
   const classes = useStyles();
-  const {
-    state: {
-      user: { firstName, lastName },
-    },
-    dispatch,
-  } = useContext(store);
+  const { state, dispatch } = useContext(store);
+
+  const firstName = state.user ? state.user.firstName : '';
+  const lastName = state.user ? state.user.lastName : '';
 
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
