@@ -88,7 +88,7 @@ const Navbar = () => {
           </List>
         </Container>
         <IconButton
-          onMouseOver={handleClick}
+          onClick={handleClick}
           edge='end'
           color='inherit'
           aria-label='home'
