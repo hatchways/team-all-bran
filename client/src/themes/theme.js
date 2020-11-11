@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles'
 
 export const theme = createMuiTheme({
   typography: {
@@ -12,3 +13,16 @@ export const theme = createMuiTheme({
     primary: { main: "#DF1B1B" }
   }
 });
+
+export const useStyles = makeStyles((theme) => ({
+  form: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+      length: '400ch',
+      display: 'flex',
+      flexDirection: 'column',
+      marginBottom: '30px'
+    }
+  },
+}));
