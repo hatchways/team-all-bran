@@ -26,15 +26,10 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   signUpForm: {
-    float: 'left',
     marginLeft: '40px',
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: "center",
-    alignItems: 'center',
     width: '30%',
   },
-
   loginImage: {
     float: 'left',
     paddingRight: '40px',
@@ -49,24 +44,41 @@ export const useStyles = makeStyles((theme) => ({
     transform: 'translate(-50%, -50%)',
     width: '100%',
   },
-
   getStarted: {
     color: '#484848',
     marginLeft: '10px',
   },
-
   loginContainer: {
     width: 'inherit',
     top: '0',
-    float: 'right',
     position: 'fixed',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    marginTop: '20px'
   },
   alreadyHaveAccount: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
+    fontStyle: 'italic',
+  },
+  loginSignupWrapperRoot: {
+    flexGrow: 1,
+    overflow: 'hidden',
+  },
+  formField: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'column'
   }
 }))
+
+export const colors = {
+  darkBlue: 'rgba(73, 94, 203, .8)',
+  lightBlue: 'rgba(73, 145, 203, .8)',
+  darkGray: 'rgba(105, 105, 105, .8)',
+  lightGray: 'rgba(169, 169, 169, .8)',
+  shadow: 'rgba(125, 123, 135, .3)'
+}
