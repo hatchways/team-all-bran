@@ -47,7 +47,7 @@ router.post("/register", (req, res) => {
                 payload,
                 "secret",
                 {
-                  expiresIn: 31556926, // 1 year in seconds
+                  expiresIn: 2629744, // 1 month in seconds
                 },
                 (err, token) => {
                   let responseObj = { user: user, token: `Bearer ${token}` };
@@ -81,7 +81,9 @@ router.post("/login", (req, res) => {
   User.findOne({ email }).then((user) => {
     // Check if user exists
     if (!user) {
-      return res.status(404).json({ emailnotfound: "Email not found" });
+      return res
+        .status(404)
+        .json({ error: "Username and password was incorrect" });
     }
 
     // Check password
@@ -97,7 +99,7 @@ router.post("/login", (req, res) => {
           payload,
           "secret",
           {
-            expiresIn: 31556926, // 1 year in seconds
+            expiresIn: 2629744, // 1 month in seconds
           },
           (err, token) => {
             let responseObj = { user: user, token: `Bearer ${token}` };
