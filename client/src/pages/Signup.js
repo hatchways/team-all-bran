@@ -89,11 +89,11 @@ const Signup = () => {
   }
 
   return (
-    <div className='login-sign-up-container'>
-      <img className='login-image' src={imageURL}></img>
-      <div className="sign-up-form ">
-        <div className="login-container">
-          <div className='already-have-account'>Already have an account?</div>
+    <div className={classes.loginInSignUpContainer}>
+      <img className={classes.loginImage} src={imageURL}></img>
+      <div className={classes.signUpForm}>
+        <div className={classes.loginContainer}>
+          <div className={classes.alreadyHaveAccount}>Already have an account?</div>
           <Link
             style={{ textDecoration: 'none' }}
             to={{ pathname: '/login' }}>
@@ -101,7 +101,7 @@ const Signup = () => {
           </Link>
         </div>
         <div>
-          <div className='get-started'>
+          <div className={classes.getStarted}>
             <h1>Get Started!</h1>
           </div>
           <form className={classes.form} noValidate autoComplete="off">
