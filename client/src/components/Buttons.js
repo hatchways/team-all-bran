@@ -13,18 +13,7 @@ export const ContinueButton = withStyles({
   },
 })(Button);
 
-export const LoginButton = withStyles({
-  root: {
-    background: `linear-gradient(45deg, ${colors.darkGray} 30%, ${colors.lightGray} 90%)`,
-    color: 'white',
-    height: '5ch',
-    padding: '0 30px',
-    boxShadow: `0 3px 5px 2px ${colors.shadow}`,
-    marginLeft: '10px'
-  },
-})(Button);
-
-export const SignupButton = withStyles({
+export const RedirectPageButton = withStyles({
   root: {
     background: `linear-gradient(45deg, ${colors.darkGray} 30%, ${colors.lightGray} 90%)`,
     color: 'white',

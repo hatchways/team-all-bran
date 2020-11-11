@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom'
-import { LoginButton, ContinueButton } from '../components/Buttons'
+import { RedirectPageButton, ContinueButton } from '../components/Buttons'
 import { useStyles } from '../themes/theme'
 import Snackbar from '@material-ui/core/Snackbar'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
@@ -94,7 +94,7 @@ const SignupForm = () => {
         <Link
           style={{ textDecoration: 'none' }}
           to={{ pathname: '/login' }}>
-          <LoginButton size="small">Log in</LoginButton>
+          <RedirectPageButton size="small">Log in</RedirectPageButton>
         </Link>
       </div>
       <div>
