@@ -1,11 +1,10 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { theme } from './themes/theme';
 import './App.css';
 import DashBoard from './pages/DashBoard';
 import api from './utils/api';
-import Navbar from './Components/Navbar';
+import Navbar from './components/Navbar';
 import Blog from './pages/Blog';
 import Faq from './pages/Faq';
 import Profile from './pages/Profile';
