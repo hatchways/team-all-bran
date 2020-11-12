@@ -15,6 +15,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
