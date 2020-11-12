@@ -16,11 +16,9 @@ const DashBoard = (props) => {
 
   return (
     <div className={classes.dashboardContainer}>
-      <div>
-        <StartDashboardButton>START</StartDashboardButton>
-      </div>
-      <div>Middle</div>
-      <div>Bottom</div>
+      <StartDashboardButton>START</StartDashboardButton>
+      <p className={classes.pastPracticesText}>Past Practice Interviews</p>
+      Bottom
     </div>
   );
 >>>>>>> Justify content to center from top to bottom

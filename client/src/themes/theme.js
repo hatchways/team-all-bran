@@ -78,6 +78,10 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  pastPracticesText: {
+    fontSize: '40px',
+    color: colors.darkBlue
   }
 }))
 
