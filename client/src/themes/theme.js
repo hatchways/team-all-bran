@@ -72,6 +72,12 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'column'
+  },
+  dashboardContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 }))
 
