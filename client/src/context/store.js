@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: null,
+  isAuthenticated: true,
   loading: true,
   user: { email: 'test@test.com', firstName: 'John', lastName: 'Doe' },
 };

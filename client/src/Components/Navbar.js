@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import avatar from '../avatar.png';
-import { useHistory } from 'react-router-dom';
+import avatar from '../images/avatar.png';
+import { Redirect, useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { store } from '../context/store';
 
@@ -23,11 +23,11 @@ import { LOGOUT } from '../context/types';
 const useStyles = makeStyles({
   navbarDisplayFlex: {
     display: `flex`,
-    justifyContent: `flex-end`,
+    justifyContent: `space-between`,
   },
   navDisplayFlex: {
     display: `flex`,
-    justifyContent: `space-between`,
+    justifyContent: `space-around`,
   },
   linkText: {
     textDecoration: `none`,
@@ -38,8 +38,8 @@ const useStyles = makeStyles({
 
 const navLinks = [
   { title: `dashboard`, path: `/dashboard` },
-  { title: `blog`, path: `/blog` },
   { title: `faq`, path: `/faq` },
+  { title: `blog`, path: `/blog` },
 ];
 
 const Navbar = () => {
@@ -64,10 +64,10 @@ const Navbar = () => {
     }
   };
 
-  return (
+  return state.isAuthenticated ? (
     <AppBar color='default' position='static'>
       <Toolbar>
-        <Link to='/'>
+        <Link to='/dashboard'>
           <IconButton edge='start' color='inherit' aria-label='home'>
             <Home fontSize='large' />
           </IconButton>
@@ -86,19 +86,20 @@ const Navbar = () => {
               </Link>
             ))}
           </List>
-        </Container>
-        <IconButton
-          onClick={handleClick}
-          edge='end'
-          color='inherit'
-          aria-label='home'
-          aria-controls='simple-menu'
-          aria-haspopup='true'
-        >
-          <Avatar alt='Avatar' src={avatar} />
+          <IconButton
+            onClick={handleClick}
+            edge='end'
+            color='inherit'
+            aria-label='home'
+            aria-controls='simple-menu'
+            aria-haspopup='true'
+          >
+            <Avatar alt='Avatar' src={avatar} />
 
-          {`${firstName} ${lastName}`}
-        </IconButton>
+            {`${firstName} ${lastName}`}
+          </IconButton>
+        </Container>
+
         <Menu
           id='simple-menu'
           anchorEl={anchorEl}
@@ -112,6 +113,8 @@ const Navbar = () => {
         </Menu>
       </Toolbar>
     </AppBar>
+  ) : (
+    <Redirect to='/signup' />
   );
 };
 export default Navbar;
