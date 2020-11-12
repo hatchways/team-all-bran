@@ -1,6 +1,11 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import './App.css';
 import DashBoard from './pages/DashBoard';
 import api from './utils/api';
@@ -49,19 +54,22 @@ function App() {
   }, [loadUser]);
 
   return (
-    <StateProvider value={store}>
-      <MuiThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Navbar />
-          <Route exact path='/dashboard' component={DashBoard} />
-          <Route exact path='/profile' component={Profile} />
-          <Route exact path='/blog' component={Blog} />
-          <Route exact path='/faq' component={Faq} />
-          <Route exact path='/signup' component={Signup} />
-          <Route exact path='/login' component={Login} />
-        </BrowserRouter>
-      </MuiThemeProvider>
-    </StateProvider>
+    <Router>
+      <Switch>
+        <StateProvider value={store}>
+          <MuiThemeProvider theme={theme}>
+            <Navbar />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={Signup} />
+            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/dashboard' component={DashBoard} />
+            <Route exact path='/blog' component={Blog} />
+            <Route exact path='/faq' component={Faq} />
+            <Redirect from='/' to='/signup' />
+          </MuiThemeProvider>
+        </StateProvider>
+      </Switch>
+    </Router>
   );
 }
 
