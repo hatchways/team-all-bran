@@ -1,11 +1,6 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import DashBoard from './pages/DashBoard';
 import api from './utils/api';
@@ -18,6 +13,7 @@ import { AUTH_ERROR, USER_LOADED } from './context/types';
 import { theme } from './themes/theme';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import PrivateRoute from './routing/PrivateRoute';
 
 function App() {
   const { dispatch } = useContext(store);
@@ -55,20 +51,21 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        <StateProvider value={store}>
-          <MuiThemeProvider theme={theme}>
-            <Navbar />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/signup' component={Signup} />
-            <Route exact path='/profile' component={Profile} />
-            <Route exact path='/dashboard' component={DashBoard} />
-            <Route exact path='/blog' component={Blog} />
-            <Route exact path='/faq' component={Faq} />
-            <Redirect from='/' to='/signup' />
-          </MuiThemeProvider>
-        </StateProvider>
-      </Switch>
+      <MuiThemeProvider theme={theme}>
+        <Switch>
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/signup' component={Signup} />
+          <Switch>
+            <StateProvider value={store}>
+              <Navbar />
+              <PrivateRoute exact path='/profile' component={Profile} />
+              <PrivateRoute exact path='/dashboard' component={DashBoard} />
+              <PrivateRoute exact path='/blog' component={Blog} />
+              <PrivateRoute exact path='/faq' component={Faq} />
+            </StateProvider>
+          </Switch>
+        </Switch>
+      </MuiThemeProvider>
     </Router>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import avatar from '../images/avatar.png';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { store } from '../context/store';
 
@@ -64,7 +64,7 @@ const Navbar = () => {
     }
   };
 
-  return state.isAuthenticated ? (
+  return (
     <AppBar color='default' position='static'>
       <Toolbar>
         <Link to='/dashboard'>
@@ -113,8 +113,6 @@ const Navbar = () => {
         </Menu>
       </Toolbar>
     </AppBar>
-  ) : (
-    <Redirect to='/signup' />
   );
 };
 export default Navbar;

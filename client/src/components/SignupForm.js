@@ -1,11 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RedirectPageButton, ContinueButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { store } from '../context/store';
 
 const SignupForm = () => {
   const classes = useStyles();
@@ -17,7 +16,6 @@ const SignupForm = () => {
     password: '',
     confirmPassword: '',
   });
-  const { state } = useContext(store);
 
   const [localState, setLocalState] = useState({
     open: false,
@@ -100,8 +98,6 @@ const SignupForm = () => {
   const passwordsAreTheSame = () => {
     return password === confirmPassword;
   };
-
-  if (state.isAuthenticated) return <Redirect to='/dashboard' />;
 
   return (
     <div className={classes.signUpForm}>
