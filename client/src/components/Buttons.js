@@ -23,3 +23,16 @@ export const RedirectPageButton = withStyles({
     marginLeft: '10px'
   },
 })(Button);
+
+export const StartDashboardButton = withStyles({
+  root: {
+    borderRadius: 35,
+    height: 40,
+    width: 100,
+    backgroundColor: colors.darkBlue,
+    padding: "18px 36px",
+    fontSize: "18px",
+    color: 'white',
+    marginTop: '30px'
+  },
+})(Button);

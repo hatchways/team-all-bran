@@ -1,6 +1,8 @@
 import React from 'react';
 import { useContext } from 'react';
 import { useStyles } from '../themes/theme';
+import Button from '@material-ui/core/Button'
+import { StartDashboardButton } from '../components/Buttons'
 
 import { store } from '../context/store';
 
@@ -14,7 +16,9 @@ const DashBoard = (props) => {
 
   return (
     <div className={classes.dashboardContainer}>
-      <div>Top</div>
+      <div>
+        <StartDashboardButton>START</StartDashboardButton>
+      </div>
       <div>Middle</div>
       <div>Bottom</div>
     </div>
