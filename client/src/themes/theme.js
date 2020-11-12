@@ -82,7 +82,21 @@ export const useStyles = makeStyles((theme) => ({
   pastPracticesText: {
     fontSize: '40px',
     color: colors.darkBlue
-  }
+  },
+  interviewTable: {
+    width: 1000,
+    margin: 'auto',
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  interviewTableHeader: {
+    backgroundColor: colors.darkBlue,
+  },
+  headerFont: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
 }))
 
 export const colors = {
