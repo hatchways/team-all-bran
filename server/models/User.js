@@ -58,7 +58,7 @@ async function registerUser(req) {
     console.log(newUser);
     return { user: newUser };
   } catch (err) {
-    console.log(err);
+    return err.message;
   }
 }
 
