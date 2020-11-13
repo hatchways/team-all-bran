@@ -38,11 +38,6 @@ const UserSchema = new Schema(
         delete ret.password;
       },
     },
-    toJSON: {
-      transform: function (doc, ret) {
-        delete ret.password;
-      },
-    },
   }
 );
 
