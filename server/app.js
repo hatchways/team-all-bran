@@ -16,8 +16,8 @@ const interviews = require('./routes/interviews');
 const { json, urlencoded } = express;
 
 var app = express();
-connectDB();
 // Connect to MongoDB
+connectDB();
 
 require('./config/passport')(passport);
 

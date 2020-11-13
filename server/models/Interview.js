@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const jwt = require('jsonwebtoken');
+const User = mongoose.model('User');
 
 const InterviewSchema = new Schema({
   startTime: {
@@ -35,14 +36,23 @@ async function getUserInterviews(req) {
 
 async function createInterview(req) {
   const { creator } = req.body;
+  const firstUser = await User.findOne({ _id: creator });
+  console.log('OUTPUT: createInterview -> firstUser', firstUser);
+  console.log(creator);
   try {
     const interview = new Interview({
-      creator,
+      creator: firstUser,
     });
     const interviewDoc = await interview.save();
-    return interviewDoc.toObject();
+    const interviewDocObject = interviewDoc.toObject();
+    console.log(
+      'OUTPUT: createInterview -> firstUser.interviews',
+      firstUser.interviews
+    );
+    firstUser.interviews.push(interviewDocObject);
+    return interviewDoc;
   } catch (err) {
-    console.log('OUTPUT: createInterview -> err', err);
+    return err;
   }
 }
 
