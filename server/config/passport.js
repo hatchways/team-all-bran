@@ -1,13 +1,13 @@
-const JwtStrategy = require("passport-jwt").Strategy;
-const mongoose = require("mongoose");
-const User = mongoose.model("users");
-require("dotenv").config();
+const JwtStrategy = require('passport-jwt').Strategy;
+const mongoose = require('mongoose');
+const User = mongoose.model('users');
+require('dotenv').config();
 const { secretKey } = process.env;
 
 let cookieExtractor = (req) => {
   let token = null;
   if (req && req.cookies) {
-    token = req.cookies["token"];
+    token = req.cookies['token'];
   }
   return token;
 };
