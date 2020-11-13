@@ -64,6 +64,7 @@ function App() {
               <PrivateRoute exact path='/faq' component={Faq} />
             </StateProvider>
           </Switch>
+          <PrivateRoute path='/' component={Signup} />
         </Switch>
       </MuiThemeProvider>
     </Router>
