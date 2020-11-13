@@ -55,6 +55,7 @@ function App() {
         <Switch>
           <Route exact path='/login' component={Login} />
           <Route exact path='/signup' component={Signup} />
+
           <Switch>
             <StateProvider value={store}>
               <Navbar />
@@ -64,6 +65,7 @@ function App() {
               <PrivateRoute exact path='/faq' component={Faq} />
             </StateProvider>
           </Switch>
+          <Route path='/' component={Signup} />
         </Switch>
       </MuiThemeProvider>
     </Router>
