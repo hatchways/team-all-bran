@@ -28,7 +28,7 @@ const UserSchema = new Schema(
     interviews: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'interviews',
+        ref: 'Interview',
       },
     ],
   },
@@ -38,10 +38,15 @@ const UserSchema = new Schema(
         delete ret.password;
       },
     },
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.password;
+      },
+    },
   }
 );
 
-const User = mongoose.model('users', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 async function registerUser(req) {
   // Check if email is in db
@@ -60,7 +65,7 @@ async function registerUser(req) {
     });
     newUser.password = bcrypt.hashSync(newUser.password, 10);
     newUser = await newUser.save();
-    console.log(newUser);
+    // console.log(newUser);
     return { user: newUser };
   } catch (err) {
     return err.message;
@@ -71,7 +76,8 @@ async function loginUser(req) {
   const { email, password } = req.body;
 
   // Find user by email
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate('interviews');
+  console.log(user);
   // Check if user exists
   if (!user) {
     return { error: 'Username or password was incorrect' };

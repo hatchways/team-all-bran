@@ -1,6 +1,7 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const mongoose = require('mongoose');
-const User = mongoose.model('users');
+const UserSchema = require('../models/User');
+const User = mongoose.model('User');
 require('dotenv').config();
 const { secretKey } = process.env;
 
