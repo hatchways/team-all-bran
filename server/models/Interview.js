@@ -50,6 +50,7 @@ async function createInterview(req) {
       firstUser.interviews
     );
     firstUser.interviews.push(interviewDocObject);
+    await firstUser.save();
     return interviewDoc;
   } catch (err) {
     return err;
