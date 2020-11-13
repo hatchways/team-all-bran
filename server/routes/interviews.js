@@ -3,6 +3,6 @@ const router = express.Router();
 const interviewController = require("../controllers/interviewController"); // import controller
 
 // GET /interviews/
-router.post("/", interviewController.register);
+router.get("/", interviewController.getUserInterviews);
 
 module.exports = router;
