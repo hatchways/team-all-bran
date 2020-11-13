@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -22,6 +22,17 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    language: {
+      type: String,
+    },
+    experience: {
+      type: Number,
+    },
+    interviewLevel: {
+      type: Number,
+      min: 1,
+      max: 5,
+    },
   },
   {
     toObject: {
@@ -37,13 +48,13 @@ const UserSchema = new Schema(
   }
 );
 
-const User = mongoose.model('users', UserSchema);
+const User = mongoose.model("users", UserSchema);
 
 async function registerUser(req) {
   // Check if email is in db
   const user = await User.findOne({ email: req.body.email });
   if (user) {
-    return { error: 'Email already exists' };
+    return { error: "Email already exists" };
   }
 
   try {
@@ -70,7 +81,7 @@ async function loginUser(req) {
   const user = await User.findOne({ email });
   // Check if user exists
   if (!user) {
-    return { error: 'Username and password was incorrect' };
+    return { error: "Username and password was incorrect" };
   }
 
   let validPass = await bcrypt.compare(password, user.password);
@@ -78,8 +89,10 @@ async function loginUser(req) {
   if (validPass) {
     return { user };
   } else {
-    return { error: 'Username and password was incorrect' };
+    return { error: "Username and password was incorrect" };
   }
 }
+
+function updateUser(req) {}
 
 module.exports = { User, registerUser, loginUser };

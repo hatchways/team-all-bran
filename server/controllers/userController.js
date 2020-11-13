@@ -40,6 +40,8 @@ function login(req, res) {
   });
 }
 
+function editUser(req, res) {}
+
 function createTokenResponse(user, res) {
   const payload = { user };
   return jwt.sign(
@@ -58,4 +60,4 @@ function createTokenResponse(user, res) {
   );
 }
 
-module.exports = { register, login };
+module.exports = { register, login, editUser };
