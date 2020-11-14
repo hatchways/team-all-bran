@@ -45,16 +45,6 @@ const navLinks = [
 const Navbar = () => {
   const classes = useStyles();
   const { state, dispatch } = useContext(store);
-  console.log('OUTPUT: Navbar -> state', state);
-
-  const [fullName, setFullName] = useState('');
-
-  useEffect(() => {
-    console.log(state);
-    if (state.user.user) {
-      setFullName(`${state.user.user.firstName} ${state.user.user.lastName}`)
-    }
-  }, [state]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
@@ -103,7 +93,7 @@ const Navbar = () => {
           >
             <Avatar alt='Avatar' src={avatar} />
 
-            {fullName}
+            {`${state.user.firstName} ${state.user.lastName}`}
           </IconButton>
         </Container>
 

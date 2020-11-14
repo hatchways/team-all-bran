@@ -33,31 +33,17 @@ const LoginForm = () => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-    myHeaders.append(
-      'Cookie',
-      'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImludGVydmlld3MiOlt7Il9pZCI6IjVmYWViYzczY2M1NDA4Y2MxODI5M2MzZiIsImNyZWF0b3IiOiI1ZmFlYjQ3MjY0MzIwOWNhMGJhNDZjYjAiLCJzdGFydFRpbWUiOiIyMDIwLTExLTEzVDE3OjAzOjQ3LjU4OFoiLCJfX3YiOjB9XSwiX2lkIjoiNWZhZWI0NzI2NDMyMDljYTBiYTQ2Y2IwIiwiZmlyc3ROYW1lIjoiS2V2aW4iLCJsYXN0TmFtZSI6IllpIiwiZW1haWwiOiJzdGV2ZTFAZ21haWwuY29tIiwiX192IjoxfSwiaWF0IjoxNjA1MzE2OTU5LCJleHAiOjE2MDc5NDY3MDN9.uCBTpucGpN8SIsrviifeHSbVdYH7ztfm3FZjIXrA-pw'
-    );
 
-    var urlencoded = new URLSearchParams();
-    urlencoded.append('email', formData.email);
-    urlencoded.append('password', formData.password);
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    };
-
-    fetch('http://localhost:3001/users/login', requestOptions)
-      .then((response) => response.json())
-      .then((result) => dispatch({ type: USER_LOADED, payload: result }))
-      .then((data) => history.push('/dashboard'))
-      .catch((error) => console.log('error', error));
+    try {
+      let result = await axios.post('http://localhost:3001/users/login', formData)
+      dispatch({ type: USER_LOADED, payload: result.data.user })
+      history.push('/dashboard')
+    }
+    catch (error) {
+      console.log(error)
+    }
   };
 
   return (
