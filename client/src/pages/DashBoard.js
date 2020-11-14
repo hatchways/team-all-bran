@@ -1,14 +1,11 @@
 import React from 'react';
-import { useContext } from 'react';
-import { useStyles } from '../themes/theme';
-import { StartDashboardButton } from '../components/Buttons'
-import PastInterviewTable from '../components/PastInterviewTable'
 
-import { store } from '../context/store';
+import { useStyles } from '../themes/theme';
+import { StartDashboardButton } from '../components/Buttons';
+import PastInterviewTable from '../components/PastInterviewTable';
 
 const DashBoard = (props) => {
-  const { state } = useContext(store);
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.dashboardContainer}>

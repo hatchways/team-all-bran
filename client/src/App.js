@@ -52,20 +52,21 @@ function App() {
   return (
     <Router>
       <MuiThemeProvider theme={theme}>
-        <Switch>
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/signup' component={Signup} />
+        <StateProvider value={store}>
           <Switch>
-            <StateProvider value={store}>
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={Signup} />
+
+            <Switch>
               <Navbar />
               <PrivateRoute exact path='/profile' component={Profile} />
               <PrivateRoute exact path='/dashboard' component={DashBoard} />
               <PrivateRoute exact path='/blog' component={Blog} />
               <PrivateRoute exact path='/faq' component={Faq} />
-            </StateProvider>
+            </Switch>
+            <Route path='/' component={Signup} />
           </Switch>
-          <PrivateRoute path='/' component={Signup} />
-        </Switch>
+        </StateProvider>
       </MuiThemeProvider>
     </Router>
   );
