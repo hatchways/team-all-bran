@@ -58,6 +58,7 @@ const Navbar = () => {
     history.push(route);
     if (route === '/signup') {
       dispatch({ type: LOGOUT });
+      localStorage.clear()
     }
   };
 

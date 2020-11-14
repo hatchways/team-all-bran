@@ -65,6 +65,8 @@ const LoginForm = () => {
       let result = await axios.post('http://localhost:3001/users/login', formData)
       dispatch({ type: USER_LOADED, payload: result.data.user })
       history.push('/dashboard')
+      const res = JSON.stringify(result.data.user)
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, res)
     }
     catch (error) {
       showAlert({ message: 'Invalid credentials!' });
