@@ -1,21 +1,13 @@
 const mongoose = require('mongoose');
-<<<<<<< HEAD
 const Schema = mongoose.Schema;
 const jwt = require('jsonwebtoken');
 const User = mongoose.model('User');
-=======
-const User = require('./User');
-const Schema = mongoose.Schema;
->>>>>>> 3f6d38219afc461409a52f22bfeb318c57b24001
 
 const InterviewSchema = new Schema({
   startTime: {
     type: Date,
     default: Date.now,
-<<<<<<< HEAD
     required: true,
-=======
->>>>>>> 3f6d38219afc461409a52f22bfeb318c57b24001
   },
   endTime: {
     type: Date,

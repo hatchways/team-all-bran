@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import avatar from '../images/avatar.png';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -45,9 +45,17 @@ const navLinks = [
 const Navbar = () => {
   const classes = useStyles();
   const { state, dispatch } = useContext(store);
+  console.log('OUTPUT: Navbar -> state', state);
 
-  const firstName = state.user ? state.user.firstName : '';
-  const lastName = state.user ? state.user.lastName : '';
+  let firstName = '';
+  let lastName = '';
+  useEffect(() => {
+    console.log(state);
+    if (state.user.user) {
+      firstName = state.user.user.firstName;
+      lastName = state.user.user.lastName;
+    }
+  }, [state]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
