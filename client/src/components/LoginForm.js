@@ -7,6 +7,8 @@ import api from '../utils/api';
 import axios from 'axios';
 import { store } from '../context/store';
 import { LOGIN_SUCCESS, USER_LOADED } from '../context/types';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -17,6 +19,15 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+
+  const [localState, setLocalState] = useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'center',
+    message: null,
+  });
+
+  const { vertical, horizontal, open, message } = localState;
 
   const loginUser = () => {
     try {
@@ -30,72 +41,90 @@ const LoginForm = () => {
     }
   };
 
+  const showAlert = ({ message }) => {
+    setLocalState({
+      open: true,
+      vertical: vertical,
+      horizontal: horizontal,
+      message,
+    });
+  };
+
+  const handleClose = () => {
+    setLocalState({ ...localState, open: false });
+  };
+
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-    myHeaders.append(
-      'Cookie',
-      'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImludGVydmlld3MiOlt7Il9pZCI6IjVmYWViYzczY2M1NDA4Y2MxODI5M2MzZiIsImNyZWF0b3IiOiI1ZmFlYjQ3MjY0MzIwOWNhMGJhNDZjYjAiLCJzdGFydFRpbWUiOiIyMDIwLTExLTEzVDE3OjAzOjQ3LjU4OFoiLCJfX3YiOjB9XSwiX2lkIjoiNWZhZWI0NzI2NDMyMDljYTBiYTQ2Y2IwIiwiZmlyc3ROYW1lIjoiS2V2aW4iLCJsYXN0TmFtZSI6IllpIiwiZW1haWwiOiJzdGV2ZTFAZ21haWwuY29tIiwiX192IjoxfSwiaWF0IjoxNjA1MzE2OTU5LCJleHAiOjE2MDc5NDY3MDN9.uCBTpucGpN8SIsrviifeHSbVdYH7ztfm3FZjIXrA-pw'
-    );
 
-    var urlencoded = new URLSearchParams();
-    urlencoded.append('email', 'steve1@gmail.com');
-    urlencoded.append('password', 'abcd1234');
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: 'follow',
-    };
-
-    fetch('http://localhost:3001/users/login', requestOptions)
-      .then((response) => response.json())
-      .then((result) => dispatch({ type: USER_LOADED, payload: result }))
-      .then((data) => history.push('/dashboard'))
-      .catch((error) => console.log('error', error));
+    try {
+      let result = await axios.post('http://localhost:3001/users/login', formData)
+      dispatch({ type: USER_LOADED, payload: result.data.user })
+      history.push('/dashboard')
+    }
+    catch (error) {
+      showAlert({ message: 'Invalid credentials!' });
+    }
   };
 
   return (
-    <div className={classes.signUpForm}>
-      <div className={classes.loginContainer}>
-        <div className={classes.alreadyHaveAccount}>Don't have an account?</div>
-        <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
-          <RedirectPageButton size='small'>SIGN UP</RedirectPageButton>
-        </Link>
-      </div>
-      <div>
-        <div className={classes.getStarted}>
-          <h1>Sign In</h1>
+    <div>
+      <div className={classes.signUpForm}>
+        <div className={classes.loginContainer}>
+          <div className={classes.alreadyHaveAccount}>Don't have an account?</div>
+          <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
+            <RedirectPageButton size='small'>SIGN UP</RedirectPageButton>
+          </Link>
         </div>
-        <form className={classes.form} noValidate autoComplete='off'>
-          <TextField
-            required
-            id='outlined-required'
-            name='email'
-            variant='outlined'
-            label='E-mail'
-            value={formData.email}
-            onChange={onChange}
-          />
-          <TextField
-            required
-            id='outlined-required'
-            name='password'
-            type='password'
-            variant='outlined'
-            label='Password'
-            value={formData.password}
-            onChange={onChange}
-          />
-          <ContinueButton onClick={onSubmit}>Continue</ContinueButton>
-        </form>
+        <div>
+          <div className={classes.getStarted}>
+            <h1>Sign In</h1>
+          </div>
+          <form className={classes.form} noValidate autoComplete='off'>
+            <TextField
+              required
+              id='outlined-required'
+              name='email'
+              variant='outlined'
+              label='E-mail'
+              value={formData.email}
+              onChange={onChange}
+            />
+            <TextField
+              required
+              id='outlined-required'
+              name='password'
+              type='password'
+              variant='outlined'
+              label='Password'
+              value={formData.password}
+              onChange={onChange}
+            />
+            <ContinueButton onClick={onSubmit}>Continue</ContinueButton>
+          </form>
+        </div>
       </div>
+      {open && (
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message={message}
+          key={vertical + horizontal}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: 'red',
+              fontSize: '20px',
+            }}
+            message={message}
+          />
+        </Snackbar>
+      )}
     </div>
   );
 };

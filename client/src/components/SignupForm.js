@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { RedirectPageButton, ContinueButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { store } from '../context/store';
+import { LOGIN_SUCCESS, USER_LOADED } from '../context/types';
+import axios from 'axios';
 
 const SignupForm = () => {
+  const history = useHistory();
   const classes = useStyles();
+  const { state, dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -49,6 +54,16 @@ const SignupForm = () => {
     // login(email, password);
 
     displayAlertMessage();
+
+    try {
+      let result = await axios.post('http://localhost:3001/users/register', formData)
+      dispatch({ type: USER_LOADED, payload: result.data.user })
+      history.push('/dashboard')
+    }
+    catch (error) {
+      console.log(error)
+    }
+
   };
 
   const displayAlertMessage = () => {
