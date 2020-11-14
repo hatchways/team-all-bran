@@ -7,6 +7,8 @@ import api from '../utils/api';
 import axios from 'axios';
 import { store } from '../context/store';
 import { LOGIN_SUCCESS, USER_LOADED } from '../context/types';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -17,6 +19,15 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+
+  const [localState, setLocalState] = useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'center',
+    message: null,
+  });
+
+  const { vertical, horizontal, open, message } = localState;
 
   const loginUser = () => {
     try {
@@ -30,6 +41,20 @@ const LoginForm = () => {
     }
   };
 
+  const showAlert = ({ message }) => {
+    setLocalState({
+      open: true,
+      vertical: vertical,
+      horizontal: horizontal,
+      message,
+    });
+  };
+
+  const handleClose = () => {
+    setLocalState({ ...localState, open: false });
+  };
+
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -42,45 +67,64 @@ const LoginForm = () => {
       history.push('/dashboard')
     }
     catch (error) {
-      console.log(error)
+      showAlert({ message: 'Invalid credentials!' });
     }
   };
 
   return (
-    <div className={classes.signUpForm}>
-      <div className={classes.loginContainer}>
-        <div className={classes.alreadyHaveAccount}>Don't have an account?</div>
-        <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
-          <RedirectPageButton size='small'>SIGN UP</RedirectPageButton>
-        </Link>
-      </div>
-      <div>
-        <div className={classes.getStarted}>
-          <h1>Sign In</h1>
+    <div>
+      <div className={classes.signUpForm}>
+        <div className={classes.loginContainer}>
+          <div className={classes.alreadyHaveAccount}>Don't have an account?</div>
+          <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
+            <RedirectPageButton size='small'>SIGN UP</RedirectPageButton>
+          </Link>
         </div>
-        <form className={classes.form} noValidate autoComplete='off'>
-          <TextField
-            required
-            id='outlined-required'
-            name='email'
-            variant='outlined'
-            label='E-mail'
-            value={formData.email}
-            onChange={onChange}
-          />
-          <TextField
-            required
-            id='outlined-required'
-            name='password'
-            type='password'
-            variant='outlined'
-            label='Password'
-            value={formData.password}
-            onChange={onChange}
-          />
-          <ContinueButton onClick={onSubmit}>Continue</ContinueButton>
-        </form>
+        <div>
+          <div className={classes.getStarted}>
+            <h1>Sign In</h1>
+          </div>
+          <form className={classes.form} noValidate autoComplete='off'>
+            <TextField
+              required
+              id='outlined-required'
+              name='email'
+              variant='outlined'
+              label='E-mail'
+              value={formData.email}
+              onChange={onChange}
+            />
+            <TextField
+              required
+              id='outlined-required'
+              name='password'
+              type='password'
+              variant='outlined'
+              label='Password'
+              value={formData.password}
+              onChange={onChange}
+            />
+            <ContinueButton onClick={onSubmit}>Continue</ContinueButton>
+          </form>
+        </div>
       </div>
+      {open && (
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message={message}
+          key={vertical + horizontal}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: 'red',
+              fontSize: '20px',
+            }}
+            message={message}
+          />
+        </Snackbar>
+      )}
     </div>
   );
 };
