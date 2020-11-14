@@ -47,13 +47,12 @@ const Navbar = () => {
   const { state, dispatch } = useContext(store);
   console.log('OUTPUT: Navbar -> state', state);
 
-  let firstName = '';
-  let lastName = '';
+  const [fullName, setFullName] = useState('');
+
   useEffect(() => {
     console.log(state);
     if (state.user.user) {
-      firstName = state.user.user.firstName;
-      lastName = state.user.user.lastName;
+      setFullName(`${state.user.user.firstName} ${state.user.user.lastName}`)
     }
   }, [state]);
 
@@ -104,7 +103,7 @@ const Navbar = () => {
           >
             <Avatar alt='Avatar' src={avatar} />
 
-            {`${firstName} ${lastName}`}
+            {fullName}
           </IconButton>
         </Container>
 

@@ -35,7 +35,6 @@ const LoginForm = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log(formData);
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
     myHeaders.append(
@@ -44,8 +43,8 @@ const LoginForm = () => {
     );
 
     var urlencoded = new URLSearchParams();
-    urlencoded.append('email', 'steve1@gmail.com');
-    urlencoded.append('password', 'abcd1234');
+    urlencoded.append('email', formData.email);
+    urlencoded.append('password', formData.password);
 
     var requestOptions = {
       method: 'POST',
