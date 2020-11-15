@@ -53,12 +53,15 @@ const Navbar = () => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleClose = (e, route) => {
+  const handleClose = (e) => {
     setAnchorEl(null);
+  };
+
+  const handleGoToRoute = (_, route) => {
     history.push(route);
     if (route === '/signup') {
       dispatch({ type: LOGOUT });
-      localStorage.clear()
+      localStorage.clear();
     }
   };
 
@@ -101,13 +104,16 @@ const Navbar = () => {
         <Menu
           id='simple-menu'
           anchorEl={anchorEl}
-          keepMounted
+          // keepMounted
           open={Boolean(anchorEl)}
+          onClose={handleClose}
         >
-          <MenuItem onClick={(e) => handleClose(e, '/profile')}>
+          <MenuItem onClick={(e) => handleGoToRoute(e, '/profile')}>
             Profile
           </MenuItem>
-          <MenuItem onClick={(e) => handleClose(e, '/signup')}>Logout</MenuItem>
+          <MenuItem onClick={(e) => handleGoToRoute(e, '/signup')}>
+            Logout
+          </MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>
