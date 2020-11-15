@@ -56,16 +56,19 @@ const SignupForm = () => {
     displayAlertMessage();
 
     try {
-      let result = await axios.post('http://localhost:3001/users/register', formData)
-      dispatch({ type: USER_LOADED, payload: result.data.user })
-      history.push('/dashboard')
-      const token = result.data.token
-      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
-    }
-    catch (error) {
-      console.log(error)
-    }
+      const result = await axios.post(
+        'http://localhost:3001/users/register',
+        formData
+      );
+      dispatch({ type: USER_LOADED, payload: result.data.user });
 
+      const token = result.data.token;
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
+      // will change to /background (protected route, routes folder)
+      history.push('/dashboard');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const displayAlertMessage = () => {
