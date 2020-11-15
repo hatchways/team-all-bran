@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import * as imageURL from '../images/login-photo.png';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from '../themes/theme';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import axios from 'axios'
@@ -16,7 +16,7 @@ const LoginSignupWrapper = ({ children }) => {
     return localStorage.getItem(process.env.REACT_APP_USER_DATA) !== null
   }
 
-  const redirectToDashBoard = async () => {
+  const redirectToDashBoard = useCallback(async () => {
     const res = localStorage.getItem(process.env.REACT_APP_USER_DATA)
 
     try {
@@ -36,13 +36,13 @@ const LoginSignupWrapper = ({ children }) => {
     catch (error) {
       console.log(error)
     }
-  }
+  }, [dispatch, history])
 
   useEffect(() => {
     if (userIsLoggedIn()) {
       redirectToDashBoard()
     }
-  }, [])
+  }, [redirectToDashBoard])
 
   return (
     <div className={classes.loginSignupWrapperRoot}>

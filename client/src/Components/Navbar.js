@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import avatar from '../images/avatar.png';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';

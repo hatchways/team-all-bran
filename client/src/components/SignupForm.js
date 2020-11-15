@@ -6,13 +6,13 @@ import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { store } from '../context/store';
-import { LOGIN_SUCCESS, USER_LOADED } from '../context/types';
+import { USER_LOADED } from '../context/types';
 import axios from 'axios';
 
 const SignupForm = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { state, dispatch } = useContext(store);
+  const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
     firstName: '',
