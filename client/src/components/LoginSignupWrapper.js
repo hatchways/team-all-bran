@@ -10,19 +10,13 @@ import axios from 'axios'
 const LoginSignupWrapper = ({ children }) => {
   const history = useHistory();
   const classes = useStyles();
-  const { dispatch } = useContext(store);
-
-  const userIsLoggedIn = () => {
-    return localStorage.getItem(process.env.REACT_APP_USER_DATA) !== null
-  }
+  const { dispatch, state } = useContext(store);
 
   const redirectToDashBoard = useCallback(async () => {
-    const res = localStorage.getItem(process.env.REACT_APP_USER_DATA)
-
     try {
       let result = await axios.get('http://localhost:3001/users/', {
         params: {
-          token: res
+          token: state.token
         }
       })
 
@@ -36,13 +30,13 @@ const LoginSignupWrapper = ({ children }) => {
     catch (error) {
       console.log(error)
     }
-  }, [dispatch, history])
+  }, [dispatch, history, state.token])
 
   useEffect(() => {
-    if (userIsLoggedIn()) {
+    if (state.token) {
       redirectToDashBoard()
     }
-  }, [redirectToDashBoard])
+  }, [redirectToDashBoard, state.token])
 
   return (
     <div className={classes.loginSignupWrapperRoot}>

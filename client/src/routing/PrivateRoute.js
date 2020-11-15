@@ -4,7 +4,7 @@ import { store } from '../context/store';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const {
-    state: { loading, isAuthenticated },
+    state: { isAuthenticated },
   } = useContext(store);
   return (
     <Route
