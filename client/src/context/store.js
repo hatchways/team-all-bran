@@ -8,6 +8,7 @@ import {
 } from './types';
 
 const initialState = {
+  token: localStorage.getItem(process.env.REACT_APP_USER_DATA),
   isAuthenticated: false,
   loading: false,
   user: {},
