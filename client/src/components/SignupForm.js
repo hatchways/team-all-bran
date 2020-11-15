@@ -6,13 +6,13 @@ import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { store } from '../context/store';
-import { LOGIN_SUCCESS, USER_LOADED } from '../context/types';
+import { USER_LOADED } from '../context/types';
 import axios from 'axios';
 
 const SignupForm = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { state, dispatch } = useContext(store);
+  const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -59,6 +59,8 @@ const SignupForm = () => {
       let result = await axios.post('http://localhost:3001/users/register', formData)
       dispatch({ type: USER_LOADED, payload: result.data.user })
       history.push('/dashboard')
+      const token = result.data.token
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
     }
     catch (error) {
       console.log(error)

@@ -7,9 +7,9 @@ import NavBar from '../components/Navbar';
 import { store } from '../context/store';
 import { Redirect } from 'react-router';
 
-const DashBoard = (props) => {
+const DashBoard = () => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(store);
+  const { state } = useContext(store);
   if (!state.isAuthenticated) return <Redirect to='/signup' />;
 
   return (

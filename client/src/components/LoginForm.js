@@ -3,17 +3,16 @@ import TextField from '@material-ui/core/TextField';
 import { Link, useHistory } from 'react-router-dom';
 import { RedirectPageButton, ContinueButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
-import api from '../utils/api';
 import axios from 'axios';
 import { store } from '../context/store';
-import { LOGIN_SUCCESS, USER_LOADED } from '../context/types';
+import { USER_LOADED } from '../context/types';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const LoginForm = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { state, dispatch } = useContext(store);
+  const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -28,18 +27,6 @@ const LoginForm = () => {
   });
 
   const { vertical, horizontal, open, message } = localState;
-
-  const loginUser = () => {
-    try {
-      // const res = await fetch(`http://localhost:3001/users/login`, JSON.stringify(formData))
-      // const
-      axios
-        .post('http://localhost:3001/users/login', formData)
-        .then((data) => console.log(data));
-    } catch (err) {
-      console.log('OUTPUT: LoginForm -> err', err);
-    }
-  };
 
   const showAlert = ({ message }) => {
     setLocalState({
@@ -65,6 +52,8 @@ const LoginForm = () => {
       let result = await axios.post('http://localhost:3001/users/login', formData)
       dispatch({ type: USER_LOADED, payload: result.data.user })
       history.push('/dashboard')
+      const token = result.data.token
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
     }
     catch (error) {
       showAlert({ message: 'Invalid credentials!' });
