@@ -10,6 +10,7 @@ node_modules/
 
 # misc
 .env
+/client/.env
 .DS_Store
 .env.local
 .env.development.local
@@ -21,5 +22,5 @@ yarn-debug.log*
 yarn-error.log*
 
 
-#TODO add .env to your gitignore
+
 

@@ -10,13 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        loading ? (
-          <h1>Loading...</h1>
-        ) : isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to='/signup' />
-        )
+        isAuthenticated ? <Component {...props} /> : <Redirect to='/signup' />
       }
     />
   );
