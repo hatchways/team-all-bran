@@ -1,8 +1,14 @@
 import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import './App.css';
 import DashBoard from './pages/DashBoard';
+
 import Blog from './pages/Blog';
 import Faq from './pages/Faq';
 import Profile from './pages/Profile';
@@ -12,23 +18,23 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import PrivateRoute from './routing/PrivateRoute';
 
+import Routes from './routing/Routes';
+
 function App() {
+
   return (
-    <Router>
+    <StateProvider value={store}>
       <MuiThemeProvider theme={theme}>
-        <StateProvider value={store}>
+        <Router>
           <Switch>
+            <Route exact path='/' component={Signup} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
-            <PrivateRoute exact path='/profile' component={Profile} />
-            <PrivateRoute exact path='/dashboard' component={DashBoard} />
-            <PrivateRoute exact path='/blog' component={Blog} />
-            <PrivateRoute exact path='/faq' component={Faq} />
-            <Route path='/' component={Signup} />
+            <Route component={Routes} />
           </Switch>
-        </StateProvider>
+        </Router>
       </MuiThemeProvider>
-    </Router>
+    </StateProvider>
   );
 }
 

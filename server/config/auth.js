@@ -16,8 +16,9 @@ module.exports = async function (req, res, next) {
     const id = jwt.verify(token, process.env.secretKey).user._id;
     //Return user interviews here
     const user = await User.findById(id).populate('interviews');
-    res.status(200).json({ user });
-    next();
+    const userObject = user.toJSON();
+    userObject.token = token;
+    res.status(200).json({ user: userObject });
   } catch (err) {
     res.status(401).json({ error: 'Token is not valid' });
   }

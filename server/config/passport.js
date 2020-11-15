@@ -27,7 +27,9 @@ module.exports = (passport) => {
           }
           return done(null, false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>
+          console.log('err from passport, something wrong with middleware', err)
+        );
     })
   );
 };
