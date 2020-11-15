@@ -1,10 +1,14 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import './App.css';
 import DashBoard from './pages/DashBoard';
-import api from './utils/api';
-import Navbar from './components/Navbar';
+
 import Blog from './pages/Blog';
 import Faq from './pages/Faq';
 import Profile from './pages/Profile';
@@ -15,56 +19,44 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import PrivateRoute from './routing/PrivateRoute';
 
-function App() {
-  const { dispatch } = useContext(store);
-  const loadUser = useCallback(async () => {
-    try {
-      const res = await api.get('/users/auth');
+import Routes from './routing/Routes';
 
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: AUTH_ERROR,
-      });
-    }
+function App() {
+  const { state, dispatch } = useContext(store);
+  const loadUser = useCallback(async () => {
+    var myHeaders = new Headers();
+
+    await fetch('http://localhost:3001/users/', {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      // credentials: 'same-origin',
+    })
+      .then((response) => response.json())
+      .then(({ user }) =>
+        dispatch({
+          type: USER_LOADED,
+          payload: user,
+        })
+      )
+      .catch((error) => console.log('error', error));
   }, [dispatch]);
 
-  const setAuthToken = (token) => {
-    if (token) {
-      api.defaults.headers.common['Bearer'] = token;
-      localStorage.setItem('token', token);
-    } else {
-      delete api.defaults.headers.common['Bearer'];
-      localStorage.removeItem('token');
-    }
-  };
-
   useEffect(() => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-      loadUser();
-    }
+    loadUser();
   }, [loadUser]);
 
   return (
-    <Router>
+    <StateProvider value={store}>
       <MuiThemeProvider theme={theme}>
-        <StateProvider value={store}>
+        <Router>
           <Switch>
+            <Route exact path='/' component={Signup} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
-            <PrivateRoute exact path='/profile' component={Profile} />
-            <PrivateRoute exact path='/dashboard' component={DashBoard} />
-            <PrivateRoute exact path='/blog' component={Blog} />
-            <PrivateRoute exact path='/faq' component={Faq} />
-            <Route path='/' component={Signup} />
+            <Route component={Routes} />
           </Switch>
-        </StateProvider>
+        </Router>
       </MuiThemeProvider>
-    </Router>
+    </StateProvider>
   );
 }
 
