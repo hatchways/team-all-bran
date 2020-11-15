@@ -4,8 +4,7 @@ const { User } = require('../models/User');
 
 module.exports = async function (req, res, next) {
   // Get token from header
-  const token = req.cookies['token'];
-  console.log('OUTPUT: token', token);
+  const token = req.query.token;
 
   // Check if no token
   if (!token) {
@@ -14,7 +13,7 @@ module.exports = async function (req, res, next) {
 
   // Verify token
   try {
-    const id = jwt.verify(req.cookies.token, process.env.secretKey).user._id;
+    const id = jwt.verify(token, process.env.secretKey).user._id;
     //Return user interviews here
     const user = await User.findById(id).populate('interviews');
     res.status(200).json({ user });

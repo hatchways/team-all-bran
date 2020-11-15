@@ -59,8 +59,8 @@ const SignupForm = () => {
       let result = await axios.post('http://localhost:3001/users/register', formData)
       dispatch({ type: USER_LOADED, payload: result.data.user })
       history.push('/dashboard')
-      const res = JSON.stringify(result.data.user)
-      localStorage.setItem(process.env.REACT_APP_USER_DATA, res)
+      const token = result.data.token
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
     }
     catch (error) {
       console.log(error)

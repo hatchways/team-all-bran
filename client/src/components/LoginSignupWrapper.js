@@ -5,6 +5,7 @@ import { useStyles } from '../themes/theme';
 import { Link, useHistory } from 'react-router-dom';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
+import axios from 'axios'
 
 const LoginSignupWrapper = ({ children }) => {
   const history = useHistory();
@@ -15,19 +16,34 @@ const LoginSignupWrapper = ({ children }) => {
     return localStorage.getItem(process.env.REACT_APP_USER_DATA) !== null
   }
 
-  const redirectToDashBoard = () => {
-    const res = JSON.parse(localStorage.getItem(process.env.REACT_APP_USER_DATA))
-    dispatch({
-      type: USER_LOADED,
-      payload: res,
-    });
-    history.push('/dashboard')
+  const redirectToDashBoard = async () => {
+    const res = localStorage.getItem(process.env.REACT_APP_USER_DATA)
+
+    try {
+      let result = await axios.get('http://localhost:3001/users/', {
+        params: {
+          token: res
+        }
+      })
+
+      dispatch({
+        type: USER_LOADED,
+        payload: result.data.user,
+      });
+
+      history.push('/dashboard')
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
+
   useEffect(() => {
     if (userIsLoggedIn()) {
       redirectToDashBoard()
     }
   }, [])
+
   return (
     <div className={classes.loginSignupWrapperRoot}>
       <Grid container spacing={2}>
