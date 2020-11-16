@@ -5,50 +5,53 @@ const User = mongoose.model('User');
 
 const InterviewSchema = new Schema({
   startTime: {
-    type: Date,
-    default: Date.now,
-    required: true,
+    type: Number,
+    default: Math.floor(Date.now() / 1000),
   },
   endTime: {
-    type: Date,
+    type: Number,
   },
-  creator: {
+
+  theme: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Theme',
+    /* Can we ref Tags here? Take most used tag out 
+      of the questions and stick it up here and call it a theme? 
+      Just wondering where theme comes from */
   },
+
+  feedback: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Feedback',
+    },
+  ],
+  users: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  ],
+  questions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Question,',
+    },
+  ],
 });
-
-async function getUserInterviews(req) {
-  // return req.headers.cookie;
-  const token = req.headers.cookie;
-  console.log(token);
-  try {
-    const decoded = jwt.verify(token, 'secret');
-    console.log('OUTPUT: getUserInterviews -> decoded', decoded);
-    req.user = decoded.user;
-
-    return req;
-  } catch (err) {
-    console.log(err.message);
-    return err.message;
-  }
-}
 
 async function createInterview(req) {
   const { creator } = req.body;
   const firstUser = await User.findOne({ _id: creator });
   console.log('OUTPUT: createInterview -> firstUser', firstUser);
-  console.log(creator);
   try {
-    const interview = new Interview({
-      creator: firstUser,
-    });
+    const interview = new Interview({});
     const interviewDoc = await interview.save();
+    interviewDoc.users.push(firstUser);
     const interviewDocObject = interviewDoc.toObject();
-    console.log(
-      'OUTPUT: createInterview -> firstUser.interviews',
-      firstUser.interviews
-    );
+    interviewDoc.startTime = Date.now();
+    await interviewDoc.save();
     firstUser.interviews.push(interviewDocObject);
     await firstUser.save();
     return interviewDoc;
@@ -67,10 +70,4 @@ async function joinInterview(req) {
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
-module.exports = {
-  Interview,
-  createInterview,
-  endInterview,
-  joinInterview,
-  getUserInterviews,
-};
+module.exports = { Interview, createInterview, endInterview, joinInterview };

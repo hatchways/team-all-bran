@@ -22,8 +22,11 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    difficultyLevel: {
-      type: String,
+    interviewLevel: {
+      type: Number,
+    },
+    professionalExperience: {
+      type: Number,
     },
     interviews: [
       {
