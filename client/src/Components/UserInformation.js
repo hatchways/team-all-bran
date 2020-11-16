@@ -1,14 +1,11 @@
-import React, { useState, useContext } from "react";
-import TextField from "@material-ui/core/TextField";
-import { Link, useHistory } from "react-router-dom";
-import { RedirectPageButton, ContinueButton } from "../components/Buttons";
-import { useStyles } from "../themes/theme";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import { store } from "../context/store";
-import { USER_LOADED } from "../context/types";
-import axios from "axios";
-import { Rating } from "@material-ui/lab";
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { ContinueButton } from '../components/Buttons';
+import { useStyles } from '../themes/theme';
+import { store } from '../context/store';
+import { USER_LOADED } from '../context/types';
+import axios from 'axios';
+import { Rating } from '@material-ui/lab';
 
 const InterviewLevelInfo = ({ interviewLevel }) => {
   const classes = useStyles();
@@ -46,7 +43,7 @@ const UserInformation = (props) => {
   const history = useHistory();
 
   const [userData, setUserData] = useState({
-    language: "English",
+    language: 'English',
     experience: 0,
     interviewLevel: 1,
   });
@@ -64,7 +61,7 @@ const UserInformation = (props) => {
 
     try {
       const result = await axios.post(
-        "http://localhost:3001/users/register",
+        'http://localhost:3001/users/register',
         formData
       );
       dispatch({ type: USER_LOADED, payload: result.data.user });
@@ -72,7 +69,7 @@ const UserInformation = (props) => {
       const token = result.data.token;
       localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
       // will change to /background (protected route, routes folder)
-      history.push("/dashboard");
+      history.push('/dashboard');
     } catch (error) {
       console.log(error);
     }

@@ -1,13 +1,13 @@
-import React, { useState, useContext } from "react";
-import TextField from "@material-ui/core/TextField";
-import { Link, useHistory } from "react-router-dom";
-import { RedirectPageButton, ContinueButton } from "../components/Buttons";
-import { useStyles } from "../themes/theme";
-import axios from "axios";
-import { store } from "../context/store";
-import { USER_LOADED } from "../context/types";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
+import React, { useState, useContext } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { Link, useHistory } from 'react-router-dom';
+import { RedirectPageButton, ContinueButton } from '../components/Buttons';
+import { useStyles } from '../themes/theme';
+import axios from 'axios';
+import { store } from '../context/store';
+import { USER_LOADED } from '../context/types';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -15,14 +15,14 @@ const LoginForm = () => {
   const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [localState, setLocalState] = useState({
     open: false,
-    vertical: "bottom",
-    horizontal: "center",
+    vertical: 'bottom',
+    horizontal: 'center',
     message: null,
   });
 
@@ -49,15 +49,15 @@ const LoginForm = () => {
 
     try {
       let result = await axios.post(
-        "http://localhost:3001/users/login",
+        'http://localhost:3001/users/login',
         formData
       );
       dispatch({ type: USER_LOADED, payload: result.data.user });
-      history.push("/dashboard");
+      history.push('/dashboard');
       const token = result.data.token;
       localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
     } catch (error) {
-      showAlert({ message: "Invalid credentials!" });
+      showAlert({ message: 'Invalid credentials!' });
     }
   };
 
@@ -68,7 +68,7 @@ const LoginForm = () => {
           <div className={classes.alreadyHaveAccount}>
             Don't have an account?
           </div>
-          <Link style={{ textDecoration: "none" }} to={{ pathname: "/signup" }}>
+          <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
             <RedirectPageButton size="small">SIGN UP</RedirectPageButton>
           </Link>
         </div>
@@ -110,8 +110,8 @@ const LoginForm = () => {
         >
           <SnackbarContent
             style={{
-              backgroundColor: "red",
-              fontSize: "20px",
+              backgroundColor: 'red',
+              fontSize: '20px',
             }}
             message={message}
           />

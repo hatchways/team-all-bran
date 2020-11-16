@@ -1,14 +1,12 @@
-import React, { useState, useContext } from "react";
-import TextField from "@material-ui/core/TextField";
-import { Link, useHistory } from "react-router-dom";
-import { RedirectPageButton, ContinueButton } from "../components/Buttons";
-import { useStyles } from "../themes/theme";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import { store } from "../context/store";
-import { USER_LOADED } from "../context/types";
-import axios from "axios";
-import UserInformation from "../components/UserInformation";
+import React, { useState, useContext } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { Link, useHistory } from 'react-router-dom';
+import { RedirectPageButton, ContinueButton } from '../components/Buttons';
+import { useStyles } from '../themes/theme';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { store } from '../context/store';
+import UserInformation from '../components/UserInformation';
 
 const SignupForm = () => {
   const history = useHistory();
@@ -16,17 +14,17 @@ const SignupForm = () => {
   const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [localState, setLocalState] = useState({
     open: false,
-    vertical: "bottom",
-    horizontal: "center",
+    vertical: 'bottom',
+    horizontal: 'center',
     continueButtonPushed: false,
     message: null,
   });
@@ -74,26 +72,26 @@ const SignupForm = () => {
 
   const displayAlertMessage = () => {
     if (!areAllFieldsCompleted()) {
-      showAlert({ message: "Must fill out every field!" });
+      showAlert({ message: 'Must fill out every field!' });
       return true;
     }
     if (!passwordIsValid() && !emailIsValid()) {
-      showAlert({ message: "Password & E-mail are invalid!" });
+      showAlert({ message: 'Password & E-mail are invalid!' });
       return true;
     }
     if (!passwordIsValid() && password.length !== 0) {
-      showAlert({ message: "Password is invalid!" });
+      showAlert({ message: 'Password is invalid!' });
       return true;
     }
     if (!emailIsValid() && email.length !== 0) {
-      showAlert({ message: "E-mail is invalid!" });
+      showAlert({ message: 'E-mail is invalid!' });
       return true;
     }
     if (areAllFieldsCompleted() && emailIsValid && !passwordsAreTheSame()) {
       showAlert({
-        vertical: "bottom",
-        horizontal: "center",
-        message: "Passwords must match!",
+        vertical: 'bottom',
+        horizontal: 'center',
+        message: 'Passwords must match!',
       });
       return true;
     }
@@ -129,7 +127,7 @@ const SignupForm = () => {
         <div className={classes.alreadyHaveAccount}>
           Already have an account?
         </div>
-        <Link style={{ textDecoration: "none" }} to={{ pathname: "/login" }}>
+        <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
           <RedirectPageButton size="small">Log in</RedirectPageButton>
         </Link>
       </div>
@@ -164,7 +162,7 @@ const SignupForm = () => {
             variant="outlined"
             label="E-mail"
             onChange={onChange}
-            helperText={"Must enter a valid e-mail address"}
+            helperText={'Must enter a valid e-mail address'}
             color="primary"
           />
           <TextField
@@ -174,7 +172,7 @@ const SignupForm = () => {
             type="password"
             variant="outlined"
             label="Password"
-            helperText={"Password must be at least 6 characters long."}
+            helperText={'Password must be at least 6 characters long.'}
             onChange={onChange}
             color="primary"
           />
@@ -185,7 +183,7 @@ const SignupForm = () => {
             type="password"
             variant="outlined"
             label="Confirm Password"
-            helperText={"Must match password"}
+            helperText={'Must match password'}
             onChange={onChange}
             color="primary"
           />
@@ -202,8 +200,8 @@ const SignupForm = () => {
         >
           <SnackbarContent
             style={{
-              backgroundColor: "red",
-              fontSize: "20px",
+              backgroundColor: 'red',
+              fontSize: '20px',
             }}
             message={message}
           />

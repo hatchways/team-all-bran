@@ -1,14 +1,14 @@
-import React from "react";
-import { MuiThemeProvider } from "@material-ui/core";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./App.css";
-import { StateProvider, store } from "./context/store";
-import { theme } from "./themes/theme";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import UserInformation from "./components/UserInformation";
+import React from 'react';
+import { MuiThemeProvider } from '@material-ui/core';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './App.css';
+import { StateProvider, store } from './context/store';
+import { theme } from './themes/theme';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import UserInformation from './components/UserInformation';
 
-import Routes from "./routing/Routes";
+import Routes from './routing/Routes';
 
 function App() {
   return (
