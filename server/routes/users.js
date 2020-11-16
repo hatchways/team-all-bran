@@ -12,4 +12,6 @@ router.post('/login', userController.login);
 
 router.get('/', auth);
 
+router.put('/update/:userId', userController.editUser);
+
 module.exports = router;

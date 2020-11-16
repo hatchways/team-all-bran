@@ -41,7 +41,6 @@ const LoginForm = () => {
     setLocalState({ ...localState, open: false });
   };
 
-
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -49,13 +48,15 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      let result = await axios.post('http://localhost:3001/users/login', formData)
-      dispatch({ type: USER_LOADED, payload: result.data.user })
-      history.push('/dashboard')
-      const token = result.data.token
-      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
-    }
-    catch (error) {
+      let result = await axios.post(
+        'http://localhost:3001/users/login',
+        formData
+      );
+      dispatch({ type: USER_LOADED, payload: result.data.user });
+      history.push('/dashboard');
+      const token = result.data.token;
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
+    } catch (error) {
       showAlert({ message: 'Invalid credentials!' });
     }
   };
@@ -64,32 +65,34 @@ const LoginForm = () => {
     <div>
       <div className={classes.signUpForm}>
         <div className={classes.loginContainer}>
-          <div className={classes.alreadyHaveAccount}>Don't have an account?</div>
+          <div className={classes.alreadyHaveAccount}>
+            Don't have an account?
+          </div>
           <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
-            <RedirectPageButton size='small'>SIGN UP</RedirectPageButton>
+            <RedirectPageButton size="small">SIGN UP</RedirectPageButton>
           </Link>
         </div>
         <div>
           <div className={classes.getStarted}>
             <h1>Sign In</h1>
           </div>
-          <form className={classes.form} noValidate autoComplete='off'>
+          <form className={classes.form} noValidate autoComplete="off">
             <TextField
               required
-              id='outlined-required'
-              name='email'
-              variant='outlined'
-              label='E-mail'
+              id="outlined-required"
+              name="email"
+              variant="outlined"
+              label="E-mail"
               value={formData.email}
               onChange={onChange}
             />
             <TextField
               required
-              id='outlined-required'
-              name='password'
-              type='password'
-              variant='outlined'
-              label='Password'
+              id="outlined-required"
+              name="password"
+              type="password"
+              variant="outlined"
+              label="Password"
               value={formData.password}
               onChange={onChange}
             />
