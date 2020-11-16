@@ -49,7 +49,7 @@ function editUser(req, res) {
       res.json({ user: data });
     })
     .catch((err) => {
-      res.json({ error: "User id not found" });
+      res.json({ error: 'User id not found' });
     });
 }
 
