@@ -11,6 +11,7 @@ const InterviewSchema = new Schema(
   {
     createdAt: Number,
     updatedAt: Number,
+    endTime: { type: Number },
     theme: {
       type: Schema.Types.ObjectId,
       ref: 'Theme',

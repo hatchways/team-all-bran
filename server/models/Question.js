@@ -12,9 +12,11 @@ const QuestionSchema = new Schema(
     updatedAt: Number,
     title: {
       type: String,
+      required: true,
     },
     difficulty: {
       type: Number,
+      required: true,
     },
     tags: [
       {
@@ -28,6 +30,4 @@ const QuestionSchema = new Schema(
 
 const Question = mongoose.model('Question', QuestionSchema);
 
-module.exports = {
-  Question,
-};
+module.exports = Question;
