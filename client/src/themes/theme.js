@@ -24,6 +24,27 @@ export const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       marginBottom: '30px',
     },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: colors.darkBlue
+    },
+    "& .MuiOutlinedInput-input": {
+      color: 'black'
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: 'black'
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: colors.darkBlue
+    }
   },
   signUpForm: {
     marginLeft: '40px',
@@ -61,11 +82,14 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    fontStyle: 'italic',
+    fontFamily: 'Roboto',
+    color: colors.charcoalGray,
   },
   loginSignupWrapperRoot: {
-    flexGrow: 1,
     overflow: 'hidden',
+    height: '100vh',
+    width: '100vw',
+    position: 'relative'
   },
   formField: {
     display: 'flex',
@@ -132,9 +156,10 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 export const colors = {
-  darkBlue: 'rgba(73, 94, 203, .8)',
+  darkBlue: '#516BF6',
   lightBlue: 'rgba(73, 145, 203, .8)',
   darkGray: 'rgba(105, 105, 105, .8)',
   lightGray: 'rgba(169, 169, 169, .8)',
   shadow: 'rgba(125, 123, 135, .3)',
+  charcoalGray: 'rgba(30,30,30, .8)'
 };
