@@ -23,7 +23,6 @@ const opts = {
 const UserSchema = new Schema(
   {
     createdAt: Number,
-    updatedAt: Number,
     firstName: {
       type: String,
       required: true,
