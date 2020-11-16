@@ -128,7 +128,7 @@ const SignupForm = () => {
           Already have an account?
         </div>
         <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
-          <RedirectPageButton size="small">Log in</RedirectPageButton>
+          <RedirectPageButton variant="outlined" size="small">Log in</RedirectPageButton>
         </Link>
       </div>
       <div>
