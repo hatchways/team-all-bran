@@ -32,6 +32,9 @@ module.exports = {
   },
   endInterview: async (req, res) => {
     const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id))
+      res.status(400).json({ msg: 'Invalid ID' });
+
     const interviewDoc = await Interview.findById(id);
     interviewDoc.endTime = Math.floor(Date.now() / 1000);
     await interviewDoc.save(); // what constitutes a completed interview?
