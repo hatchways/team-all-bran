@@ -4,7 +4,6 @@ const interviewController = require('../controllers/interviewController');
 
 // Get all current users interviews
 // GET /interviews/me
-router.get('/me', interviewController.getMyInterviews);
 router.post('/', interviewController.cInterview);
 router.patch('/:id', interviewController.endInterview);
 

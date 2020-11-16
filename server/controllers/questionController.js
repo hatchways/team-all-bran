@@ -8,6 +8,5 @@ module.exports = {
 
     const questionDoc = await new Question({ title, difficulty }).save();
     res.json(questionDoc);
-    console.log(questionDoc);
   },
 };

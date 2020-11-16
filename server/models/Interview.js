@@ -46,7 +46,7 @@ const InterviewSchema = new Schema(
 async function createInterview(req) {
   const { creator } = req.body;
   const firstUser = await User.findOne({ _id: creator });
-  console.log('OUTPUT: createInterview -> firstUser', firstUser);
+
   try {
     const interview = new Interview({});
     const interviewDoc = await interview.save();
@@ -62,13 +62,9 @@ async function createInterview(req) {
   }
 }
 
-async function endInterview(req) {
-  console.log('OUTPUT: endInterview -> req', req.body);
-}
+async function endInterview(req) {}
 
-async function joinInterview(req) {
-  console.log('OUTPUT: joinInterview -> req', req.body);
-}
+async function joinInterview(req) {}
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
