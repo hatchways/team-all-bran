@@ -64,8 +64,10 @@ export const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
   },
   loginSignupWrapperRoot: {
-    flexGrow: 1,
     overflow: 'hidden',
+    height: '100vh',
+    width: '100vw',
+    position: 'relative'
   },
   formField: {
     display: 'flex',
