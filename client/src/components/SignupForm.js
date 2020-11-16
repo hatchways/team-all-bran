@@ -7,6 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { store } from '../context/store';
 import UserInformation from '../components/UserInformation';
+import axios from 'axios';
 
 const SignupForm = () => {
   const history = useHistory();
@@ -61,6 +62,13 @@ const SignupForm = () => {
     e.preventDefault();
 
     if (displayAlertMessage()) {
+      return;
+    }
+
+    let emailCheck = await emailExists();
+
+    if (emailCheck) {
+      showAlert({ message: 'Email already exists' });
       return;
     }
 
@@ -120,7 +128,21 @@ const SignupForm = () => {
     return password === confirmPassword;
   };
 
-  console.log(continueButtonPushed);
+  const emailExists = async () => {
+    try {
+      const result = await axios.post(
+        'http://localhost:3001/users/register',
+        formData
+      );
+    } catch (err) {
+      if (err.response.data.error === 'Email already exists') {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   return !continueButtonPushed ? (
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
