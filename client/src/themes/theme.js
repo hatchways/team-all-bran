@@ -129,6 +129,53 @@ export const useStyles = makeStyles((theme) => ({
     color: `${colors.darkGray}`,
     marginBottom: '30px',
   },
+  interviewContainer: {
+    overflow: 'hidden',
+    height: '100vh',
+    width: '100vw',
+    position: 'relative'
+  },
+  interviewHeader: {
+    backgroundColor: colors.darkBlue,
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    height: '85px',
+    alignItems: 'center'
+  },
+  interviewDetails: {
+    height: '100vh'
+  },
+  interviewTextEditor: {
+    backgroundColor: 'rgba(30,30,30, 1)',
+    height: '100vh'
+  },
+  interviewOutput: {
+    backgroundColor: 'yellow',
+    bottom: '0',
+    position: 'absolute',
+    height: '15vh',
+    width: '66%',
+    marginBottom: '25px',
+    borderRadius: '25px'
+  },
+  interviewOutputHeader: {
+    backgroundColor: 'gray',
+    width: '100%',
+    borderTopLeftRadius: '25px',
+    borderTopRightRadius: '25px',
+    height: '25%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  textMarginRight: {
+    marginRight: '10px'
+  },
+  textMarginLeft: {
+    marginLeft: '10px'
+  },
 }));
 
 export const colors = {
