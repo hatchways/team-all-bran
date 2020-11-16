@@ -24,6 +24,27 @@ export const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       marginBottom: '30px',
     },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: colors.darkBlue
+    },
+    "& .MuiOutlinedInput-input": {
+      color: 'black'
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "black"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: 'black'
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "gray"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: colors.darkBlue
+    }
   },
   signUpForm: {
     marginLeft: '40px',
