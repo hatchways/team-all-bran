@@ -22,17 +22,15 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    language: {
+    difficultyLevel: {
       type: String,
     },
-    experience: {
-      type: Number,
-    },
-    interviewLevel: {
-      type: Number,
-      min: 1,
-      max: 5,
-    },
+    interviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Interview",
+      },
+    ],
   },
   {
     toObject: {
@@ -48,25 +46,26 @@ const UserSchema = new Schema(
   }
 );
 
-const User = mongoose.model("users", UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 async function registerUser(req) {
   // Check if email is in db
-  const user = await User.findOne({ email: req.body.email });
+  const { email, firstName, lastName, password } = req.body;
+  const user = await User.findOne({ email });
   if (user) {
     return { error: "Email already exists" };
   }
 
   try {
     let newUser = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: req.body.password,
+      firstName,
+      lastName,
+      email,
+      password,
     });
     newUser.password = bcrypt.hashSync(newUser.password, 10);
     newUser = await newUser.save();
-    console.log(newUser);
+    // console.log(newUser);
     return { user: newUser };
   } catch (err) {
     return err.message;
@@ -74,14 +73,14 @@ async function registerUser(req) {
 }
 
 async function loginUser(req) {
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
   // Find user by email
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate("interviews");
+  console.log(user);
   // Check if user exists
   if (!user) {
-    return { error: "Username and password was incorrect" };
+    return { error: "Username or password was incorrect" };
   }
 
   let validPass = await bcrypt.compare(password, user.password);
@@ -89,7 +88,7 @@ async function loginUser(req) {
   if (validPass) {
     return { user };
   } else {
-    return { error: "Username and password was incorrect" };
+    return { error: "Username or password was incorrect" };
   }
 }
 

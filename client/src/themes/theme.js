@@ -72,7 +72,31 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'column'
-  }
+  },
+  dashboardContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pastPracticesText: {
+    fontSize: '40px',
+    color: colors.darkBlue
+  },
+  interviewTable: {
+    width: 1000,
+    margin: 'auto',
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  interviewTableHeader: {
+    backgroundColor: colors.darkBlue,
+  },
+  headerFont: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
 }))
 
 export const colors = {

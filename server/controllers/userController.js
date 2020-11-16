@@ -1,8 +1,8 @@
-const userModel = require("../models/User");
-const validateRegister = require("../user-validation/register");
-const validateLogin = require("../user-validation/login");
+const userModel = require('../models/User');
+const validateRegister = require('../user-validation/register');
+const validateLogin = require('../user-validation/login');
 const { secretKey } = process.env;
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 function register(req, res) {
   const { errors, isValid } = validateRegister(req.body);
@@ -62,10 +62,10 @@ function createTokenResponse(user, res) {
       expiresIn: 2629744, // 1 month in seconds
     },
     (err, token) => {
-      let responseObj = { user: user, token: token };
+      let responseObj = { user, token };
       res
         .status(201)
-        .cookie("token", token, { httpOnly: true })
+        .cookie('token', token, { httpOnly: true })
         .json(responseObj);
     }
   );

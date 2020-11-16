@@ -8,10 +8,10 @@ import {
 } from './types';
 
 const initialState = {
-  token: localStorage.getItem('token'),
-  isAuthenticated: true,
+  token: localStorage.getItem(process.env.REACT_APP_USER_DATA),
+  isAuthenticated: false,
   loading: false,
-  user: { email: 'test@test.com', firstName: 'John', lastName: 'Doe' },
+  user: {},
 };
 
 const store = createContext(initialState);
