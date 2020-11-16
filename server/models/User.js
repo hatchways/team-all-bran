@@ -93,6 +93,29 @@ async function loginUser(req) {
   }
 }
 
-function updateUser(req) {}
+function updateUser(id, req) {
+  const userId = id;
+  const lang = req.body.language;
+  const experience = req.body.experience;
+  const interviewLevel = req.body.interviewLevel;
 
-module.exports = { User, registerUser, loginUser };
+  return User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $set: {
+        language: lang,
+        experience: experience,
+        interviewLevel: interviewLevel,
+      },
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        return err;
+      }
+      return { user: doc };
+    }
+  );
+}
+
+module.exports = { User, registerUser, loginUser, updateUser };

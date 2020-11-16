@@ -12,6 +12,6 @@ router.post("/register", userController.register);
 // POST /users/login
 router.post("/login", userController.login);
 
-router.post("/user/edit/:id", userController.editUser);
+router.put("/update/:userId", userController.editUser);
 
 module.exports = router;

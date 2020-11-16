@@ -40,7 +40,18 @@ function login(req, res) {
   });
 }
 
-function editUser(req, res) {}
+function editUser(req, res) {
+  const id = req.params.userId;
+  let user = userModel.updateUser(id, req);
+
+  user
+    .then((data) => {
+      res.json({ user: data });
+    })
+    .catch((err) => {
+      res.json({ error: "User id not found" });
+    });
+}
 
 function createTokenResponse(user, res) {
   const payload = { user };
