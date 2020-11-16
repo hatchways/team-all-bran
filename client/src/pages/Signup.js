@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-// import { Redirect } from 'react-router';
+import React from 'react';
+
 import LoginSignupWrapper from '../components/LoginSignupWrapper';
 import SignupForm from '../components/SignupForm';
-// import { store } from '../context/store';
 
 const Signup = () => {
   return (
