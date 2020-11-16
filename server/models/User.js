@@ -22,8 +22,17 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    difficultyLevel: {
+    language: {
       type: String,
+      required: true,
+    },
+    experience: {
+      type: Number,
+      required: true,
+    },
+    interviewLevel: {
+      type: Number,
+      required: true,
     },
     interviews: [
       {
@@ -50,7 +59,15 @@ const User = mongoose.model("User", UserSchema);
 
 async function registerUser(req) {
   // Check if email is in db
-  const { email, firstName, lastName, password } = req.body;
+  const {
+    email,
+    firstName,
+    lastName,
+    password,
+    language,
+    experience,
+    interviewLevel,
+  } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     return { error: "Email already exists" };
@@ -62,6 +79,9 @@ async function registerUser(req) {
       lastName,
       email,
       password,
+      language,
+      experience,
+      interviewLevel,
     });
     newUser.password = bcrypt.hashSync(newUser.password, 10);
     newUser = await newUser.save();
