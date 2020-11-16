@@ -61,7 +61,8 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    fontStyle: 'italic',
+    fontFamily: 'Roboto',
+    color: colors.charcoalGray,
   },
   loginSignupWrapperRoot: {
     overflow: 'hidden',
@@ -139,4 +140,5 @@ export const colors = {
   darkGray: 'rgba(105, 105, 105, .8)',
   lightGray: 'rgba(169, 169, 169, .8)',
   shadow: 'rgba(125, 123, 135, .3)',
+  charcoalGray: 'rgba(30,30,30, .8)'
 };
