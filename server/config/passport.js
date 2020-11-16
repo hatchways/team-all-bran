@@ -1,6 +1,7 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const mongoose = require('mongoose');
-const User = mongoose.model('users');
+
+const User = mongoose.model('User');
 require('dotenv').config();
 const { secretKey } = process.env;
 
@@ -19,14 +20,16 @@ opts.secretOrKey = secretKey;
 module.exports = (passport) => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
-      User.findById(jwt_payload.id)
+      User.findById(jwt_payload.user._id)
         .then((user) => {
           if (user) {
-            return done(null, user);
+            return done('null', user);
           }
           return done(null, false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>
+          console.log('err from passport, something wrong with middleware', err)
+        );
     })
   );
 };

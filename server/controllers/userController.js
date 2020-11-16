@@ -1,8 +1,8 @@
-const userModel = require("../models/User");
-const validateRegister = require("../user-validation/register");
-const validateLogin = require("../user-validation/login");
+const userModel = require('../models/User');
+const validateRegister = require('../user-validation/register');
+const validateLogin = require('../user-validation/login');
 const { secretKey } = process.env;
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 function register(req, res) {
   const { errors, isValid } = validateRegister(req.body);
@@ -40,6 +40,19 @@ function login(req, res) {
   });
 }
 
+function editUser(req, res) {
+  const id = req.params.userId;
+  let user = userModel.updateUser(id, req);
+
+  user
+    .then((data) => {
+      res.json({ user: data });
+    })
+    .catch((err) => {
+      res.json({ error: 'User id not found' });
+    });
+}
+
 function createTokenResponse(user, res) {
   const payload = { user };
   return jwt.sign(
@@ -49,13 +62,13 @@ function createTokenResponse(user, res) {
       expiresIn: 2629744, // 1 month in seconds
     },
     (err, token) => {
-      let responseObj = { user: user, token: token };
+      let responseObj = { user, token };
       res
         .status(201)
-        .cookie("token", token, { httpOnly: true })
+        .cookie('token', token, { httpOnly: true })
         .json(responseObj);
     }
   );
 }
 
-module.exports = { register, login };
+module.exports = { register, login, editUser };
