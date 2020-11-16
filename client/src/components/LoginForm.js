@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
-import { RedirectPageButton, ContinueButton } from '../components/Buttons';
-import { useStyles } from '../themes/theme';
+import React, { useState } from "react";
+import TextField from "@material-ui/core/TextField";
+import { Link } from "react-router-dom";
+import { RedirectPageButton, ContinueButton } from "./Buttons";
+import { useStyles } from "../themes/theme";
 
 const LoginForm = () => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const onChange = (e) => {
@@ -23,30 +23,30 @@ const LoginForm = () => {
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
         <div className={classes.alreadyHaveAccount}>Don't have an account?</div>
-        <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
-          <RedirectPageButton size='small'>SIGN UP</RedirectPageButton>
+        <Link style={{ textDecoration: "none" }} to={{ pathname: "/signup" }}>
+          <RedirectPageButton size="small">SIGN UP</RedirectPageButton>
         </Link>
       </div>
       <div>
         <div className={classes.getStarted}>
           <h1>Sign In</h1>
         </div>
-        <form className={classes.form} noValidate autoComplete='off'>
+        <form className={classes.form} noValidate autoComplete="off">
           <TextField
             required
-            id='outlined-required'
-            name='email'
-            variant='outlined'
-            label='E-mail'
+            id="outlined-required"
+            name="email"
+            variant="outlined"
+            label="E-mail"
             onChange={onChange}
           />
           <TextField
             required
-            id='outlined-required'
-            name='password'
-            type='password'
-            variant='outlined'
-            label='Password'
+            id="outlined-required"
+            name="password"
+            type="password"
+            variant="outlined"
+            label="Password"
             onChange={onChange}
           />
           <ContinueButton onClick={onSubmit}>Continue</ContinueButton>
