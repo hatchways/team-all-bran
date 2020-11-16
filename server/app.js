@@ -12,6 +12,7 @@ const pingRouter = require('./routes/ping');
 
 const users = require('./routes/users');
 const interviews = require('./routes/interviews');
+const questions = require('./routes/questions');
 
 const { json, urlencoded } = express;
 
@@ -35,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/ping', pingRouter);
 app.use('/users', users);
 app.use('/interviews', interviews);
+app.use('/questions', questions);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

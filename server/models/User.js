@@ -2,9 +2,27 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
+const opts = {
+  // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+  timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+
+  // Any doc -> Object or JSON will not include the password
+  toObject: {
+    transform: function (doc, ret) {
+      delete ret.password;
+    },
+  },
+  toJSON: {
+    transform: function (doc, ret) {
+      delete ret.password;
+    },
+  },
+};
+
 // Create Schema
 const UserSchema = new Schema(
   {
+    createdAt: Number,
     firstName: {
       type: String,
       required: true,
@@ -41,18 +59,7 @@ const UserSchema = new Schema(
       },
     ],
   },
-  {
-    toObject: {
-      transform: function (doc, ret) {
-        delete ret.password;
-      },
-    },
-    toJSON: {
-      transform: function (doc, ret) {
-        delete ret.password;
-      },
-    },
-  }
+  opts
 );
 
 const User = mongoose.model('User', UserSchema);
