@@ -132,7 +132,7 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 export const colors = {
-  darkBlue: 'rgba(73, 94, 203, .8)',
+  darkBlue: '#516BF6',
   lightBlue: 'rgba(73, 145, 203, .8)',
   darkGray: 'rgba(105, 105, 105, .8)',
   lightGray: 'rgba(169, 169, 169, .8)',
