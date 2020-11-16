@@ -9,6 +9,8 @@ const opts = {
 
 const FeedbackSchema = new Schema(
   {
+    createdAt: Number,
+    updatedAt: Number,
     content: {
       type: String,
     },

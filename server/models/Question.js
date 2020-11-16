@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const jwt = require('jsonwebtoken');
-const User = mongoose.model('User');
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -10,6 +8,8 @@ const opts = {
 
 const QuestionSchema = new Schema(
   {
+    createdAt: Number,
+    updatedAt: Number,
     title: {
       type: String,
     },

@@ -2,9 +2,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
+const opts = {
+  // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+  timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+};
+
 // Create Schema
 const UserSchema = new Schema(
   {
+    createdAt: Number,
+    updatedAt: Number,
     firstName: {
       type: String,
       required: true,
@@ -36,6 +43,7 @@ const UserSchema = new Schema(
     ],
   },
   {
+    ...opts,
     toObject: {
       transform: function (doc, ret) {
         delete ret.password;
