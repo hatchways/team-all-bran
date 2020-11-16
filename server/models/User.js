@@ -22,6 +22,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+<<<<<<< HEAD
     language: {
       type: String,
       required: true,
@@ -33,6 +34,13 @@ const UserSchema = new Schema(
     interviewLevel: {
       type: Number,
       required: true,
+=======
+    interviewLevel: {
+      type: Number,
+    },
+    professionalExperience: {
+      type: Number,
+>>>>>>> dev
     },
     interviews: [
       {
