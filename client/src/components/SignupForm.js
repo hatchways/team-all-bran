@@ -128,7 +128,7 @@ const SignupForm = () => {
           Already have an account?
         </div>
         <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
-          <RedirectPageButton variant="outlined" size="small">Log in</RedirectPageButton>
+          <RedirectPageButton variant="outlined" size="small">Sign in</RedirectPageButton>
         </Link>
       </div>
       <div>
@@ -209,8 +209,8 @@ const SignupForm = () => {
       )}
     </div>
   ) : (
-    <UserInformation formData={formData} />
-  );
+      <UserInformation formData={formData} />
+    );
 };
 
 export default SignupForm;

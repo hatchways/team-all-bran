@@ -9,7 +9,8 @@ export const ContinueButton = withStyles({
     height: 48,
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(125, 123, 135, .3)',
-    marginLeft: '10px'
+    marginLeft: '10px',
+    borderRadius: 25
   },
 })(Button);
 
@@ -19,6 +20,7 @@ export const RedirectPageButton = withStyles({
     height: '5ch',
     padding: '0 30px',
     marginLeft: '10px',
+    borderRadius: 25
   },
 })(Button);
 
