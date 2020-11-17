@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const User = mongoose.model('User');
+const User = mongoose.model("User");
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -14,7 +14,7 @@ const InterviewSchema = new Schema(
     endTime: { type: Number },
     theme: {
       type: Schema.Types.ObjectId,
-      ref: 'Theme',
+      ref: "Theme",
       /* Can we ref Tags here? Take most used tag out 
       of the questions and stick it up here and call it a theme? 
       Just wondering where theme comes from */
@@ -23,20 +23,20 @@ const InterviewSchema = new Schema(
     feedback: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Feedback',
+        ref: "Feedback",
       },
     ],
     users: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true,
       },
     ],
     questions: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Question,',
+        ref: "Question,",
       },
     ],
   },
@@ -66,6 +66,6 @@ async function endInterview(req) {}
 
 async function joinInterview(req) {}
 
-const Interview = mongoose.model('Interview', InterviewSchema);
+const Interview = mongoose.model("Interview", InterviewSchema);
 
 module.exports = { Interview, createInterview, endInterview, joinInterview };

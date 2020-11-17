@@ -6,7 +6,7 @@ chai.should();
 chai.use(chaiHttp);
 
 describe("/POST ping", () => {
-  it("it should return 400", done => {
+  it("it should return 400", (done) => {
     chai
       .request(app)
       .post(`/ping/`)

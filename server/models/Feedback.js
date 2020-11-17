@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const User = mongoose.model('User');
+const User = mongoose.model("User");
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -22,17 +22,17 @@ const FeedbackSchema = new Schema(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     interview: {
       type: Schema.Types.ObjectId,
-      ref: 'Interview',
+      ref: "Interview",
     },
   },
   opts
 );
 
-const Question = mongoose.model('Question', FeedbackSchema);
+const Question = mongoose.model("Question", FeedbackSchema);
 
 module.exports = {
   Question,

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const Question = require('../models/Question');
-const User = require('../models/User');
+const mongoose = require("mongoose");
+const Question = require("../models/Question");
+const User = require("../models/User");
 
 module.exports = {
   create: async (req, res) => {

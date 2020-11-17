@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import { colors } from '../themes/theme'
+import { colors } from '../themes/theme';
 
 export const ContinueButton = withStyles({
   root: {
@@ -9,7 +9,7 @@ export const ContinueButton = withStyles({
     height: 48,
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(125, 123, 135, .3)',
-    marginLeft: '10px'
+    marginLeft: '10px',
   },
 })(Button);
 
@@ -20,7 +20,7 @@ export const RedirectPageButton = withStyles({
     height: '5ch',
     padding: '0 30px',
     boxShadow: `0 3px 5px 2px ${colors.shadow}`,
-    marginLeft: '10px'
+    marginLeft: '10px',
   },
 })(Button);
 
@@ -30,9 +30,9 @@ export const StartDashboardButton = withStyles({
     height: 40,
     width: 100,
     backgroundColor: colors.darkBlue,
-    padding: "18px 36px",
-    fontSize: "18px",
+    padding: '18px 36px',
+    fontSize: '18px',
     color: 'white',
-    marginTop: '30px'
+    marginTop: '30px',
   },
 })(Button);

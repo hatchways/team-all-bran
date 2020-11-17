@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const jwt = require('jsonwebtoken');
-const User = mongoose.model('User');
+const jwt = require("jsonwebtoken");
+const User = mongoose.model("User");
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -18,14 +18,14 @@ const TagSchema = new Schema(
     questions: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Question',
+        ref: "Question",
       },
     ],
   },
   opts
 );
 
-const Tag = mongoose.model('Tag', TagSchema);
+const Tag = mongoose.model("Tag", TagSchema);
 
 module.exports = {
   Tag,

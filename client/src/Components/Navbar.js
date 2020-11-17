@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
-import avatar from "../images/avatar.png";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { store } from "../context/store";
+import React, { useContext, useState } from 'react';
+import avatar from '../images/avatar.png';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { store } from '../context/store';
 
 import {
   AppBar,
@@ -14,11 +14,11 @@ import {
   Container,
   Menu,
   MenuItem,
-} from "@material-ui/core";
-import { Home } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { LOGOUT } from "../context/types";
+} from '@material-ui/core';
+import { Home } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import { LOGOUT } from '../context/types';
 
 const useStyles = makeStyles({
   navbarDisplayFlex: {
@@ -59,24 +59,24 @@ const Navbar = () => {
 
   const handleGoToRoute = (_, route) => {
     history.push(route);
-    if (route === "/signup") {
+    if (route === '/signup') {
       dispatch({ type: LOGOUT });
       localStorage.clear();
     }
   };
 
   return state.isAuthenticated ? (
-    <AppBar color="default" position="static">
+    <AppBar color='default' position='static'>
       <Toolbar>
-        <Link to="/dashboard">
-          <IconButton edge="start" color="inherit" aria-label="home">
-            <Home fontSize="large" />
+        <Link to='/dashboard'>
+          <IconButton edge='start' color='inherit' aria-label='home'>
+            <Home fontSize='large' />
           </IconButton>
         </Link>
-        <Container maxWidth="md" className={classes.navbarDisplayFlex}>
+        <Container maxWidth='md' className={classes.navbarDisplayFlex}>
           <List
-            component="nav"
-            aria-labelledby="main navigation"
+            component='nav'
+            aria-labelledby='main navigation'
             className={classes.navDisplayFlex}
           >
             {navLinks.map(({ title, path }) => (
@@ -89,31 +89,29 @@ const Navbar = () => {
           </List>
           <IconButton
             onClick={handleClick}
-            edge="end"
-            color="inherit"
-            aria-label="home"
-            aria-controls="simple-menu"
-            aria-haspopup="true"
+            edge='end'
+            color='inherit'
+            aria-label='home'
+            aria-controls='simple-menu'
+            aria-haspopup='true'
           >
-            <Avatar alt="Avatar" src={avatar} />
+            <Avatar alt='Avatar' src={avatar} />
 
             {`${state.user.firstName} ${state.user.lastName}`}
           </IconButton>
         </Container>
 
         <Menu
-          id="simple-menu"
+          id='simple-menu'
           anchorEl={anchorEl}
           // keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={(e) => handleGoToRoute(e, "/profile")}>
+          <MenuItem onClick={(e) => handleGoToRoute(e, '/profile')}>
             Profile
           </MenuItem>
-          <MenuItem onClick={(e) => handleGoToRoute(e, "/signup")}>
-            Logout
-          </MenuItem>
+          <MenuItem onClick={(e) => handleGoToRoute(e, '/signup')}>Logout</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

@@ -72,11 +72,7 @@ const PastInterviewTable = () => {
                 <div>{interview.name.time}</div>
               </TableCell>
               <TableCell align='right'>
-                <Rating
-                  name='read-only'
-                  value={interview.codingRating}
-                  readOnly
-                />
+                <Rating name='read-only' value={interview.codingRating} readOnly />
               </TableCell>
               <TableCell align='right'>
                 <Rating
