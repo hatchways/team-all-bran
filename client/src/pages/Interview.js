@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
@@ -6,6 +6,13 @@ import TextEditor from '../components/TextEditor'
 
 const Interview = () => {
   const classes = useStyles();
+
+  const [codeSnippet, setCodeSnippet] = useState('')
+
+  const handleCodeSnippetChange = (codeSnippet) => {
+    setCodeSnippet(codeSnippet)
+  }
+
   return (
     <div className={classes.interviewContainer}>
       <Grid container spacing={3}>
@@ -17,7 +24,7 @@ const Interview = () => {
           <InterviewQuestionDetails />
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
-          <TextEditor />
+          <TextEditor handleCodeSnippetChange={handleCodeSnippetChange} />
           <div className={classes.interviewOutput}>
             <div className={classes.interviewOutputHeader}>
               <div className={classes.textMarginLeft}>Console</div>
