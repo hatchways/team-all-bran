@@ -1,12 +1,12 @@
-import React from "react"
-import { Switch, Route } from "react-router"
-import Navbar from "../components/Navbar"
-import Blog from "../pages/Blog"
-import DashBoard from "../pages/DashBoard"
-import Faq from "../pages/Faq"
-import Profile from "../pages/Profile"
-import PrivateRoute from "./PrivateRoute"
-import Signup from "../pages/Signup"
+import React from 'react'
+import { Switch, Route } from 'react-router'
+import Navbar from '../components/Navbar'
+import Blog from '../pages/Blog'
+import DashBoard from '../pages/DashBoard'
+import Faq from '../pages/Faq'
+import Profile from '../pages/Profile'
+import PrivateRoute from './PrivateRoute'
+import Signup from '../pages/Signup'
 
 const Routes = () => {
   return (

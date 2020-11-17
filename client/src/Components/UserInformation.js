@@ -1,14 +1,13 @@
-import React, { useState, useContext } from "react"
-import { useHistory } from "react-router-dom"
-import { NextStepButton } from "../components/Buttons"
-import { useStyles, GlobalCss } from "../themes/theme"
-import { store } from "../context/store"
-import { USER_LOADED } from "../context/types"
-import axios from "axios"
-import { Rating } from "@material-ui/lab"
-import { withStyles } from "@material-ui/core/styles"
-import Select from "@material-ui/core/Select"
-import MenuItem from "@material-ui/core/MenuItem"
+import React, { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { NextStepButton } from '../components/Buttons'
+import { useStyles, GlobalCss } from '../themes/theme'
+import { store } from '../context/store'
+import { USER_LOADED } from '../context/types'
+import axios from 'axios'
+import { Rating } from '@material-ui/lab'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -49,7 +48,7 @@ const UserInformation = (props) => {
   const history = useHistory()
 
   const [userData, setUserData] = useState({
-    language: "English",
+    language: 'English',
     experience: 0,
     interviewLevel: 1,
   })
@@ -79,7 +78,7 @@ const UserInformation = (props) => {
       dispatch({ type: USER_LOADED, payload: result.data.user })
 
       // will change to /background (protected route, routes folder)
-      history.push("/dashboard")
+      history.push('/dashboard')
     } catch (error) {
       console.log(error)
     }
