@@ -6,7 +6,6 @@ import { StateProvider, store } from "./context/store"
 import { theme } from "./themes/theme"
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
-import UserInformation from "./components/UserInformation"
 
 import Routes from "./routing/Routes"
 
@@ -27,5 +26,3 @@ function App() {
 }
 
 export default App
-
-//<Route exact path="/background" component={UserInformation} />

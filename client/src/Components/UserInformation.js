@@ -61,7 +61,6 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
 const UserInformation = (props) => {
   const classes = useStyles()
   const { dispatch } = useContext(store)
-  let a = useContext(store)
   const history = useHistory()
 
   const [userData, setUserData] = useState({
