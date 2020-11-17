@@ -2,6 +2,7 @@ import React from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
+import TextEditor from '../components/TextEditor'
 
 const Interview = () => {
   const classes = useStyles();
@@ -16,7 +17,7 @@ const Interview = () => {
           <InterviewQuestionDetails />
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
-          <div>Text Editor</div>
+          <TextEditor />
           <div className={classes.interviewOutput}>
             <div className={classes.interviewOutputHeader}>
               <div className={classes.textMarginLeft}>Console</div>
