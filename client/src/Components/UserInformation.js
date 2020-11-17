@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useHistory } from "react-router-dom"
 import { NextStepButton } from "../components/Buttons"
-import { useStyles } from "../themes/theme"
+import { useStyles, GlobalCss } from "../themes/theme"
 import { store } from "../context/store"
 import { USER_LOADED } from "../context/types"
 import axios from "axios"
@@ -10,22 +10,7 @@ import { withStyles } from "@material-ui/core/styles"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 
-const GlobalCss = withStyles({
-  "@global": {
-    body: {
-      height: "100vh",
-    },
-    "#root": {
-      height: "100%",
-    },
-    header: {
-      display: "none",
-    },
-    ".MuiAppBar-root": {
-      display: "none",
-    },
-  },
-})(() => null)
+const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const InterviewLevelInfo = ({ interviewLevel }) => {
   const classes = useStyles()
@@ -126,17 +111,13 @@ const UserInformation = (props) => {
             onChange={changeExperience}
             value={experience}
           >
-            <MenuItem value={0}>0</MenuItem>
-            <MenuItem value={1}>1</MenuItem>
-            <MenuItem value={2}>2</MenuItem>
-            <MenuItem value={3}>3</MenuItem>
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={6}>6</MenuItem>
-            <MenuItem value={7}>7</MenuItem>
-            <MenuItem value={8}>8</MenuItem>
-            <MenuItem value={9}>9</MenuItem>
-            <MenuItem value={10}>10 or more</MenuItem>
+            {Array.from(experienceList, (item) => {
+              if (item < 10) {
+                return <MenuItem value={item}>{item} </MenuItem>
+              } else {
+                return <MenuItem value={item}>10 or more</MenuItem>
+              }
+            })}
           </Select>
 
           <div className={classes.infoFormDiv}>

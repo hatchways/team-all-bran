@@ -240,6 +240,23 @@ export const useStyles = makeStyles((theme) => ({
   },
 }))
 
+export const GlobalCss = withStyles({
+  "@global": {
+    body: {
+      height: "100vh",
+    },
+    "#root": {
+      height: "100%",
+    },
+    header: {
+      display: "none",
+    },
+    ".MuiAppBar-root": {
+      display: "none",
+    },
+  },
+})(() => null)
+
 export const colors = {
   darkBlue: "#516BF6",
   lightBlue: "rgba(73, 145, 203, .8)",

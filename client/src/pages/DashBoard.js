@@ -14,7 +14,6 @@ const DashBoard = () => {
   if (!state.isAuthenticated) return <Redirect to="/signup" />
 
   if (state.user.experience === undefined) {
-    console.log(state.user.experience)
     return <UserInformation user={state.user} />
   }
 
