@@ -17,6 +17,7 @@ function register(req, res) {
     if (data.error) {
       res.status(400).json({ error: data.error });
     } else {
+      console.log(data);
       createTokenResponse(data.user, res);
     }
   });

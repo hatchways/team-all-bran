@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { RedirectPageButton, ContinueButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-
-import UserInformation from '../components/UserInformation';
+import { store } from '../context/store';
+import axios from 'axios';
+import { USER_LOADED } from '../context/types';
 
 const SignupForm = () => {
+  const history = useHistory();
   const classes = useStyles();
+  const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -23,11 +26,10 @@ const SignupForm = () => {
     open: false,
     vertical: 'bottom',
     horizontal: 'center',
-    continueButtonPushed: false,
     message: null,
   });
 
-  const { vertical, horizontal, open, message, continueButtonPushed } = localState;
+  const { vertical, horizontal, open, message } = localState;
 
   const { firstName, lastName, email, password, confirmPassword } = formData;
 
@@ -56,10 +58,22 @@ const SignupForm = () => {
       return;
     }
 
-    setLocalState({
-      ...localState,
-      continueButtonPushed: !continueButtonPushed,
-    });
+    try {
+      const result = await axios.post(
+        'http://localhost:3001/users/register',
+        formData
+      );
+      dispatch({ type: USER_LOADED, payload: result.data.user });
+
+      const token = result.data.token;
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
+      // will change to /background (protected route, routes folder)
+      history.push('/dashboard');
+    } catch (error) {
+      if (error.response.data.error === 'Email already exists') {
+        showAlert({ message: 'Email already exists' });
+      }
+    }
   };
 
   const displayAlertMessage = () => {
@@ -112,22 +126,23 @@ const SignupForm = () => {
     return password === confirmPassword;
   };
 
-  return !continueButtonPushed ? (
+  return (
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
         <div className={classes.alreadyHaveAccount}>Already have an account?</div>
         <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
-          <RedirectPageButton size='small'>Log in</RedirectPageButton>
+          <RedirectPageButton variant='outlined' size='small'>
+            Sign in
+          </RedirectPageButton>
         </Link>
       </div>
       <div>
         <div className={classes.getStarted}>
           <h1>Get Started!</h1>
         </div>
-        <form className={classes.form} noValidate autoComplete='off'>
+        <form className={classes.form} noValidate autoComplete='on'>
           <TextField
             required
-            className={classes.textField}
             id='outlined-required'
             label='First name'
             variant='outlined'
@@ -166,7 +181,7 @@ const SignupForm = () => {
             color='primary'
           />
           <TextField
-            error={password !== confirmPassword}
+            error={password !== confirmPassword && confirmPassword > 0}
             id='standard-error-helper-text'
             name='confirmPassword'
             type='password'
@@ -197,14 +212,7 @@ const SignupForm = () => {
         </Snackbar>
       )}
     </div>
-  ) : (
-    <UserInformation formData={formData} />
   );
 };
 
 export default SignupForm;
-
-// ) => {
-//   displayAlertMessage();
-//   setLocalState({ continueButtonPushed: true });
-// }
