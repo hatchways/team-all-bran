@@ -3,11 +3,17 @@ import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
 import TextEditor from '../components/TextEditor'
+import { RunCodeButton } from '../components/Buttons';
 
 const Interview = () => {
   const classes = useStyles();
 
   const [codeSnippet, setCodeSnippet] = useState('')
+  const [output, setOutput] = useState('')
+
+  const runCode = (output) => {
+    setOutput(output)
+  }
 
   const handleCodeSnippetChange = (codeSnippet) => {
     setCodeSnippet(codeSnippet)
@@ -27,8 +33,13 @@ const Interview = () => {
           <TextEditor handleCodeSnippetChange={handleCodeSnippetChange} />
           <div className={classes.interviewOutput}>
             <div className={classes.interviewOutputHeader}>
-              <div className={classes.textMarginLeft}>Console</div>
-              <div className={classes.textMarginRight}>RUN CODE</div>
+              <div className={classes.consoleText}>Console</div>
+              <div onClick={() => runCode('hello')}>
+                <RunCodeButton text="RUN CODE" />
+              </div>
+            </div>
+            <div className={classes.outputText}>
+              {output}
             </div>
           </div>
         </Grid>

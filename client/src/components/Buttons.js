@@ -68,3 +68,9 @@ export const InterviewDetailButton = (props) => {
     </Button>
   )
 }
+
+export const RunCodeButton = (props) => {
+  const classes = useStyles()
+  const { text } = props
+  return <Button variant="outlined" className={classes.runCodeButton}>{text}</Button>
+}

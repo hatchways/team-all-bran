@@ -186,20 +186,24 @@ export const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   interviewOutput: {
-    backgroundColor: 'yellow',
+    backgroundColor: colors.darkGraySolid,
     bottom: '0',
     position: 'absolute',
-    height: '15vh',
+    height: '20vh',
     width: '66%',
     marginBottom: '25px',
+<<<<<<< HEAD
     borderRadius: '25px',
+=======
+    borderRadius: '10px'
+>>>>>>> Implement run code button and style console with CSS
   },
   interviewOutputHeader: {
-    backgroundColor: 'gray',
+    backgroundColor: colors.lightGraySolid,
     width: '100%',
-    borderTopLeftRadius: '25px',
-    borderTopRightRadius: '25px',
-    height: '25%',
+    borderTopLeftRadius: '10px',
+    borderTopRightRadius: '10px',
+    height: '30%',
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -288,9 +292,31 @@ export const useStyles = makeStyles((theme) => ({
   },
   questionAnswerButtonContainer: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
-}))
+  runCodeButton: {
+    color: 'white',
+    borderColor: colors.lightGray,
+    borderRadius: 25,
+    marginRight: '10px',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    borderWidth: 4,
+    padding: '2px 20px'
+  },
+  consoleText: {
+    color: 'white',
+    marginLeft: '20px',
+    fontSize: '25px'
+  },
+  outputText: {
+    color: 'white',
+    marginTop: '15px',
+    paddingLeft: '20px',
+    fontFamily: 'monospace',
+    fontSize: '18px',
+  }
+}));
 
 export const GlobalCss = withStyles({
   '@global': {
@@ -316,4 +342,6 @@ export const colors = {
   lightGray: 'rgba(169, 169, 169, .8)',
   shadow: 'rgba(125, 123, 135, .3)',
   charcoalGray: 'rgba(30,30,30, .8)',
-}
+  darkGraySolid: 'rgba(105, 105, 105, 1)',
+  lightGraySolid: 'rgba(76, 76, 76, 1)'
+};
