@@ -131,17 +131,18 @@ const SignupForm = () => {
       <div className={classes.loginContainer}>
         <div className={classes.alreadyHaveAccount}>Already have an account?</div>
         <Link style={{ textDecoration: "none" }} to={{ pathname: "/login" }}>
-          <RedirectPageButton size="small">Log in</RedirectPageButton>
+          <RedirectPageButton variant="outlined" size="small">
+            Sign in
+          </RedirectPageButton>
         </Link>
       </div>
       <div>
         <div className={classes.getStarted}>
           <h1>Get Started!</h1>
         </div>
-        <form className={classes.form} noValidate autoComplete="off">
+        <form className={classes.form} noValidate autoComplete="on">
           <TextField
             required
-            className={classes.textField}
             id="outlined-required"
             label="First name"
             variant="outlined"
@@ -180,7 +181,7 @@ const SignupForm = () => {
             color="primary"
           />
           <TextField
-            error={password !== confirmPassword}
+            error={password !== confirmPassword && confirmPassword > 0}
             id="standard-error-helper-text"
             name="confirmPassword"
             type="password"

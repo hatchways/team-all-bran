@@ -69,7 +69,7 @@ const LoginForm = () => {
             Don't have an account?
           </div>
           <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
-            <RedirectPageButton size="small">SIGN UP</RedirectPageButton>
+            <RedirectPageButton variant="outlined" size="small">SIGN UP</RedirectPageButton>
           </Link>
         </div>
         <div>
