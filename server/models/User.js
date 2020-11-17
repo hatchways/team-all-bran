@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const opts = {
@@ -23,6 +23,7 @@ const opts = {
 const UserSchema = new Schema(
   {
     createdAt: Number,
+    updatedAt: Number,
     firstName: {
       type: String,
       required: true,
@@ -55,14 +56,14 @@ const UserSchema = new Schema(
     interviews: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Interview",
+        ref: 'Interview',
       },
     ],
   },
   opts
 );
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 async function registerUser(req) {
   // Check if email is in db
@@ -77,7 +78,7 @@ async function registerUser(req) {
   } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    return { error: "Email already exists" };
+    return { error: 'Email already exists' };
   }
 
   try {
@@ -103,11 +104,11 @@ async function loginUser(req) {
   const { email, password } = req.body;
 
   // Find user by email
-  const user = await User.findOne({ email }).populate("interviews");
+  const user = await User.findOne({ email }).populate('interviews');
 
   // Check if user exists
   if (!user) {
-    return { error: "Username or password was incorrect" };
+    return { error: 'Username or password was incorrect' };
   }
 
   let validPass = await bcrypt.compare(password, user.password);
@@ -115,7 +116,7 @@ async function loginUser(req) {
   if (validPass) {
     return { user };
   } else {
-    return { error: "Username or password was incorrect" };
+    return { error: 'Username or password was incorrect' };
   }
 }
 
