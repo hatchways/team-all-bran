@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
+import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
 
 const Interview = () => {
   const classes = useStyles();
@@ -11,8 +12,8 @@ const Interview = () => {
           <div className={classes.textMarginLeft}>Interview with</div>
           <div className={classes.textMarginRight}>End Interview</div>
         </Grid>
-        <Grid className={classes.interviewDetails} item xs={4}>
-          <div className={classes.textMarginLeft}>Question Details</div>
+        <Grid className={classes.interviewDetailsContainer} item xs={4}>
+          <InterviewQuestionDetails />
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <div>Text Editor</div>

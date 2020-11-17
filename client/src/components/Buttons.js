@@ -1,6 +1,8 @@
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { colors } from '../themes/theme'
+import React from 'react'
+import { useStyles } from '../themes/theme'
 
 export const ContinueButton = withStyles({
   root: {
@@ -36,3 +38,13 @@ export const StartDashboardButton = withStyles({
     marginTop: '30px'
   },
 })(Button);
+
+export const InterviewDetailButton = (props) => {
+  const classes = useStyles()
+  const { text, questionAnswerToggle } = props
+  return <Button className={questionAnswerToggle
+    ? classes.questionAnswerButtonHighlighted
+    : classes.questionAnswerButtonUnhighlighted}>
+    {text}
+  </Button>
+}
