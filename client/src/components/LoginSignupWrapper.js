@@ -13,7 +13,6 @@ const LoginSignupWrapper = ({ children }) => {
   const { dispatch, state } = useContext(store);
 
   const redirectToDashBoard = useCallback(async () => {
-    if (state.user) history.push('/dashboard');
     try {
       let result = await axios.get('http://localhost:3001/users/', {
         params: {
@@ -33,7 +32,7 @@ const LoginSignupWrapper = ({ children }) => {
   }, [dispatch, history, state.token]);
 
   useEffect(() => {
-    if (state.token && state.user) {
+    if (state.token) {
       redirectToDashBoard();
     }
   }, [redirectToDashBoard, state.token]);
