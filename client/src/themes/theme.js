@@ -192,11 +192,7 @@ export const useStyles = makeStyles((theme) => ({
     height: '20vh',
     width: '66%',
     marginBottom: '25px',
-<<<<<<< HEAD
-    borderRadius: '25px',
-=======
     borderRadius: '10px'
->>>>>>> Implement run code button and style console with CSS
   },
   interviewOutputHeader: {
     backgroundColor: colors.lightGraySolid,
