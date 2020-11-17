@@ -1,17 +1,18 @@
-import React, { useState, useContext } from 'react';
-import TextField from '@material-ui/core/TextField';
-import { Link, useHistory } from 'react-router-dom';
-import { RedirectPageButton, ContinueButton } from '../components/Buttons';
-import { useStyles } from '../themes/theme';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { store } from '../context/store';
-import UserInformation from '../components/UserInformation';
+import React, { useState, useContext } from 'react'
+import TextField from '@material-ui/core/TextField'
+import { Link, useHistory } from 'react-router-dom'
+import { RedirectPageButton, ContinueButton } from '../components/Buttons'
+import { useStyles } from '../themes/theme'
+import Snackbar from '@material-ui/core/Snackbar'
+import SnackbarContent from '@material-ui/core/SnackbarContent'
+import { store } from '../context/store'
+import axios from 'axios'
+import { USER_LOADED } from '../context/types'
 
 const SignupForm = () => {
-  const history = useHistory();
-  const classes = useStyles();
-  const { dispatch } = useContext(store);
+  const history = useHistory()
+  const classes = useStyles()
+  const { dispatch } = useContext(store)
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -19,25 +20,18 @@ const SignupForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
-  });
+  })
 
   const [localState, setLocalState] = useState({
     open: false,
     vertical: 'bottom',
     horizontal: 'center',
-    continueButtonPushed: false,
     message: null,
-  });
+  })
 
-  const {
-    vertical,
-    horizontal,
-    open,
-    message,
-    continueButtonPushed,
-  } = localState;
+  const { vertical, horizontal, open, message } = localState
 
-  const { firstName, lastName, email, password, confirmPassword } = formData;
+  const { firstName, lastName, email, password, confirmPassword } = formData
 
   const showAlert = ({ message }) => {
     setLocalState({
@@ -46,62 +40,74 @@ const SignupForm = () => {
       vertical: vertical,
       horizontal: horizontal,
       message,
-    });
-  };
+    })
+  }
 
   const handleClose = () => {
-    setLocalState({ ...localState, open: false });
-  };
+    setLocalState({ ...localState, open: false })
+  }
 
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const continueClicked = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (displayAlertMessage()) {
-      return;
+      return
     }
 
-    setLocalState({
-      ...localState,
-      continueButtonPushed: !continueButtonPushed,
-    });
-  };
+    try {
+      const result = await axios.post(
+        'http://localhost:3001/users/register',
+        formData
+      )
+      dispatch({ type: USER_LOADED, payload: result.data.user })
+
+      const token = result.data.token
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
+      // will change to /background (protected route, routes folder)
+      history.push('/dashboard')
+    } catch (error) {
+      if (error.response.data.error === 'Email already exists') {
+        showAlert({ message: 'Email already exists' })
+      }
+    }
+  }
 
   const displayAlertMessage = () => {
     if (!areAllFieldsCompleted()) {
-      showAlert({ message: 'Must fill out every field!' });
-      return true;
+      showAlert({ message: 'Must fill out every field!' })
+      return true
     }
     if (!passwordIsValid() && !emailIsValid()) {
-      showAlert({ message: 'Password & E-mail are invalid!' });
-      return true;
+      showAlert({ message: 'Password & E-mail are invalid!' })
+      return true
     }
     if (!passwordIsValid() && password.length !== 0) {
-      showAlert({ message: 'Password is invalid!' });
-      return true;
+      showAlert({ message: 'Password is invalid!' })
+      return true
     }
     if (!emailIsValid() && email.length !== 0) {
-      showAlert({ message: 'E-mail is invalid!' });
-      return true;
+      showAlert({ message: 'E-mail is invalid!' })
+      return true
     }
     if (areAllFieldsCompleted() && emailIsValid && !passwordsAreTheSame()) {
       showAlert({
         vertical: 'bottom',
         horizontal: 'center',
         message: 'Passwords must match!',
-      });
-      return true;
+      })
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 
   const passwordIsValid = () => {
-    return password.length >= 6;
-  };
+    return password.length >= 6
+  }
 
   const areAllFieldsCompleted = () => {
     return !(
@@ -109,26 +115,25 @@ const SignupForm = () => {
       lastName.length === 0 ||
       email.length === 0 ||
       password.length === 0
-    );
-  };
+    )
+  }
 
   const emailIsValid = () => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
 
   const passwordsAreTheSame = () => {
-    return password === confirmPassword;
-  };
+    return password === confirmPassword
+  }
 
-  console.log(continueButtonPushed);
-  return !continueButtonPushed ? (
+  return (
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
-        <div className={classes.alreadyHaveAccount}>
-          Already have an account?
-        </div>
+        <div className={classes.alreadyHaveAccount}>Already have an account?</div>
         <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
-          <RedirectPageButton variant="outlined" size="small">Sign in</RedirectPageButton>
+          <RedirectPageButton variant="outlined" size="small">
+            Sign in
+          </RedirectPageButton>
         </Link>
       </div>
       <div>
@@ -207,9 +212,7 @@ const SignupForm = () => {
         </Snackbar>
       )}
     </div>
-  ) : (
-      <UserInformation formData={formData} />
-    );
-};
+  )
+}
 
-export default SignupForm;
+export default SignupForm
