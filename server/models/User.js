@@ -92,7 +92,7 @@ async function registerUser(req) {
     });
     newUser.password = bcrypt.hashSync(newUser.password, 10);
     newUser = await newUser.save();
-    // console.log(newUser);
+
     return { user: newUser };
   } catch (err) {
     return err.message;
@@ -104,7 +104,7 @@ async function loginUser(req) {
 
   // Find user by email
   const user = await User.findOne({ email }).populate('interviews');
-  console.log(user);
+
   // Check if user exists
   if (!user) {
     return { error: 'Username or password was incorrect' };

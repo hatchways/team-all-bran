@@ -1,21 +1,21 @@
-import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import { ContinueButton } from '../components/Buttons';
-import { useStyles } from '../themes/theme';
-import { store } from '../context/store';
-import { USER_LOADED } from '../context/types';
-import axios from 'axios';
-import { Rating } from '@material-ui/lab';
+import React, { useState, useContext } from "react"
+import { useHistory } from "react-router-dom"
+import { ContinueButton } from "../components/Buttons"
+import { useStyles } from "../themes/theme"
+import { store } from "../context/store"
+import { USER_LOADED } from "../context/types"
+import axios from "axios"
+import { Rating } from "@material-ui/lab"
 
 const InterviewLevelInfo = ({ interviewLevel }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   if (interviewLevel < 3) {
     return (
       <>
         <div className={classes.interviewLevelDiv}>Beginner </div>
         <div className={classes.interviewLevelDesc}> New to job interviews</div>
       </>
-    );
+    )
   } else if (interviewLevel < 5) {
     return (
       <>
@@ -24,7 +24,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
           Had a few job interviews but need more practice
         </div>
       </>
-    );
+    )
   } else {
     return (
       <>
@@ -33,49 +33,47 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
           Used to job interviews and looking for a challenge
         </div>
       </>
-    );
+    )
   }
-};
+}
 
 const UserInformation = (props) => {
-  const classes = useStyles();
-  const { dispatch } = useContext(store);
-  const history = useHistory();
+  const classes = useStyles()
+  const { dispatch } = useContext(store)
+  const history = useHistory()
 
   const [userData, setUserData] = useState({
-    language: 'English',
+    language: "English",
     experience: 0,
     interviewLevel: 1,
-  });
+  })
 
   const changeRating = (e) => {
-    console.log(e.target.value);
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  };
+    setUserData({ ...userData, [e.target.name]: e.target.value })
+  }
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    let formData = { ...props.formData, ...userData };
-    console.log(formData);
+    let formData = { ...props.formData, ...userData }
 
     try {
       const result = await axios.post(
-        'http://localhost:3001/users/register',
+        "http://localhost:3001/users/register",
         formData
-      );
-      dispatch({ type: USER_LOADED, payload: result.data.user });
+      )
+      dispatch({ type: USER_LOADED, payload: result.data.user })
 
-      const token = result.data.token;
-      localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
+      const token = result.data.token
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
       // will change to /background (protected route, routes folder)
-      history.push('/dashboard');
+      history.push("/dashboard")
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
-  const { interviewLevel } = userData;
+  const { interviewLevel } = userData
 
   return (
     <>
@@ -86,10 +84,7 @@ const UserInformation = (props) => {
       <form
         className={classes.form}
         onSubmit={(e) => {
-          e.preventDefault();
-          console.log(e.target.language.value);
-          console.log(e.target.experience.value);
-          console.log(e.target.interviewLevel.value);
+          e.preventDefault()
         }}
       >
         <div className={classes.infoFormDiv}>Your Language:</div>
@@ -97,9 +92,7 @@ const UserInformation = (props) => {
           <option value="English" label="English"></option>
         </select>
 
-        <div className={classes.infoFormDiv}>
-          Years of professional experience:
-        </div>
+        <div className={classes.infoFormDiv}>Years of professional experience:</div>
         <select name="experience" className={classes.infoDropdown}>
           <option value={0} label="0"></option>
           <option value={1} label="1"></option>
@@ -130,7 +123,7 @@ const UserInformation = (props) => {
         <ContinueButton onClick={onSubmit}>Register</ContinueButton>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default UserInformation;
+export default UserInformation

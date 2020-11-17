@@ -1,17 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RedirectPageButton, ContinueButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { store } from '../context/store';
+
 import UserInformation from '../components/UserInformation';
 
 const SignupForm = () => {
-  const history = useHistory();
   const classes = useStyles();
-  const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -29,13 +27,7 @@ const SignupForm = () => {
     message: null,
   });
 
-  const {
-    vertical,
-    horizontal,
-    open,
-    message,
-    continueButtonPushed,
-  } = localState;
+  const { vertical, horizontal, open, message, continueButtonPushed } = localState;
 
   const { firstName, lastName, email, password, confirmPassword } = formData;
 
@@ -120,72 +112,69 @@ const SignupForm = () => {
     return password === confirmPassword;
   };
 
-  console.log(continueButtonPushed);
   return !continueButtonPushed ? (
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
-        <div className={classes.alreadyHaveAccount}>
-          Already have an account?
-        </div>
+        <div className={classes.alreadyHaveAccount}>Already have an account?</div>
         <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
-          <RedirectPageButton size="small">Log in</RedirectPageButton>
+          <RedirectPageButton size='small'>Log in</RedirectPageButton>
         </Link>
       </div>
       <div>
         <div className={classes.getStarted}>
           <h1>Get Started!</h1>
         </div>
-        <form className={classes.form} noValidate autoComplete="off">
+        <form className={classes.form} noValidate autoComplete='off'>
           <TextField
             required
             className={classes.textField}
-            id="outlined-required"
-            label="First name"
-            variant="outlined"
-            name="firstName"
+            id='outlined-required'
+            label='First name'
+            variant='outlined'
+            name='firstName'
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <TextField
             required
-            id="outlined-required"
-            label="Last name"
-            variant="outlined"
-            name="lastName"
+            id='outlined-required'
+            label='Last name'
+            variant='outlined'
+            name='lastName'
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <TextField
             error={!emailIsValid() && email.length !== 0}
-            id="standard-error-helper-text"
-            name="email"
-            variant="outlined"
-            label="E-mail"
+            id='standard-error-helper-text'
+            name='email'
+            variant='outlined'
+            label='E-mail'
             onChange={onChange}
             helperText={'Must enter a valid e-mail address'}
-            color="primary"
+            color='primary'
           />
           <TextField
             error={password.length > 0 && password.length < 6}
-            id="standard-error-helper-text"
-            name="password"
-            type="password"
-            variant="outlined"
-            label="Password"
+            id='standard-error-helper-text'
+            name='password'
+            type='password'
+            variant='outlined'
+            label='Password'
             helperText={'Password must be at least 6 characters long.'}
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <TextField
             error={password !== confirmPassword}
-            id="standard-error-helper-text"
-            name="confirmPassword"
-            type="password"
-            variant="outlined"
-            label="Confirm Password"
+            id='standard-error-helper-text'
+            name='confirmPassword'
+            type='password'
+            variant='outlined'
+            label='Confirm Password'
             helperText={'Must match password'}
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <ContinueButton onClick={continueClicked}>Continue</ContinueButton>
         </form>
