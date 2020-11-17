@@ -6,8 +6,8 @@ import { useStyles } from "../themes/theme"
 import Snackbar from "@material-ui/core/Snackbar"
 import SnackbarContent from "@material-ui/core/SnackbarContent"
 import { store } from "../context/store"
-import UserInformation from "../components/UserInformation"
 import axios from "axios"
+import { USER_LOADED } from "../context/types"
 
 const SignupForm = () => {
   const history = useHistory()
@@ -26,11 +26,10 @@ const SignupForm = () => {
     open: false,
     vertical: "bottom",
     horizontal: "center",
-    continueButtonPushed: false,
     message: null,
   })
 
-  const { vertical, horizontal, open, message, continueButtonPushed } = localState
+  const { vertical, horizontal, open, message } = localState
 
   const { firstName, lastName, email, password, confirmPassword } = formData
 
@@ -59,17 +58,22 @@ const SignupForm = () => {
       return
     }
 
-    let emailCheck = await emailExists()
+    try {
+      const result = await axios.post(
+        "http://localhost:3001/users/register",
+        formData
+      )
+      dispatch({ type: USER_LOADED, payload: result.data.user })
 
-    if (emailCheck) {
-      showAlert({ message: "Email already exists" })
-      return
+      const token = result.data.token
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
+      // will change to /background (protected route, routes folder)
+      history.push("/dashboard")
+    } catch (error) {
+      if (error.response.data.error === "Email already exists") {
+        showAlert({ message: "Email already exists" })
+      }
     }
-
-    setLocalState({
-      ...localState,
-      continueButtonPushed: !continueButtonPushed,
-    })
   }
 
   const displayAlertMessage = () => {
@@ -122,22 +126,7 @@ const SignupForm = () => {
     return password === confirmPassword
   }
 
-  const emailExists = async () => {
-    try {
-      const result = await axios.post(
-        "http://localhost:3001/users/register",
-        formData
-      )
-    } catch (err) {
-      if (err.response.data.error === "Email already exists") {
-        return true
-      }
-    }
-
-    return false
-  }
-
-  return !continueButtonPushed ? (
+  return (
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
         <div className={classes.alreadyHaveAccount}>Already have an account?</div>
@@ -222,8 +211,6 @@ const SignupForm = () => {
         </Snackbar>
       )}
     </div>
-  ) : (
-    <UserInformation formData={formData} />
   )
 }
 

@@ -18,7 +18,6 @@ function App() {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/background" component={UserInformation} />
             <Route component={Routes} />
           </Switch>
         </Router>
@@ -28,3 +27,5 @@ function App() {
 }
 
 export default App
+
+//<Route exact path="/background" component={UserInformation} />

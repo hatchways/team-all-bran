@@ -18,6 +18,12 @@ const GlobalCss = withStyles({
     "#root": {
       height: "100%",
     },
+    header: {
+      display: "none",
+    },
+    ".MuiAppBar-root": {
+      display: "none",
+    },
   },
 })(() => null)
 
@@ -55,6 +61,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
 const UserInformation = (props) => {
   const classes = useStyles()
   const { dispatch } = useContext(store)
+  let a = useContext(store)
   const history = useHistory()
 
   const [userData, setUserData] = useState({
@@ -78,23 +85,20 @@ const UserInformation = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    let formData = { ...props.formData, ...userData }
-    console.log(formData)
+    const id = props.user._id
 
-    // try {
-    //   const result = await axios.post(
-    //     "http://localhost:3001/users/register",
-    //     formData
-    //   )
-    //   dispatch({ type: USER_LOADED, payload: result.data.user })
+    try {
+      const result = await axios.put(
+        `http://localhost:3001/users/update/${id}`,
+        userData
+      )
+      dispatch({ type: USER_LOADED, payload: result.data.user })
 
-    //   const token = result.data.token
-    //   localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
-    //   // will change to /background (protected route, routes folder)
-    //   history.push("/dashboard")
-    // } catch (error) {
-    //   console.log(error)
-    // }
+      // will change to /background (protected route, routes folder)
+      history.push("/dashboard")
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const { language, experience, interviewLevel } = userData
@@ -105,16 +109,7 @@ const UserInformation = (props) => {
       <div className={classes.background}>
         <h1 className={classes.backgroundHeader}>Tell us about your Background</h1>
 
-        <form
-          className={classes.backgroundForm}
-          id="backgroundForm"
-          onSubmit={(e) => {
-            e.preventDefault()
-            console.log(e.target.language.value)
-            console.log(e.target.experience.value)
-            console.log(e.target.interviewLevel.value)
-          }}
-        >
+        <form className={classes.backgroundForm} id="backgroundForm">
           <div className={classes.infoFormDiv}>Your Language:</div>
           <Select
             className={classes.infoDropdown}
