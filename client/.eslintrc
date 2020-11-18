@@ -12,8 +12,10 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-console": "error",
-    "react/no-unescaped-entities": "off"
+    "no-console": "off",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off"
+    
   },
   "parser": "babel-eslint"
 }

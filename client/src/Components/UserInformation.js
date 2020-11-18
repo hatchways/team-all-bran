@@ -48,12 +48,13 @@ const UserInformation = (props) => {
   const history = useHistory()
 
   const [userData, setUserData] = useState({
-    language: 'English',
+    language: "English",
     experience: 0,
     interviewLevel: 1,
   })
 
   const changeRating = (e) => {
+
     setUserData({ ...userData, interviewLevel: Number(e.target.value) })
   }
 
@@ -67,7 +68,6 @@ const UserInformation = (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-
     const id = props.user._id
 
     try {
@@ -130,7 +130,6 @@ const UserInformation = (props) => {
             size="large"
             defaultValue={1}
           />
-
           <InterviewLevelInfo interviewLevel={interviewLevel} />
         </form>
         <NextStepButton type="submit" form="backgroundForm" onClick={onSubmit}>

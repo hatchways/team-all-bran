@@ -20,7 +20,9 @@ const DashBoard = () => {
   return (
     !state.loading && (
       <div className={classes.dashboardContainer}>
-        <StartDashboardButton>START</StartDashboardButton>
+        <StartDashboardButton onClick={() => history.push('/lobby')}>
+          START
+        </StartDashboardButton>
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable />
       </div>

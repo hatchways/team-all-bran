@@ -5,7 +5,7 @@ import { useStyles } from '../themes/theme';
 import { useHistory } from 'react-router-dom';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
-import axios from 'axios'
+import axios from 'axios';
 
 const LoginSignupWrapper = ({ children }) => {
   const history = useHistory();
@@ -16,27 +16,26 @@ const LoginSignupWrapper = ({ children }) => {
     try {
       let result = await axios.get('http://localhost:3001/users/', {
         params: {
-          token: state.token
-        }
-      })
+          token: state.token,
+        },
+      });
 
       dispatch({
         type: USER_LOADED,
         payload: result.data.user,
       });
 
-      history.push('/dashboard')
+      history.push('/dashboard');
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-  }, [dispatch, history, state.token])
+  }, [dispatch, history, state.token]);
 
   useEffect(() => {
     if (state.token) {
-      redirectToDashBoard()
+      redirectToDashBoard();
     }
-  }, [redirectToDashBoard, state.token])
+  }, [redirectToDashBoard, state.token]);
 
   return (
     <div className={classes.loginSignupWrapperRoot}>

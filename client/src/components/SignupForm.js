@@ -29,7 +29,9 @@ const SignupForm = () => {
     message: null,
   })
 
+
   const { vertical, horizontal, open, message } = localState
+
 
   const { firstName, lastName, email, password, confirmPassword } = formData
 
@@ -125,8 +127,9 @@ const SignupForm = () => {
   const passwordsAreTheSame = () => {
     return password === confirmPassword
   }
-
+  
   return (
+
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
         <div className={classes.alreadyHaveAccount}>Already have an account?</div>
@@ -148,37 +151,37 @@ const SignupForm = () => {
             variant="outlined"
             name="firstName"
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <TextField
             required
-            id="outlined-required"
-            label="Last name"
-            variant="outlined"
-            name="lastName"
+            id='outlined-required'
+            label='Last name'
+            variant='outlined'
+            name='lastName'
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <TextField
             error={!emailIsValid() && email.length !== 0}
-            id="standard-error-helper-text"
-            name="email"
-            variant="outlined"
-            label="E-mail"
+            id='standard-error-helper-text'
+            name='email'
+            variant='outlined'
+            label='E-mail'
             onChange={onChange}
             helperText={'Must enter a valid e-mail address'}
-            color="primary"
+            color='primary'
           />
           <TextField
             error={password.length > 0 && password.length < 6}
-            id="standard-error-helper-text"
-            name="password"
-            type="password"
-            variant="outlined"
-            label="Password"
+            id='standard-error-helper-text'
+            name='password'
+            type='password'
+            variant='outlined'
+            label='Password'
             helperText={'Password must be at least 6 characters long.'}
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <TextField
             error={password !== confirmPassword && confirmPassword > 0}
@@ -189,7 +192,7 @@ const SignupForm = () => {
             label="Confirm Password"
             helperText={'Must match password'}
             onChange={onChange}
-            color="primary"
+            color='primary'
           />
           <ContinueButton onClick={continueClicked}>Continue</ContinueButton>
         </form>
