@@ -6,7 +6,6 @@ import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import axios from 'axios';
 import { Rating } from '@material-ui/lab';
-import { withStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 

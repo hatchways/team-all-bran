@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
-import avatar from "../images/avatar.png";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { store } from "../context/store";
+import React, { useContext, useEffect, useState } from 'react';
+import avatar from '../images/avatar.png';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { store } from '../context/store';
 
 import {
   AppBar,
@@ -14,35 +14,20 @@ import {
   Container,
   Menu,
   MenuItem,
-} from "@material-ui/core";
-import { Home } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { LOGOUT } from "../context/types";
+} from '@material-ui/core';
+import { Home } from '@material-ui/icons';
 
-const useStyles = makeStyles({
-  navbarDisplayFlex: {
-    display: `flex`,
-    justifyContent: `space-between`,
-  },
-  navDisplayFlex: {
-    display: `flex`,
-    justifyContent: `space-between`,
-  },
-  linkText: {
-    textDecoration: `none`,
-    textTransform: `uppercase`,
-    color: `black`,
-  },
-});
+import Avatar from '@material-ui/core/Avatar';
+import { LOGOUT } from '../context/types';
+import { theme, useStyles } from '../themes/theme';
 
 const navLinks = [
-  { title: `dashboard`, path: `/dashboard` },
-  { title: `faq`, path: `/faq` },
-  { title: `blog`, path: `/blog` },
+  { title: `Dashboard`, path: `/dashboard` },
+  { title: `FAQ`, path: `/faq` },
+  { title: `Blog`, path: `/blog` },
 ];
 
-const Navbar = () => {
+const Navbar = (props) => {
   const classes = useStyles();
   const { state, dispatch } = useContext(store);
 
@@ -59,62 +44,71 @@ const Navbar = () => {
 
   const handleGoToRoute = (_, route) => {
     history.push(route);
-    if (route === "/signup") {
+    if (route === '/signup') {
       dispatch({ type: LOGOUT });
       localStorage.clear();
     }
   };
 
+  const [selected, setSelected] = useState(0);
+
   return state.isAuthenticated ? (
-    <AppBar color="default" position="static">
-      <Toolbar>
-        <Link to="/dashboard">
-          <IconButton edge="start" color="inherit" aria-label="home">
-            <Home fontSize="large" />
-          </IconButton>
-        </Link>
-        <Container maxWidth="md" className={classes.navbarDisplayFlex}>
+    <AppBar color='default' position='static'>
+      <Toolbar className={classes.navBarContainer}>
+        <div>
+          <Link to='/dashboard'>
+            <IconButton color='inherit' aria-label='home'>
+              <Home fontSize='large' />
+            </IconButton>
+          </Link>
+        </div>
+
+        <div className={classes.navbarDisplayFlex}>
           <List
-            component="nav"
-            aria-labelledby="main navigation"
-            className={classes.navDisplayFlex}
+            className={classes.navbarDisplayFlex}
+            component='nav'
+            aria-labelledby='main navigation'
           >
-            {navLinks.map(({ title, path }) => (
-              <Link to={path} key={title} className={classes.linkText}>
-                <ListItem button>
+            {navLinks.map(({ title, path }, idx) => (
+              <Link to={path} key={title} style={{ textDecoration: 'none' }}>
+                <ListItem
+                  className={
+                    selected === idx ? classes.linkTextSelected : classes.linkText
+                  }
+                  onClick={() => setSelected(idx)}
+                >
                   <ListItemText primary={title} />
                 </ListItem>
               </Link>
             ))}
-          </List>
+          </List>{' '}
           <IconButton
             onClick={handleClick}
-            edge="end"
-            color="inherit"
-            aria-label="home"
-            aria-controls="simple-menu"
-            aria-haspopup="true"
+            color='inherit'
+            aria-label='home'
+            aria-controls='simple-menu'
+            aria-haspopup='true'
           >
-            <Avatar alt="Avatar" src={avatar} />
-
-            {`${state.user.firstName} ${state.user.lastName}`}
+            <Avatar alt='Avatar' src={avatar} />
+            <div
+              className={classes.userNameDiv}
+            >{`${state.user.firstName} ${state.user.lastName}`}</div>
           </IconButton>
-        </Container>
-
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          // keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={(e) => handleGoToRoute(e, "/profile")}>
-            Profile
-          </MenuItem>
-          <MenuItem onClick={(e) => handleGoToRoute(e, "/signup")}>
-            Logout
-          </MenuItem>
-        </Menu>
+          <Menu
+            id='simple-menu'
+            anchorEl={anchorEl}
+            // keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={(e) => handleGoToRoute(e, '/profile')}>
+              Profile
+            </MenuItem>
+            <MenuItem onClick={(e) => handleGoToRoute(e, '/signup')}>
+              Logout
+            </MenuItem>
+          </Menu>
+        </div>
       </Toolbar>
     </AppBar>
   ) : null;
