@@ -4,14 +4,11 @@ import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
 import TextEditor from '../components/TextEditor'
 import { RunCodeButton } from '../components/Buttons';
-import LanguageSelectMenu from '../components/LanguageSelectMenu'
-import { ExitInterviewButton } from '../components/Buttons'
 import { useHistory } from 'react-router-dom'
-import { store } from '../context/store';
+import InterviewHeader from '../components/InterviewHeader'
 
 const Interview = () => {
   const classes = useStyles();
-  const history = useHistory()
   const [codeSnippet, setCodeSnippet] = useState('')
   const [output, setOutput] = useState('')
   const [language, setLanguage] = useState('javascript');
@@ -24,26 +21,10 @@ const Interview = () => {
     setCodeSnippet(codeSnippet)
   }
 
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-  }
-
-  const exitInterview = () => {
-    history.push('/dashboard')
-  }
-
   return (
     <div className={classes.interviewContainer}>
       <Grid container spacing={3}>
-        <Grid className={classes.interviewHeader} item xs={12}>
-          <div className={classes.interviewWithText}>Interview with </div>
-          <div className={classes.languageExitInterviewContainer}>
-            <LanguageSelectMenu handleLanguageChange={handleLanguageChange} language={language} />
-            <div onClick={exitInterview}>
-              <ExitInterviewButton text="End Interview" />
-            </div>
-          </div>
-        </Grid>
+        <InterviewHeader language={language} setLanguage={setLanguage} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           <InterviewQuestionDetails />
         </Grid>
