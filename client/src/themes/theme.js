@@ -1,5 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core'
+import { blueGrey } from '@material-ui/core/colors'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
 
 export const theme = createMuiTheme({
   typography: {
@@ -12,7 +13,7 @@ export const theme = createMuiTheme({
   palette: {
     primary: { main: '#DF1B1B' },
   },
-});
+})
 
 export const useStyles = makeStyles((theme) => ({
   form: {
@@ -24,27 +25,27 @@ export const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       marginBottom: '30px',
     },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: colors.darkBlue
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: colors.darkBlue,
     },
-    "& .MuiOutlinedInput-input": {
-      color: 'black'
+    '& .MuiOutlinedInput-input': {
+      color: 'black',
     },
-    "&:hover .MuiOutlinedInput-input": {
-      color: "black"
+    '&:hover .MuiOutlinedInput-input': {
+      color: 'black',
     },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-      color: 'black'
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
+      color: 'black',
     },
-    "& .MuiInputLabel-outlined": {
-      color: "gray"
+    '& .MuiInputLabel-outlined': {
+      color: 'gray',
     },
-    "&:hover .MuiInputLabel-outlined": {
-      color: "gray"
+    '&:hover .MuiInputLabel-outlined': {
+      color: 'gray',
     },
-    "& .MuiInputLabel-outlined.Mui-focused": {
-      color: colors.darkBlue
-    }
+    '& .MuiInputLabel-outlined.Mui-focused': {
+      color: colors.darkBlue,
+    },
   },
   signUpForm: {
     marginLeft: '40px',
@@ -82,6 +83,14 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
+    fontStyle: 'italic',
+  },
+  loginSignupWrapperRoot: {
+    flexGrow: 1,
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
     fontFamily: 'Roboto',
     color: colors.charcoalGray,
   },
@@ -89,7 +98,7 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     height: '100vh',
     width: '100vw',
-    position: 'relative'
+    position: 'relative',
   },
   formField: {
     display: 'flex',
@@ -122,12 +131,12 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   infoFormDiv: {
-    marginLeft: '10px',
     marginBottom: '2px',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    //color: `${colors.darkGray}`,
+    color: 'rgba(94, 94, 94)',
   },
   infoDropdown: {
-    marginLeft: '10px',
     marginRight: '10px',
     marginBottom: '20px',
     paddingLeft: '16px',
@@ -135,21 +144,18 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: '8px',
     borderRadius: '5px',
     border: `1px solid ${colors.lightGray}`,
-    width: '50%',
+    width: '100%',
     height: '40px',
   },
   starRating: {
-    marginLeft: '10px',
     marginTop: '5px',
     marginBottom: '7px',
   },
   interviewLevelDiv: {
-    marginLeft: '10px',
     color: `${colors.darkBlue}`,
     fontWeight: 'Bold',
   },
   interviewLevelDesc: {
-    marginLeft: '10px',
     color: `${colors.darkGray}`,
     marginBottom: '30px',
   },
@@ -157,7 +163,9 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     height: '100vh',
     width: '100vw',
-    position: 'relative'
+    position: 'relative',
+    overflow: 'hidden',
+    position: 'relative',
   },
   interviewHeader: {
     backgroundColor: colors.darkBlue,
@@ -165,14 +173,17 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     flexDirection: 'row',
     height: '85px',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  interviewDetails: {
-    height: '100vh'
+  interviewDetailsContainer: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   interviewTextEditor: {
     backgroundColor: 'rgba(30,30,30, 1)',
-    height: '100vh'
+    height: '100vh',
   },
   interviewOutput: {
     backgroundColor: 'yellow',
@@ -181,7 +192,7 @@ export const useStyles = makeStyles((theme) => ({
     height: '15vh',
     width: '66%',
     marginBottom: '25px',
-    borderRadius: '25px'
+    borderRadius: '25px',
   },
   interviewOutputHeader: {
     backgroundColor: 'gray',
@@ -192,15 +203,111 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textMarginRight: {
-    marginRight: '10px'
+    marginRight: '10px',
   },
   textMarginLeft: {
-    marginLeft: '10px'
+    marginLeft: '10px',
   },
-}));
+
+  backgroundContainer: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: `rgba(67, 67, 125)`,
+  },
+  background: {
+    width: '50%',
+    height: '80%',
+    backgroundColor: `white`,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    //justifyContent: "center",
+  },
+  backgroundHeader: {
+    color: `${colors.darkBlue}`,
+    fontSize: '25px',
+    fontWeight: '600',
+    width: '50%',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  backgroundForm: {
+    width: '50%',
+    //height: "30%",
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  questionDetailsContainer: {
+    marginTop: '30px',
+    textAlign: 'left',
+    width: '25vw',
+    height: '85vh',
+  },
+  questionTopicText: {
+    color: colors.darkBlue,
+    fontSize: '35px',
+    marginBottom: '40px',
+  },
+  funcDescText: {
+    fontWeight: 'bold',
+    fontSize: '25px',
+  },
+  questionDescText: {
+    color: 'gray',
+    fontSize: '18px',
+  },
+  answerSolutionContainer: {
+    marginTop: '30px',
+  },
+  questionAnswerButtonHighlighted: {
+    borderRadius: 35,
+    height: 50,
+    width: 150,
+    padding: '18px 36px',
+    fontSize: '15px',
+    color: colors.darkBlue,
+    marginRight: '15px',
+    boxShadow: `0 1px 5px 2px ${colors.shadow}`,
+  },
+  questionAnswerButtonUnhighlighted: {
+    borderRadius: 35,
+    height: 50,
+    width: 150,
+    padding: '18px 36px',
+    fontSize: '15px',
+    color: colors.charcoalGray,
+    marginRight: '15px',
+    boxShadow: `0 1px 5px 2px ${colors.shadow}`,
+  },
+  questionAnswerButtonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+}))
+
+export const GlobalCss = withStyles({
+  '@global': {
+    body: {
+      height: '100vh',
+    },
+    '#root': {
+      height: '100%',
+    },
+    header: {
+      display: 'none',
+    },
+    '.MuiAppBar-root': {
+      display: 'none',
+    },
+  },
+})(() => null)
 
 export const colors = {
   darkBlue: '#516BF6',
@@ -208,5 +315,5 @@ export const colors = {
   darkGray: 'rgba(105, 105, 105, .8)',
   lightGray: 'rgba(169, 169, 169, .8)',
   shadow: 'rgba(125, 123, 135, .3)',
-  charcoalGray: 'rgba(30,30,30, .8)'
-};
+  charcoalGray: 'rgba(30,30,30, .8)',
+}

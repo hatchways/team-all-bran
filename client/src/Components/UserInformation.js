@@ -1,14 +1,19 @@
-import React, { useState, useContext } from "react"
-import { useHistory } from "react-router-dom"
-import { ContinueButton } from "../components/Buttons"
-import { useStyles } from "../themes/theme"
-import { store } from "../context/store"
-import { USER_LOADED } from "../context/types"
-import axios from "axios"
-import { Rating } from "@material-ui/lab"
+import React, { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { NextStepButton } from '../components/Buttons'
+import { useStyles, GlobalCss } from '../themes/theme'
+import { store } from '../context/store'
+import { USER_LOADED } from '../context/types'
+import axios from 'axios'
+import { Rating } from '@material-ui/lab'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+
+const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const InterviewLevelInfo = ({ interviewLevel }) => {
   const classes = useStyles()
+
   if (interviewLevel < 3) {
     return (
       <>
@@ -49,80 +54,89 @@ const UserInformation = (props) => {
   })
 
   const changeRating = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value })
+
+    setUserData({ ...userData, interviewLevel: Number(e.target.value) })
+  }
+
+  const changeExperience = (e) => {
+    setUserData({ ...userData, experience: e.target.value })
+  }
+
+  const changeLanguage = (e) => {
+    setUserData({ ...userData, language: e.target.value })
   }
 
   const onSubmit = async (e) => {
     e.preventDefault()
-
-    let formData = { ...props.formData, ...userData }
+    const id = props.user._id
 
     try {
-      const result = await axios.post(
-        "http://localhost:3001/users/register",
-        formData
+      const result = await axios.put(
+        `http://localhost:3001/users/update/${id}`,
+        userData
       )
       dispatch({ type: USER_LOADED, payload: result.data.user })
 
-      const token = result.data.token
-      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
       // will change to /background (protected route, routes folder)
-      history.push("/dashboard")
+      history.push('/dashboard')
     } catch (error) {
       console.log(error)
     }
   }
 
-  const { interviewLevel } = userData
+  const { language, experience, interviewLevel } = userData
 
   return (
-    <>
-      <div className={classes.getStarted}>
-        <h1>Tell us about your Backgroud</h1>
+    <div className={classes.backgroundContainer}>
+      <GlobalCss />
+      <div className={classes.background}>
+        <h1 className={classes.backgroundHeader}>Tell us about your Background</h1>
+
+        <form className={classes.backgroundForm} id="backgroundForm">
+          <div className={classes.infoFormDiv}>Your Language:</div>
+          <Select
+            className={classes.infoDropdown}
+            onChange={changeLanguage}
+            value={language}
+          >
+            <MenuItem value="English">English</MenuItem>
+          </Select>
+
+          <div className={classes.infoFormDiv}>
+            Years of professional experience:
+          </div>
+          <Select
+            className={classes.infoDropdown}
+            onChange={changeExperience}
+            value={experience}
+          >
+            {Array.from(experienceList, (item) => {
+              if (item < 10) {
+                return <MenuItem value={item}>{item} </MenuItem>
+              } else {
+                return <MenuItem value={item}>10 or more</MenuItem>
+              }
+            })}
+          </Select>
+
+          <div className={classes.infoFormDiv}>
+            What is your level at job interviews?
+          </div>
+
+          <Rating
+            name="interviewLevel"
+            className={classes.starRating}
+            onChange={changeRating}
+            size="large"
+            defaultValue={1}
+          />
+          <InterviewLevelInfo interviewLevel={interviewLevel} />
+        </form>
+        <NextStepButton type="submit" form="backgroundForm" onClick={onSubmit}>
+          Next Step
+        </NextStepButton>
       </div>
-
-      <form
-        className={classes.form}
-        onSubmit={(e) => {
-          e.preventDefault()
-        }}
-      >
-        <div className={classes.infoFormDiv}>Your Language:</div>
-        <select name="language" className={classes.infoDropdown}>
-          <option value="English" label="English"></option>
-        </select>
-
-        <div className={classes.infoFormDiv}>Years of professional experience:</div>
-        <select name="experience" className={classes.infoDropdown}>
-          <option value={0} label="0"></option>
-          <option value={1} label="1"></option>
-          <option value={2} label="2"></option>
-          <option value={3} label="3"></option>
-          <option value={4} label="4"></option>
-          <option value={5} label="5"></option>
-          <option value={6} label="6"></option>
-          <option value={7} label="7"></option>
-          <option value={8} label="8"></option>
-          <option value={9} label="9"></option>
-          <option value={10} label="10 or more"></option>
-        </select>
-
-        <div className={classes.infoFormDiv}>
-          What is your level at job interviews?
-        </div>
-
-        <Rating
-          className={classes.starRating}
-          name="interviewLevel"
-          onChange={changeRating}
-          size="large"
-          defaultValue={1}
-        />
-
-        <InterviewLevelInfo interviewLevel={interviewLevel} />
-        <ContinueButton onClick={onSubmit}>Register</ContinueButton>
-      </form>
-    </>
+    </div>
   )
 }
 
