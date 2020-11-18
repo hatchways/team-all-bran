@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 
 const { User } = require('../models/User');
 
-module.exports = async function (req, res, next) {
+module.exports = async function getUser(req, res, next) {
   // Get token from header
-  const token = req.query.token;
+  const token = req.query.token ? req.query.token : req.cookies.token;
 
   // Check if no token
   if (!token) {
