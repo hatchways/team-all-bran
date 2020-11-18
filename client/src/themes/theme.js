@@ -1,6 +1,5 @@
-import { createMuiTheme } from '@material-ui/core'
-import { blueGrey } from '@material-ui/core/colors'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
   typography: {
@@ -13,7 +12,7 @@ export const theme = createMuiTheme({
   palette: {
     primary: { main: '#DF1B1B' },
   },
-})
+});
 
 export const useStyles = makeStyles((theme) => ({
   form: {
@@ -164,8 +163,6 @@ export const useStyles = makeStyles((theme) => ({
     height: '100vh',
     width: '100vw',
     position: 'relative',
-    overflow: 'hidden',
-    position: 'relative',
   },
   interviewHeader: {
     backgroundColor: colors.darkBlue,
@@ -290,7 +287,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
   },
-}))
+}));
 
 export const GlobalCss = withStyles({
   '@global': {
@@ -307,7 +304,7 @@ export const GlobalCss = withStyles({
       display: 'none',
     },
   },
-})(() => null)
+})(() => null);
 
 export const colors = {
   darkBlue: '#516BF6',
@@ -316,4 +313,4 @@ export const colors = {
   lightGray: 'rgba(169, 169, 169, .8)',
   shadow: 'rgba(125, 123, 135, .3)',
   charcoalGray: 'rgba(30,30,30, .8)',
-}
+};
