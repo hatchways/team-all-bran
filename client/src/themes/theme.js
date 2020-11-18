@@ -233,10 +233,11 @@ export const useStyles = makeStyles((theme) => ({
   textMarginRight: {
     marginRight: '10px',
   },
-  textMarginLeft: {
-    marginLeft: '10px',
+  interviewWithText: {
+    marginLeft: '40px',
+    color: 'white',
+    fontSize: '30px'
   },
-
   backgroundContainer: {
     height: '100%',
     display: 'flex',
