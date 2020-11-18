@@ -1,13 +1,13 @@
-import React from 'react'
-import { Switch, Route } from 'react-router'
-import Navbar from '../components/Navbar'
-import Blog from '../pages/Blog'
-import DashBoard from '../pages/DashBoard'
-import Faq from '../pages/Faq'
-import Profile from '../pages/Profile'
-import PrivateRoute from './PrivateRoute'
-import Signup from '../pages/Signup'
-
+import React from 'react';
+import { Switch, Route } from 'react-router';
+import Navbar from '../components/Navbar';
+import Blog from '../pages/Blog';
+import DashBoard from '../pages/DashBoard';
+import Faq from '../pages/Faq';
+import Profile from '../pages/Profile';
+import PrivateRoute from './PrivateRoute';
+import Signup from '../pages/Signup';
+import Lobby from '../pages/Lobby';
 
 const Routes = () => {
   return (
@@ -23,7 +23,7 @@ const Routes = () => {
         <Route path='/' component={Signup} />
       </Switch>
     </>
-  )
-}
+  );
+};
 
-export default Routes
+export default Routes;
