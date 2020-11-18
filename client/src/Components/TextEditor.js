@@ -14,13 +14,21 @@ const TextEditor = (props) => {
     props.handleCodeSnippetChange(codeText.current())
   }
 
+  const displayDefaultText = () => {
+    if (props.language === 'javascript') {
+      return "//write your code here"
+    } else if (props.language === 'python') {
+      return "# write your code here"
+    }
+  }
+
   return (
     <ControlledEditor
       height="90vh"
       theme="dark"
       options={{ fontSize: 18 }}
       language={props.language}
-      value={"// write your code here"}
+      value={displayDefaultText()}
       editorDidMount={handleEditorDidMount}
       onChange={handleCodeChange} />
 
