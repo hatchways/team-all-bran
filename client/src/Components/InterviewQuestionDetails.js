@@ -15,10 +15,10 @@ const InterviewQuestionDetails = (props) => {
     <div className={classes.interviewDetailsContainer}>
       <div className={classes.questionAnswerButtonContainer}>
         <div onClick={() => setQuestionAnswerToggle({ answer: true, question: false })}>
-          <InterviewDetailButton questionAnswerToggle={answer} text="Answer" />
+          <InterviewDetailButton questionAnswerToggle={answer} text="Question" />
         </div>
         <div onClick={() => setQuestionAnswerToggle({ answer: false, question: true })}>
-          <InterviewDetailButton questionAnswerToggle={question} text="Question" />
+          <InterviewDetailButton questionAnswerToggle={question} text="Answer" />
         </div>
       </div>
       {answer
