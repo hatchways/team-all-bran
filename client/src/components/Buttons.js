@@ -74,3 +74,9 @@ export const RunCodeButton = (props) => {
   const { text } = props
   return <Button variant="outlined" className={classes.runCodeButton}>{text}</Button>
 }
+
+export const ExitInterviewButton = (props) => {
+  const classes = useStyles()
+  const { text } = props
+  return <Button variant="outlined" className={classes.exitInterviewButton}>{text}</Button>
+}

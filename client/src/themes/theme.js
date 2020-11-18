@@ -325,6 +325,16 @@ export const useStyles = makeStyles((theme) => ({
     borderWidth: 4,
     padding: '2px 20px'
   },
+  exitInterviewButton: {
+    color: 'white',
+    borderColor: colors.lightGray,
+    borderRadius: 25,
+    marginRight: '10px',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    borderWidth: 2,
+    padding: '2px 20px'
+  },
   consoleText: {
     color: 'white',
     marginLeft: '20px',

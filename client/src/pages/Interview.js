@@ -5,10 +5,12 @@ import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
 import TextEditor from '../components/TextEditor'
 import { RunCodeButton } from '../components/Buttons';
 import LanguageSelectMenu from '../components/LanguageSelectMenu'
+import { ExitInterviewButton } from '../components/Buttons'
+import { useHistory } from 'react-router-dom'
 
 const Interview = () => {
   const classes = useStyles();
-
+  const history = useHistory()
   const [codeSnippet, setCodeSnippet] = useState('')
   const [output, setOutput] = useState('')
   const [language, setLanguage] = useState('javascript');
@@ -25,6 +27,10 @@ const Interview = () => {
     setLanguage(event.target.value);
   }
 
+  const exitInterview = () => {
+    history.push('/dashboard')
+  }
+
   return (
     <div className={classes.interviewContainer}>
       <Grid container spacing={3}>
@@ -32,7 +38,9 @@ const Interview = () => {
           <div className={classes.textMarginLeft}>Interview with</div>
           <div className={classes.languageExitInterviewContainer}>
             <LanguageSelectMenu handleLanguageChange={handleLanguageChange} language={language} />
-            <div className={classes.textMarginRight}>End Interview</div>
+            <div onClick={exitInterview}>
+              <ExitInterviewButton text="End Interview" />
+            </div>
           </div>
         </Grid>
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
