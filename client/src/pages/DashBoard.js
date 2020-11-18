@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext } from 'react'
 
-import { useStyles } from '../themes/theme';
-import { StartDashboardButton } from '../components/Buttons';
-import PastInterviewTable from '../components/PastInterviewTable';
-import { store } from '../context/store';
-import { Redirect, useHistory } from 'react-router';
+import { useStyles } from '../themes/theme'
+import { StartDashboardButton } from '../components/Buttons'
+import PastInterviewTable from '../components/PastInterviewTable'
+import { store } from '../context/store'
+import { Redirect } from 'react-router'
 
-import UserInformation from '../components/UserInformation';
+import UserInformation from '../components/UserInformation'
 
 const DashBoard = () => {
   const classes = useStyles();
