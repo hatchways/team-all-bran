@@ -46,6 +46,34 @@ export const useStyles = makeStyles((theme) => ({
       color: colors.darkBlue,
     },
   },
+  [`form-dropdown`]: {
+    minWidth: 120,
+    marginRight: 30,
+    '& .MuiOutlinedInput-root.Mui .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '& .MuiOutlinedInput-input': {
+      color: 'white',
+    },
+    '&:hover .MuiOutlinedInput-input': {
+      color: 'black',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
+      color: 'white',
+    },
+    '& .MuiInputLabel-outlined': {
+      color: 'white',
+    },
+    '&:hover .MuiInputLabel-outlined': {
+      color: 'white',
+    },
+    '& .MuiInputLabel-outlined.Mui-focused': {
+      color: 'white',
+    },
+  },
   signUpForm: {
     marginLeft: '40px',
     display: 'flex',
@@ -169,7 +197,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    height: '85px',
+    height: '100px',
     alignItems: 'center',
   },
   interviewDetailsContainer: {
@@ -308,6 +336,20 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: '20px',
     fontFamily: 'monospace',
     fontSize: '18px',
+  },
+  languageExitInterviewContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: '20px'
+  },
+  languageDropdownContainer: {
+    marginRight: '25px',
+    color: 'white'
+  },
+  languageDropDown: {
+    color: 'white'
   }
 }));
 

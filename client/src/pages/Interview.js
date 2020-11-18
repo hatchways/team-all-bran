@@ -30,7 +30,7 @@ const Interview = () => {
       <Grid container spacing={3}>
         <Grid className={classes.interviewHeader} item xs={12}>
           <div className={classes.textMarginLeft}>Interview with</div>
-          <div>
+          <div className={classes.languageExitInterviewContainer}>
             <LanguageSelectMenu handleLanguageChange={handleLanguageChange} language={language} />
             <div className={classes.textMarginRight}>End Interview</div>
           </div>
