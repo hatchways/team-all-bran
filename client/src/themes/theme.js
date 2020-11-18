@@ -288,7 +288,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   questionAnswerButtonContainer: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: '20px'
   },
   runCodeButton: {
     color: 'white',
