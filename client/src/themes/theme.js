@@ -3,8 +3,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
   typography: {
-    fontFamily: '"Roboto"',
-    fontSize: 12,
+    fontFamily: '"Helvetica"',
+    fontSize: 14,
     h1: {
       // could customize the h1 variant as well
     },
@@ -240,7 +240,6 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
-
   questionDetailsContainer: {
     marginTop: '30px',
     textAlign: 'left',

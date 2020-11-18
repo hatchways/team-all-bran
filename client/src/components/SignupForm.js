@@ -1,3 +1,4 @@
+
 import React, { useState, useContext } from 'react'
 import TextField from '@material-ui/core/TextField'
 import { Link, useHistory } from 'react-router-dom'
@@ -9,10 +10,11 @@ import { store } from '../context/store'
 import axios from 'axios'
 import { USER_LOADED } from '../context/types'
 
+
 const SignupForm = () => {
-  const history = useHistory()
-  const classes = useStyles()
-  const { dispatch } = useContext(store)
+  const history = useHistory();
+  const classes = useStyles();
+  const { dispatch } = useContext(store);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -22,16 +24,16 @@ const SignupForm = () => {
     confirmPassword: '',
   })
 
+
   const [localState, setLocalState] = useState({
     open: false,
     vertical: 'bottom',
     horizontal: 'center',
     message: null,
-  })
+  });
 
 
   const { vertical, horizontal, open, message } = localState
-
 
   const { firstName, lastName, email, password, confirmPassword } = formData
 
@@ -42,33 +44,33 @@ const SignupForm = () => {
       vertical: vertical,
       horizontal: horizontal,
       message,
-    })
-  }
+    });
+  };
 
   const handleClose = () => {
-    setLocalState({ ...localState, open: false })
-  }
+    setLocalState({ ...localState, open: false });
+  };
 
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const continueClicked = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (displayAlertMessage()) {
-      return
+      return;
     }
 
     try {
       const result = await axios.post(
         'http://localhost:3001/users/register',
         formData
-      )
-      dispatch({ type: USER_LOADED, payload: result.data.user })
+      );
+      dispatch({ type: USER_LOADED, payload: result.data.user });
 
-      const token = result.data.token
-      localStorage.setItem(process.env.REACT_APP_USER_DATA, token)
+      const token = result.data.token;
+      localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
       // will change to /background (protected route, routes folder)
       history.push('/dashboard')
     } catch (error) {
@@ -76,7 +78,7 @@ const SignupForm = () => {
         showAlert({ message: 'Email already exists' })
       }
     }
-  }
+  };
 
   const displayAlertMessage = () => {
     if (!areAllFieldsCompleted()) {
@@ -104,12 +106,12 @@ const SignupForm = () => {
       return true
     }
 
-    return false
-  }
+    return false;
+  };
 
   const passwordIsValid = () => {
-    return password.length >= 6
-  }
+    return password.length >= 6;
+  };
 
   const areAllFieldsCompleted = () => {
     return !(
@@ -117,17 +119,16 @@ const SignupForm = () => {
       lastName.length === 0 ||
       email.length === 0 ||
       password.length === 0
-    )
-  }
+    );
+  };
 
   const emailIsValid = () => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  }
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   const passwordsAreTheSame = () => {
     return password === confirmPassword
   }
-  
   return (
 
     <div className={classes.signUpForm}>
@@ -143,13 +144,13 @@ const SignupForm = () => {
         <div className={classes.getStarted}>
           <h1>Get Started!</h1>
         </div>
-        <form className={classes.form} noValidate autoComplete="on">
+        <form className={classes.form} noValidate autoComplete='on'>
           <TextField
             required
-            id="outlined-required"
-            label="First name"
-            variant="outlined"
-            name="firstName"
+            id='outlined-required'
+            label='First name'
+            variant='outlined'
+            name='firstName'
             onChange={onChange}
             color='primary'
           />
@@ -215,7 +216,7 @@ const SignupForm = () => {
         </Snackbar>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SignupForm
+export default SignupForm;
