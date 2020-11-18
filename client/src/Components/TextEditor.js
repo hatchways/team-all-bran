@@ -19,7 +19,7 @@ const TextEditor = (props) => {
       height="90vh"
       theme="dark"
       options={{ fontSize: 18 }}
-      language="javascript"
+      language={props.language}
       value={"// write your code here"}
       editorDidMount={handleEditorDidMount}
       onChange={handleCodeChange} />

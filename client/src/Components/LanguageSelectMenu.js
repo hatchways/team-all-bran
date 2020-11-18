@@ -18,8 +18,8 @@ const LanguageSelectMenu = (props) => {
         onChange={props.handleLanguageChange}
         label="Language"
       >
-        <MenuItem value={'Javascript'}>Javascript</MenuItem>
-        <MenuItem value={'Python'}>Python</MenuItem>
+        <MenuItem value={'javascript'}>Javascript</MenuItem>
+        <MenuItem value={'python'}>Python</MenuItem>
       </Select>
     </FormControl>
   )

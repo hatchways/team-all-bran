@@ -11,7 +11,7 @@ const Interview = () => {
 
   const [codeSnippet, setCodeSnippet] = useState('')
   const [output, setOutput] = useState('')
-  const [language, setLanguage] = useState('Javascript');
+  const [language, setLanguage] = useState('javascript');
 
   const runCode = (output) => {
     setOutput(output)
@@ -39,7 +39,7 @@ const Interview = () => {
           <InterviewQuestionDetails />
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
-          <TextEditor handleCodeSnippetChange={handleCodeSnippetChange} />
+          <TextEditor language={language} handleCodeSnippetChange={handleCodeSnippetChange} />
           <div className={classes.interviewOutput}>
             <div className={classes.interviewOutputHeader}>
               <div className={classes.consoleText}>Console</div>
