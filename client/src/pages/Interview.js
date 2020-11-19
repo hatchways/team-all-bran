@@ -17,7 +17,7 @@ const Interview = () => {
 
   return (
     <div className={classes.interviewContainer}>
-      <Grid container spacing={3}>
+      <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader language={language} setLanguage={setLanguage} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           <InterviewQuestionDetails />

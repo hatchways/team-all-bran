@@ -74,6 +74,10 @@ export const useStyles = makeStyles((theme) => ({
       color: 'white',
     },
   },
+  gridSpacingThree: {
+    width: '100%',
+    margin: 0
+  },
   signUpForm: {
     marginLeft: '40px',
     display: 'flex',
