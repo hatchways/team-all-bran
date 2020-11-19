@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import socketIOClient from 'socket.io-client';
 
 const ENDPOINT = '/';
 
 function Lobby() {
   const [response, setResponse] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
@@ -13,6 +15,7 @@ function Lobby() {
     });
     return () => socket.disconnect();
   }, []);
+  console.log('CHECKING FOR PATHNAME', history.location.pathname);
 
   return (
     <p>
