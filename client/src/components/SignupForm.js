@@ -61,7 +61,8 @@ const SignupForm = () => {
     try {
       const result = await axios.post(
         'http://localhost:3001/users/register',
-        formData
+        formData,
+        { withCredentials: true }
       );
       dispatch({ type: USER_LOADED, payload: result.data });
 

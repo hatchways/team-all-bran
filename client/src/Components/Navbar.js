@@ -29,7 +29,6 @@ const navLinks = [
 const Navbar = (props) => {
   const classes = useStyles();
   const { state, dispatch } = useContext(store);
-  console.log(state);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
@@ -46,7 +45,7 @@ const Navbar = (props) => {
     history.push(route);
     if (route === '/signup') {
       dispatch({ type: LOGOUT });
-      localStorage.clear();
+      fetch('/users/logout', { method: 'POST', credentials: 'same-origin' });
     }
   };
 
