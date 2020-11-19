@@ -3,6 +3,7 @@ const validateRegister = require('../user-validation/register');
 const validateLogin = require('../user-validation/login');
 const { secretKey } = process.env;
 const jwt = require('jsonwebtoken');
+const { User } = require('../models/User');
 
 function register(req, res) {
   const { errors, isValid } = validateRegister(req.body);
@@ -54,24 +55,18 @@ function editUser(req, res) {
 }
 
 async function getUser(req, res, next) {
-  // Get token from header
-  const token = req.query.token ? req.query.token : req.cookies.token;
-
-  // Check if no token
-  if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
-  }
-
   try {
     // Verify token
-    const id = await jwt.verify(token, process.env.secretKey).user._id;
+    const id = await jwt.verify(req.cookies.token, process.env.secretKey).user
+      ._id;
+    console.log(id);
+
+    const user = await User.findById(id);
+    res.status(200).json({ user });
+
     // Return user interviews here
-    const user = await User.findById(id).populate('interviews');
-    const userObject = user.toJSON();
-    userObject.token = token;
-    res.status(200).json({ user: userObject });
   } catch (err) {
-    res.status(401).json({ error: 'Token is not valid' });
+    res.status(401).json({ error: 'Token is not validdd' });
   }
 }
 
@@ -87,7 +82,7 @@ function createTokenResponse(user, res) {
       let responseObj = { user, token };
       res
         .status(201)
-        .cookie('token', token, { httpOnly: true })
+        .cookie('token', token, { httpOnly: true, sameSite: 'lax' })
         .json(responseObj);
     }
   );
