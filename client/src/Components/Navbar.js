@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import avatar from '../images/avatar.png';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Container,
   Menu,
   MenuItem,
 } from '@material-ui/core';
@@ -19,7 +18,7 @@ import { Home } from '@material-ui/icons';
 
 import Avatar from '@material-ui/core/Avatar';
 import { LOGOUT } from '../context/types';
-import { theme, useStyles } from '../themes/theme';
+import { useStyles } from '../themes/theme';
 
 const navLinks = [
   { title: `Dashboard`, path: `/dashboard` },

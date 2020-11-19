@@ -221,7 +221,7 @@ export const useStyles = makeStyles((theme) => ({
     height: '20vh',
     width: '66%',
     marginBottom: '25px',
-    borderRadius: '10px'
+    borderRadius: '10px',
   },
   interviewOutputHeader: {
     backgroundColor: colors.lightGraySolid,
@@ -318,7 +318,7 @@ export const useStyles = makeStyles((theme) => ({
   questionAnswerButtonContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: '20px'
+    marginTop: '20px',
   },
   runCodeButton: {
     color: 'white',
@@ -328,7 +328,7 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '18px',
     borderWidth: 4,
-    padding: '2px 20px'
+    padding: '2px 20px',
   },
   exitInterviewButton: {
     color: 'white',
@@ -343,7 +343,7 @@ export const useStyles = makeStyles((theme) => ({
   consoleText: {
     color: 'white',
     marginLeft: '20px',
-    fontSize: '25px'
+    fontSize: '25px',
   },
   outputText: {
     color: 'white',
@@ -365,7 +365,35 @@ export const useStyles = makeStyles((theme) => ({
   },
   languageDropDown: {
     color: 'white'
-  }
+  },
+  navbarDisplayFlex: {
+    display: `flex`,
+    justifyContent: `space-around`,
+    marginRight: `45px`,
+  },
+  navBarContainer: {
+    display: `flex`,
+    justifyContent: `space-between`,
+  },
+  linkText: {
+    textDecoration: `none`,
+    color: `black`,
+  },
+  linkTextSelected: {
+    textDecoration: `none`,
+    color: `#516BF6`,
+    fontWeight: `bold`,
+  },
+  nameAvatar: {
+    display: `flex`,
+    justifyContent: `space-around`,
+  },
+  userNameDiv: {
+    fontSize: `16px`,
+    color: `black`,
+    marginLeft: `10px`,
+  },
+  // marginLeft: `25px`,
 }));
 
 export const GlobalCss = withStyles({
@@ -393,5 +421,5 @@ export const colors = {
   shadow: 'rgba(125, 123, 135, .3)',
   charcoalGray: 'rgba(30,30,30, .8)',
   darkGraySolid: 'rgba(105, 105, 105, 1)',
-  lightGraySolid: 'rgba(76, 76, 76, 1)'
+  lightGraySolid: 'rgba(76, 76, 76, 1)',
 };
