@@ -14,11 +14,7 @@ const LoginSignupWrapper = ({ children }) => {
 
   const redirectToDashBoard = useCallback(async () => {
     try {
-      let result = await axios.get('http://localhost:3001/users/', {
-        params: {
-          token: state.token,
-        },
-      });
+      let result = await axios.get('http://localhost:3001/users/');
 
       dispatch({
         type: USER_LOADED,
@@ -31,11 +27,23 @@ const LoginSignupWrapper = ({ children }) => {
     }
   }, [dispatch, history, state.token]);
 
-  useEffect(() => {
-    if (state.token) {
-      redirectToDashBoard();
+  const loadUser = async () => {
+    try {
+      const res = await axios.get('/users');
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
     }
-  }, [redirectToDashBoard, state.token]);
+  };
+
+  useEffect(() => {
+    loadUser();
+    console.log(state);
+  }, [state.token]);
 
   return (
     <div className={classes.loginSignupWrapperRoot}>

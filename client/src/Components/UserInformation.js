@@ -1,16 +1,15 @@
-import React, { useState, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
-import { NextStepButton } from '../components/Buttons'
-import { useStyles, GlobalCss } from '../themes/theme'
-import { store } from '../context/store'
-import { USER_LOADED } from '../context/types'
-import axios from 'axios'
-import { Rating } from '@material-ui/lab'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { NextStepButton } from '../components/Buttons';
+import { useStyles, GlobalCss } from '../themes/theme';
+import { store } from '../context/store';
+import { USER_LOADED } from '../context/types';
+import axios from 'axios';
+import { Rating } from '@material-ui/lab';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
-const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
+const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const InterviewLevelInfo = ({ interviewLevel }) => {
   const classes = useStyles();
@@ -55,9 +54,8 @@ const UserInformation = (props) => {
   });
 
   const changeRating = (e) => {
-    setUserData({ ...userData, interviewLevel: Number(e.target.value) })
-  }
-
+    setUserData({ ...userData, interviewLevel: Number(e.target.value) });
+  };
 
   const changeExperience = (e) => {
     setUserData({ ...userData, experience: e.target.value });
@@ -68,18 +66,18 @@ const UserInformation = (props) => {
   };
 
   const onSubmit = async (e) => {
-    e.preventDefault()
-    const id = props.user._id
-
+    e.preventDefault();
+    const id = props.user._id;
 
     try {
       const result = await axios.put(
         `http://localhost:3001/users/update/${id}`,
-        userData
+        userData,
+        { withCredentials: true }
       );
-      dispatch({ type: USER_LOADED, payload: result.data.user });
+      dispatch({ type: USER_LOADED, payload: result.data });
       // will change to /background (protected route, routes folder)
-      history.push('/dashboard')
+      history.push('/dashboard');
     } catch (error) {
       console.log(error);
     }

@@ -62,11 +62,12 @@ async function getUser(req, res, next) {
     console.log(id);
 
     const user = await User.findById(id);
-    res.status(200).json({ user });
+
+    res.status(200).json({ user, token: req.cookies.token });
 
     // Return user interviews here
   } catch (err) {
-    res.status(401).json({ error: 'Token is not validdd' });
+    res.status(401).json({ error: 'Token is not valid' });
   }
 }
 

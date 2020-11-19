@@ -25,7 +25,8 @@ const StateProvider = ({ children }) => {
           ...state,
           isAuthenticated: true,
           loading: false,
-          user: payload,
+          user: payload.user,
+          token: payload.token,
         };
       case REGISTER_SUCCESS:
         return {
