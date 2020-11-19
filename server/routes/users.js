@@ -15,7 +15,7 @@ router.get('/', auth);
 
 router.put(
   '/update/:userId',
-  //passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   userController.editUser
 );
 

@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const indexRouter = require('./routes/index');
@@ -28,6 +29,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(express.static(join(__dirname, 'public')));
 // Passport middleware
 app.use(passport.initialize());
