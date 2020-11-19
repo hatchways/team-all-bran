@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { RunCodeButton } from './Buttons';
 import { useStyles } from '../themes/theme';
 
 const OutputConsole = (props) => {
   const classes = useStyles();
-  const [output, setOutput] = useState('')
+  const [output, setOutput] = useState('');
 
   const runCode = (output) => {
-    setOutput(output)
+    setOutput(output);
   }
 
   return (
@@ -25,4 +25,4 @@ const OutputConsole = (props) => {
   )
 }
 
-export default OutputConsole
+export default OutputConsole;

@@ -35,4 +35,4 @@ const TextEditor = ({ language, handleCodeSnippetChange }) => {
   )
 }
 
-export default TextEditor
+export default TextEditor;
