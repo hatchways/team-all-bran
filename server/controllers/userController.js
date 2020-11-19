@@ -89,4 +89,9 @@ function createTokenResponse(user, res) {
   );
 }
 
-module.exports = { register, login, editUser, getUser };
+function logout(req, res) {
+  res.clearCookie('token');
+  return res.sendStatus(200);
+}
+
+module.exports = { register, login, editUser, getUser, logout };

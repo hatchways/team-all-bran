@@ -11,6 +11,12 @@ router.post('/register', userController.register);
 // POST /users/login
 router.post('/login', userController.login);
 
+router.post(
+  '/logout',
+  passport.authenticate('jwt', { session: false }),
+  userController.logout
+);
+
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
