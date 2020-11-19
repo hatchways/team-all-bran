@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-
+import InterviewDialog from '../components/InterviewDialog';
 import { useStyles } from '../themes/theme';
 import { StartDashboardButton } from '../components/Buttons';
 import PastInterviewTable from '../components/PastInterviewTable';
@@ -13,7 +13,7 @@ const DashBoard = () => {
 
   const history = useHistory();
   const { state } = useContext(store);
-  
+
   if (!state.isAuthenticated) return <Redirect to='/signup' />;
 
   if (state.user.experience === undefined) {
@@ -28,6 +28,7 @@ const DashBoard = () => {
         </StartDashboardButton>
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable />
+        <InterviewDialog />
       </div>
     )
   );
