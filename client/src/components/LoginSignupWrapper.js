@@ -5,7 +5,7 @@ import { useStyles } from '../themes/theme';
 import { Redirect } from 'react-router-dom';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
-import axios from 'axios';
+import { getUser } from '../utils/apiFunctions';
 
 const LoginSignupWrapper = ({ children }) => {
   const classes = useStyles();
@@ -13,7 +13,7 @@ const LoginSignupWrapper = ({ children }) => {
 
   const loadUser = useCallback(async () => {
     try {
-      const res = await axios.get('/users');
+      const res = await getUser();
       dispatch({
         type: USER_LOADED,
         payload: res.data,
