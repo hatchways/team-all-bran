@@ -1,11 +1,10 @@
-import { createMuiTheme } from '@material-ui/core'
-import { blueGrey } from '@material-ui/core/colors'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
   typography: {
-    fontFamily: '"Roboto"',
-    fontSize: 12,
+    fontFamily: '"Helvetica"',
+    fontSize: 14,
     h1: {
       // could customize the h1 variant as well
     },
@@ -13,7 +12,7 @@ export const theme = createMuiTheme({
   palette: {
     primary: { main: '#DF1B1B' },
   },
-})
+});
 
 export const useStyles = makeStyles((theme) => ({
   form: {
@@ -164,8 +163,6 @@ export const useStyles = makeStyles((theme) => ({
     height: '100vh',
     width: '100vw',
     position: 'relative',
-    overflow: 'hidden',
-    position: 'relative',
   },
   interviewHeader: {
     backgroundColor: colors.darkBlue,
@@ -186,20 +183,20 @@ export const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   interviewOutput: {
-    backgroundColor: 'yellow',
+    backgroundColor: colors.darkGraySolid,
     bottom: '0',
     position: 'absolute',
-    height: '15vh',
+    height: '20vh',
     width: '66%',
     marginBottom: '25px',
-    borderRadius: '25px',
+    borderRadius: '10px',
   },
   interviewOutputHeader: {
-    backgroundColor: 'gray',
+    backgroundColor: colors.lightGraySolid,
     width: '100%',
-    borderTopLeftRadius: '25px',
-    borderTopRightRadius: '25px',
-    height: '25%',
+    borderTopLeftRadius: '10px',
+    borderTopRightRadius: '10px',
+    height: '30%',
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -243,7 +240,6 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
-
   questionDetailsContainer: {
     marginTop: '30px',
     textAlign: 'left',
@@ -289,8 +285,60 @@ export const useStyles = makeStyles((theme) => ({
   questionAnswerButtonContainer: {
     display: 'flex',
     flexDirection: 'row',
+    marginTop: '20px',
   },
-}))
+  runCodeButton: {
+    color: 'white',
+    borderColor: colors.lightGray,
+    borderRadius: 25,
+    marginRight: '10px',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    borderWidth: 4,
+    padding: '2px 20px',
+  },
+  consoleText: {
+    color: 'white',
+    marginLeft: '20px',
+    fontSize: '25px',
+  },
+  outputText: {
+    color: 'white',
+    marginTop: '15px',
+    paddingLeft: '20px',
+    fontFamily: 'monospace',
+    fontSize: '18px',
+  },
+  navbarDisplayFlex: {
+    display: `flex`,
+    justifyContent: `space-around`,
+    marginRight: `45px`,
+  },
+  navBarContainer: {
+    display: `flex`,
+    justifyContent: `space-between`,
+  },
+
+  linkText: {
+    textDecoration: `none`,
+    color: `black`,
+  },
+  linkTextSelected: {
+    textDecoration: `none`,
+    color: `#516BF6`,
+    fontWeight: `bold`,
+  },
+  nameAvatar: {
+    display: `flex`,
+    justifyContent: `space-around`,
+  },
+  userNameDiv: {
+    fontSize: `16px`,
+    color: `black`,
+    marginLeft: `10px`,
+  },
+  // marginLeft: `25px`,
+}));
 
 export const GlobalCss = withStyles({
   '@global': {
@@ -307,7 +355,7 @@ export const GlobalCss = withStyles({
       display: 'none',
     },
   },
-})(() => null)
+})(() => null);
 
 export const colors = {
   darkBlue: '#516BF6',
@@ -316,4 +364,6 @@ export const colors = {
   lightGray: 'rgba(169, 169, 169, .8)',
   shadow: 'rgba(125, 123, 135, .3)',
   charcoalGray: 'rgba(30,30,30, .8)',
-}
+  darkGraySolid: 'rgba(105, 105, 105, 1)',
+  lightGraySolid: 'rgba(76, 76, 76, 1)',
+};
