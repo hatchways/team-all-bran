@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import Navbar from '../components/Navbar';
@@ -19,7 +18,7 @@ const Routes = () => {
         <PrivateRoute exact path='/dashboard' component={DashBoard} />
         <PrivateRoute exact path='/blog' component={Blog} />
         <PrivateRoute exact path='/faq' component={Faq} />
-        <PrivateRoute exact path='/lobby' component={Lobby} />{' '}
+        <PrivateRoute exact path='/lobby/:id' component={Lobby} />{' '}
         {/* This route can change */}
         <Route path='/' component={Signup} />
       </Switch>
