@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useStyles } from '../themes/theme';
 
-const LanguageSelectMenu = (props) => {
+const LanguageSelectMenu = ({ language, handleLanguageChange }) => {
   const classes = useStyles()
 
   return (
@@ -14,8 +14,8 @@ const LanguageSelectMenu = (props) => {
       <Select
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
-        value={props.language}
-        onChange={props.handleLanguageChange}
+        value={language}
+        onChange={handleLanguageChange}
         label="Language"
       >
         <MenuItem value={'javascript'}>Javascript</MenuItem>
