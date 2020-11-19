@@ -55,15 +55,15 @@ function editUser(req, res) {
 }
 
 async function getUser(req, res, next) {
+  const { token } = req.cookies;
+  const { secretKey } = process.env;
   try {
     // Verify token
-    const id = await jwt.verify(req.cookies.token, process.env.secretKey).user
-      ._id;
-    console.log(id);
+    const id = await jwt.verify(token, secretKey).user._id;
 
     const user = await User.findById(id);
 
-    res.status(200).json({ user, token: req.cookies.token });
+    res.status(200).json({ user, token });
 
     // Return user interviews here
   } catch (err) {

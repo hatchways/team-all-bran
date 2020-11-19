@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useCallback } from 'react';
 import * as imageURL from '../images/login-photo.png';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from '../themes/theme';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import axios from 'axios';
@@ -23,7 +23,7 @@ const LoginSignupWrapper = ({ children }) => {
 
       history.push('/dashboard');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, [dispatch, history, state.token]);
 
@@ -34,7 +34,6 @@ const LoginSignupWrapper = ({ children }) => {
         type: USER_LOADED,
         payload: res.data,
       });
-      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -42,8 +41,11 @@ const LoginSignupWrapper = ({ children }) => {
 
   useEffect(() => {
     loadUser();
-    console.log(state);
-  }, [state.token]);
+  }, []);
+
+  if (state.token) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <div className={classes.loginSignupWrapperRoot}>

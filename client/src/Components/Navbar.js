@@ -29,6 +29,7 @@ const navLinks = [
 const Navbar = (props) => {
   const classes = useStyles();
   const { state, dispatch } = useContext(store);
+  console.log(state);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
