@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import InterviewDialog from '../components/InterviewDialog';
 import { useStyles } from '../themes/theme';
-import { StartDashboardButton } from '../components/Buttons';
 import PastInterviewTable from '../components/PastInterviewTable';
 import { store } from '../context/store';
 import { useHistory } from 'react-router';
