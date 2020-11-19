@@ -21,12 +21,9 @@ const DashBoard = () => {
   return (
     !state.loading && (
       <div className={classes.dashboardContainer}>
-        <StartDashboardButton onClick={() => history.push('/lobby')}>
-          START
-        </StartDashboardButton>
+        <InterviewDialog />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable />
-        <InterviewDialog />
       </div>
     )
   );
