@@ -48,8 +48,8 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      let result = await loginUser(formData);
-      dispatch({ type: USER_LOADED, payload: result.data });
+      let result = await axios.post('http://localhost:3000/users/login', formData);
+      dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
       const token = result.data.token;
       localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
