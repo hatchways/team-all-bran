@@ -2,34 +2,26 @@ import React, { useContext, useEffect, useCallback } from 'react';
 import * as imageURL from '../images/login-photo.png';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from '../themes/theme';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { store } from '../context/store';
-import { USER_LOADED } from '../context/types';
-import { getUser } from '../utils/apiFunctions';
+import axios from 'axios';
 
 const LoginSignupWrapper = ({ children }) => {
   const classes = useStyles();
-  const { dispatch, state } = useContext(store);
+  const history = useHistory();
 
-  const loadUser = useCallback(async () => {
+  const getUserInfo = useCallback(async () => {
     try {
-      const res = await getUser();
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.error(err);
+      await axios.get('http://localhost:3000/users/')
+      history.push('/dashboard')
+    } catch (error) {
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    loadUser();
-  }, [loadUser]);
+    getUserInfo();
+  }, [getUserInfo]);
 
-  if (state.token) {
-    return <Redirect to='/dashboard' />;
-  }
 
   return (
     <div className={classes.loginSignupWrapperRoot}>
