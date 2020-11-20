@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
-import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
-import TextEditor from '../components/TextEditor'
+import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
+import TextEditor from '../components/TextEditor';
 import { RunCodeButton } from '../components/Buttons';
 
 const Interview = () => {
   const classes = useStyles();
 
-  const [codeSnippet, setCodeSnippet] = useState('')
-  const [output, setOutput] = useState('')
+  const [codeSnippet, setCodeSnippet] = useState('');
+  const [output, setOutput] = useState('');
 
   const runCode = (output) => {
-    setOutput(output)
-  }
+    console.log(codeSnippet);
+    setOutput(output);
+  };
 
   const handleCodeSnippetChange = (codeSnippet) => {
-    setCodeSnippet(codeSnippet)
-  }
+    setCodeSnippet(codeSnippet);
+  };
 
   return (
     <div className={classes.interviewContainer}>
@@ -35,12 +36,10 @@ const Interview = () => {
             <div className={classes.interviewOutputHeader}>
               <div className={classes.consoleText}>Console</div>
               <div onClick={() => runCode('hello')}>
-                <RunCodeButton text="RUN CODE" />
+                <RunCodeButton text='RUN CODE' />
               </div>
             </div>
-            <div className={classes.outputText}>
-              {output}
-            </div>
+            <div className={classes.outputText}>{output}</div>
           </div>
         </Grid>
       </Grid>

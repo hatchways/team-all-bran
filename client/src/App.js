@@ -6,6 +6,7 @@ import { StateProvider, store } from './context/store';
 import { theme } from './themes/theme';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import Interview from './pages/Interview';
 
 import Routes from './routing/Routes';
 
@@ -17,6 +18,7 @@ function App() {
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
+            <Route exact path='/test' component={Interview} />
             <Route component={Routes} />
           </Switch>
         </Router>
