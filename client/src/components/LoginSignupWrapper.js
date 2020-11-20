@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useCallback } from 'react';
 import * as imageURL from '../images/login-photo.png';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from '../themes/theme';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { store } from '../context/store';
 import axios from 'axios';
 

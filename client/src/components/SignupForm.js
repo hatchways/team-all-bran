@@ -63,7 +63,7 @@ const SignupForm = () => {
         'http://localhost:3000/users/register',
         formData
       );
-      dispatch({ type: USER_LOADED, payload: result.data.user });
+      dispatch({ type: USER_LOADED, payload: result.data });
 
       const token = result.data.token;
       localStorage.setItem(process.env.REACT_APP_USER_DATA, token);

@@ -74,11 +74,11 @@ const UserInformation = (props) => {
         `http://localhost:3000/users/update/${id}`,
         userData
       );
-      dispatch({ type: USER_LOADED, payload: result.data.user });
+      dispatch({ type: USER_LOADED, payload: result.data });
       // will change to /background (protected route, routes folder)
       history.push('/dashboard');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
