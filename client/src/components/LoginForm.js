@@ -8,6 +8,7 @@ import { USER_LOADED } from '../context/types';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { loginUser } from '../utils/apiFunctions';
+import axios from 'axios';
 
 const LoginForm = () => {
   const history = useHistory();
