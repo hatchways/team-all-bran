@@ -18,7 +18,7 @@ const Routes = () => {
         <PrivateRoute exact path='/dashboard' component={DashBoard} />
         <PrivateRoute exact path='/blog' component={Blog} />
         <PrivateRoute exact path='/faq' component={Faq} />
-        <PrivateRoute exact path='/lobby/:id' component={Lobby} />{' '}
+        <Route exact path='/lobby/:id' component={Lobby} />{' '}
         {/* This route can change */}
         <Route path='/' component={Signup} />
       </Switch>
