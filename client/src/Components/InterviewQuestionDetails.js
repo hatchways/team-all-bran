@@ -40,7 +40,7 @@ const InterviewQuestionDetails = (props) => {
           Answer
         </div>}
     </div>
-  )
+  );
 }
 
-export default InterviewQuestionDetails
+export default InterviewQuestionDetails;
