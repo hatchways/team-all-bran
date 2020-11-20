@@ -41,6 +41,7 @@ const Lobby = () => {
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
+    console.log(state);
     socket.emit('join_lobby', state.user);
     socket.on('users', (users) => {
       setUserData(Object.values(users));
