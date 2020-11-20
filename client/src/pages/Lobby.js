@@ -33,16 +33,21 @@ const Lobby = () => {
     setOpen(false);
   };
 
-  const [response, setResponse] = useState('');
+  const [userData, setUserData] = useState('');
   const history = useHistory();
+
+  const { state, dispatch } = useContext(store);
+  console.log(state.user);
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    socket.on('FromAPI', (data) => {
-      setResponse(data);
+    socket.emit('join_lobby', state.user);
+    socket.on('users', (users) => {
+      setUserData(Object.values(users));
     });
     return () => socket.disconnect();
   }, []);
+
   console.log('CHECKING FOR PATHNAME', history.location.pathname);
 
   if (!open) return <Redirect to='/dashboard' />;
@@ -51,10 +56,6 @@ const Lobby = () => {
 
   return (
     <div>
-      <p>
-        It's <time dateTime={response}>{response}</time>
-      </p>
-
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -76,7 +77,7 @@ const Lobby = () => {
           <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
           </DialogContent>
-          <UserList handleClose={handleClose} />
+          <UserList userData={userData} handleClose={handleClose} />
         </div>
       </Dialog>
     </div>
@@ -85,7 +86,7 @@ const Lobby = () => {
 
 export default Lobby;
 
-const UserList = ({ handleClose }) => {
+const UserList = ({ handleClose, userData }) => {
   const { state } = useContext(store);
   const classes = useStyles();
 
@@ -94,16 +95,22 @@ const UserList = ({ handleClose }) => {
       <Grid>
         <div className={classes.demo}>
           <List>
-            <ListItem>
-              <>
-                <Avatar alt='' img={avatar}>
-                  {' '}
-                </Avatar>
-              </>
-              <ListItemText
-                primary={state.user.firstName + ' ' + state.user.lastName}
-              />
-            </ListItem>
+            <div>
+              {userData ? (
+                userData.map(({ firstName, lastName }, index) => {
+                  return (
+                    <ListItem className={classes.waitingRoomUser} key={index}>
+                      <Avatar alt='Avatar' src={avatar} />
+                      <div
+                        className={classes.waitingRoomUserName}
+                      >{`${firstName} ${lastName}`}</div>
+                    </ListItem>
+                  );
+                })
+              ) : (
+                <p>Empty</p>
+              )}
+            </div>
           </List>
           <ContinueButton onClick={handleClose} color='primary'>
             Start
