@@ -1,15 +1,13 @@
-
-import React, { useState, useContext } from 'react'
-import TextField from '@material-ui/core/TextField'
-import { Link, useHistory } from 'react-router-dom'
-import { RedirectPageButton, ContinueButton } from '../components/Buttons'
-import { useStyles } from '../themes/theme'
-import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import { store } from '../context/store'
-import axios from 'axios'
-import { USER_LOADED } from '../context/types'
-
+import React, { useState, useContext } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { Link, useHistory } from 'react-router-dom';
+import { RedirectPageButton, ContinueButton } from '../components/Buttons';
+import { useStyles } from '../themes/theme';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { store } from '../context/store';
+import axios from 'axios';
+import { USER_LOADED } from '../context/types';
 
 const SignupForm = () => {
   const history = useHistory();
@@ -22,8 +20,7 @@ const SignupForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
-  })
-
+  });
 
   const [localState, setLocalState] = useState({
     open: false,
@@ -32,10 +29,9 @@ const SignupForm = () => {
     message: null,
   });
 
+  const { vertical, horizontal, open, message } = localState;
 
-  const { vertical, horizontal, open, message } = localState
-
-  const { firstName, lastName, email, password, confirmPassword } = formData
+  const { firstName, lastName, email, password, confirmPassword } = formData;
 
   const showAlert = ({ message }) => {
     setLocalState({
@@ -64,7 +60,7 @@ const SignupForm = () => {
 
     try {
       const result = await axios.post(
-        'http://localhost:3001/users/register',
+        'http://localhost:3000/users/register',
         formData
       );
       dispatch({ type: USER_LOADED, payload: result.data.user });
@@ -72,38 +68,38 @@ const SignupForm = () => {
       const token = result.data.token;
       localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
       // will change to /background (protected route, routes folder)
-      history.push('/dashboard')
+      history.push('/dashboard');
     } catch (error) {
       if (error.response.data.error === 'Email already exists') {
-        showAlert({ message: 'Email already exists' })
+        showAlert({ message: 'Email already exists' });
       }
     }
   };
 
   const displayAlertMessage = () => {
     if (!areAllFieldsCompleted()) {
-      showAlert({ message: 'Must fill out every field!' })
-      return true
+      showAlert({ message: 'Must fill out every field!' });
+      return true;
     }
     if (!passwordIsValid() && !emailIsValid()) {
-      showAlert({ message: 'Password & E-mail are invalid!' })
-      return true
+      showAlert({ message: 'Password & E-mail are invalid!' });
+      return true;
     }
     if (!passwordIsValid() && password.length !== 0) {
-      showAlert({ message: 'Password is invalid!' })
-      return true
+      showAlert({ message: 'Password is invalid!' });
+      return true;
     }
     if (!emailIsValid() && email.length !== 0) {
-      showAlert({ message: 'E-mail is invalid!' })
-      return true
+      showAlert({ message: 'E-mail is invalid!' });
+      return true;
     }
     if (areAllFieldsCompleted() && emailIsValid && !passwordsAreTheSame()) {
       showAlert({
         vertical: 'bottom',
         horizontal: 'center',
         message: 'Passwords must match!',
-      })
-      return true
+      });
+      return true;
     }
 
     return false;
@@ -127,15 +123,14 @@ const SignupForm = () => {
   };
 
   const passwordsAreTheSame = () => {
-    return password === confirmPassword
-  }
+    return password === confirmPassword;
+  };
   return (
-
     <div className={classes.signUpForm}>
       <div className={classes.loginContainer}>
         <div className={classes.alreadyHaveAccount}>Already have an account?</div>
         <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
-          <RedirectPageButton variant="outlined" size="small">
+          <RedirectPageButton variant='outlined' size='small'>
             Sign in
           </RedirectPageButton>
         </Link>
@@ -186,11 +181,11 @@ const SignupForm = () => {
           />
           <TextField
             error={password !== confirmPassword && confirmPassword > 0}
-            id="standard-error-helper-text"
-            name="confirmPassword"
-            type="password"
-            variant="outlined"
-            label="Confirm Password"
+            id='standard-error-helper-text'
+            name='confirmPassword'
+            type='password'
+            variant='outlined'
+            label='Confirm Password'
             helperText={'Must match password'}
             onChange={onChange}
             color='primary'
