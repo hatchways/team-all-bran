@@ -19,7 +19,7 @@ const executeCode = require('./routes/executeCode');
 const { json, urlencoded } = express;
 
 var app = express();
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors());
 // Connect to MongoDB
 connectDB();
 

@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import api from './api';
 
 export const getUser = () => {
@@ -14,4 +15,8 @@ export const signUpUser = (formData) => {
 
 export const loginUser = (formData) => {
   return api.post('/users/login', formData);
+};
+
+export const joinInterview = (id) => {
+  return api.put(`/interviews/${id}`);
 };
