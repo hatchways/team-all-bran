@@ -45,7 +45,7 @@ const Navbar = (props) => {
     history.push(route);
     if (route === '/signup') {
       dispatch({ type: LOGOUT });
-      localStorage.clear();
+      fetch('/users/logout', { method: 'POST', credentials: 'same-origin' });
     }
   };
 
