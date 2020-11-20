@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { ControlledEditor } from '@monaco-editor/react';
 
-const TextEditor = (props) => {
+const TextEditor = ({ language, handleCodeSnippetChange }) => {
   const [isEditorReady, setIsEditorReady] = useState(false);
   const codeText = useRef();
 
@@ -11,7 +11,15 @@ const TextEditor = (props) => {
   }
 
   const handleCodeChange = () => {
-    props.handleCodeSnippetChange(codeText.current())
+    handleCodeSnippetChange(codeText.current())
+  }
+
+  const displayDefaultText = () => {
+    if (language === 'javascript') {
+      return "//write your code here"
+    } else if (language === 'python') {
+      return "# write your code here"
+    }
   }
 
   return (
@@ -19,12 +27,12 @@ const TextEditor = (props) => {
       height="90vh"
       theme="dark"
       options={{ fontSize: 18 }}
-      language="javascript"
-      value={"// write your code here"}
+      language={language}
+      value={displayDefaultText()}
       editorDidMount={handleEditorDidMount}
       onChange={handleCodeChange} />
 
   )
 }
 
-export default TextEditor
+export default TextEditor;
