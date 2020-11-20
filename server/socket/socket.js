@@ -1,25 +1,18 @@
 module.exports = (server) => {
   // const http = require('http').createServer(server);
   const io = require('socket.io')(server, { origins: '*:*' });
-
-  let interval;
-
+  const connectedUsers = {};
   io.on('connection', (socket) => {
-    console.log('Client connected');
-
-    if (interval) {
-      clearInterval(interval);
-    }
-
-    interval = setInterval(() => getApiAndEmit(socket), 1000);
-
-    socket.on('disconnect', () => console.log('Client disconnected'));
+    let connectedUser;
+    socket.on('join_lobby', (user) => {
+      connectedUser = user._id;
+      connectedUsers[connectedUser] = user;
+      io.emit('users', connectedUsers);
+    });
+    socket.on('disconnect', () => {
+      delete connectedUsers[connectedUser];
+      io.emit('users', connectedUsers);
+    });
   });
-
-  const getApiAndEmit = (socket) => {
-    const response = new Date();
-    socket.emit('FromAPI', response);
-  };
-
   return io;
 };

@@ -54,21 +54,9 @@ function editUser(req, res) {
     });
 }
 
-async function getUser(req, res, next) {
-  const { token } = req.cookies;
-  const { secretKey } = process.env;
-  try {
-    // Verify token
-    const id = await jwt.verify(token, secretKey).user._id;
-
-    const user = await User.findById(id);
-
-    res.status(200).json({ user, token });
-
-    // Return user interviews here
-  } catch (err) {
-    res.status(401).json({ error: 'Token is not valid' });
-  }
+function getUser(req, res) {
+  const { user } = req;
+  res.json({ user });
 }
 
 function createTokenResponse(user, res) {
@@ -83,7 +71,7 @@ function createTokenResponse(user, res) {
       let responseObj = { user, token };
       res
         .status(201)
-        .cookie('token', token, { httpOnly: true, sameSite: 'lax' })
+        .cookie('token', token, { httpOnly: true })
         .json(responseObj);
     }
   );
