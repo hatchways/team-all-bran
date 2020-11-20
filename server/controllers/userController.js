@@ -40,6 +40,11 @@ function login(req, res) {
   });
 }
 
+function logout(req, res) {
+  res.clearCookie('token');
+  return res.sendStatus(200);
+}
+
 function editUser(req, res) {
   const id = req.params.userId;
   let user = userModel.updateUser(id, req);
@@ -93,4 +98,4 @@ function createTokenResponse(user, res) {
   );
 }
 
-module.exports = { register, login, editUser, getUser };
+module.exports = { register, login, editUser, getUser, logout };
