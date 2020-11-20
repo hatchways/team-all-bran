@@ -3,12 +3,11 @@ import TextField from '@material-ui/core/TextField';
 import { Link, useHistory } from 'react-router-dom';
 import { RedirectPageButton, ContinueButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
+import axios from 'axios';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { loginUser } from '../utils/apiFunctions';
-import axios from 'axios';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -50,7 +49,7 @@ const LoginForm = () => {
 
     try {
       let result = await axios.post('http://localhost:3000/users/login', formData);
-      dispatch({ type: USER_LOADED, payload: result.data });
+      dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
       const token = result.data.token;
       localStorage.setItem(process.env.REACT_APP_USER_DATA, token);
@@ -67,7 +66,7 @@ const LoginForm = () => {
           <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
             <RedirectPageButton variant='outlined' size='small'>
               SIGN UP
-            </RedirectPageButton>
+           </RedirectPageButton>
           </Link>
         </div>
         <div>

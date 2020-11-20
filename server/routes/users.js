@@ -11,17 +11,12 @@ router.post('/register', userController.register);
 // POST /users/login
 router.post('/login', userController.login);
 
-router.post(
-  '/logout',
-  passport.authenticate('jwt', { session: false }),
-  userController.logout
-);
+// POST /users/logout
+router.post('/logout', userController.logout);
 
-router.get(
-  '/',
+router.get('/',
   passport.authenticate('jwt', { session: false }),
-  userController.getUser
-);
+  userController.getUser);
 
 router.put(
   '/update/:userId',
