@@ -102,7 +102,6 @@ const UserList = ({ handleClose }) => {
               </>
               <ListItemText
                 primary={state.user.firstName + ' ' + state.user.lastName}
-                img={avatar}
               />
             </ListItem>
           </List>
