@@ -44,19 +44,16 @@ const InterviewSchema = new Schema(
 );
 
 async function createInterview(req) {
-  const { creator } = req.body;
-  const firstUser = await User.findOne({ _id: creator });
-
+  const firstUser = req.user;
   try {
-    const interview = new Interview({});
-    const interviewDoc = await interview.save();
+    const interviewDoc = await new Interview({}).save();
     interviewDoc.users.push(firstUser);
     const interviewDocObject = interviewDoc.toObject();
 
     await interviewDoc.save();
     firstUser.interviews.push(interviewDocObject);
     await firstUser.save();
-    return interviewDoc;
+    return interviewDoc.populate('users');
   } catch (err) {
     return err;
   }
