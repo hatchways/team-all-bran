@@ -6,6 +6,10 @@ const apiMethod = (req, res) => {
   let code = req.body.code;
   let language = req.body.language;
 
+  //console.log(req);
+
+  console.log(`${language} ---- ${code}`);
+
   let fileName = '';
 
   switch (language) {
@@ -38,10 +42,10 @@ const apiMethod = (req, res) => {
       res.json(codeOutput);
     })
     .catch(function (error) {
-      console.log(error);
+      //console.log(error);
     });
 };
 
-router.get('/', apiMethod);
+router.post('/', apiMethod);
 
 module.exports = router;

@@ -30,6 +30,8 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static(join(__dirname, 'public')));
 // Passport middleware
 app.use(passport.initialize());

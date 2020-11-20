@@ -3,38 +3,54 @@ import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
 import TextEditor from '../components/TextEditor';
-import { RunCodeButton } from '../components/Buttons';
+import InterviewHeader from '../components/InterviewHeader';
+import OutputConsole from '../components/OutputConsole';
+import axios from 'axios';
 
 const Interview = () => {
   const classes = useStyles();
   const [codeSnippet, setCodeSnippet] = useState('');
-  const [language, setLanguage] = useState('javascript');
+  //const [language, setLanguage] = useState('javascript');
+
+  const [codeData, setCodeData] = useState({
+    language: 'javascript',
+    code: '//write your code here',
+  });
+
+  const [codeResult, setCodeResult] = useState('');
 
   const handleCodeSnippetChange = (codeSnippet) => {
-    setCodeSnippet(codeSnippet);
+    setCodeData({ ...codeData, code: codeSnippet });
   };
+
+  const handleLanguageChange = (language) => {
+    setCodeData({ ...codeData, language: language });
+  };
+
+  const runCode = async () => {
+    try {
+      const result = await axios.post(`http://localhost:3001/runCode`, codeData);
+      setCodeResult(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { language, code } = codeData;
 
   return (
     <div className={classes.interviewContainer}>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
-        <InterviewHeader language={language} setLanguage={setLanguage} />
+        <InterviewHeader language={language} setLanguage={handleLanguageChange} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           <InterviewQuestionDetails />
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
-<<<<<<< HEAD
-          <TextEditor handleCodeSnippetChange={handleCodeSnippetChange} />
-          <div className={classes.interviewOutput}>
-            <div className={classes.interviewOutputHeader}>
-              <div className={classes.consoleText}>Console</div>
-              <div onClick={() => runCode('hello')}>
-                <RunCodeButton text='RUN CODE' />
-              </div>
-            </div>
-            <div className={classes.outputText}>{output}</div>
-          </div>
-          <TextEditor language={language} handleCodeSnippetChange={handleCodeSnippetChange} />
-          <OutputConsole codeSnippet={codeSnippet} />
+          <TextEditor
+            language={language}
+            handleCodeSnippetChange={handleCodeSnippetChange}
+          />
+          <OutputConsole runCode={runCode} codeResult={codeResult} />
         </Grid>
       </Grid>
     </div>
