@@ -17,7 +17,7 @@ const questions = require('./routes/questions');
 const { json, urlencoded } = express;
 
 var app = express();
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 // Connect to MongoDB
 connectDB();
 

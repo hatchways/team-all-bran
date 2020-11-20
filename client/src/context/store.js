@@ -8,7 +8,7 @@ import {
 } from './types';
 
 const initialState = {
-  token: localStorage.getItem(process.env.REACT_APP_USER_DATA),
+  token: null,
   isAuthenticated: false,
   loading: false,
   user: {},
@@ -25,7 +25,8 @@ const StateProvider = ({ children }) => {
           ...state,
           isAuthenticated: true,
           loading: false,
-          user: payload,
+          user: payload.user,
+          token: payload.token,
         };
       case REGISTER_SUCCESS:
         return {

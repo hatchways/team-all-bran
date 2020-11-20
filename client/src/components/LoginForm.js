@@ -3,11 +3,11 @@ import TextField from '@material-ui/core/TextField';
 import { Link, useHistory } from 'react-router-dom';
 import { RedirectPageButton, ContinueButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
-import axios from 'axios';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { loginUser } from '../utils/apiFunctions';
 
 const LoginForm = () => {
   const history = useHistory();
