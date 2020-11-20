@@ -90,6 +90,7 @@ export default Lobby;
 const UserList = ({ handleClose, userData }) => {
   const { state } = useContext(store);
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <Grid>
@@ -113,7 +114,7 @@ const UserList = ({ handleClose, userData }) => {
               )}
             </div>
           </List>
-          <ContinueButton onClick={handleClose} color='primary'>
+          <ContinueButton onClick={() => history.push('/interview')} color='primary'>
             Start
           </ContinueButton>
         </div>
