@@ -3,7 +3,7 @@ import avatar from '../images/avatar.png';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { store } from '../context/store';
-import axios from 'axios'
+import { logoutUser } from '../utils/apiFunctions'
 
 import {
   AppBar,
@@ -46,7 +46,7 @@ const Navbar = (props) => {
     history.push(route);
     if (route === '/signup') {
       dispatch({ type: LOGOUT });
-      axios.post('http://localhost:3000/users/logout')
+      logoutUser();
     }
   };
 
