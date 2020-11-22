@@ -8,6 +8,7 @@ import Profile from '../pages/Profile';
 import PrivateRoute from './PrivateRoute';
 import Signup from '../pages/Signup';
 import Lobby from '../pages/Lobby';
+import Interview from '../pages/Interview';
 
 const Routes = () => {
   return (
@@ -18,7 +19,8 @@ const Routes = () => {
         <PrivateRoute exact path='/dashboard' component={DashBoard} />
         <PrivateRoute exact path='/blog' component={Blog} />
         <PrivateRoute exact path='/faq' component={Faq} />
-        <Route exact path='/lobby/:id' component={Lobby} />{' '}
+        <PrivateRoute exact path='/lobby/:id' component={Lobby} />
+        <PrivateRoute exact path='/interview' component={Interview} />
         {/* This route can change */}
         <Route path='/' component={Signup} />
       </Switch>
