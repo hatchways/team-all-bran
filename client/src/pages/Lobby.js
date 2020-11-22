@@ -7,53 +7,46 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import { ContinueButton, StartDashboardButton } from '../components/Buttons';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import avatar from '../images/avatar.png';
-import { useStyles } from '../themes/theme';
+import { ContinueButton } from '../components/Buttons';
 import { Input, InputLabel } from '@material-ui/core';
 import { store } from '../context/store';
+import WaitingRoomUserList from '../components/WaitingRoomUserList'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
 const Lobby = () => {
-  const classes = useStyles();
   const ENDPOINT = '/';
-  const [open, setOpen] = React.useState(true);
+  const URL = `http://localhost:3000`;
+
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [userData, setUserData] = useState('');
+  const [open, setOpen] = useState(true);
+  const [userData, setUserData] = useState(null);
   const history = useHistory();
 
-  const { state, dispatch } = useContext(store);
-  console.log(state.user);
+  const { state } = useContext(store);
 
   useEffect(() => {
+    const roomId = history.location.pathname.split('/')[2];
     const socket = socketIOClient(ENDPOINT);
-    console.log(state);
-    socket.emit('join_lobby', state.user);
+    socket.emit('join_room', { user: state.user, roomId });
     socket.on('users', (users) => {
+      if (users === null) {
+        alert("TOO MANY PEOPLE!!!!")
+        history.push('/dashboard');
+        return;
+      }
       setUserData(Object.values(users));
     });
     return () => socket.disconnect();
   }, []);
 
-  console.log('CHECKING FOR PATHNAME', history.location.pathname);
-
   if (!open) return <Redirect to='/dashboard' />;
-
-  const youAreEl = `http://localhost:3000`;
 
   return (
     <div>
@@ -68,7 +61,7 @@ const Lobby = () => {
         <div>
           <DialogTitle id='alert-dialog-slide-title'>Waiting Room</DialogTitle>
           <DialogActions>
-            <Input onChange={() => {}} value={youAreEl + history.location.pathname}>
+            <Input onChange={() => { }} value={URL + history.location.pathname}>
               <InputLabel>Copy Link</InputLabel>
             </Input>
             <ContinueButton onClick={handleClose} color='primary'>
@@ -78,7 +71,7 @@ const Lobby = () => {
           <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
           </DialogContent>
-          <UserList userData={userData} handleClose={handleClose} />
+          <WaitingRoomUserList userData={userData} handleClose={handleClose} />
         </div>
       </Dialog>
     </div>
@@ -86,39 +79,3 @@ const Lobby = () => {
 };
 
 export default Lobby;
-
-const UserList = ({ handleClose, userData }) => {
-  const { state } = useContext(store);
-  const classes = useStyles();
-  const history = useHistory();
-
-  return (
-    <Grid>
-      <Grid>
-        <div className={classes.demo}>
-          <List>
-            <div>
-              {userData ? (
-                userData.map(({ firstName, lastName }, index) => {
-                  return (
-                    <ListItem className={classes.waitingRoomUser} key={index}>
-                      <Avatar alt='Avatar' src={avatar} />
-                      <div
-                        className={classes.waitingRoomUserName}
-                      >{`${firstName} ${lastName}`}</div>
-                    </ListItem>
-                  );
-                })
-              ) : (
-                <p>Empty</p>
-              )}
-            </div>
-          </List>
-          <ContinueButton onClick={() => history.push('/interview')} color='primary'>
-            Start
-          </ContinueButton>
-        </div>
-      </Grid>
-    </Grid>
-  );
-};
