@@ -30,6 +30,10 @@ module.exports = (server) => {
       io.emit('users', connectedUsers[room]);
     });
 
+    socket.on('start_interview', (roomId) => {
+      io.emit('join_interview_room', connectedUsers[roomId]);
+    });
+
     socket.on('disconnect', () => {
       delete connectedUsers[room][connectedUser];
       io.emit('users', connectedUsers[room]);
