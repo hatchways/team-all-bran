@@ -11,14 +11,40 @@ const FeedbackSchema = new Schema(
   {
     createdAt: Number,
     updatedAt: Number,
-    content: {
+    performanceLevel: {
+      type: Number,
+    },
+    categories: {
+      communication: {
+        type: Number,
+      },
+      codeEfficiency: {
+        type: Number,
+      },
+      codeOrganization: {
+        type: Number,
+      },
+      speed: {
+        type: Number,
+      },
+      debugging: {
+        type: Number,
+      },
+      prolemSolving: {
+        type: Number,
+      },
+    },
+    strengths: {
       type: String,
     },
-    codingRating: {
-      type: Number,
+    improvements: {
+      type: String,
     },
-    communication: {
-      type: Number,
+    resources: {
+      type: String,
+    },
+    other: {
+      type: String,
     },
     user: {
       type: Schema.Types.ObjectId,
@@ -32,8 +58,8 @@ const FeedbackSchema = new Schema(
   opts
 );
 
-const Question = mongoose.model('Question', FeedbackSchema);
+const Feedback = mongoose.model('Feedback', FeedbackSchema);
 
 module.exports = {
-  Question,
+  Feedback,
 };
