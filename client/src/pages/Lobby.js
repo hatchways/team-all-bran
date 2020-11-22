@@ -19,6 +19,7 @@ import avatar from '../images/avatar.png';
 import { useStyles } from '../themes/theme';
 import { Input, InputLabel } from '@material-ui/core';
 import { store } from '../context/store';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -32,7 +33,7 @@ const Lobby = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const [copied, setCopied] = useState(false);
   const [userData, setUserData] = useState('');
   const history = useHistory();
 
@@ -70,9 +71,12 @@ const Lobby = () => {
             <Input onChange={() => {}} value={youAreEl + history.location.pathname}>
               <InputLabel>Copy Link</InputLabel>
             </Input>
-            <ContinueButton onClick={handleClose} color='primary'>
-              COPY
-            </ContinueButton>
+            <CopyToClipboard
+              onCopy={() => setCopied(true)}
+              text={youAreEl + history.location.pathname}
+            >
+              <ContinueButton color='primary'>COPY</ContinueButton>
+            </CopyToClipboard>
           </DialogActions>
           <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
