@@ -8,7 +8,6 @@ const { Interview } = require('../models/Interview');
 
 module.exports = {
   cInterview: async (req, res) => {
-    console.log(req);
     const interview = await interviewModel.createInterview(req);
     res.send({ interview });
   },
