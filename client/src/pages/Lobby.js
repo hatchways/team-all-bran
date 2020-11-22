@@ -29,6 +29,7 @@ const Lobby = () => {
 
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState(null);
+  const [creatorId, setCreatorId] = useState(null)
   const [localState, setLocalState] = useState({
     alert: false,
     vertical: 'bottom',
@@ -62,6 +63,9 @@ const Lobby = () => {
         showAlert({ message: 'This lobby is currently full' });
         return;
       }
+      if (Object.values(users).length === 1) {
+        setCreatorId(Object.values(users)[0]._id)
+      }
       setUserData(Object.values(users));
     });
     return () => socket.disconnect();
@@ -92,7 +96,7 @@ const Lobby = () => {
           <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
           </DialogContent>
-          <WaitingRoomUserList showStartButton={!alert} userData={userData} handleClose={handleClose} />
+          <WaitingRoomUserList creatorId={creatorId} showStartButton={!alert} userData={userData} handleClose={handleClose} />
         </div>
       </Dialog>
       {open && (
