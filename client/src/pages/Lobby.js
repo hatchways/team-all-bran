@@ -96,7 +96,12 @@ const Lobby = () => {
           <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
           </DialogContent>
-          <WaitingRoomUserList creatorId={creatorId} showStartButton={!alert} userData={userData} handleClose={handleClose} />
+          <WaitingRoomUserList showStartButton={!alert} userData={userData} handleClose={handleClose} />
+          {!alert &&
+            creatorId &&
+            <ContinueButton onClick={() => history.push('/interview')} color='primary'>
+              Start
+        </ContinueButton>}
         </div>
       </Dialog>
       {open && (
