@@ -11,6 +11,8 @@ import { ContinueButton } from '../components/Buttons';
 import { Input, InputLabel } from '@material-ui/core';
 import { store } from '../context/store';
 import WaitingRoomUserList from '../components/WaitingRoomUserList'
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -27,9 +29,29 @@ const Lobby = () => {
 
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState(null);
-  const history = useHistory();
+  const [localState, setLocalState] = useState({
+    alert: false,
+    vertical: 'bottom',
+    horizontal: 'center',
+    message: null,
+  });
 
+  const history = useHistory();
   const { state } = useContext(store);
+  const { vertical, horizontal, alert, message } = localState;
+
+  const showAlert = ({ message }) => {
+    setLocalState({
+      alert: true,
+      vertical: vertical,
+      horizontal: horizontal,
+      message,
+    });
+  };
+
+  const handleAlertClose = () => {
+    setLocalState({ ...localState, alert: false });
+  };
 
   useEffect(() => {
     const roomId = history.location.pathname.split('/')[2];
@@ -37,8 +59,7 @@ const Lobby = () => {
     socket.emit('join_room', { user: state.user, roomId });
     socket.on('users', (users) => {
       if (users === null) {
-        alert("TOO MANY PEOPLE!!!!")
-        history.push('/dashboard');
+        showAlert({ message: 'This lobby is currently full' });
         return;
       }
       setUserData(Object.values(users));
@@ -71,9 +92,26 @@ const Lobby = () => {
           <DialogContent>
             <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
           </DialogContent>
-          <WaitingRoomUserList userData={userData} handleClose={handleClose} />
+          <WaitingRoomUserList showStartButton={!alert} userData={userData} handleClose={handleClose} />
         </div>
       </Dialog>
+      {open && (
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={alert}
+          onClose={handleAlertClose}
+          message={message}
+          key={vertical + horizontal}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: 'red',
+              fontSize: '20px',
+            }}
+            message={message}
+          />
+        </Snackbar>
+      )}
     </div>
   );
 };

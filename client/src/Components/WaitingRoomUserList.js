@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import avatar from '../images/avatar.png';
 import { useStyles } from '../themes/theme';
 
-const WaitingRoomUserList = ({ userData }) => {
+const WaitingRoomUserList = ({ userData, showStartButton }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -34,9 +34,11 @@ const WaitingRoomUserList = ({ userData }) => {
                 )}
             </div>
           </List>
-          <ContinueButton onClick={() => history.push('/interview')} color='primary'>
-            Start
-          </ContinueButton>
+          {showStartButton &&
+            <ContinueButton onClick={() => history.push('/interview')} color='primary'>
+              Start
+        </ContinueButton>}
+
         </div>
       </Grid>
     </Grid>
