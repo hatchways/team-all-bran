@@ -38,6 +38,8 @@ const Lobby = () => {
   });
 
   const history = useHistory();
+  const roomId = history.location.pathname.split('/')[2];
+  const socket = socketIOClient(ENDPOINT);
   const { state } = useContext(store);
   const { vertical, horizontal, alert, message } = localState;
 
@@ -54,9 +56,11 @@ const Lobby = () => {
     setLocalState({ ...localState, alert: false });
   };
 
+  const handleStartInterview = () => {
+    socket.emit('start_interview', roomId);
+  }
+
   useEffect(() => {
-    const roomId = history.location.pathname.split('/')[2];
-    const socket = socketIOClient(ENDPOINT);
     socket.emit('join_room', { user: state.user, roomId });
     socket.on('users', (users) => {
       if (users === null) {
@@ -67,6 +71,9 @@ const Lobby = () => {
         setCreatorId(Object.values(users)[0]._id)
       }
       setUserData(Object.values(users));
+    });
+    socket.on('join_interview_room', (users) => {
+      history.push('/interview');
     });
     return () => socket.disconnect();
   }, []);
@@ -99,7 +106,7 @@ const Lobby = () => {
           <WaitingRoomUserList showStartButton={!alert} userData={userData} handleClose={handleClose} />
           {!alert &&
             creatorId &&
-            <ContinueButton onClick={() => history.push('/interview')} color='primary'>
+            <ContinueButton onClick={handleStartInterview} color='primary'>
               Start
         </ContinueButton>}
         </div>
