@@ -72,7 +72,7 @@ async function getUser(req, res, next) {
 }
 
 function createTokenResponse(user, res) {
-  const payload = { user };
+  const payload = user._id;
   return jwt.sign(
     payload,
     secretKey,
