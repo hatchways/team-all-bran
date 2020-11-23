@@ -13,7 +13,7 @@ const DashBoard = () => {
 
   const history = useHistory();
   const { state } = useContext(store);
-  
+
   if (!state.isAuthenticated) return <Redirect to='/signup' />;
 
   if (state.user.experience === undefined) {
