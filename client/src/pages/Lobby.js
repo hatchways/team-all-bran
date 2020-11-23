@@ -7,17 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import { ContinueButton, StartDashboardButton } from '../components/Buttons';
+import { ContinueButton } from '../components/Buttons';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import avatar from '../images/avatar.png';
-import { theme, useStyles } from '../themes/theme';
-import { Input, InputLabel, TextField } from '@material-ui/core';
+import { useStyles } from '../themes/theme';
+import { TextField } from '@material-ui/core';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -37,7 +34,7 @@ const Lobby = () => {
   const [userData, setUserData] = useState('');
   const history = useHistory();
 
-  const { state, dispatch } = useContext(store);
+  const { state } = useContext(store);
   console.log(state.user);
 
   useEffect(() => {
@@ -47,7 +44,7 @@ const Lobby = () => {
       setUserData(Object.values(users));
     });
     return () => socket.disconnect();
-  }, []);
+  }, [state.user]);
 
   console.log('CHECKING FOR PATHNAME', history.location.pathname);
 
@@ -83,7 +80,9 @@ const Lobby = () => {
               onCopy={() => setCopied(true)}
               text={youAreEl + history.location.pathname}
             >
-              <ContinueButton color='primary'>COPY</ContinueButton>
+              <ContinueButton disabled={copied} color='primary'>
+                COPY
+              </ContinueButton>
             </CopyToClipboard>
           </DialogActions>
           <DialogContent>
@@ -101,8 +100,7 @@ const Lobby = () => {
 
 export default Lobby;
 
-const UserList = ({ handleClose, userData }) => {
-  const { state } = useContext(store);
+const UserList = ({ userData }) => {
   const classes = useStyles();
 
   return (
