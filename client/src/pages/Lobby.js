@@ -78,7 +78,6 @@ const Lobby = () => {
               id='outlined-basic'
               variant='outlined'
               disabled
-              color={theme.colors.darkBlue}
             />
             <CopyToClipboard
               onCopy={() => setCopied(true)}
