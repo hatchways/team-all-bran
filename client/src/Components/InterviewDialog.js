@@ -64,7 +64,6 @@ export default function SimpleDialogDemo() {
   };
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
-    console.log(event.target.value);
   };
 
   return (

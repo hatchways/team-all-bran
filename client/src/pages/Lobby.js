@@ -16,8 +16,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import avatar from '../images/avatar.png';
-import { useStyles } from '../themes/theme';
-import { Input, InputLabel } from '@material-ui/core';
+import { theme, useStyles } from '../themes/theme';
+import { Input, InputLabel, TextField } from '@material-ui/core';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -56,8 +56,9 @@ const Lobby = () => {
   const youAreEl = `http://localhost:3000`;
 
   return (
-    <div>
+    <>
       <Dialog
+        className={classes.waitingRoomDialogue}
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -65,12 +66,20 @@ const Lobby = () => {
         aria-labelledby='alert-dialog-slide-title'
         aria-describedby='alert-dialog-slide-description'
       >
-        <div>
+        <div className={classes.formControlWaitingRoom}>
           <DialogTitle id='alert-dialog-slide-title'>Waiting Room</DialogTitle>
+          <p>
+            <strong>Share link</strong>
+          </p>
           <DialogActions>
-            <Input onChange={() => {}} value={youAreEl + history.location.pathname}>
-              <InputLabel>Copy Link</InputLabel>
-            </Input>
+            <TextField
+              fullWidth
+              value={youAreEl + history.location.pathname}
+              id='outlined-basic'
+              variant='outlined'
+              disabled
+              color={theme.colors.darkBlue}
+            />
             <CopyToClipboard
               onCopy={() => setCopied(true)}
               text={youAreEl + history.location.pathname}
@@ -79,12 +88,15 @@ const Lobby = () => {
             </CopyToClipboard>
           </DialogActions>
           <DialogContent>
-            <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
+            <DialogContentText>Participants</DialogContentText>
           </DialogContent>
           <UserList userData={userData} handleClose={handleClose} />
+          <ContinueButton onClick={handleClose} color='primary'>
+            Start
+          </ContinueButton>
         </div>
       </Dialog>
-    </div>
+    </>
   );
 };
 
@@ -116,9 +128,6 @@ const UserList = ({ handleClose, userData }) => {
               )}
             </div>
           </List>
-          <ContinueButton onClick={handleClose} color='primary'>
-            Start
-          </ContinueButton>
         </div>
       </Grid>
     </Grid>
