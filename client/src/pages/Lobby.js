@@ -81,7 +81,7 @@ const Lobby = () => {
               text={youAreEl + history.location.pathname}
             >
               <ContinueButton disabled={copied} color='primary'>
-                COPY
+                {!copied ? 'COPY' : 'COPIED!'}
               </ContinueButton>
             </CopyToClipboard>
           </DialogActions>
