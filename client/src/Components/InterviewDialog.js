@@ -6,9 +6,9 @@ import Dialog from '@material-ui/core/Dialog';
 
 import { StartDashboardButton } from './Buttons';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
-import Axios from 'axios';
 import { store } from '../context/store';
 import { useHistory } from 'react-router';
+import { createInterview } from '../utils/apiFunctions';
 
 function SimpleDialog({ onClose, selectedValue, open, handleChange }) {
   const classes = useStyles();
@@ -20,13 +20,9 @@ function SimpleDialog({ onClose, selectedValue, open, handleChange }) {
   const { state } = useContext(store);
   const history = useHistory();
 
-  const createInterview = async () => {
+  const createInt = async () => {
     try {
-      const { data } = await Axios.post(
-        '/interviews',
-        { creator: state.user._id },
-        { withCredentials: true }
-      );
+      const { data } = await createInterview(state.user._id);
 
       history.push(`/lobby/${data.interview._id}`);
     } catch (err) {
@@ -44,7 +40,7 @@ function SimpleDialog({ onClose, selectedValue, open, handleChange }) {
           selectedValue={selectedValue}
           handleChange={handleChange}
         />
-        <StartDashboardButton onClick={createInterview}>Create</StartDashboardButton>
+        <StartDashboardButton onClick={createInt}>Create</StartDashboardButton>
       </div>
     </Dialog>
   );

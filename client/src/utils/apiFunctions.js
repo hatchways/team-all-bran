@@ -20,3 +20,7 @@ export const loginUser = (formData) => {
 export const joinInterview = (id) => {
   return api.put(`/interviews/${id}`);
 };
+
+export const createInterview = (id) => {
+  return api.post(`/interviews`, { creator: id });
+};
