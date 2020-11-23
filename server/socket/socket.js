@@ -34,10 +34,14 @@ module.exports = (server) => {
       io.emit('join_interview_room', connectedUsers[roomId]);
     });
 
-    socket.on('disconnect', () => {
+    socket.on('waiting_room_disconnect', () => {
       delete connectedUsers[room][connectedUser];
 
       io.emit('users', connectedUsers[room]);
+    });
+
+    socket.on('disconnect', () => {
+
     });
 
   });

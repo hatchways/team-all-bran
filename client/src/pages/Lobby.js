@@ -60,21 +60,33 @@ const Lobby = () => {
   }
 
   useEffect(() => {
+    let mounted = true;
+
     socket.emit('join_room', { user: state.user, roomId });
     socket.on('users', (users) => {
       if (users === null) {
-        showAlert({ message: 'This lobby is currently full' });
+        if (mounted) {
+          showAlert({ message: 'This lobby is currently full' });
+        }
         return;
       }
       if (Object.values(users).length === 1) {
-        setCreatorId(Object.values(users)[0]._id)
+        if (mounted) {
+          setCreatorId(Object.values(users)[0]._id);
+        }
       }
-      setUserData(Object.values(users));
+      if (mounted) {
+        setUserData(Object.values(users));
+      }
     });
     socket.on('join_interview_room', (users) => {
       history.push('/interview');
     });
-    return () => socket.disconnect();
+
+    return () => {
+      mounted = false;
+      socket.emit('waiting_room_disconnect');
+    };
   }, []);
 
   if (!open) return <Redirect to='/dashboard' />;
