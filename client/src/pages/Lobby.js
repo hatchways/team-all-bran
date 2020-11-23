@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, useHistory } from 'react-router';
-import socketIOClient from 'socket.io-client';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -19,7 +18,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Lobby = () => {
-  const ENDPOINT = '/';
   const URL = `http://localhost:3000`;
 
 
@@ -39,8 +37,9 @@ const Lobby = () => {
 
   const history = useHistory();
   const roomId = history.location.pathname.split('/')[2];
-  const socket = socketIOClient(ENDPOINT);
   const { state } = useContext(store);
+  const socket = state.socket
+
   const { vertical, horizontal, alert, message } = localState;
 
   const showAlert = ({ message }) => {
