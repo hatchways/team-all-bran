@@ -22,11 +22,11 @@ module.exports = (server) => {
         }
         connectedUsers[room][connectedUser] = user;
       } else {
+        user['isOwner'] = true
         connectedUsers[room] = {
           [connectedUser]: user
         }
       }
-
       io.emit('users', connectedUsers[room]);
     });
 
@@ -36,6 +36,7 @@ module.exports = (server) => {
 
     socket.on('disconnect', () => {
       delete connectedUsers[room][connectedUser];
+
       io.emit('users', connectedUsers[room]);
     });
 
