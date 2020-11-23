@@ -46,7 +46,7 @@ const InterviewSchema = new Schema(
 async function createInterview(req) {
   const firstUser = req.user;
   try {
-    const interviewDoc = await new Interview({}).save();
+    const interviewDoc = new Interview({});
     interviewDoc.users.push(firstUser);
     const interviewDocObject = interviewDoc.toObject();
 
