@@ -1,47 +1,54 @@
 import React, { useState } from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
-import InterviewQuestionDetails from '../components/InterviewQuestionDetails'
-import TextEditor from '../components/TextEditor'
-import { RunCodeButton } from '../components/Buttons';
+import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
+import TextEditor from '../components/TextEditor';
+import InterviewHeader from '../components/InterviewHeader';
+import OutputConsole from '../components/OutputConsole';
+import axios from 'axios';
 
 const Interview = () => {
   const classes = useStyles();
 
-  const [codeSnippet, setCodeSnippet] = useState('')
-  const [output, setOutput] = useState('')
+  const [codeData, setCodeData] = useState({
+    language: 'javascript',
+    code: '//write your code here',
+  });
 
-  const runCode = (output) => {
-    setOutput(output)
-  }
+  const [codeResult, setCodeResult] = useState('');
 
   const handleCodeSnippetChange = (codeSnippet) => {
-    setCodeSnippet(codeSnippet)
-  }
+    setCodeData({ ...codeData, code: codeSnippet });
+  };
+
+  const handleLanguageChange = (language) => {
+    setCodeData({ ...codeData, language: language });
+  };
+
+  const runCode = async () => {
+    try {
+      const result = await axios.post(`/runCode`, codeData);
+      setCodeResult(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { language, code } = codeData;
 
   return (
     <div className={classes.interviewContainer}>
-      <Grid container spacing={3}>
-        <Grid className={classes.interviewHeader} item xs={12}>
-          <div className={classes.textMarginLeft}>Interview with</div>
-          <div className={classes.textMarginRight}>End Interview</div>
-        </Grid>
+      <Grid className={classes.gridSpacingThree} container spacing={3}>
+        <InterviewHeader language={language} setLanguage={handleLanguageChange} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           <InterviewQuestionDetails />
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
-          <TextEditor handleCodeSnippetChange={handleCodeSnippetChange} />
-          <div className={classes.interviewOutput}>
-            <div className={classes.interviewOutputHeader}>
-              <div className={classes.consoleText}>Console</div>
-              <div onClick={() => runCode('hello')}>
-                <RunCodeButton text="RUN CODE" />
-              </div>
-            </div>
-            <div className={classes.outputText}>
-              {output}
-            </div>
-          </div>
+          <TextEditor
+            language={language}
+            handleCodeSnippetChange={handleCodeSnippetChange}
+          />
+          <OutputConsole runCode={runCode} codeResult={codeResult} />
         </Grid>
       </Grid>
     </div>

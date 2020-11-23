@@ -46,6 +46,38 @@ export const useStyles = makeStyles((theme) => ({
       color: colors.darkBlue,
     },
   },
+  [`form-dropdown`]: {
+    minWidth: 120,
+    marginRight: 30,
+    '& .MuiOutlinedInput-root.Mui .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '& .MuiOutlinedInput-input': {
+      color: 'white',
+    },
+    '&:hover .MuiOutlinedInput-input': {
+      color: 'black',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
+      color: 'white',
+    },
+    '& .MuiInputLabel-outlined': {
+      color: 'white',
+    },
+    '&:hover .MuiInputLabel-outlined': {
+      color: 'white',
+    },
+    '& .MuiInputLabel-outlined.Mui-focused': {
+      color: 'white',
+    },
+  },
+  gridSpacingThree: {
+    width: '100%',
+    margin: 0
+  },
   signUpForm: {
     marginLeft: '40px',
     display: 'flex',
@@ -169,7 +201,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    height: '85px',
+    height: '100px',
     alignItems: 'center',
   },
   interviewDetailsContainer: {
@@ -205,10 +237,11 @@ export const useStyles = makeStyles((theme) => ({
   textMarginRight: {
     marginRight: '10px',
   },
-  textMarginLeft: {
-    marginLeft: '10px',
+  interviewWithText: {
+    marginLeft: '40px',
+    color: 'white',
+    fontSize: '30px'
   },
-
   backgroundContainer: {
     height: '100%',
     display: 'flex',
@@ -297,6 +330,16 @@ export const useStyles = makeStyles((theme) => ({
     borderWidth: 4,
     padding: '2px 20px',
   },
+  exitInterviewButton: {
+    color: 'white',
+    borderColor: colors.lightGray,
+    borderRadius: 25,
+    marginRight: '10px',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    borderWidth: 2,
+    padding: '2px 20px'
+  },
   consoleText: {
     color: 'white',
     marginLeft: '20px',
@@ -309,6 +352,20 @@ export const useStyles = makeStyles((theme) => ({
     fontFamily: 'monospace',
     fontSize: '18px',
   },
+  languageExitInterviewContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: '20px'
+  },
+  languageDropdownContainer: {
+    marginRight: '25px',
+    color: 'white'
+  },
+  languageDropDown: {
+    color: 'white'
+  },
   navbarDisplayFlex: {
     display: `flex`,
     justifyContent: `space-around`,
@@ -318,7 +375,6 @@ export const useStyles = makeStyles((theme) => ({
     display: `flex`,
     justifyContent: `space-between`,
   },
-
   linkText: {
     textDecoration: `none`,
     color: `black`,

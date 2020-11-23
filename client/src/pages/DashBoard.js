@@ -11,7 +11,6 @@ import UserInformation from '../components/UserInformation';
 const DashBoard = () => {
   const classes = useStyles();
 
-  const history = useHistory();
   const { state } = useContext(store);
 
   if (state.user.experience === undefined) {
