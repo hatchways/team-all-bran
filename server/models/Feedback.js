@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const User = mongoose.model('User');
+const Interview = mongoose.model('Interview');
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -60,6 +60,44 @@ const FeedbackSchema = new Schema(
 
 const Feedback = mongoose.model('Feedback', FeedbackSchema);
 
+async function addFeedback(req) {
+  const {
+    performanceLevel,
+    categories,
+    strengths,
+    improvements,
+    resources,
+    other,
+    userId,
+    interviewId,
+  } = req.body;
+
+  try {
+    let newFeedback = new Feedback({
+      performanceLevel: performanceLevel,
+      categories: categories,
+      strengths: strengths,
+      improvements: improvements,
+      resources: resources,
+      other: other,
+      user: userId,
+      interview: interviewId,
+    });
+
+    const interview = await Interview.findOne({ _id: interviewId });
+
+    newFeedback = await newFeedback.save();
+
+    interview.feedback.push(newFeedback);
+    await interview.save();
+
+    return { feedback: newFeedback };
+  } catch (err) {
+    return { error: err.message };
+  }
+}
+
 module.exports = {
   Feedback,
+  addFeedback,
 };
