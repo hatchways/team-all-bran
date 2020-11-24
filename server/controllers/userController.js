@@ -3,7 +3,6 @@ const validateRegister = require('../user-validation/register');
 const validateLogin = require('../user-validation/login');
 const { secretKey } = process.env;
 const jwt = require('jsonwebtoken');
-const { User } = require('../models/User');
 
 function register(req, res) {
   const { errors, isValid } = validateRegister(req.body);
@@ -41,6 +40,11 @@ function login(req, res) {
   });
 }
 
+function logout(req, res) {
+  res.clearCookie('token');
+  return res.sendStatus(200);
+}
+
 function editUser(req, res) {
   const id = req.params.userId;
   let user = userModel.updateUser(id, req);
@@ -54,25 +58,12 @@ function editUser(req, res) {
     });
 }
 
-async function getUser(req, res, next) {
-  const { token } = req.cookies;
-  const { secretKey } = process.env;
-  try {
-    // Verify token
-    const id = await jwt.verify(token, secretKey).user._id;
-
-    const user = await User.findById(id);
-
-    res.status(200).json({ user, token });
-
-    // Return user interviews here
-  } catch (err) {
-    res.status(401).json({ error: 'Token is not valid' });
-  }
+function getUser(req, res) {
+  res.status(200).json({ user: req.user });
 }
 
 function createTokenResponse(user, res) {
-  const payload = { user };
+  const payload = { userId: user._id };
   return jwt.sign(
     payload,
     secretKey,
@@ -87,11 +78,6 @@ function createTokenResponse(user, res) {
         .json(responseObj);
     }
   );
-}
-
-function logout(req, res) {
-  res.clearCookie('token');
-  return res.sendStatus(200);
 }
 
 module.exports = { register, login, editUser, getUser, logout };

@@ -4,10 +4,10 @@ import { NextStepButton } from '../components/Buttons';
 import { useStyles, GlobalCss } from '../themes/theme';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
-import axios from 'axios';
 import { Rating } from '@material-ui/lab';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { updateUser } from '../utils/apiFunctions';
 
 const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -27,7 +27,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
         <div className={classes.interviewLevelDiv}>Intermediate </div>
         <div className={classes.interviewLevelDesc}>
           Had a few job interviews but need more practice
-        </div>
+       </div>
       </>
     );
   } else {
@@ -36,7 +36,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
         <div className={classes.interviewLevelDiv}>Experienced </div>
         <div className={classes.interviewLevelDesc}>
           Used to job interviews and looking for a challenge
-        </div>
+       </div>
       </>
     );
   }
@@ -70,12 +70,8 @@ const UserInformation = (props) => {
     const id = props.user._id;
 
     try {
-      const result = await axios.put(
-        `http://localhost:3000/users/update/${id}`,
-        userData
-      );
-      dispatch({ type: USER_LOADED, payload: result.data });
-      // will change to /background (protected route, routes folder)
+      const result = await updateUser(id);
+      dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
     } catch (error) {
       console.error(error);
@@ -102,7 +98,7 @@ const UserInformation = (props) => {
 
           <div className={classes.infoFormDiv}>
             Years of professional experience:
-          </div>
+         </div>
           <Select
             className={classes.infoDropdown}
             onChange={changeExperience}
@@ -119,7 +115,7 @@ const UserInformation = (props) => {
 
           <div className={classes.infoFormDiv}>
             What is your level at job interviews?
-          </div>
+         </div>
 
           <Rating
             name='interviewLevel'
@@ -132,7 +128,7 @@ const UserInformation = (props) => {
         </form>
         <NextStepButton type='submit' form='backgroundForm' onClick={onSubmit}>
           Next Step
-        </NextStepButton>
+       </NextStepButton>
       </div>
     </div>
   );

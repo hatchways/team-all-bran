@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
-const cors = require('cors');
 const indexRouter = require('./routes/index');
 const pingRouter = require('./routes/ping');
 
@@ -20,7 +19,6 @@ const feedback = require('./routes/feedback');
 const { json, urlencoded } = express;
 
 var app = express();
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 // Connect to MongoDB
 connectDB();
 

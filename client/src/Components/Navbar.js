@@ -3,6 +3,7 @@ import avatar from '../images/avatar.png';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { store } from '../context/store';
+import { logoutUser } from '../utils/apiFunctions'
 
 import {
   AppBar,
@@ -45,7 +46,7 @@ const Navbar = (props) => {
     history.push(route);
     if (route === '/signup') {
       dispatch({ type: LOGOUT });
-      fetch('/users/logout', { method: 'POST', credentials: 'same-origin' });
+      logoutUser();
     }
   };
 
