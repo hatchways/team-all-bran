@@ -50,7 +50,7 @@ const Lobby = () => {
 
   if (!open) return <Redirect to='/dashboard' />;
 
-  const youAreEl = `http://localhost:3000`;
+  const URL = `http://localhost:3000`;
 
   return (
     <>
@@ -71,14 +71,14 @@ const Lobby = () => {
           <DialogActions>
             <TextField
               fullWidth
-              value={youAreEl + history.location.pathname}
+              value={URL + history.location.pathname}
               id='outlined-basic'
               variant='outlined'
               disabled
             />
             <CopyToClipboard
               onCopy={() => setCopied(true)}
-              text={youAreEl + history.location.pathname}
+              text={URL + history.location.pathname}
             >
               <ContinueButton disabled={copied} color='primary'>
                 {!copied ? 'COPY' : 'COPIED!'}
