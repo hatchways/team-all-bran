@@ -12,9 +12,13 @@ router.post('/register', userController.register);
 router.post('/login', userController.login);
 
 // POST /users/logout
-router.post('/logout', userController.logout);
+router.post('/logout',
+  passport.authenticate('jwt', { session: false }),
+  userController.logout);
 
-router.get('/', auth);
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  userController.getUser);
 
 router.put(
   '/update/:userId',

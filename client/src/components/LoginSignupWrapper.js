@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import * as imageURL from '../images/login-photo.png';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from '../themes/theme';
 import { useHistory } from 'react-router-dom';
-import { store } from '../context/store';
-import axios from 'axios';
+import { getUser } from '../utils/apiFunctions'
 
 const LoginSignupWrapper = ({ children }) => {
   const classes = useStyles();
@@ -12,8 +11,8 @@ const LoginSignupWrapper = ({ children }) => {
 
   const getUserInfo = useCallback(async () => {
     try {
-      await axios.get('http://localhost:3000/users/')
-      history.push('/dashboard')
+      await getUser();
+      history.push('/dashboard');
     } catch (error) {
     }
   }, []);

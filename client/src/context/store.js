@@ -32,7 +32,6 @@ const StateProvider = ({ children }) => {
           isAuthenticated: true,
           loading: false,
           user: payload,
-          socket
         };
       case REGISTER_SUCCESS:
         return {

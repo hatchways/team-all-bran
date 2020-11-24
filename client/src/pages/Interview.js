@@ -9,8 +9,6 @@ import axios from 'axios';
 
 const Interview = () => {
   const classes = useStyles();
-  const [codeSnippet, setCodeSnippet] = useState('');
-  //const [language, setLanguage] = useState('javascript');
 
   const [codeData, setCodeData] = useState({
     language: 'javascript',
@@ -29,7 +27,7 @@ const Interview = () => {
 
   const runCode = async () => {
     try {
-      const result = await axios.post(`http://localhost:3001/runCode`, codeData);
+      const result = await axios.post(`/runCode`, codeData);
       setCodeResult(result.data);
     } catch (error) {
       console.error(error);

@@ -8,6 +8,7 @@ import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { loginUser } from '../utils/apiFunctions';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -48,7 +49,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      let result = await axios.post('http://localhost:3000/users/login', formData);
+      let result = await loginUser(formData);
       dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
       const token = result.data.token;

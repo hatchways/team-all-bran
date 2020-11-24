@@ -20,7 +20,7 @@ opts.secretOrKey = secretKey;
 module.exports = (passport) => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
-      User.findById(jwt_payload.user._id)
+      User.findById(jwt_payload.userId)
         .then((user) => {
           if (user) {
             return done(null, user);
@@ -28,7 +28,10 @@ module.exports = (passport) => {
           return done(null, false);
         })
         .catch((err) =>
-          console.error('err from passport, something wrong with middleware', err)
+          console.error(
+            'err from passport, something wrong with middleware',
+            err
+          )
         );
     })
   );

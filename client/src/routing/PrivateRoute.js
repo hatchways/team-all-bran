@@ -1,8 +1,9 @@
 import React, { useContext, useCallback, useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router';
 import { store } from '../context/store';
-import axios from 'axios';
 import { USER_LOADED } from '../context/types'
+import { getUser } from '../utils/apiFunctions'
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
   const { dispatch, state } = useContext(store);
@@ -11,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const getUserInfo = useCallback(async () => {
 
     try {
-      const result = await axios.get('http://localhost:3000/users/')
+      const result = await getUser();
       dispatch({
         type: USER_LOADED,
         payload: result.data.user,

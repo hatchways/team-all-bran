@@ -10,7 +10,7 @@ export const updateUser = (id) => {
 };
 
 export const signUpUser = (formData) => {
-  return api.post(`/users/signup`, formData);
+  return api.post(`/users/register`, formData);
 };
 
 export const loginUser = (formData) => {
@@ -19,4 +19,8 @@ export const loginUser = (formData) => {
 
 export const joinInterview = (id) => {
   return api.put(`/interviews/${id}`);
+}
+
+export const logoutUser = () => {
+  return api.post('/users/logout');
 };
