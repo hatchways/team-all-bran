@@ -30,9 +30,25 @@ var scraper = (async () => {
         })
       }
     })
-    return questions;
+    return questions
   });
-  console.log(questions)
+
+  for (let question of questions) {
+    await page.goto(question.url)
+    if (!page.url().startsWith("https://leetcode.com/accounts/login/?next=/problems")) {
+      console.log("Currently scraping: #" + question.index + " - " + page.url());
+      await page.waitForSelector('.question-content__JfgR', { timeout: 10000 });
+      const description = await page.evaluate(() => {
+        const questionContentDivs = Array.from(document.getElementsByClassName('question-content__JfgR'), q => q.innerText);
+        return questionContentDivs[0]
+      });
+      question.description = description
+    } else {
+      continue
+    }
+  };
+
+  await browser.close();
 })
 
 scraper()
