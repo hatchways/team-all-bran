@@ -23,8 +23,8 @@ const Lobby = () => {
   const { state } = useContext(store);
   const URL = `http://localhost:3000`;
   const classes = useStyles();
+  const history = useHistory();
   const [copied, setCopied] = useState(false);
-
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState(null);
   const [creatorId, setCreatorId] = useState(null);
@@ -35,16 +35,13 @@ const Lobby = () => {
     message: null,
   });
 
-  const history = useHistory();
   const roomId = history.location.pathname.split('/')[2];
-
+  const { vertical, horizontal, alert, message } = localState;
   const socket = state.socket;
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const { vertical, horizontal, alert, message } = localState;
 
   const showAlert = ({ message }) => {
     setLocalState({
@@ -88,7 +85,7 @@ const Lobby = () => {
         history.push('/interview');
       }
     });
-    return () => socket.disconnect();
+
     return () => {
       mounted = false;
       socket.emit('waiting_room_disconnect');
