@@ -64,7 +64,7 @@ const Lobby = () => {
 
     socket.emit('join_room', { user: state.user, roomId });
     socket.on('users', (users) => {
-      if (users === null) {
+      if (users === 'full') {
         if (mounted) {
           showAlert({ message: 'This lobby is currently full' });
         }

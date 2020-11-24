@@ -6,6 +6,7 @@ module.exports = (server) => {
   io.on('connection', (socket) => {
     let connectedUser;
     let room;
+    let isRoomFull = false;
 
     const waitingRoomFull = () => {
       return Object.keys(connectedUsers[room]).length === 2
@@ -15,9 +16,11 @@ module.exports = (server) => {
       connectedUser = user._id;
       room = roomId;
 
+
       if (connectedUsers[room]) {
         if (waitingRoomFull()) {
-          socket.emit('users', null);
+          isRoomFull = true;
+          socket.emit('users', 'full');
           return;
         }
         connectedUsers[room][connectedUser] = user;
@@ -35,9 +38,11 @@ module.exports = (server) => {
     });
 
     socket.on('waiting_room_disconnect', () => {
-      delete connectedUsers[room][connectedUser];
-
-      io.emit('users', connectedUsers[room]);
+      if (!isRoomFull) {
+        delete connectedUsers[room][connectedUser];
+        isRoomFull = false;
+        io.emit('users', connectedUsers[room]);
+      }
     });
 
     socket.on('disconnect', () => {
