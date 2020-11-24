@@ -19,24 +19,18 @@ const InterviewSchema = new Schema(
       of the questions and stick it up here and call it a theme? 
       Just wondering where theme comes from */
     },
-
-    feedback: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Feedback',
-      },
-    ],
     users: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-      },
-    ],
-    questions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Question,',
+        _id: false,
+        user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        feedback: {
+          type: Schema.Types.ObjectId,
+          ref: 'Feedback',
+        },
+        questions: {
+          type: Schema.Types.ObjectId,
+          ref: 'Question,',
+        },
       },
     ],
     difficulty: {
@@ -50,7 +44,7 @@ async function createInterview(req) {
   const firstUser = req.user;
   try {
     const interviewDoc = new Interview({ difficulty: req.body.difficulty });
-    interviewDoc.users.push(firstUser);
+    interviewDoc.users.push({ user: firstUser._id });
     const interviewDocObject = interviewDoc.toObject();
 
     await interviewDoc.save();
@@ -62,10 +56,44 @@ async function createInterview(req) {
   }
 }
 
+async function addUserToInterview(req) {
+  const { userId } = req.body;
+  const interviewId = req.params.id;
+  const user = await User.findOne({ _id: userId });
+
+  try {
+    const interview = await Interview.findOne({ _id: interviewId });
+    const interviewDoc = await interview.save();
+    interviewDoc.users.push({ user: user._id });
+    const interviewDocObject = interviewDoc.toObject();
+
+    await interviewDoc.save();
+    user.interviews.push(interviewDocObject);
+    await user.save();
+    return interviewDoc;
+  } catch (err) {
+    return err;
+  }
+}
+
+async function getInterview(interviewId) {
+  const interview = await Interview.findOne({ _id: interviewId }).populate(
+    'users.feedback'
+  );
+  return { interview: interview };
+}
+
 async function endInterview(req) {}
 
 async function joinInterview(req) {}
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
-module.exports = { Interview, createInterview, endInterview, joinInterview };
+module.exports = {
+  Interview,
+  createInterview,
+  endInterview,
+  joinInterview,
+  addUserToInterview,
+  getInterview,
+};
