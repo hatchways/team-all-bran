@@ -33,24 +33,24 @@ const InterviewSchema = new Schema(
         },
       },
     ],
+    difficulty: {
+      type: String,
+    },
   },
   opts
 );
 
 async function createInterview(req) {
-  const { creator } = req.body;
-  const firstUser = await User.findOne({ _id: creator });
-
+  const firstUser = req.user;
   try {
-    const interview = new Interview({});
-    const interviewDoc = await interview.save();
+    const interviewDoc = new Interview({ difficulty: req.body.difficulty });
     interviewDoc.users.push({ user: firstUser._id });
     const interviewDocObject = interviewDoc.toObject();
 
     await interviewDoc.save();
     firstUser.interviews.push(interviewDocObject);
     await firstUser.save();
-    return interviewDoc;
+    return interviewDoc.populate('users');
   } catch (err) {
     return err;
   }

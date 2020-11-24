@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const interviewModel = require('../models/Interview');
-const Interview = mongoose.model('Interview');
 
 const { secretKey } = process.env;
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/User.js');
+const { Interview } = require('../models/Interview');
 
 const cInterview = async (req, res) => {
   const interview = await interviewModel.createInterview(req);

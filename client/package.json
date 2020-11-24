@@ -9,6 +9,7 @@
     "@monaco-editor/react": "^3.7.0",
     "axios": "^0.21.0",
     "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
@@ -55,6 +56,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.js": "eslint --fix"
   }
 }

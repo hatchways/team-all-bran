@@ -10,7 +10,7 @@ export const theme = createMuiTheme({
     },
   },
   palette: {
-    primary: { main: '#DF1B1B' },
+    primary: { main: '#516BF6' },
   },
 });
 
@@ -76,7 +76,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   gridSpacingThree: {
     width: '100%',
-    margin: 0
+    margin: 0,
   },
   signUpForm: {
     marginLeft: '40px',
@@ -240,7 +240,7 @@ export const useStyles = makeStyles((theme) => ({
   interviewWithText: {
     marginLeft: '40px',
     color: 'white',
-    fontSize: '30px'
+    fontSize: '30px',
   },
   backgroundContainer: {
     height: '100%',
@@ -338,7 +338,7 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '18px',
     borderWidth: 2,
-    padding: '2px 20px'
+    padding: '2px 20px',
   },
   consoleText: {
     color: 'white',
@@ -357,14 +357,14 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: '20px'
+    marginRight: '20px',
   },
   languageDropdownContainer: {
     marginRight: '25px',
-    color: 'white'
+    color: 'white',
   },
   languageDropDown: {
-    color: 'white'
+    color: 'white',
   },
   navbarDisplayFlex: {
     display: `flex`,
@@ -393,7 +393,32 @@ export const useStyles = makeStyles((theme) => ({
     color: `black`,
     marginLeft: `10px`,
   },
-  // marginLeft: `25px`,
+  createInterviewDialog: {
+    display: `flex`,
+    flexDirection: `column`,
+    justifyContent: `space-around`,
+    alignItems: `center`,
+    padding: `45px`,
+  },
+  waitingRoomDialogue: {
+    display: `flex`,
+    flexDirection: `column`,
+    justifyContent: `space-between`,
+    alignContent: `left`,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 450,
+    minHeight: 100,
+  },
+  formControlWaitingRoom: {
+    margin: theme.spacing(1),
+    minWidth: 500,
+    minHeight: 100,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export const GlobalCss = withStyles({

@@ -74,7 +74,7 @@ function createTokenResponse(user, res) {
       let responseObj = { user, token };
       res
         .status(201)
-        .cookie('token', token, { httpOnly: true, sameSite: 'lax' })
+        .cookie('token', token, { httpOnly: true })
         .json(responseObj);
     }
   );
