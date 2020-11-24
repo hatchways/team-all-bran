@@ -21,7 +21,6 @@ const DashBoard = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
-    onClose(selectedValue);
   };
 
   const handleClose = (value) => {
@@ -32,13 +31,9 @@ const DashBoard = () => {
     setSelectedValue(event.target.value);
   };
 
-  const onClose = () => {
-    console.log('got here');
-  };
-
   const createInt = async () => {
     try {
-      const { data } = await createInterview(state.user._id);
+      const { data } = await createInterview({ difficulty: selectedValue });
       history.push(`/lobby/${data.interview._id}`);
     } catch (err) {
       console.error('OUTPUT: SimpleDialog -> err', err);

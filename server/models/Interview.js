@@ -39,6 +39,9 @@ const InterviewSchema = new Schema(
         ref: 'Question,',
       },
     ],
+    difficulty: {
+      type: String,
+    },
   },
   opts
 );
@@ -46,7 +49,7 @@ const InterviewSchema = new Schema(
 async function createInterview(req) {
   const firstUser = req.user;
   try {
-    const interviewDoc = new Interview({});
+    const interviewDoc = new Interview({ difficulty: req.body.difficulty });
     interviewDoc.users.push(firstUser);
     const interviewDocObject = interviewDoc.toObject();
 
