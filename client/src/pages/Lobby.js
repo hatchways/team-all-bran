@@ -82,7 +82,7 @@ const Lobby = () => {
     });
     socket.on('join_interview_room', (users) => {
       if (mounted) {
-        history.push('/interview');
+        history.push(`/interview/${roomId}`);
       }
     });
 
