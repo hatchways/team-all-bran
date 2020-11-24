@@ -59,8 +59,7 @@ function editUser(req, res) {
 }
 
 function getUser(req, res) {
-  const { user } = req;
-  res.json({ user });
+  res.status(200).json({ user: req.user });
 }
 
 function createTokenResponse(user, res) {

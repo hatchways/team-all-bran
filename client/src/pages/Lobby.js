@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, useHistory } from 'react-router';
-import socketIOClient from 'socket.io-client';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -8,49 +7,95 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { ContinueButton } from '../components/Buttons';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
-import avatar from '../images/avatar.png';
-import { useStyles } from '../themes/theme';
 import { TextField } from '@material-ui/core';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import WaitingRoomUserList from '../components/WaitingRoomUserList';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { useStyles } from '../themes/theme';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
 const Lobby = () => {
+  const { state } = useContext(store);
+  const URL = `http://localhost:3000`;
   const classes = useStyles();
-  const ENDPOINT = '/';
-  const [open, setOpen] = React.useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const [open, setOpen] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const [creatorId, setCreatorId] = useState(null);
+  const [localState, setLocalState] = useState({
+    alert: false,
+    vertical: 'bottom',
+    horizontal: 'center',
+    message: null,
+  });
+
+  const history = useHistory();
+  const roomId = history.location.pathname.split('/')[2];
+
+  const socket = state.socket;
 
   const handleClose = () => {
     setOpen(false);
   };
-  const [copied, setCopied] = useState(false);
-  const [userData, setUserData] = useState('');
-  const history = useHistory();
 
-  const { state } = useContext(store);
-  console.log(state.user);
+  const { vertical, horizontal, alert, message } = localState;
+
+  const showAlert = ({ message }) => {
+    setLocalState({
+      alert: true,
+      vertical: vertical,
+      horizontal: horizontal,
+      message,
+    });
+  };
+
+  const handleAlertClose = () => {
+    setLocalState({ ...localState, alert: false });
+  };
+
+  const handleStartInterview = () => {
+    socket.emit('start_interview', roomId);
+  };
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.emit('join_lobby', state.user);
+    let mounted = true;
+
+    socket.emit('join_room', { user: state.user, roomId });
     socket.on('users', (users) => {
-      setUserData(Object.values(users));
+      if (users === 'full') {
+        if (mounted) {
+          showAlert({ message: 'This lobby is currently full' });
+        }
+        return;
+      }
+      if (Object.values(users).length === 1) {
+        if (mounted) {
+          setCreatorId(Object.values(users)[0]._id);
+        }
+      }
+      if (mounted) {
+        setUserData(Object.values(users));
+      }
+    });
+    socket.on('join_interview_room', (users) => {
+      if (mounted) {
+        history.push('/interview');
+      }
     });
     return () => socket.disconnect();
+    return () => {
+      mounted = false;
+      socket.emit('waiting_room_disconnect');
+    };
   }, [state.user]);
 
-  console.log('CHECKING FOR PATHNAME', history.location.pathname);
-
   if (!open) return <Redirect to='/dashboard' />;
-
-  const URL = `http://localhost:3000`;
 
   return (
     <>
@@ -88,45 +133,37 @@ const Lobby = () => {
           <DialogContent>
             <DialogContentText>Participants</DialogContentText>
           </DialogContent>
-          <UserList userData={userData} handleClose={handleClose} />
-          <ContinueButton onClick={handleClose} color='primary'>
-            Start
-          </ContinueButton>
+          <WaitingRoomUserList
+            showStartButton={!alert}
+            userData={userData}
+            handleClose={handleClose}
+          />
+          {!alert && creatorId && (
+            <ContinueButton onClick={handleStartInterview} color='primary'>
+              Start
+            </ContinueButton>
+          )}
         </div>
       </Dialog>
+      {open && (
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={alert}
+          onClose={handleAlertClose}
+          message={message}
+          key={vertical + horizontal}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: 'red',
+              fontSize: '20px',
+            }}
+            message={message}
+          />
+        </Snackbar>
+      )}
     </>
   );
 };
 
 export default Lobby;
-
-const UserList = ({ userData }) => {
-  const classes = useStyles();
-
-  return (
-    <Grid>
-      <Grid>
-        <div className={classes.demo}>
-          <List>
-            <div>
-              {userData ? (
-                userData.map(({ firstName, lastName }, index) => {
-                  return (
-                    <ListItem className={classes.waitingRoomUser} key={index}>
-                      <Avatar alt='Avatar' src={avatar} />
-                      <div
-                        className={classes.waitingRoomUserName}
-                      >{`${firstName} ${lastName}`}</div>
-                    </ListItem>
-                  );
-                })
-              ) : (
-                <p>Empty</p>
-              )}
-            </div>
-          </List>
-        </div>
-      </Grid>
-    </Grid>
-  );
-};
