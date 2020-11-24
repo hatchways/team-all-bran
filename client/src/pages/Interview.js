@@ -17,13 +17,13 @@ const Interview = (props) => {
   });
 
   const [codeResult, setCodeResult] = useState('');
-  const [question, setQuestion] = useState(null)
+  const [pageData, setPageData] = useState({ isLoaded: false, question: null })
   const difficulty = props.location.state.difficulty
 
   const fetchQuestionsByDifficulty = async () => {
     try {
       const { data } = await getRandomQuestion(difficulty)
-      setQuestion(data);
+      setPageData({ isLoaded: true, question: data });
     } catch (e) {
       console.error(e)
     }
@@ -58,7 +58,7 @@ const Interview = (props) => {
       <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader language={language} setLanguage={handleLanguageChange} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
-          <InterviewQuestionDetails question={question} />
+          {pageData.isLoaded ? <InterviewQuestionDetails question={pageData.question} /> : <div>Loading question...</div>}
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
