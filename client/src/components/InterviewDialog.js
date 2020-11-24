@@ -9,6 +9,7 @@ import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 import Axios from 'axios';
 import { store } from '../context/store';
 import { useHistory } from 'react-router';
+import Lobby from '../pages/Lobby';
 
 function SimpleDialog({ onClose, selectedValue, open, handleChange }) {
   const classes = useStyles();
@@ -27,8 +28,10 @@ function SimpleDialog({ onClose, selectedValue, open, handleChange }) {
         { creator: state.user._id },
         { withCredentials: true }
       );
-
-      history.push(`/lobby/${data.interview._id}`);
+      history.push({
+        pathname: `/lobby/${data.interview._id}`,
+        state: { difficulty: selectedValue }
+      })
     } catch (err) {
       console.error('OUTPUT: SimpleDialog -> err', err);
     }

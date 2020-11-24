@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const Lobby = () => {
+const Lobby = (props) => {
   const URL = `http://localhost:3000`;
 
 
@@ -27,7 +27,8 @@ const Lobby = () => {
 
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState(null);
-  const [creatorId, setCreatorId] = useState(null)
+  const [creatorId, setCreatorId] = useState(null);
+  const [startInterview, setStartInterview] = useState(false);
   const [localState, setLocalState] = useState({
     alert: false,
     vertical: 'bottom',
@@ -81,7 +82,7 @@ const Lobby = () => {
     });
     socket.on('join_interview_room', (users) => {
       if (mounted) {
-        history.push('/interview');
+        setStartInterview(true);
       }
     });
 
@@ -92,6 +93,9 @@ const Lobby = () => {
   }, []);
 
   if (!open) return <Redirect to='/dashboard' />;
+  if (startInterview) return <Redirect to={{
+    pathname: "/interview", state: { difficulty: props.location.state.difficulty }
+  }} />;
 
   return (
     <div>
