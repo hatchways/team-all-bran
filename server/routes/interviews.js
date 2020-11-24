@@ -10,7 +10,6 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   interviewController.cInterview
 );
-// router.patch('/:id', interviewController.endInterview);
 router.put(
   '/:id',
   passport.authenticate('jwt', { session: false }),

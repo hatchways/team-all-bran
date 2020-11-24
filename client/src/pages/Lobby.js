@@ -7,27 +7,27 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { ContinueButton } from '../components/Buttons';
-import { Input, InputLabel } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { store } from '../context/store';
-import WaitingRoomUserList from '../components/WaitingRoomUserList'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import WaitingRoomUserList from '../components/WaitingRoomUserList';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { useStyles } from '../themes/theme';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
 const Lobby = () => {
+  const { state } = useContext(store);
   const URL = `http://localhost:3000`;
-
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const classes = useStyles();
+  const [copied, setCopied] = useState(false);
 
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState(null);
-  const [creatorId, setCreatorId] = useState(null)
+  const [creatorId, setCreatorId] = useState(null);
   const [localState, setLocalState] = useState({
     alert: false,
     vertical: 'bottom',
@@ -37,8 +37,12 @@ const Lobby = () => {
 
   const history = useHistory();
   const roomId = history.location.pathname.split('/')[2];
-  const { state } = useContext(store);
-  const socket = state.socket
+
+  const socket = state.socket;
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const { vertical, horizontal, alert, message } = localState;
 
@@ -57,7 +61,7 @@ const Lobby = () => {
 
   const handleStartInterview = () => {
     socket.emit('start_interview', roomId);
-  }
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -84,18 +88,19 @@ const Lobby = () => {
         history.push('/interview');
       }
     });
-
+    return () => socket.disconnect();
     return () => {
       mounted = false;
       socket.emit('waiting_room_disconnect');
     };
-  }, []);
+  }, [state.user]);
 
   if (!open) return <Redirect to='/dashboard' />;
 
   return (
-    <div>
+    <>
       <Dialog
+        className={classes.waitingRoomDialogue}
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -103,25 +108,41 @@ const Lobby = () => {
         aria-labelledby='alert-dialog-slide-title'
         aria-describedby='alert-dialog-slide-description'
       >
-        <div>
+        <div className={classes.formControlWaitingRoom}>
           <DialogTitle id='alert-dialog-slide-title'>Waiting Room</DialogTitle>
+          <p>
+            <strong>Share link</strong>
+          </p>
           <DialogActions>
-            <Input onChange={() => { }} value={URL + history.location.pathname}>
-              <InputLabel>Copy Link</InputLabel>
-            </Input>
-            <ContinueButton onClick={handleClose} color='primary'>
-              COPY
-            </ContinueButton>
+            <TextField
+              fullWidth
+              value={URL + history.location.pathname}
+              id='outlined-basic'
+              variant='outlined'
+              disabled
+            />
+            <CopyToClipboard
+              onCopy={() => setCopied(true)}
+              text={URL + history.location.pathname}
+            >
+              <ContinueButton disabled={copied} color='primary'>
+                {!copied ? 'COPY' : 'COPIED!'}
+              </ContinueButton>
+            </CopyToClipboard>
           </DialogActions>
           <DialogContent>
-            <DialogContentText id='alert-dialog-slide-description'></DialogContentText>
+            <DialogContentText>Participants</DialogContentText>
           </DialogContent>
-          <WaitingRoomUserList showStartButton={!alert} userData={userData} handleClose={handleClose} />
-          {!alert &&
-            creatorId &&
+          <WaitingRoomUserList
+            showStartButton={!alert}
+            userData={userData}
+            handleClose={handleClose}
+          />
+          {!alert && creatorId && (
             <ContinueButton onClick={handleStartInterview} color='primary'>
               Start
-        </ContinueButton>}
+            </ContinueButton>
+          )}
         </div>
       </Dialog>
       {open && (
@@ -141,7 +162,7 @@ const Lobby = () => {
           />
         </Snackbar>
       )}
-    </div>
+    </>
   );
 };
 

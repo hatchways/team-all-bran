@@ -18,7 +18,11 @@ export const loginUser = (formData) => {
 
 export const joinInterview = (id) => {
   return api.put(`/interviews/${id}`);
-}
+};
+
+export const createInterview = ({ id, difficulty }) => {
+  return api.post(`/interviews`, { creator: id, difficulty });
+};
 
 export const logoutUser = () => {
   return api.post('/users/logout');
