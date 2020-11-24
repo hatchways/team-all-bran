@@ -9,9 +9,9 @@ module.exports = {
   },
   getRandomQuestionByDifficulty: async (req, res) => {
     const { difficulty } = req.query;
-
-    const questions = await Question.find({ difficulty: difficulty })
-    var randomIndex = Math.floor(Math.random() * questions.length);
-    res.status(200).json(questions[randomIndex]);
+    const count = await Question.count({ difficulty });
+    const random = Math.floor(Math.random() * count);
+    const question = await Question.findOne({ difficulty }).skip(random);
+    res.status(200).json(question);
   }
 };
