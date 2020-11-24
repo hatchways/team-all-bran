@@ -24,9 +24,9 @@ const InterviewQuestionDetails = (props) => {
       {answer
         ? <>
           <div className={classes.questionDetailsContainer}>
-            <p className={classes.questionTopicText}>{props.question && props.question.title}</p>
+            <p className={classes.questionTopicText}>{props.question.title}</p>
             <p className={classes.questionDescText}>
-              {props.question && props.question.description}
+              {props.question.description}
             </p>
           </div>
         </>
