@@ -6,10 +6,22 @@ const passport = require('passport');
 
 // Get all current users interviews
 // GET /interviews/me
-router.post('/', interviewController.cInterview);
-router.patch('/:id', interviewController.endInterview);
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.cInterview
+);
+router.patch(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.endInterview
+);
 
-router.put('/:id/user', interviewController.addUser);
+router.put(
+  '/:id/user',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.addUser
+);
 
 router.put(
   '/:interviewId/feedback',

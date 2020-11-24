@@ -1,26 +1,22 @@
 const feedBackModel = require('../models/Feedback');
 
-function createFeedback(req, res) {
-  const feedback = feedBackModel.addFeedback(req);
-  feedback.then((data) => {
-    if (data.error) {
-      res.status(400).json({ error: data.error });
-    } else {
-      res.json({ feedback: data.feedback });
-    }
-  });
+async function createFeedback(req, res) {
+  const feedback = await feedBackModel.addFeedback(req);
+  if (feedback.error) {
+    res.status(400).json({ error: feedback.error });
+  } else {
+    res.json(feedback);
+  }
 }
 
-function getFeedback(req, res) {
+async function getFeedback(req, res) {
   const interviewId = req.params.interviewId;
-  const feedback = feedBackModel.getFeedback(interviewId);
-  feedback.then((data) => {
-    if (data.error) {
-      res.status(400).json({ error: data.error });
-    } else {
-      res.json({ interview: data.interview });
-    }
-  });
+  const interview = await feedBackModel.getFeedback(interviewId);
+  if (interview.error) {
+    res.status(400).json({ error: interview.error });
+  } else {
+    res.json(interview);
+  }
 }
 
 module.exports = { createFeedback, getFeedback };

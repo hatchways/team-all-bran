@@ -71,7 +71,6 @@ async function addFeedback(req) {
 
   try {
     const interview = await Interview.findOne({ _id: interviewId });
-    let currFeedback = '';
 
     let interviewUser = interview.users[0];
     let userIdReciever = interview.users[1].user._id;
@@ -80,7 +79,7 @@ async function addFeedback(req) {
       userIdReciever = interview.users[0].user._id;
     }
 
-    currFeedback = await createAndUpdateFeedback(
+    const feedback = await createAndUpdateFeedback(
       performanceLevel,
       categories,
       strengths,
@@ -92,10 +91,10 @@ async function addFeedback(req) {
       interviewUser,
       interviewId
     );
-    interview.users.feedback = currFeedback;
+    interview.users.feedback = feedback;
     await interview.save();
 
-    return { feedback: currFeedback };
+    return { feedback: feedback };
   } catch (err) {
     return { error: err.message };
   }
@@ -105,7 +104,6 @@ async function getFeedback(interviewId) {
   const interview = await Interview.findOne({ _id: interviewId }).populate(
     'users.feedback'
   );
-  //console.log(interview);
   return { interview: interview };
 }
 

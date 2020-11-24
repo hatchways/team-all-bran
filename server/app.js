@@ -14,7 +14,6 @@ const users = require('./routes/users');
 const interviews = require('./routes/interviews');
 const questions = require('./routes/questions');
 const executeCode = require('./routes/executeCode');
-const feedback = require('./routes/feedback');
 
 const { json, urlencoded } = express;
 
@@ -42,7 +41,6 @@ app.use('/users', users);
 app.use('/interviews', interviews);
 app.use('/questions', questions);
 app.use('/runCode', executeCode);
-//app.use('/feedback', feedback);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
