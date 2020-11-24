@@ -80,7 +80,9 @@ const Lobby = () => {
       }
     });
     socket.on('join_interview_room', (users) => {
-      history.push('/interview');
+      if (mounted) {
+        history.push('/interview');
+      }
     });
 
     return () => {

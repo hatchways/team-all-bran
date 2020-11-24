@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 
 import {
@@ -9,8 +9,8 @@ import {
   LOGIN_SUCCESS,
 } from './types';
 
-const ENDPOINT = '/';
-const socket = socketIOClient(ENDPOINT);
+let ENDPOINT = '/';
+let socket;
 
 const initialState = {
   token: null,
@@ -24,6 +24,11 @@ const store = createContext(initialState);
 const { Provider } = store;
 
 const StateProvider = ({ children }) => {
+
+  useEffect(() => {
+    socket = socketIOClient(ENDPOINT);
+  }, []);
+
   const [state, dispatch] = useReducer(({ state }, { type, payload }) => {
     switch (type) {
       case USER_LOADED:
