@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RunCodeButton } from './Buttons';
 import { useStyles } from '../themes/theme';
 
 const OutputConsole = (props) => {
   const classes = useStyles();
-  const [output, setOutput] = useState('');
-
-  const runCode = (output) => {
-    setOutput(output);
-  }
 
   return (
     <div className={classes.interviewOutput}>
       <div className={classes.interviewOutputHeader}>
         <div className={classes.consoleText}>Console</div>
-        <div onClick={() => runCode('hello')}>
-          <RunCodeButton text="RUN CODE" />
+        <div onClick={props.runCode}>
+          <RunCodeButton text='RUN CODE' />
         </div>
       </div>
       <div className={classes.outputText}>
-        {output}
+        <pre>{props.codeResult}</pre>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default OutputConsole;

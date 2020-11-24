@@ -3,7 +3,6 @@ const validateRegister = require('../user-validation/register');
 const validateLogin = require('../user-validation/login');
 const { secretKey } = process.env;
 const jwt = require('jsonwebtoken');
-const { User } = require('../models/User');
 
 function register(req, res) {
   const { errors, isValid } = validateRegister(req.body);
@@ -41,6 +40,11 @@ function login(req, res) {
   });
 }
 
+function logout(req, res) {
+  res.clearCookie('token');
+  return res.sendStatus(200);
+}
+
 function editUser(req, res) {
   const id = req.params.userId;
   let user = userModel.updateUser(id, req);
@@ -75,11 +79,6 @@ function createTokenResponse(user, res) {
         .json(responseObj);
     }
   );
-}
-
-function logout(req, res) {
-  res.clearCookie('token');
-  return res.sendStatus(200);
 }
 
 module.exports = { register, login, editUser, getUser, logout };

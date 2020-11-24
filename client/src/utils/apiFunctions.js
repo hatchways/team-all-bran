@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import api from './api';
 
 export const getUser = () => {
@@ -10,7 +9,7 @@ export const updateUser = (id) => {
 };
 
 export const signUpUser = (formData) => {
-  return api.post(`/users/signup`, formData);
+  return api.post(`/users/register`, formData);
 };
 
 export const loginUser = (formData) => {
@@ -23,4 +22,8 @@ export const joinInterview = (id) => {
 
 export const createInterview = (id) => {
   return api.post(`/interviews`, { creator: id });
+};
+
+export const logoutUser = () => {
+  return api.post('/users/logout');
 };
