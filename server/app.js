@@ -42,7 +42,7 @@ app.use('/users', users);
 app.use('/interviews', interviews);
 app.use('/questions', questions);
 app.use('/runCode', executeCode);
-app.use('/feedback', feedback);
+//app.use('/feedback', feedback);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -64,20 +64,22 @@ async function addFeedback(req) {
     improvements,
     resources,
     other,
-    userIdReciever,
-    interviewId,
   } = req.body;
 
   const userIdCreator = req.user._id;
+  const interviewId = req.params.interviewId;
 
   try {
     const interview = await Interview.findOne({ _id: interviewId });
     let currFeedback = '';
 
-    let interviewUsers = interview.users[0];
+    let interviewUser = interview.users[0];
+    let userIdReciever = interview.users[1].user._id;
     if (!interview.users[0].user.equals(userIdCreator)) {
-      interviewUsers = interview.users[1];
+      interviewUser = interview.users[1];
+      userIdReciever = interview.users[0].user._id;
     }
+
     currFeedback = await createAndUpdateFeedback(
       performanceLevel,
       categories,
@@ -87,7 +89,7 @@ async function addFeedback(req) {
       other,
       userIdCreator,
       userIdReciever,
-      interviewUsers,
+      interviewUser,
       interviewId
     );
     interview.users.feedback = currFeedback;
@@ -100,8 +102,11 @@ async function addFeedback(req) {
 }
 
 async function getFeedback(interviewId) {
-  const interview = await Feedback.find({ interview: interviewId });
-  return { feedback: interview };
+  const interview = await Interview.findOne({ _id: interviewId }).populate(
+    'users.feedback'
+  );
+  //console.log(interview);
+  return { interview: interview };
 }
 
 async function createAndUpdateFeedback(
@@ -113,18 +118,18 @@ async function createAndUpdateFeedback(
   other,
   userIdCreator,
   userIdReciever,
-  interviewUsers,
+  interviewUser,
   interviewId
 ) {
   let feedback;
-  if (!interviewUsers.feedback) {
+  if (!interviewUser.feedback) {
     feedback = new Feedback({
       feedbackCreator: userIdCreator,
       feedbackReciever: userIdReciever,
       interview: interviewId,
     });
   } else {
-    feedback = await Feedback.findOne(interviewUsers.feedback);
+    feedback = await Feedback.findOne(interviewUser.feedback);
   }
 
   if (performanceLevel) {

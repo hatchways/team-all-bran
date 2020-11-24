@@ -56,10 +56,36 @@ async function createInterview(req) {
   }
 }
 
+async function addUserToInterview(req) {
+  const { userId } = req.body;
+  const interviewId = req.params.id;
+  const user = await User.findOne({ _id: userId });
+
+  try {
+    const interview = await Interview.findOne({ _id: interviewId });
+    const interviewDoc = await interview.save();
+    interviewDoc.users.push({ user: user._id });
+    const interviewDocObject = interviewDoc.toObject();
+
+    await interviewDoc.save();
+    user.interviews.push(interviewDocObject);
+    await user.save();
+    return interviewDoc;
+  } catch (err) {
+    return err;
+  }
+}
+
 async function endInterview(req) {}
 
 async function joinInterview(req) {}
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
-module.exports = { Interview, createInterview, endInterview, joinInterview };
+module.exports = {
+  Interview,
+  createInterview,
+  endInterview,
+  joinInterview,
+  addUserToInterview,
+};
