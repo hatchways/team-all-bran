@@ -10,7 +10,7 @@ export const theme = createMuiTheme({
     },
   },
   palette: {
-    primary: { main: '#DF1B1B' },
+    primary: { main: '#516BF6' },
   },
 });
 
@@ -393,7 +393,21 @@ export const useStyles = makeStyles((theme) => ({
     color: `black`,
     marginLeft: `10px`,
   },
-  // marginLeft: `25px`,
+  createInterviewDialog: {
+    display: `flex`,
+    flexDirection: `column`,
+    justifyContent: `space-around`,
+    alignItems: `center`,
+    padding: `45px`,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 450,
+    minHeight: 100,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export const GlobalCss = withStyles({

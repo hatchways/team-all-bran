@@ -74,7 +74,7 @@ const UserInformation = (props) => {
       dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 

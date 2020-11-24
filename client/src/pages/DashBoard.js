@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-
+import InterviewDialog from '../components/InterviewDialog';
 import { useStyles } from '../themes/theme';
-import { StartDashboardButton } from '../components/Buttons';
 import PastInterviewTable from '../components/PastInterviewTable';
 import { store } from '../context/store';
 import { useHistory } from 'react-router';
@@ -21,9 +20,7 @@ const DashBoard = () => {
   return (
     !state.loading && (
       <div className={classes.dashboardContainer}>
-        <StartDashboardButton onClick={() => history.push('/lobby')}>
-          START
-        </StartDashboardButton>
+        <InterviewDialog />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable />
       </div>

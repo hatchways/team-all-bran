@@ -16,6 +16,10 @@ export const loginUser = (formData) => {
   return api.post('/users/login', formData);
 };
 
+export const joinInterview = (id) => {
+  return api.put(`/interviews/${id}`);
+}
+
 export const logoutUser = () => {
   return api.post('/users/logout');
 };
