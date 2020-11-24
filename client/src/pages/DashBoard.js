@@ -3,7 +3,6 @@ import InterviewDialog from '../components/InterviewDialog';
 import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
 import { store } from '../context/store';
-import { Redirect } from 'react-router';
 import { useHistory } from 'react-router';
 
 import UserInformation from '../components/UserInformation';

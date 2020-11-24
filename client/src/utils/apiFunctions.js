@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import api from './api';
 
 export const getUser = () => {
