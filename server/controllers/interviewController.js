@@ -31,8 +31,19 @@ const addUser = async (req, res) => {
   res.send({ interview });
 };
 
+async function getInterview(req, res) {
+  const interviewId = req.params.interviewId;
+  const interview = await interviewModel.getInterview(interviewId);
+  if (interview.error) {
+    res.status(400).json({ error: interview.error });
+  } else {
+    res.json(interview);
+  }
+}
+
 module.exports = {
   cInterview,
   endInterview,
   addUser,
+  getInterview,
 };

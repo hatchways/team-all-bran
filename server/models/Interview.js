@@ -76,6 +76,13 @@ async function addUserToInterview(req) {
   }
 }
 
+async function getInterview(interviewId) {
+  const interview = await Interview.findOne({ _id: interviewId }).populate(
+    'users.feedback'
+  );
+  return { interview: interview };
+}
+
 async function endInterview(req) {}
 
 async function joinInterview(req) {}
@@ -88,4 +95,5 @@ module.exports = {
   endInterview,
   joinInterview,
   addUserToInterview,
+  getInterview,
 };

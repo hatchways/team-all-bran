@@ -32,7 +32,7 @@ router.put(
 router.get(
   '/:interviewId',
   passport.authenticate('jwt', { session: false }),
-  feedbackController.getFeedback
+  interviewController.getInterview
 );
 
 module.exports = router;

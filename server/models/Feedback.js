@@ -100,13 +100,6 @@ async function addFeedback(req) {
   }
 }
 
-async function getFeedback(interviewId) {
-  const interview = await Interview.findOne({ _id: interviewId }).populate(
-    'users.feedback'
-  );
-  return { interview: interview };
-}
-
 async function createAndUpdateFeedback(
   performanceLevel,
   categories,
@@ -155,5 +148,4 @@ async function createAndUpdateFeedback(
 module.exports = {
   Feedback,
   addFeedback,
-  getFeedback,
 };
