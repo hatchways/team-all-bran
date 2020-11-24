@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
-
 import { useStyles } from '../themes/theme';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-
 import { StartDashboardButton } from './Buttons';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 import { store } from '../context/store';

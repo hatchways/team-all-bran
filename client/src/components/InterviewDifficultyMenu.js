@@ -7,9 +7,7 @@ import { useStyles } from '../themes/theme';
 
 export default function SimpleSelect({ handleChange, selectedValue }) {
   const classes = useStyles();
-
   const difficulties = ['Easy', 'Medium', 'Hard'];
-
   return (
     <div>
       <FormControl className={classes.formControl}>
