@@ -63,7 +63,7 @@ function getUser(req, res) {
 }
 
 function createTokenResponse(user, res) {
-  const payload = { user: user._id };
+  const payload = { userId: user._id };
   return jwt.sign(
     payload,
     secretKey,
