@@ -27,3 +27,11 @@ export const createInterview = ({ id, difficulty }) => {
 export const logoutUser = () => {
   return api.post('/users/logout');
 };
+
+export const getRandomQuestion = (difficulty) => {
+  return api.get('/questions', {
+    params: {
+      difficulty: difficulty
+    }
+  });
+};
