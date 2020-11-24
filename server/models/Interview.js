@@ -19,24 +19,18 @@ const InterviewSchema = new Schema(
       of the questions and stick it up here and call it a theme? 
       Just wondering where theme comes from */
     },
-
-    feedback: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Feedback',
-      },
-    ],
     users: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-      },
-    ],
-    questions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Question,',
+        _id: false,
+        user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        feedback: {
+          type: Schema.Types.ObjectId,
+          ref: 'Feedback',
+        },
+        questions: {
+          type: Schema.Types.ObjectId,
+          ref: 'Question,',
+        },
       },
     ],
   },
@@ -50,7 +44,7 @@ async function createInterview(req) {
   try {
     const interview = new Interview({});
     const interviewDoc = await interview.save();
-    interviewDoc.users.push(firstUser);
+    interviewDoc.users.push({ user: firstUser._id });
     const interviewDocObject = interviewDoc.toObject();
 
     await interviewDoc.save();

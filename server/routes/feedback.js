@@ -9,4 +9,10 @@ router.post(
   feedbackController.createFeedback
 );
 
+router.get(
+  '/interview/:interviewId',
+  passport.authenticate('jwt', { session: false }),
+  feedbackController.getFeedback
+);
+
 module.exports = router;
