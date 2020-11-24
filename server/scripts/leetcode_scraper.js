@@ -35,6 +35,7 @@ const scraper = (async () => {
 
   for (let question of questions) {
     await page.goto(question.url)
+
     if (!page.url().startsWith("https://leetcode.com/accounts/login/?next=/problems")) {
       console.log("Currently scraping: #" + question.index + " - " + page.url());
       await page.waitForSelector('.question-content__JfgR', { timeout: 10000 });
@@ -46,6 +47,14 @@ const scraper = (async () => {
     } else {
       continue
     }
+
+    fs.readFile('leetcode-problems.json', function (err, data) {
+      const fileContent = JSON.parse(data)
+      fileContent.push(question)
+      fs.writeFile("leetcode-problems.json", JSON.stringify(fileContent), (err, res) => {
+        if (err) console.log('error', err);
+      });
+    });
   };
 
   await browser.close();
