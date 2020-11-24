@@ -1,12 +1,10 @@
-const mongoose = require('mongoose');
 const Question = require('../models/Question');
-const User = require('../models/User');
 
 module.exports = {
   create: async (req, res) => {
-    const { title, difficulty } = req.body;
+    const { index, url, title, difficulty, description } = req.body;
 
-    const questionDoc = await new Question({ title, difficulty }).save();
+    const questionDoc = await new Question({ index, url, title, difficulty, description }).save();
     res.json(questionDoc);
   },
 };
