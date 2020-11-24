@@ -74,35 +74,23 @@ async function addFeedback(req) {
     const interview = await Interview.findOne({ _id: interviewId });
     let currFeedback = '';
 
-    if (interview.users[0].user.equals(userIdCreator)) {
-      currFeedback = await createAndUpdateFeedback(
-        performanceLevel,
-        categories,
-        strengths,
-        improvements,
-        resources,
-        other,
-        userIdCreator,
-        userIdReciever,
-        interview.users[0],
-        interviewId
-      );
-      interview.users[0].feedback = currFeedback;
-    } else {
-      currFeedback = await createAndUpdateFeedback(
-        performanceLevel,
-        categories,
-        strengths,
-        improvements,
-        resources,
-        other,
-        userIdCreator,
-        userIdReciever,
-        interview.users[1],
-        interviewId
-      );
-      interview.users[1].feedback = currFeedback; // new user should be existing before feedback is given
+    let interviewUsers = interview.users[0];
+    if (!interview.users[0].user.equals(userIdCreator)) {
+      interviewUsers = interview.users[1];
     }
+    currFeedback = await createAndUpdateFeedback(
+      performanceLevel,
+      categories,
+      strengths,
+      improvements,
+      resources,
+      other,
+      userIdCreator,
+      userIdReciever,
+      interviewUsers,
+      interviewId
+    );
+    interview.users.feedback = currFeedback;
     await interview.save();
 
     return { feedback: currFeedback };
@@ -128,7 +116,7 @@ async function createAndUpdateFeedback(
   interviewUsers,
   interviewId
 ) {
-  let feedback = '';
+  let feedback;
   if (!interviewUsers.feedback) {
     feedback = new Feedback({
       feedbackCreator: userIdCreator,
