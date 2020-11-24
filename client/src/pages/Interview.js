@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
 import TextEditor from '../components/TextEditor';
 import InterviewHeader from '../components/InterviewHeader';
 import OutputConsole from '../components/OutputConsole';
+import { getRandomQuestion } from '../utils/apiFunctions';
 import axios from 'axios';
 
-const Interview = () => {
+const Interview = (props) => {
   const classes = useStyles();
 
   const [codeData, setCodeData] = useState({
@@ -16,6 +17,22 @@ const Interview = () => {
   });
 
   const [codeResult, setCodeResult] = useState('');
+  const [question, setQuestion] = useState(null)
+  const difficulty = props.location.state.difficulty
+
+  const fetchQuestionsByDifficulty = async () => {
+    try {
+      const { data } = await getRandomQuestion(difficulty)
+      setQuestion(data);
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  useEffect(() => {
+    fetchQuestionsByDifficulty()
+  }, []);
+
 
   const handleCodeSnippetChange = (codeSnippet) => {
     setCodeData({ ...codeData, code: codeSnippet });
