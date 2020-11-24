@@ -9,7 +9,7 @@ import {
   LOGIN_SUCCESS,
 } from './types';
 
-let ENDPOINT = '/';
+const ENDPOINT = '/';
 let socket;
 
 const initialState = {

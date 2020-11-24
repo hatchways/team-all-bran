@@ -21,7 +21,6 @@ const Routes = () => {
         <PrivateRoute exact path='/faq' component={Faq} />
         <PrivateRoute exact path='/lobby/:id' component={Lobby} />
         <PrivateRoute exact path='/interview' component={Interview} />
-        {/* This route can change */}
         <Route path='/' component={Signup} />
       </Switch>
     </>
