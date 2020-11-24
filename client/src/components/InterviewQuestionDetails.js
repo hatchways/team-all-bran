@@ -24,16 +24,10 @@ const InterviewQuestionDetails = (props) => {
       {answer
         ? <>
           <div className={classes.questionDetailsContainer}>
-            <p className={classes.questionTopicText}>Diagonal Difference</p>
+            <p className={classes.questionTopicText}>{props.question && props.question.title}</p>
             <p className={classes.questionDescText}>
-              Given a square matrix, calculate the absolute difference between
-              the sums of its diagonals. For example, the square matrix arr is show below.
-        </p>
-            <p className={classes.funcDescText}>Function Description</p>
-            <p className={classes.questionDescText}>
-              Complete the function in the diagonalOfDifference editor below. It must return an
-              integer representing the absolute diagonal difference. diagonalDifference takes in the follow parameter: arr: an array of integers.
-        </p>
+              {props.question && props.question.description}
+            </p>
           </div>
         </>
         : <div className={classes.answerSolutionContainer}>

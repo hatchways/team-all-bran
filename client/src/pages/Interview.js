@@ -58,7 +58,7 @@ const Interview = (props) => {
       <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader language={language} setLanguage={handleLanguageChange} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
-          <InterviewQuestionDetails />
+          <InterviewQuestionDetails question={question} />
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
