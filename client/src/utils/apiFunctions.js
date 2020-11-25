@@ -36,10 +36,10 @@ export const logoutUser = () => {
   return api.post('/users/logout');
 };
 
-export const getRandomQuestion = (difficulty) => {
-  return api.get('/questions', {
-    params: {
-      difficulty: difficulty
-    }
-  });
+export const getInterview = (roomId) => {
+  return api.get(`/interviews/${roomId}`)
+};
+
+export const getQuestion = (questionId) => {
+  return api.get(`/questions/${questionId}`)
 };
