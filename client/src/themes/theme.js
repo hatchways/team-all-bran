@@ -318,17 +318,18 @@ export const useStyles = makeStyles((theme) => ({
   questionAnswerButtonHighlighted: {
     borderRadius: 35,
     height: 50,
-    width: 150,
+    width: 180,
     padding: '18px 36px',
     fontSize: '15px',
     color: colors.darkBlue,
     marginRight: '15px',
     boxShadow: `0 1px 5px 2px ${colors.shadow}`,
+    fontWeight: 'bold'
   },
   questionAnswerButtonUnhighlighted: {
     borderRadius: 35,
     height: 50,
-    width: 150,
+    width: 180,
     padding: '18px 36px',
     fontSize: '15px',
     color: colors.charcoalGray,
@@ -439,6 +440,22 @@ export const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  answerButton: {
+    color: colors.darkBlue,
+    borderColor: colors.lightGray,
+    borderRadius: 5,
+    marginTop: '10px',
+    marginBottom: '20px',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    borderWidth: 2,
+    padding: '2px 20px'
+  },
+  answerButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 }));
 
 export const GlobalCss = withStyles({

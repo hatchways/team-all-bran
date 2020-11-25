@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { InterviewDetailButton } from '../components/Buttons'
 import { useStyles } from '../themes/theme';
+import { AnswerButton } from './Buttons'
 
-const InterviewQuestionDetails = (props) => {
+const InterviewQuestionDetails = ({ questions }) => {
   const classes = useStyles();
 
-  const [questionAnswerToggle, setQuestionAnswerToggle] = useState({
-    answer: true,
-    question: false
+  const [questionHighlightToggle, setQuestionHighlightToggle] = useState({
+    questionOne: true,
+    questionTwo: false
   });
 
-  const parsedQuestionDescription = () => {
+  const questionSet = [...Object.values(questions)]
+  const [questionDisplayed, setQuestionDisplayed] = useState(0)
+
+  const parsedQuestionDescription = (question) => {
     let mainDescriptionParsed = false;
-    let lines = props.question.description.split('\n');
+    let lines = question.description.split('\n');
     let lineCount = lines.length;
     let codeBlockTexts = [];
     return (
@@ -49,27 +53,32 @@ const InterviewQuestionDetails = (props) => {
     return (line.startsWith("Example") || line.startsWith("Constraints:") || index === lineCount - 1)
   }
 
-  const { answer, question } = questionAnswerToggle
+  const { questionOne, questionTwo } = questionHighlightToggle
   return (
     <div className={classes.interviewDetailsContainer}>
       <div className={classes.questionAnswerButtonContainer}>
-        <div onClick={() => setQuestionAnswerToggle({ answer: true, question: false })}>
-          <InterviewDetailButton questionAnswerToggle={answer} text="Question" />
+        <div onClick={() => {
+          setQuestionHighlightToggle({ questionOne: true, questionTwo: false })
+          setQuestionDisplayed(0)
+        }}>
+          <InterviewDetailButton questionAnswerToggle={questionOne} text="Question #1" />
         </div>
-        <div onClick={() => setQuestionAnswerToggle({ answer: false, question: true })}>
-          <InterviewDetailButton questionAnswerToggle={question} text="Answer" />
+        <div onClick={() => {
+          setQuestionHighlightToggle({ questionOne: false, questionTwo: true })
+          setQuestionDisplayed(1)
+        }}>
+          <InterviewDetailButton questionAnswerToggle={questionTwo} text="Question #2" />
         </div>
       </div>
-      {answer
-        ? <>
-          <div className={classes.questionDetailsContainer}>
-            <p className={classes.questionTopicText}>{props.question.title}</p>
-            {parsedQuestionDescription()}
+      <div className={classes.questionDetailsContainer}>
+        <p className={classes.questionTopicText}>{questionSet[questionDisplayed].title}</p>
+        {parsedQuestionDescription(questionSet[questionDisplayed])}
+        <div className={classes.answerButtonContainer}>
+          <div onClick={() => window.open(`${questionSet[questionDisplayed].url}/discuss`, "_blank")}>
+            <AnswerButton text="View Answer" />
           </div>
-        </>
-        : <div className={classes.answerSolutionContainer}>
-          Answer
-        </div>}
+        </div>
+      </div>
     </div>
   );
 }
