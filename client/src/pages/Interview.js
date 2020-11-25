@@ -50,6 +50,16 @@ const Interview = () => {
     setLanguage(language);
   };
 
+  useEffect(() => {
+    socket.emit('change_language', language);
+  }, [language]);
+
+  useEffect(() => {
+    socket.on('language_change', (data) => {
+      setLanguage(data);
+    });
+  }, [socket]);
+
   const runCode = async () => {
     try {
       const result = await axios.post(`/runCode`, { language, code });

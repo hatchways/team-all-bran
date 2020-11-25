@@ -16,21 +16,20 @@ module.exports = (server) => {
     });
 
     socket.on('code_result', (codeResult) => {
-      console.log(
-        'OUTPUT ~ file: socket.js ~ line 67 ~ socket.on ~ codeResult',
-        codeResult
-      );
       socket.broadcast.to(socket.roomId).emit('result_code', codeResult);
     });
 
     socket.on('change_text', (code) => {
-      console.log(code);
       socket.broadcast.to(socket.roomId).emit('new_content', code);
     });
 
     const waitingRoomFull = () => {
       return Object.keys(connectedUsers[room]).length === 2;
     };
+
+    socket.on('change_language', (language) => {
+      socket.broadcast.to(socket.roomId).emit('language_change', language);
+    });
 
     socket.on('join_room', ({ user, roomId }) => {
       connectedUser = user._id;
