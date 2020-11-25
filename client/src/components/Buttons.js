@@ -80,3 +80,9 @@ export const ExitInterviewButton = (props) => {
   const { text } = props
   return <Button variant="outlined" className={classes.exitInterviewButton}>{text}</Button>
 }
+
+export const AnswerButton = (props) => {
+  const classes = useStyles()
+  const { text } = props
+  return <Button variant="outlined" className={classes.answerButton}>{text}</Button>
+}
