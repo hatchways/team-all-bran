@@ -1,21 +1,32 @@
 const connectedUsers = {};
+const rooms = [];
 
 module.exports = (server) => {
   // const http = require('http').createServer(server);
   const io = require('socket.io')(server, { origins: '*:*' });
   io.on('connection', (socket) => {
+    const id = socket.client;
     let connectedUser;
     let room;
     let isRoomFull = false;
 
+    socket.on('create_room', ({ user, roomId }) => {
+      socket.roomId = roomId;
+      socket.join(roomId);
+    });
+
+    socket.on('change_text', (code) => {
+      console.log(code);
+      socket.broadcast.to(socket.roomId).emit('new_content', code);
+    });
+
     const waitingRoomFull = () => {
-      return Object.keys(connectedUsers[room]).length === 2
-    }
+      return Object.keys(connectedUsers[room]).length === 2;
+    };
 
     socket.on('join_room', ({ user, roomId }) => {
       connectedUser = user._id;
       room = roomId;
-
 
       if (connectedUsers[room]) {
         if (waitingRoomFull()) {
@@ -25,10 +36,10 @@ module.exports = (server) => {
         }
         connectedUsers[room][connectedUser] = user;
       } else {
-        user['isOwner'] = true
+        user['isOwner'] = true;
         connectedUsers[room] = {
-          [connectedUser]: user
-        }
+          [connectedUser]: user,
+        };
       }
       io.emit('users', connectedUsers[room]);
     });
@@ -46,9 +57,8 @@ module.exports = (server) => {
     });
 
     socket.on('disconnect', () => {
-
+      console.log(`User ${id} disconnected`);
     });
-
   });
   return io;
 };

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
 import { ControlledEditor } from '@monaco-editor/react';
 
-const TextEditor = ({ language, handleCodeSnippetChange }) => {
+const TextEditor = ({ value, language, handleCodeSnippetChange }) => {
   const [isEditorReady, setIsEditorReady] = useState(false);
   const codeText = useRef();
 
@@ -10,29 +10,31 @@ const TextEditor = ({ language, handleCodeSnippetChange }) => {
     codeText.current = _codeText;
   }
 
-  const handleCodeChange = () => {
-    handleCodeSnippetChange(codeText.current())
-  }
+  const handleCodeChange = (ev, value) => {
+    console.log(value);
+    handleCodeSnippetChange(value);
+  };
 
   const displayDefaultText = () => {
     if (language === 'javascript') {
-      return "//write your code here"
+      return '//write your code here';
     } else if (language === 'python') {
-      return "# write your code here"
+      return '# write your code here';
     }
-  }
+  };
 
   return (
     <ControlledEditor
-      height="90vh"
-      theme="dark"
+      height='90vh'
+      theme='dark'
       options={{ fontSize: 18 }}
       language={language}
-      value={displayDefaultText()}
+      value={value}
       editorDidMount={handleEditorDidMount}
-      onChange={handleCodeChange} />
-
-  )
-}
+      onChange={handleCodeChange}
+      loading={'Loading...'}
+    />
+  );
+};
 
 export default TextEditor;
