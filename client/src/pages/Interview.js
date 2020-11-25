@@ -5,11 +5,14 @@ import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
 import TextEditor from '../components/TextEditor';
 import InterviewHeader from '../components/InterviewHeader';
 import OutputConsole from '../components/OutputConsole';
-import { getRandomQuestion } from '../utils/apiFunctions';
 import axios from 'axios';
+import { getInterview, getQuestion } from '../utils/apiFunctions'
+import { useHistory } from 'react-router';
 
-const Interview = (props) => {
+const Interview = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const roomId = history.location.pathname.split('/')[2];
 
   const [codeData, setCodeData] = useState({
     language: 'javascript',
@@ -25,31 +28,32 @@ const Interview = (props) => {
     }
   });
 
-  const difficulty = props.location.state.difficulty;
-
-  const fetchQuestionsByDifficulty = async () => {
+  const fetchQuestions = async () => {
     try {
-      const { data: questionOne } = await getRandomQuestion(difficulty);
-      const { data: questionTwo } = await getRandomQuestion(difficulty);
+      const { data } = await getInterview(roomId)
+      const { interview: userData } = data;
+      const { users: interviewUsers } = userData;
+      const questions = [];
 
-      if (questionOne.index === questionTwo.index) {
-        fetchQuestionsByDifficulty()
-      } else {
-        setPageData({
-          isLoaded: true,
-          questions: {
-            questionOne,
-            questionTwo
-          }
-        });
+      for (let user of interviewUsers) {
+        const questionId = user.question;
+        const question = await getQuestion(questionId).then(res => res.data);
+        questions.push(question);
       }
+      setPageData({
+        isLoaded: true,
+        questions: {
+          questionOne: questions[0],
+          questionTwo: questions[1]
+        }
+      })
     } catch (e) {
       console.error(e);
     }
   }
 
   useEffect(() => {
-    fetchQuestionsByDifficulty();
+    fetchQuestions();
   }, []);
 
 
