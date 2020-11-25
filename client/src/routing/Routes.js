@@ -9,6 +9,7 @@ import PrivateRoute from './PrivateRoute';
 import Signup from '../pages/Signup';
 import Lobby from '../pages/Lobby';
 import Interview from '../pages/Interview';
+import FeedbackDialog from '../components/FeedbackDialog';
 
 const Routes = () => {
   return (
@@ -21,6 +22,12 @@ const Routes = () => {
         <PrivateRoute exact path='/faq' component={Faq} />
         <PrivateRoute exact path='/lobby/:id' component={Lobby} />
         <PrivateRoute exact path='/interview' component={Interview} />
+        <PrivateRoute
+          exact
+          path='/interview/feedback/:pageNumber'
+          component={Interview}
+        />
+
         <Route path='/' component={Signup} />
       </Switch>
     </>
