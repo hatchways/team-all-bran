@@ -41,7 +41,7 @@ module.exports = (server) => {
       if (!isRoomFull) {
         delete connectedUsers[room][connectedUser];
         isRoomFull = false;
-        io.emit('users', connectedUsers[room]);
+        io.emit('waiting_room_disconnect_user', connectedUsers[room]);
       }
     });
 

@@ -35,4 +35,10 @@ router.get(
   interviewController.getInterview
 );
 
+router.post(
+  '/:id/start',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.joinInterview
+);
+
 module.exports = router;

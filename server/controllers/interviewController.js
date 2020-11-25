@@ -41,9 +41,17 @@ async function getInterview(req, res) {
   }
 }
 
+const joinInterview = async (req, res) => {
+  const { id } = req.params
+
+  const interview = await interviewModel.addInterviewQuestions(id)
+
+  res.json(interview)
+}
 module.exports = {
   cInterview,
   endInterview,
   addUser,
   getInterview,
+  joinInterview
 };

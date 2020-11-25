@@ -29,8 +29,7 @@ function SimpleDialog({ onClose, selectedValue, open, handleChange }) {
         { withCredentials: true }
       );
       history.push({
-        pathname: `/lobby/${data.interview._id}`,
-        state: { difficulty: selectedValue }
+        pathname: `/lobby/${data.interview._id}`
       })
     } catch (err) {
       console.error('OUTPUT: SimpleDialog -> err', err);
