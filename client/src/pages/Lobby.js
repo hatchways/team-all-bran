@@ -122,6 +122,9 @@ const Lobby = (props) => {
 
   if (startInterview) {
     addUserAndQuestions();
+    history.push({
+      pathname: `/interview/${roomId}`
+    })
   }
 
   return (
