@@ -15,6 +15,14 @@ module.exports = (server) => {
       socket.join(roomId);
     });
 
+    socket.on('code_result', (codeResult) => {
+      console.log(
+        'OUTPUT ~ file: socket.js ~ line 67 ~ socket.on ~ codeResult',
+        codeResult
+      );
+      socket.broadcast.to(socket.roomId).emit('result_code', codeResult);
+    });
+
     socket.on('change_text', (code) => {
       console.log(code);
       socket.broadcast.to(socket.roomId).emit('new_content', code);

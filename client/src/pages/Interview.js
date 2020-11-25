@@ -33,6 +33,16 @@ const Interview = () => {
   }, [code, socket]);
 
   useEffect(() => {
+    socket.emit('code_result', codeResult);
+  }, [codeResult, socket]);
+
+  useEffect(() => {
+    socket.on('result_code', (data) => {
+      setCodeResult(data);
+    });
+  }, [socket]);
+
+  useEffect(() => {
     socket.on('new_content', (data) => setValue(data));
   }, [socket]);
 
