@@ -17,20 +17,39 @@ const Interview = (props) => {
   });
 
   const [codeResult, setCodeResult] = useState('');
-  const [pageData, setPageData] = useState({ isLoaded: false, question: null })
-  const difficulty = props.location.state.difficulty
+  const [pageData, setPageData] = useState({
+    isLoaded: false,
+    questions: {
+      questionOne: null,
+      questionTwo: null
+    }
+  });
+
+  const difficulty = props.location.state.difficulty;
 
   const fetchQuestionsByDifficulty = async () => {
     try {
-      const { data } = await getRandomQuestion(difficulty)
-      setPageData({ isLoaded: true, question: data });
+      const { data: questionOne } = await getRandomQuestion(difficulty);
+      const { data: questionTwo } = await getRandomQuestion(difficulty);
+
+      if (questionOne.index === questionTwo.index) {
+        fetchQuestionsByDifficulty()
+      } else {
+        setPageData({
+          isLoaded: true,
+          questions: {
+            questionOne,
+            questionTwo
+          }
+        });
+      }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   useEffect(() => {
-    fetchQuestionsByDifficulty()
+    fetchQuestionsByDifficulty();
   }, []);
 
 
@@ -50,15 +69,13 @@ const Interview = (props) => {
       console.error(error);
     }
   };
-
   const { language, code } = codeData;
-
   return (
     <div className={classes.interviewContainer}>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader language={language} setLanguage={handleLanguageChange} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
-          {pageData.isLoaded ? <InterviewQuestionDetails question={pageData.question} /> : <div>Loading question...</div>}
+          {pageData.isLoaded ? <InterviewQuestionDetails questions={pageData.questions} /> : <div>Loading question...</div>}
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
