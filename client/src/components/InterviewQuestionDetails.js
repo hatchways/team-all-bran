@@ -10,6 +10,45 @@ const InterviewQuestionDetails = (props) => {
     question: false
   });
 
+  const parsedQuestionDescription = () => {
+    let mainDescriptionParsed = false;
+    let lines = props.question.description.split('\n');
+    let lineCount = lines.length;
+    let codeBlockTexts = [];
+    return (
+      lines.map((line, index) => {
+        if (mainDescriptionWasParsed(line, index, lineCount)) {
+          mainDescriptionParsed = true;
+          const codeDiv = (
+            <>
+              {codeBlockTexts.length > 0 ?
+                <div key={index} className={classes.questionDescCodeBlock}>
+                  {codeBlockTexts.map((text, index) => {
+                    return <p key={index}>{text}</p>
+                  })}
+                </div>
+                : <></>}
+              {line.startsWith("Example ") ? <p key={index} className={classes.questionDescExampleText}>{line}</p> : <></>}
+            </>
+          )
+          codeBlockTexts = [];
+          return codeDiv;
+        } else if (!mainDescriptionParsed) {
+          if (line.length !== 0) {
+            return <p key={index} className={classes.questionDescText}>{line}</p>
+          }
+          return <></>
+        } else {
+          codeBlockTexts.push(line);
+        }
+      })
+    );
+  }
+
+  const mainDescriptionWasParsed = (line, index, lineCount) => {
+    return (line.startsWith("Example") || line.startsWith("Constraints:") || index === lineCount - 1)
+  }
+
   const { answer, question } = questionAnswerToggle
   return (
     <div className={classes.interviewDetailsContainer}>
@@ -25,9 +64,7 @@ const InterviewQuestionDetails = (props) => {
         ? <>
           <div className={classes.questionDetailsContainer}>
             <p className={classes.questionTopicText}>{props.question.title}</p>
-            <p className={classes.questionDescText}>
-              {props.question.description}
-            </p>
+            {parsedQuestionDescription()}
           </div>
         </>
         : <div className={classes.answerSolutionContainer}>
