@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { InterviewDetailButton } from '../components/Buttons'
 import { useStyles } from '../themes/theme';
 import { AnswerButton } from './Buttons'
+import { generateKey } from '../utils/generateRandomKey'
 
 const InterviewQuestionDetails = ({ questions }) => {
   const classes = useStyles();
@@ -16,8 +17,8 @@ const InterviewQuestionDetails = ({ questions }) => {
 
   const parsedQuestionDescription = (question) => {
     let mainDescriptionParsed = false;
-    let lines = question.description.split('\n');
-    let lineCount = lines.length;
+    const lines = question.description.split('\n');
+    const lineCount = lines.length;
     let codeBlockTexts = [];
     return (
       lines.map((line, index) => {
@@ -26,20 +27,20 @@ const InterviewQuestionDetails = ({ questions }) => {
           const codeDiv = (
             <>
               {codeBlockTexts.length > 0 ?
-                <div key={index} className={classes.questionDescCodeBlock}>
-                  {codeBlockTexts.map((text, index) => {
-                    return <p key={index}>{text}</p>
+                <div className={classes.questionDescCodeBlock}>
+                  {codeBlockTexts.map(text => {
+                    return <p key={generateKey()}>{text}</p>
                   })}
                 </div>
-                : <></>}
-              {line.startsWith("Example ") ? <p key={index} className={classes.questionDescExampleText}>{line}</p> : <></>}
+                : <div key={generateKey()}></div>}
+              {line.startsWith("Example ") ? <p className={classes.questionDescExampleText}>{line}</p> : <></>}
             </>
           )
           codeBlockTexts = [];
           return codeDiv;
         } else if (!mainDescriptionParsed) {
           if (line.length !== 0) {
-            return <p key={index} className={classes.questionDescText}>{line}</p>
+            return <p className={classes.questionDescText}>{line}</p>
           }
           return <></>
         } else {
