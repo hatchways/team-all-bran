@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = mongoose.model('User');
+const Question = require('../models/Question');
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -15,8 +16,8 @@ const InterviewSchema = new Schema(
     theme: {
       type: Schema.Types.ObjectId,
       ref: 'Theme',
-      /* Can we ref Tags here? Take most used tag out 
-      of the questions and stick it up here and call it a theme? 
+      /* Can we ref Tags here? Take most used tag out
+      of the questions and stick it up here and call it a theme?
       Just wondering where theme comes from */
     },
     users: [
@@ -27,7 +28,7 @@ const InterviewSchema = new Schema(
           type: Schema.Types.ObjectId,
           ref: 'Feedback',
         },
-        questions: {
+        question: {
           type: Schema.Types.ObjectId,
           ref: 'Question,',
         },
@@ -83,17 +84,35 @@ async function getInterview(interviewId) {
   return { interview: interview };
 }
 
-async function endInterview(req) {}
+async function addInterviewQuestions(id) {
+  const interview = await Interview.findOne({ _id: id });
+  const { difficulty } = interview;
+  const questions = await getRandomQuestionsByDifficulty(difficulty);
 
-async function joinInterview(req) {}
+  interview.users.forEach(user => {
+    user.question = questions.pop();
+  })
+  interview.save();
+  return interview;
+}
+
+const getRandomQuestionsByDifficulty = async (difficulty) => {
+  const count = await Question.count({ difficulty });
+
+  const questionOne = await Question.findOne({ difficulty }).skip(Math.floor(Math.random() * count));
+  const questionTwo = await Question.findOne({ difficulty }).skip(Math.floor(Math.random() * count));
+  if (questionOne.index === questionTwo.index) {
+    getRandomQuestionByDifficulty(difficulty)
+  }
+  return [questionOne, questionTwo]
+}
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
 module.exports = {
   Interview,
   createInterview,
-  endInterview,
-  joinInterview,
   addUserToInterview,
   getInterview,
+  addInterviewQuestions
 };
