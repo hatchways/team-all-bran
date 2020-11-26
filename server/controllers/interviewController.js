@@ -41,7 +41,7 @@ async function getInterview(req, res) {
   }
 }
 
-const joinInterview = async (req, res) => {
+const startInterview = async (req, res) => {
   const { id } = req.params
 
   const interview = await interviewModel.addInterviewQuestions(id)
@@ -53,5 +53,5 @@ module.exports = {
   endInterview,
   addUser,
   getInterview,
-  joinInterview
+  startInterview
 };

@@ -87,7 +87,7 @@ async function getInterview(interviewId) {
 async function addInterviewQuestions(id) {
   const interview = await Interview.findOne({ _id: id });
   const { difficulty } = interview;
-  const questions = await getRandomQuestionByDifficulty(difficulty);
+  const questions = await getRandomQuestionsByDifficulty(difficulty);
 
   interview.users.forEach(user => {
     user.question = questions.pop();
@@ -96,7 +96,7 @@ async function addInterviewQuestions(id) {
   return interview;
 }
 
-const getRandomQuestionByDifficulty = async (difficulty) => {
+const getRandomQuestionsByDifficulty = async (difficulty) => {
   const count = await Question.count({ difficulty });
 
   const questionOne = await Question.findOne({ difficulty }).skip(Math.floor(Math.random() * count));
@@ -106,17 +106,12 @@ const getRandomQuestionByDifficulty = async (difficulty) => {
   }
   return [questionOne, questionTwo]
 }
-async function endInterview(req) { }
-
-async function joinInterview(req) { }
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
 module.exports = {
   Interview,
   createInterview,
-  endInterview,
-  joinInterview,
   addUserToInterview,
   getInterview,
   addInterviewQuestions
