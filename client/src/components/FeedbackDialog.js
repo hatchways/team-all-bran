@@ -1,22 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  FormHelperText,
-  Radio,
-  RadioGroup,
-  TextField,
-} from '@material-ui/core/';
+import { Dialog, DialogContent, FormControl } from '@material-ui/core/';
 import { useStyles } from '../themes/theme';
 import { useParams, useHistory } from 'react-router-dom';
-import { PreviousQuestionButton } from './Buttons';
 import {
   FormOne,
   FormTwo,
@@ -34,22 +19,6 @@ const FeedbackDialog = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const [feedback, setFeedback] = useState();
-
-  useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback) {
-        setFeedback(result.data.feedback);
-      }
-    }
-    setUserFeedback();
-  });
-
-  const prevPage = () => {
-    history.push(`/interview/feedback/${String(Number(pageNumber) - 1)}`);
-  };
-
   let question;
   let questionNumber;
   let formContent;
@@ -63,33 +32,32 @@ const FeedbackDialog = () => {
     case '2':
       question = 'Submit a review of the candidate in the following categories:';
       questionNumber = '2';
-      formContent = <FormTwo />;
+      formContent = <FormTwo pageNumber={pageNumber} />;
       break;
     case '3':
       question =
         'What are some things this candidate did well (the more specific the better)';
       questionNumber = '3';
-      formContent = <FormThree />;
+      formContent = <FormThree pageNumber={pageNumber} />;
       break;
     case '4':
       question =
         'What are some things this candidate can improve on (the more specific the better)';
       questionNumber = '4';
-      formContent = <FormFour />;
+      formContent = <FormFour pageNumber={pageNumber} />;
       break;
     case '5':
       question =
         'Any recommendations on resources that can help the candidate improve?';
       questionNumber = '5';
-      formContent = <FormFive />;
+      formContent = <FormFive pageNumber={pageNumber} />;
       break;
     case '6':
       question = 'Anything else?';
       questionNumber = '6';
-      formContent = <FormSix />;
+      formContent = <FormSix pageNumber={pageNumber} />;
       break;
   }
-  console.log(feedback);
   return (
     <Dialog
       PaperProps={{ classes: { root: classes.feedbackDialog } }}
@@ -116,21 +84,7 @@ const FeedbackDialog = () => {
 
         <div className={classes.feedbackQuestion}>{question}</div>
 
-        <FormControl classes={{ root: classes.one }}>
-          {formContent}
-          {pageNumber > 1 ? (
-            <PreviousQuestionButton
-              variant='outlined'
-              onClick={prevPage}
-              color='primary'
-              autoFocus
-            >
-              PREVIOUS QUESTION
-            </PreviousQuestionButton>
-          ) : (
-            ''
-          )}
-        </FormControl>
+        <FormControl classes={{ root: classes.one }}>{formContent}</FormControl>
       </DialogContent>
     </Dialog>
   );
