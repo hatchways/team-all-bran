@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core/';
 import { useStyles } from '../themes/theme';
 import { getFeedbackCreator } from '../utils/apiFunctions';
-import { NextPage, PrevPage } from './FeedbackButtons';
+import { NextPage } from './FeedbackButtons';
 const interviewId = '5fbfcab4d54a3f7654ae5684'; // For testing purposes. To be changed later to pull from params
 
 export function FormOne() {
@@ -58,13 +58,16 @@ export function FormOne() {
         <FormLabel className={classes.feedbackFormLabel}>Perfect</FormLabel>
       </div>
       <div>
-        <NextPage feedbackType='performance' performanceLevel={performanceLevel} />
+        <NextPage
+          performanceLevel={performanceLevel}
+          feedbackValue={performanceLevel}
+        />
       </div>
     </>
   );
 }
 
-export function FormTwo({ pageNumber }) {
+export function FormTwo() {
   const classes = useStyles();
   const [categoryRatings, setCategories] = useState({});
 
@@ -130,7 +133,8 @@ export function FormTwo({ pageNumber }) {
 
   return (
     <>
-      {/* <div className={classes.feedbackCategoryRatingsContainer}>
+      <div className={classes.feedbackFormCategoryContainer}>
+        <div className={classes.feedbackCategoryRatingsContainer}>
           {categoryValues.map((category, index) => {
             return (
               <div className={classes.feedbackCategoryRatings} key={index}>
@@ -138,74 +142,66 @@ export function FormTwo({ pageNumber }) {
               </div>
             );
           })}
-        </div> */}
-      <div className={classes.feedbackFormContainer}>
-        {/* <div>
-            {categories.map((category, index) => {
-              return <div key={index}>{category}</div>;
-            })}
-          </div> */}
-        <div>
-          {categories.map((category, index) => {
-            let defaultValue;
-            if (categoryRatings) {
-              switch (category) {
-                case 'Communication skills':
-                  defaultValue = String(categoryRatings.communication);
-                  break;
-                case 'Code efficiency':
-                  defaultValue = String(categoryRatings.codeEfficiency);
-                  break;
-                case 'Code organization':
-                  defaultValue = String(categoryRatings.codeOrganization);
-                  break;
-                case 'Speed':
-                  defaultValue = String(categoryRatings.speed);
-                  break;
-                case 'Debugging skills':
-                  defaultValue = String(categoryRatings.debugging);
-                  break;
-                case 'Problem solving skills':
-                  defaultValue = String(categoryRatings.problemSolving);
-                  break;
-              }
-            }
-            return (
-              <RadioGroup
-                classes={{ root: classes.feedbackFormContainerRadio }}
-                key={index}
-                row
-                aria-label={category}
-                name={category}
-                value={defaultValue}
-                onChange={changeCategories}
-              >
-                <label className={'GG'}>{category}</label>
-                <div className={classes.feedbackFormRadio}>
-                  {categoryScore.map((score, index) => {
-                    return (
-                      <FormControlLabel
-                        key={index}
-                        value={score}
-                        control={<Radio color='primary' />}
-                      />
-                    );
-                  })}
-                </div>
-              </RadioGroup>
-            );
-          })}
         </div>
+        {categories.map((category, index) => {
+          let defaultValue;
+          if (categoryRatings) {
+            switch (category) {
+              case 'Communication skills':
+                defaultValue = String(categoryRatings.communication);
+                break;
+              case 'Code efficiency':
+                defaultValue = String(categoryRatings.codeEfficiency);
+                break;
+              case 'Code organization':
+                defaultValue = String(categoryRatings.codeOrganization);
+                break;
+              case 'Speed':
+                defaultValue = String(categoryRatings.speed);
+                break;
+              case 'Debugging skills':
+                defaultValue = String(categoryRatings.debugging);
+                break;
+              case 'Problem solving skills':
+                defaultValue = String(categoryRatings.problemSolving);
+                break;
+            }
+          }
+          return (
+            <RadioGroup
+              classes={{ root: classes.feedbackFormContainerRadio }}
+              key={index}
+              row
+              aria-label={category}
+              name={category}
+              value={defaultValue}
+              onChange={changeCategories}
+            >
+              <label className={'GG'}>{category}</label>
+              <div className={classes.feedbackFormRadio}>
+                {categoryScore.map((score, index) => {
+                  return (
+                    <FormControlLabel
+                      classes={{ root: classes.feedbackFormContainerLabel }}
+                      key={index}
+                      value={score}
+                      control={<Radio color='primary' />}
+                    />
+                  );
+                })}
+              </div>
+            </RadioGroup>
+          );
+        })}
       </div>
       <div>
-        <PrevPage pageNumber={pageNumber} />
-        <NextPage feedbackType='categories' categories={categoryRatings} />
+        <NextPage categories={categoryRatings} feedbackValue={categoryRatings} />
       </div>
     </>
   );
 }
 
-export function FormThree({ pageNumber }) {
+export function FormThree() {
   const classes = useStyles();
   const [strengths, setStrength] = useState();
 
@@ -233,16 +229,16 @@ export function FormThree({ pageNumber }) {
         name='strength'
         onChange={changeStrengths}
         defaultValue={strengths}
+        classes={{ root: classes.feedbackText }}
       />
       <div>
-        <PrevPage pageNumber={pageNumber} />
-        <NextPage feedbackType='strengths' strengths={strengths} />
+        <NextPage strengths={strengths} feedbackValue={strengths} />
       </div>
     </>
   );
 }
 
-export function FormFour({ pageNumber }) {
+export function FormFour() {
   const classes = useStyles();
   const [improvements, setImprovements] = useState();
 
@@ -270,16 +266,16 @@ export function FormFour({ pageNumber }) {
         name='improvements'
         onChange={changeImprovements}
         defaultValue={improvements}
+        classes={{ root: classes.feedbackText }}
       />
       <div>
-        <PrevPage pageNumber={pageNumber} />
-        <NextPage feedbackType='improvements' improvements={improvements} />
+        <NextPage improvements={improvements} feedbackValue={improvements} />
       </div>
     </>
   );
 }
 
-export function FormFive({ pageNumber }) {
+export function FormFive() {
   const classes = useStyles();
   const [resources, setResources] = useState();
 
@@ -307,16 +303,16 @@ export function FormFive({ pageNumber }) {
         name='resources'
         onChange={changeResources}
         defaultValue={resources}
+        classes={{ root: classes.feedbackText }}
       />
       <div>
-        <PrevPage pageNumber={pageNumber} />
-        <NextPage feedbackType='resources' resources={resources} />
+        <NextPage resources={resources} feedbackValue={resources} />
       </div>
     </>
   );
 }
 
-export function FormSix({ pageNumber }) {
+export function FormSix() {
   const classes = useStyles();
   const [other, setOther] = useState();
 
@@ -344,10 +340,10 @@ export function FormSix({ pageNumber }) {
         name='other'
         onChange={changeOther}
         defaultValue={other}
+        classes={{ root: classes.feedbackText }}
       />
       <div>
-        <PrevPage pageNumber={pageNumber} />
-        <NextPage feedbackType='other' other={other} />
+        <NextPage other={other} feedbackValue={other} />
       </div>
     </>
   );

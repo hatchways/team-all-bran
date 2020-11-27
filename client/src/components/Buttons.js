@@ -115,5 +115,6 @@ export const PreviousQuestionButton = withStyles({
     alignSelf: 'center',
     marginTop: 'auto',
     marginBottom: 'auto',
+    marginRight: '25px',
   },
 })(Button);

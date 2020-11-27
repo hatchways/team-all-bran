@@ -10,13 +10,9 @@ import {
   FormFive,
   FormSix,
 } from './FeedbackForms';
-import { createFeedback, getFeedbackCreator } from '../utils/apiFunctions';
-
-const interviewId = '5fbfcab4d54a3f7654ae5684'; // For testing purposes. To be changed later to pull from params
 
 const FeedbackDialog = () => {
   const { pageNumber } = useParams();
-  const history = useHistory();
   const classes = useStyles();
 
   let question;
@@ -27,35 +23,35 @@ const FeedbackDialog = () => {
     case '1':
       question = 'Overall, how well did this person do in the interview?';
       questionNumber = '1';
-      formContent = <FormOne pageNumber={pageNumber} />;
+      formContent = <FormOne />;
       break;
     case '2':
       question = 'Submit a review of the candidate in the following categories:';
       questionNumber = '2';
-      formContent = <FormTwo pageNumber={pageNumber} />;
+      formContent = <FormTwo />;
       break;
     case '3':
       question =
         'What are some things this candidate did well (the more specific the better)';
       questionNumber = '3';
-      formContent = <FormThree pageNumber={pageNumber} />;
+      formContent = <FormThree />;
       break;
     case '4':
       question =
         'What are some things this candidate can improve on (the more specific the better)';
       questionNumber = '4';
-      formContent = <FormFour pageNumber={pageNumber} />;
+      formContent = <FormFour />;
       break;
     case '5':
       question =
         'Any recommendations on resources that can help the candidate improve?';
       questionNumber = '5';
-      formContent = <FormFive pageNumber={pageNumber} />;
+      formContent = <FormFive />;
       break;
     case '6':
       question = 'Anything else?';
       questionNumber = '6';
-      formContent = <FormSix pageNumber={pageNumber} />;
+      formContent = <FormSix />;
       break;
   }
   return (

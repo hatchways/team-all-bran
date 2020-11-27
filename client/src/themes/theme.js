@@ -456,11 +456,12 @@ export const useStyles = makeStyles((theme) => ({
     color: colors.darkGraySolid,
     fontWeight: 'bold',
     fontSize: '16px',
+    marginBottom: '30px',
   },
   feedbackFormContainer: {
     display: 'flex',
-    marginTop: '50px',
-    marginBottom: '50px',
+    marginTop: '20px',
+    marginBottom: '20px',
   },
   feedbackFormLabel: {
     marginTop: 'auto',
@@ -475,20 +476,48 @@ export const useStyles = makeStyles((theme) => ({
   },
   feedbackCategoryRatingsContainer: {
     display: 'flex',
+    justifyContent: 'flex-end',
+    marginBottom: '20px',
   },
   feedbackCategoryRatings: {
-    width: '40px',
-    marginRight: '40px',
+    textAlign: 'center',
+    width: '82px',
+    fontSize: '12px',
+    marginLeft: '20px',
+    marginTop: 'auto',
+    color: colors.darkBlue,
+    fontWeight: '600',
   },
   feedbackFormContainerRadio: {
     display: 'flex',
     width: '100%',
+    justifyContent: 'space-between',
   },
   feedbackFormRadio: {
     alignSelf: 'flex-end',
   },
+  feedbackFormContainerLabel: {
+    marginLeft: '45px',
+  },
   one: {
     width: '100%',
+  },
+  feedbackFormCategoryContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100vh',
+  },
+  feedbackActions: {
+    justifyContent: 'center',
+    marginBottom: '25px',
+    marginTop: '30px',
+  },
+  feedbackText: {
+    width: '90vh',
+  },
+  feedbackError: {
+    color: 'red',
+    textAlign: 'center',
   },
 }));
 
