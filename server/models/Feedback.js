@@ -74,7 +74,6 @@ async function addFeedback(req) {
     other,
     experience,
   } = req.body;
-
   const userIdCreator = req.user._id;
   const interviewId = req.params.interviewId;
 
