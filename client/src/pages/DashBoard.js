@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
+import UpcomingInterviewTable from '../components/UpcomingInterviewTable'
 import { store } from '../context/store';
 
 import { useHistory } from 'react-router';
@@ -9,7 +10,7 @@ import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 
 import UserInformation from '../components/UserInformation';
 import { createInterview, getQuestion, getUser, getUserInterviews } from '../utils/apiFunctions';
-import { StartDashboardButton } from '../components/Buttons';
+import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
 
 const DashBoard = () => {
@@ -33,6 +34,7 @@ const DashBoard = () => {
           const q = await getQuestion(user.question);
 
           interviews.push({
+            createdAt: interview.createdAt,
             interviewId: interview._id,
             userId: u.data.user._id,
             firstName: u.data.user.firstName,
@@ -105,6 +107,8 @@ const DashBoard = () => {
             <CustomButton onClick={createInt} classField={classes.startDashboardButton} text='CREATE' />
           </div>
         </Dialog>
+        <p className={classes.pastPracticesText}>Upcoming Practice Interviews</p>
+        <UpcomingInterviewTable interviews={pageData.interviews} />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable />
       </div>
