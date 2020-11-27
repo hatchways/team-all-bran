@@ -9,7 +9,7 @@ import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 
 import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
-import { StartDashboardButton } from '../components/Buttons';
+import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
 
 const DashBoard = () => {
@@ -49,13 +49,7 @@ const DashBoard = () => {
   return (
     !state.loading && (
       <div className={classes.dashboardContainer}>
-        <StartDashboardButton
-          variant='outlined'
-          color='primary'
-          onClick={handleClickOpen}
-        >
-          START
-        </StartDashboardButton>
+        <CustomButton onClick={handleClickOpen} text='START' classField={classes.startDashboardButton} />
         <Dialog
           onClose={handleClose}
           aria-labelledby='simple-dialog-title'
@@ -72,7 +66,7 @@ const DashBoard = () => {
               selectedValue={selectedValue}
               handleChange={handleChange}
             />
-            <StartDashboardButton onClick={createInt}>Create</StartDashboardButton>
+            <CustomButton onClick={createInt} classField={classes.startDashboardButton} text='CREATE' />
           </div>
         </Dialog>
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Link, useHistory } from 'react-router-dom';
-import { RedirectPageButton, ContinueButton } from '../components/Buttons';
+import { CustomButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
 import axios from 'axios';
 import { store } from '../context/store';
@@ -65,9 +65,7 @@ const LoginForm = () => {
         <div className={classes.loginContainer}>
           <div className={classes.alreadyHaveAccount}>Don't have an account?</div>
           <Link style={{ textDecoration: 'none' }} to={{ pathname: '/signup' }}>
-            <RedirectPageButton variant='outlined' size='small'>
-              SIGN UP
-           </RedirectPageButton>
+            <CustomButton classField={classes.redirectPageButton} text='SIGN UP' />
           </Link>
         </div>
         <div>
@@ -94,7 +92,7 @@ const LoginForm = () => {
               value={formData.password}
               onChange={onChange}
             />
-            <ContinueButton onClick={onSubmit}>Continue</ContinueButton>
+            <CustomButton onClick={onSubmit} classField={classes.continueButton} text="Continue" />
           </form>
         </div>
       </div>
