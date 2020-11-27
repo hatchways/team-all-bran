@@ -24,8 +24,24 @@ export const createInterview = ({ id, difficulty }) => {
   return api.post(`/interviews`, { creator: id, difficulty });
 };
 
+export const addUserToInterview = ({ userId, roomId }) => {
+  return api.put(`/interviews/${roomId}/user`, { userId });
+};
+
+export const addInterviewQuestions = (roomId) => {
+  return api.post(`/interviews/${roomId}/start`);
+};
+
 export const logoutUser = () => {
   return api.post('/users/logout');
+};
+
+export const getInterview = (roomId) => {
+  return api.get(`/interviews/${roomId}`);
+};
+
+export const getQuestion = (questionId) => {
+  return api.get(`/questions/${questionId}`);
 };
 
 export const createFeedback = (interviewId, formData) => {

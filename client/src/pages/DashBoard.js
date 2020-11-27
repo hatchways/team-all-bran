@@ -34,7 +34,9 @@ const DashBoard = () => {
   const createInt = async () => {
     try {
       const { data } = await createInterview({ difficulty: selectedValue });
-      history.push(`/lobby/${data.interview._id}`);
+      history.push({
+        pathname: `/lobby/${data.interview._id}`
+      })
     } catch (err) {
       console.error('OUTPUT: SimpleDialog -> err', err);
     }

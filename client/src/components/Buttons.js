@@ -89,6 +89,16 @@ export const ExitInterviewButton = (props) => {
   );
 };
 
+export const AnswerButton = (props) => {
+  const classes = useStyles();
+  const { text } = props;
+  return (
+    <Button variant='outlined' className={classes.answerButton}>
+      {text}
+    </Button>
+  );
+};
+
 export const NextQuestionButton = withStyles({
   root: {
     borderRadius: 35,

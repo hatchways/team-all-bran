@@ -75,6 +75,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   gridSpacingThree: {
+    height: '93vh',
     width: '100%',
     margin: 0,
   },
@@ -192,7 +193,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   interviewContainer: {
     overflow: 'hidden',
-    height: '100vh',
+    height: '100%',
     width: '100vw',
     position: 'relative',
   },
@@ -201,7 +202,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    height: '100px',
+    height: '10vh',
     alignItems: 'center',
   },
   interviewDetailsContainer: {
@@ -276,13 +277,15 @@ export const useStyles = makeStyles((theme) => ({
   questionDetailsContainer: {
     marginTop: '30px',
     textAlign: 'left',
-    width: '25vw',
-    height: '85vh',
+    width: '100%',
+    height: '72vh',
+    overflow: 'scroll',
   },
   questionTopicText: {
     color: colors.darkBlue,
     fontSize: '35px',
     marginBottom: '40px',
+    textAlign: 'center',
   },
   funcDescText: {
     fontWeight: 'bold',
@@ -291,6 +294,24 @@ export const useStyles = makeStyles((theme) => ({
   questionDescText: {
     color: 'gray',
     fontSize: '18px',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+  },
+  questionDescExampleText: {
+    color: colors.darkBlue,
+    fontWeight: 'bold',
+    fontSize: '20px',
+    padding: '20px',
+  },
+  questionDescCodeBlock: {
+    padding: '20px',
+    color: 'black',
+    backgroundColor: colors.lighterGray,
+    fontSize: '18px',
+    fontFamily:
+      'SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace',
+    padding: '20px',
+    width: '85%',
   },
   answerSolutionContainer: {
     marginTop: '30px',
@@ -298,17 +319,18 @@ export const useStyles = makeStyles((theme) => ({
   questionAnswerButtonHighlighted: {
     borderRadius: 35,
     height: 50,
-    width: 150,
+    width: 180,
     padding: '18px 36px',
     fontSize: '15px',
     color: colors.darkBlue,
     marginRight: '15px',
     boxShadow: `0 1px 5px 2px ${colors.shadow}`,
+    fontWeight: 'bold',
   },
   questionAnswerButtonUnhighlighted: {
     borderRadius: 35,
     height: 50,
-    width: 150,
+    width: 180,
     padding: '18px 36px',
     fontSize: '15px',
     color: colors.charcoalGray,
@@ -418,6 +440,22 @@ export const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  answerButton: {
+    color: colors.darkBlue,
+    borderColor: colors.lightGray,
+    borderRadius: 5,
+    marginTop: '10px',
+    marginBottom: '20px',
+    fontWeight: 'bold',
+    fontSize: '18px',
+    borderWidth: 2,
+    padding: '2px 20px',
+  },
+  answerButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   feedbackDialog: {
     //height: '80%',
@@ -547,4 +585,5 @@ export const colors = {
   charcoalGray: 'rgba(30,30,30, .8)',
   darkGraySolid: 'rgba(105, 105, 105, 1)',
   lightGraySolid: 'rgba(76, 76, 76, 1)',
+  lighterGray: 'rgba(247, 249, 250, 1)',
 };

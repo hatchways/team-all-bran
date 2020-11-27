@@ -35,6 +35,12 @@ router.get(
   interviewController.getInterview
 );
 
+router.post(
+  '/:id/start',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.startInterview
+);
+
 router.get(
   '/:interviewId/feedback/creator',
   passport.authenticate('jwt', { session: false }),
