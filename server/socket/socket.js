@@ -13,8 +13,6 @@ module.exports = (server) => {
     });
 
     socket.on('create_room', ({ user, roomId }) => {
-      //check if room exists
-
       if (rooms[roomId]) {
         if (Object.keys(rooms[roomId]).length < 2) {
           rooms[roomId][user._id] = user;
@@ -76,6 +74,7 @@ module.exports = (server) => {
     });
 
     socket.on('disconnect', () => {
+      console.log(id, socket.userId);
       delete usersToSockets[id];
       delete socketToUsers[socket.userId];
       console.log(`User ${id} disconnected`);

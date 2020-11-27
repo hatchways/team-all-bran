@@ -42,7 +42,6 @@ const Lobby = () => {
 
   const handleClose = () => {
     setOpen(false);
-    // socket.emit('leave_room', { userId: state.user._id, roomId });
   };
 
   const showAlert = ({ message }) => {
@@ -63,30 +62,38 @@ const Lobby = () => {
   };
 
   useEffect(() => {
+    let isMounted = true;
     console.log('joining_room: ', roomId);
-    if (state.user) {
+    if (state.user && isMounted) {
       socket.emit('create_room', { user: state.user, roomId });
     }
 
     return () => {
+      isMounted = false;
       console.log('left room: ', roomId);
-      // socket.emit('leave_room', { userId: state.user._id, roomId });
     };
-  }, [socket]);
+  }, [socket, roomId, state.user]);
 
   useEffect(() => {
-    socket.on('lobby_users', ({ users }) => {
-      console.log(users);
-      setUserData(users);
-    });
-    return () => {};
+    let isMounted = true;
+    if (isMounted) {
+      socket.on('lobby_users', ({ users }) => {
+        setUserData(users);
+      });
+    }
+    return () => {
+      isMounted = false;
+    };
   }, [socket, userData]);
 
   useEffect(() => {
-    socket.on('join_interview_room', () => {
-      history.push(`/interview/${roomId}`);
-    });
-  }, []);
+    let isMounted = true;
+    if (isMounted) {
+      socket.on('join_interview_room', () => {
+        history.push(`/interview/${roomId}`);
+      });
+    }
+  }, [socket, history, roomId]);
 
   if (!open) return <Redirect to='/dashboard' />;
   return (
