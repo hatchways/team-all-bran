@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Link, useHistory } from 'react-router-dom';
-import { RedirectPageButton, ContinueButton } from '../components/Buttons';
+import { CustomButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
@@ -128,9 +128,7 @@ const SignupForm = () => {
       <div className={classes.loginContainer}>
         <div className={classes.alreadyHaveAccount}>Already have an account?</div>
         <Link style={{ textDecoration: 'none' }} to={{ pathname: '/login' }}>
-          <RedirectPageButton variant='outlined' size='small'>
-            Sign in
-          </RedirectPageButton>
+          <CustomButton classField={classes.redirectPageButton} text='SIGN IN' />
         </Link>
       </div>
       <div>
@@ -188,7 +186,7 @@ const SignupForm = () => {
             onChange={onChange}
             color='primary'
           />
-          <ContinueButton onClick={continueClicked}>Continue</ContinueButton>
+          <CustomButton onClick={continueClicked} classField={classes.continueButton} text="Continue" />
         </form>
       </div>
       {open && (

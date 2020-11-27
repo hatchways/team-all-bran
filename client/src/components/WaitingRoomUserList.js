@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { ContinueButton } from '../components/Buttons';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
