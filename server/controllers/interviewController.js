@@ -48,10 +48,18 @@ const startInterview = async (req, res) => {
 
   res.json(interview)
 }
+
+const getInterviewsByUserId = async (req, res) => {
+  const email = req.user.email;
+  const interviews = (await User.findOne({ email }).populate('interviews')).interviews;
+  res.json(interviews);
+}
+
 module.exports = {
   cInterview,
   endInterview,
   addUser,
   getInterview,
-  startInterview
+  startInterview,
+  getInterviewsByUserId
 };
