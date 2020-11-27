@@ -8,6 +8,7 @@ import InterviewHeader from '../components/InterviewHeader';
 import OutputConsole from '../components/OutputConsole';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import SocketContext from '../context/socket';
 
 const Interview = () => {
   const classes = useStyles();
@@ -15,7 +16,8 @@ const Interview = () => {
   const { id } = useParams();
 
   const { state } = useContext(store);
-  const { socket } = state;
+  const socket = useContext(SocketContext);
+
   const handleCodeSnippetChange = (codeSnippet) => {
     setCode(codeSnippet);
   };
@@ -24,13 +26,19 @@ const Interview = () => {
   const [value, setValue] = useState('');
   const [codeResult, setCodeResult] = useState('');
 
-  useEffect(() => {
-    socket.emit('create_room', { user: state.user, id });
-  }, [socket, state.user, id]);
+  // useEffect(() => {
+  //   if (id !== undefined) {
+  //     socket.emit('create_room', { user: state.user, id });
+  //   }
+  // }, [socket, state.user, id]);
 
   useEffect(() => {
     socket.emit('change_text', code);
   }, [code, socket]);
+
+  useEffect(() => {
+    socket.on('new_content', (data) => setValue(data));
+  });
 
   useEffect(() => {
     socket.emit('code_result', codeResult);
@@ -42,17 +50,13 @@ const Interview = () => {
     });
   }, [socket]);
 
-  useEffect(() => {
-    socket.on('new_content', (data) => setValue(data));
-  }, [socket]);
-
   const handleLanguageChange = (language) => {
     setLanguage(language);
   };
 
   useEffect(() => {
     socket.emit('change_language', language);
-  }, [language]);
+  }, [language, socket]);
 
   useEffect(() => {
     socket.on('language_change', (data) => {

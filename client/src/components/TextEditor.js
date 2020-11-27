@@ -1,26 +1,45 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ControlledEditor } from '@monaco-editor/react';
+import { store } from '../context/store';
 
 const TextEditor = ({ value, language, handleCodeSnippetChange }) => {
   const [isEditorReady, setIsEditorReady] = useState(false);
-  const codeText = useRef();
+  const [position, setPosition] = useState({ lineNumber: 1, column: 0 });
+  const editorRef = useRef();
+  const {
+    state: { socket },
+  } = useContext(store);
 
-  function handleEditorDidMount(_codeText) {
+  function handleEditorDidMount(e, editor) {
     setIsEditorReady(true);
-    codeText.current = _codeText;
+    editorRef.current = editor;
   }
 
-  const handleCodeChange = (ev, value) => {
-    console.log(value);
-    handleCodeSnippetChange(value);
-  };
+  // useEffect(() => {
+  //   if (isEditorReady && editorRef.current) {
+  //     editorRef.current.onDidChangeCursorPosition(
+  //       ({ position: { lineNumber, column } }) => {
+  //         // setPosition(e.position);
+  //         console.log(lineNumber, column);
+  //         socket.emit('new_cursor_position', { lineNumber, column });
+  //         // setPosition({ lineNumber, column });
+  //       }
+  //     );
+  //   }
+  // }, [isEditorReady, editorRef, socket]);
 
-  const displayDefaultText = () => {
-    if (language === 'javascript') {
-      return '//write your code here';
-    } else if (language === 'python') {
-      return '# write your code here';
-    }
+  // useEffect(() => {
+  //   if (isEditorReady && editorRef.current) {
+  //     socket.on('updated_position', ({ lineNumber, column }) => {
+  //       setPosition({ lineNumber, column });
+  //     });
+  //   }
+  // }, [socket, isEditorReady, editorRef]);
+
+  useEffect(() => {}, []);
+
+  const handleCodeChange = (_, value) => {
+    handleCodeSnippetChange(value);
   };
 
   return (

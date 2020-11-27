@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect, useHistory, useParams } from 'react-router';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,6 +14,7 @@ import WaitingRoomUserList from '../components/WaitingRoomUserList';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { useStyles } from '../themes/theme';
+import SocketContext from '../context/socket';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -21,6 +22,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Lobby = () => {
   const { state } = useContext(store);
+  const socket = useContext(SocketContext);
+  const { id: roomId } = useParams();
   const URL = `http://localhost:3000`;
   const classes = useStyles();
   const history = useHistory();
@@ -35,12 +38,11 @@ const Lobby = () => {
     message: null,
   });
 
-  const roomId = history.location.pathname.split('/')[2];
   const { vertical, horizontal, alert, message } = localState;
-  const socket = state.socket;
 
   const handleClose = () => {
     setOpen(false);
+    // socket.emit('leave_room', { userId: state.user._id, roomId });
   };
 
   const showAlert = ({ message }) => {
@@ -61,39 +63,32 @@ const Lobby = () => {
   };
 
   useEffect(() => {
-    let mounted = true;
-
-    socket.emit('join_room', { user: state.user, roomId });
-    socket.on('users', (users) => {
-      if (users === 'full') {
-        if (mounted) {
-          showAlert({ message: 'This lobby is currently full' });
-        }
-        return;
-      }
-      if (Object.values(users).length === 1) {
-        if (mounted) {
-          setCreatorId(Object.values(users)[0]._id);
-        }
-      }
-      if (mounted) {
-        setUserData(Object.values(users));
-      }
-    });
-    socket.on('join_interview_room', (users) => {
-      if (mounted) {
-        history.push(`/interview/${roomId}`);
-      }
-    });
+    console.log('joining_room: ', roomId);
+    if (state.user) {
+      socket.emit('create_room', { user: state.user, roomId });
+    }
 
     return () => {
-      mounted = false;
-      socket.emit('waiting_room_disconnect');
+      console.log('left room: ', roomId);
+      // socket.emit('leave_room', { userId: state.user._id, roomId });
     };
-  }, [state.user]);
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on('lobby_users', ({ users }) => {
+      console.log(users);
+      setUserData(users);
+    });
+    return () => {};
+  }, [socket, userData]);
+
+  useEffect(() => {
+    socket.on('join_interview_room', () => {
+      history.push(`/interview/${roomId}`);
+    });
+  }, []);
 
   if (!open) return <Redirect to='/dashboard' />;
-
   return (
     <>
       <Dialog
@@ -130,12 +125,14 @@ const Lobby = () => {
           <DialogContent>
             <DialogContentText>Participants</DialogContentText>
           </DialogContent>
-          <WaitingRoomUserList
-            showStartButton={!alert}
-            userData={userData}
-            handleClose={handleClose}
-          />
-          {!alert && creatorId && (
+          {userData && (
+            <WaitingRoomUserList
+              showStartButton={!alert}
+              userData={userData}
+              handleClose={handleClose}
+            />
+          )}
+          {!alert && (
             <ContinueButton onClick={handleStartInterview} color='primary'>
               Start
             </ContinueButton>
@@ -164,3 +161,34 @@ const Lobby = () => {
 };
 
 export default Lobby;
+
+// useEffect(() => {
+//   let mounted = true;
+
+//   socket.on('users', (users) => {
+//     if (users === 'full') {
+//       if (mounted) {
+//         showAlert({ message: 'This lobby is currently full' });
+//       }
+//       return;
+//     }
+//     if (Object.values(users).length === 1) {
+//       if (mounted) {
+//         setCreatorId(Object.values(users)[0]._id);
+//       }
+//     }
+//     if (mounted) {
+//       setUserData(Object.values(users));
+//     }
+//   });
+//   socket.on('join_interview_room', (users) => {
+//     if (mounted) {
+//       history.push(`/interview/${roomId}`);
+//     }
+//   });
+
+//   return () => {
+//     mounted = false;
+//     socket.emit('waiting_room_disconnect');
+//   };
+// }, [state.user]);

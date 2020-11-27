@@ -18,20 +18,16 @@ const WaitingRoomUserList = ({ userData, showStartButton }) => {
         <div className={classes.demo}>
           <List>
             <div>
-              {userData ? (
-                userData.map(({ firstName, lastName, isOwner }, index) => {
-                  return (
-                    <ListItem className={classes.waitingRoomUser} key={index}>
-                      <Avatar alt='Avatar' src={avatar} />
-                      <div
-                        className={classes.waitingRoomUserName}
-                      >{`${firstName} ${lastName} ${isOwner ? '(Owner)' : ''}`}</div>
-                    </ListItem>
-                  );
-                })
-              ) : (
-                  <p>Waiting Room Full</p>
-                )}
+              {userData.map(({ firstName, lastName, isOwner }, index) => {
+                return (
+                  <ListItem className={classes.waitingRoomUser} key={index}>
+                    <Avatar alt='Avatar' src={avatar} />
+                    <div
+                      className={classes.waitingRoomUserName}
+                    >{`${firstName} ${lastName} ${isOwner ? '(Owner)' : ''}`}</div>
+                  </ListItem>
+                );
+              })}
             </div>
           </List>
         </div>
