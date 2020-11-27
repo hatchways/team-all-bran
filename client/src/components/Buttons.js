@@ -1,8 +1,8 @@
-import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles'
-import { colors } from '../themes/theme'
-import React from 'react'
-import { useStyles } from '../themes/theme'
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import { colors } from '../themes/theme';
+import React from 'react';
+import { useStyles } from '../themes/theme';
 
 export const ContinueButton = withStyles({
   root: {
@@ -14,7 +14,7 @@ export const ContinueButton = withStyles({
     marginLeft: '10px',
     borderRadius: 25,
   },
-})(Button)
+})(Button);
 
 export const RedirectPageButton = withStyles({
   root: {
@@ -24,7 +24,7 @@ export const RedirectPageButton = withStyles({
     marginLeft: '10px',
     borderRadius: 25,
   },
-})(Button)
+})(Button);
 
 export const StartDashboardButton = withStyles({
   root: {
@@ -37,7 +37,7 @@ export const StartDashboardButton = withStyles({
     color: 'white',
     marginTop: '30px',
   },
-})(Button)
+})(Button);
 
 export const NextStepButton = withStyles({
   root: {
@@ -51,11 +51,11 @@ export const NextStepButton = withStyles({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
-})(Button)
+})(Button);
 
 export const InterviewDetailButton = (props) => {
-  const classes = useStyles()
-  const { text, questionAnswerToggle } = props
+  const classes = useStyles();
+  const { text, questionAnswerToggle } = props;
   return (
     <Button
       className={
@@ -66,17 +66,54 @@ export const InterviewDetailButton = (props) => {
     >
       {text}
     </Button>
-  )
-}
+  );
+};
 
 export const RunCodeButton = (props) => {
-  const classes = useStyles()
-  const { text } = props
-  return <Button variant="outlined" className={classes.runCodeButton}>{text}</Button>
-}
+  const classes = useStyles();
+  const { text } = props;
+  return (
+    <Button variant='outlined' className={classes.runCodeButton}>
+      {text}
+    </Button>
+  );
+};
 
 export const ExitInterviewButton = (props) => {
-  const classes = useStyles()
-  const { text } = props
-  return <Button variant="outlined" className={classes.exitInterviewButton}>{text}</Button>
-}
+  const classes = useStyles();
+  const { text } = props;
+  return (
+    <Button variant='outlined' className={classes.exitInterviewButton}>
+      {text}
+    </Button>
+  );
+};
+
+export const NextQuestionButton = withStyles({
+  root: {
+    borderRadius: 35,
+    height: 48,
+    backgroundColor: colors.darkBlue,
+    padding: '0 30px',
+    width: '200px',
+    color: 'white',
+    alignSelf: 'center',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+})(Button);
+
+export const PreviousQuestionButton = withStyles({
+  root: {
+    borderRadius: 35,
+    borderColor: colors.lightGray,
+    height: 48,
+    backgroundColor: 'white',
+    padding: '0 30px',
+    width: '215px',
+    color: colors.lightGray,
+    alignSelf: 'center',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+})(Button);

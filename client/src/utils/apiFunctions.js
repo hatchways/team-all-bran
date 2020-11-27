@@ -4,8 +4,8 @@ export const getUser = () => {
   return api.get('/users');
 };
 
-export const updateUser = (id) => {
-  return api.put(`/users/update/${id}`);
+export const updateUser = (id, userData) => {
+  return api.put(`/users/update/${id}`, userData);
 };
 
 export const signUpUser = (formData) => {
@@ -26,4 +26,12 @@ export const createInterview = ({ id, difficulty }) => {
 
 export const logoutUser = () => {
   return api.post('/users/logout');
+};
+
+export const createFeedback = (interviewId, formData) => {
+  return api.put(`/interviews/${interviewId}/feedback/`, formData);
+};
+
+export const getFeedbackCreator = (interviewId) => {
+  return api.get(`/interviews/${interviewId}/feedback/creator`);
 };

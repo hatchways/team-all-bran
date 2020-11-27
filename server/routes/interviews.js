@@ -35,4 +35,10 @@ router.get(
   interviewController.getInterview
 );
 
+router.get(
+  '/:interviewId/feedback/creator',
+  passport.authenticate('jwt', { session: false }),
+  feedbackController.getFeedbackCreator
+);
+
 module.exports = router;

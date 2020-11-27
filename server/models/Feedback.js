@@ -24,7 +24,7 @@ const FeedbackSchema = new Schema({
     debugging: {
       type: Number,
     },
-    prolemSolving: {
+    problemSolving: {
       type: Number,
     },
   },
@@ -39,6 +39,14 @@ const FeedbackSchema = new Schema({
   },
   other: {
     type: String,
+  },
+  experience: {
+    rating: {
+      type: Number,
+    },
+    description: {
+      type: String,
+    },
   },
   feedbackCreator: {
     type: Schema.Types.ObjectId,
@@ -64,6 +72,7 @@ async function addFeedback(req) {
     improvements,
     resources,
     other,
+    experience,
   } = req.body;
 
   const userIdCreator = req.user._id;
@@ -74,9 +83,11 @@ async function addFeedback(req) {
 
     let interviewUser = interview.users[0];
     let userIdReciever = interview.users[1].user._id;
+    let index = 0;
     if (!interview.users[0].user.equals(userIdCreator)) {
       interviewUser = interview.users[1];
       userIdReciever = interview.users[0].user._id;
+      index = 1;
     }
 
     const feedback = await createAndUpdateFeedback(
@@ -86,12 +97,13 @@ async function addFeedback(req) {
       improvements,
       resources,
       other,
+      experience,
       userIdCreator,
       userIdReciever,
       interviewUser,
       interviewId
     );
-    interview.users.feedback = feedback;
+    interview.users[index].feedback = feedback;
     await interview.save();
 
     return { feedback: feedback };
@@ -107,6 +119,7 @@ async function createAndUpdateFeedback(
   improvements,
   resources,
   other,
+  experience,
   userIdCreator,
   userIdReciever,
   interviewUser,
@@ -141,11 +154,35 @@ async function createAndUpdateFeedback(
   if (other) {
     feedback.other = other;
   }
+  if (experience) {
+    feedback.experience = experience;
+  }
   feedback = await feedback.save();
   return feedback;
+}
+
+async function getFeedbackCreator(interviewId, user) {
+  const interview = await Interview.findOne({ _id: interviewId }).populate(
+    'users.feedback'
+  );
+
+  if (
+    interview.users[0].feedback &&
+    interview.users[0].feedback.feedbackCreator.equals(user._id)
+  ) {
+    return { feedback: interview.users[0].feedback };
+  } else if (
+    interview.users[1].feedback &&
+    interview.users[1].feedback.feedbackCreator.equals(user._id)
+  ) {
+    return { feedback: interview.users[1].feedback };
+  } else {
+    return { error: 'Could not find feedback for user' };
+  }
 }
 
 module.exports = {
   Feedback,
   addFeedback,
+  getFeedbackCreator,
 };

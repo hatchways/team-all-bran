@@ -19,4 +19,17 @@ async function getFeedback(req, res) {
   }
 }
 
-module.exports = { createFeedback, getFeedback };
+async function getFeedbackCreator(req, res) {
+  const interviewId = req.params.interviewId;
+  const feedback = await feedBackModel.getFeedbackCreator(
+    interviewId,
+    req.user
+  );
+  if (feedback.error) {
+    res.status(400).json({ error: feedback.error });
+  } else {
+    res.json(feedback);
+  }
+}
+
+module.exports = { createFeedback, getFeedback, getFeedbackCreator };

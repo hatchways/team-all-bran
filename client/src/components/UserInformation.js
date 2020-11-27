@@ -27,7 +27,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
         <div className={classes.interviewLevelDiv}>Intermediate </div>
         <div className={classes.interviewLevelDesc}>
           Had a few job interviews but need more practice
-       </div>
+        </div>
       </>
     );
   } else {
@@ -36,7 +36,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
         <div className={classes.interviewLevelDiv}>Experienced </div>
         <div className={classes.interviewLevelDesc}>
           Used to job interviews and looking for a challenge
-       </div>
+        </div>
       </>
     );
   }
@@ -70,7 +70,7 @@ const UserInformation = (props) => {
     const id = props.user._id;
 
     try {
-      const result = await updateUser(id);
+      const result = await updateUser(id, userData);
       dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
     } catch (error) {
@@ -98,7 +98,7 @@ const UserInformation = (props) => {
 
           <div className={classes.infoFormDiv}>
             Years of professional experience:
-         </div>
+          </div>
           <Select
             className={classes.infoDropdown}
             onChange={changeExperience}
@@ -115,7 +115,7 @@ const UserInformation = (props) => {
 
           <div className={classes.infoFormDiv}>
             What is your level at job interviews?
-         </div>
+          </div>
 
           <Rating
             name='interviewLevel'
@@ -128,7 +128,7 @@ const UserInformation = (props) => {
         </form>
         <NextStepButton type='submit' form='backgroundForm' onClick={onSubmit}>
           Next Step
-       </NextStepButton>
+        </NextStepButton>
       </div>
     </div>
   );

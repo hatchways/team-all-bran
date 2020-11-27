@@ -419,6 +419,77 @@ export const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  feedbackDialog: {
+    //height: '80%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  feedbackDialogTitle: {
+    color: colors.darkBlue,
+    fontWeight: '400',
+    fontSize: '30px',
+    marginBottom: '12px',
+  },
+  feedbackDialogSubheading: {
+    marginTop: 0,
+    color: colors.lightGray,
+    fontWeight: '350',
+    fontStyle: 'italic',
+  },
+  feedbackDialogQuestionNumber: {
+    display: 'flex',
+    marginBottom: '8px',
+  },
+  feedbackNumber: {
+    color: colors.darkBlue,
+    fontWeight: 'bold',
+    fontSize: '16px',
+    marginRight: '2px',
+  },
+  feedbackRemainder: {
+    color: colors.lightGray,
+    fontSize: '16px',
+  },
+  feedbackQuestion: {
+    color: colors.darkGraySolid,
+    fontWeight: 'bold',
+    fontSize: '16px',
+  },
+  feedbackFormContainer: {
+    display: 'flex',
+    marginTop: '50px',
+    marginBottom: '50px',
+  },
+  feedbackFormLabel: {
+    marginTop: 'auto',
+    paddingBottom: '12px',
+    color: colors.darkBlue,
+    fontWeight: 'bold',
+    fontSize: '16px',
+  },
+  formRadioOne: {
+    marginLeft: '20px',
+    marginRight: '20px',
+  },
+  feedbackCategoryRatingsContainer: {
+    display: 'flex',
+  },
+  feedbackCategoryRatings: {
+    width: '40px',
+    marginRight: '40px',
+  },
+  feedbackFormContainerRadio: {
+    display: 'flex',
+    width: '100%',
+  },
+  feedbackFormRadio: {
+    alignSelf: 'flex-end',
+  },
+  one: {
+    width: '100%',
+  },
 }));
 
 export const GlobalCss = withStyles({
