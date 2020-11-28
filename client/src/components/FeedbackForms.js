@@ -59,10 +59,7 @@ export function FormOne() {
         <FormLabel className={classes.feedbackFormLabel}>Perfect</FormLabel>
       </div>
       <div>
-        <NextPage
-          performanceLevel={performanceLevel}
-          feedbackValue={performanceLevel}
-        />
+        <NextPage feedbackValue={performanceLevel} />
       </div>
     </>
   );
@@ -197,7 +194,7 @@ export function FormTwo() {
         })}
       </div>
       <div>
-        <NextPage categories={categoryRatings} feedbackValue={categoryRatings} />
+        <NextPage feedbackValue={categoryRatings} />
       </div>
     </>
   );
@@ -273,7 +270,7 @@ export function FormFour() {
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage improvements={improvements} feedbackValue={improvements} />
+        <NextPage feedbackValue={improvements} />
       </div>
     </>
   );
@@ -349,7 +346,51 @@ export function FormSix() {
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage other={other} feedbackValue={other} />
+        <NextPage feedbackValue={other} />
+      </div>
+    </>
+  );
+}
+
+export function FormSeven({ experienceRating, setExperienceRating }) {
+  const interviewId = useParams().id;
+  const classes = useStyles();
+  const [experienceDescription, setExperienceDescription] = useState();
+
+  useEffect(() => {
+    async function setUserFeedback() {
+      let result = await getFeedbackCreator(interviewId);
+      if (result.data.feedback.experience) {
+        setExperienceDescription(result.data.feedback.experience.description);
+        setExperienceRating(result.data.feedback.experience.rating);
+      }
+    }
+    setUserFeedback();
+  }, []);
+
+  const changeDescription = (e) => {
+    setExperienceDescription(e.target.value);
+  };
+
+  const experience = {
+    rating: experienceRating,
+    description: experienceDescription,
+  };
+
+  return (
+    <>
+      <TextField
+        placeholder='Text here...'
+        variant='outlined'
+        multiline
+        rows={8}
+        name='experience'
+        onChange={changeDescription}
+        defaultValue={experienceDescription}
+        classes={{ root: classes.feedbackText }}
+      />
+      <div>
+        <NextPage feedbackValue={experience} />
       </div>
     </>
   );

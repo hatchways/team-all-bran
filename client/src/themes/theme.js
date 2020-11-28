@@ -249,7 +249,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: `rgba(67, 67, 125)`,
+    //backgroundColor: `rgba(67, 67, 125)`,
   },
   background: {
     width: '50%',
@@ -484,7 +484,6 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: '30px',
   },
   feedbackDialog: {
-    //height: '80%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -492,6 +491,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   feedbackDialogTitle: {
     color: colors.darkBlue,
+    width: '450px',
+    textAlign: 'center',
     fontWeight: '400',
     fontSize: '30px',
     marginBottom: '12px',
@@ -579,6 +580,18 @@ export const useStyles = makeStyles((theme) => ({
   feedbackError: {
     color: 'red',
     textAlign: 'center',
+  },
+  feedbackExperienceRating: {
+    marginBottom: '50px',
+  },
+  feedbackExperienceRatingDesc: {
+    marginTop: '20px',
+    marginBottom: '20px',
+    color: colors.darkBlue,
+    borderRadius: '15px',
+    boxShadow: '-4px -4px 4px #eae5e5',
+    paddingLeft: '2px',
+    paddingRight: '2px',
   },
 }));
 

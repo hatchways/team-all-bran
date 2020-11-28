@@ -57,6 +57,13 @@ export const NextPage = ({ feedbackValue }) => {
           return;
         }
         break;
+      case '7':
+        const { rating, description } = feedbackValue;
+        if (rating < 1 || !(description && description.length > 0)) {
+          setError(true);
+          return;
+        }
+        break;
     }
 
     try {
@@ -65,7 +72,7 @@ export const NextPage = ({ feedbackValue }) => {
       console.error(error);
     }
 
-    if (pageNumber < 6) {
+    if (pageNumber < 7) {
       history.push(`/interview/${interviewId}/feedback/${Number(pageNumber) + 1}`);
     } else {
       history.push(`/dashboard`);
@@ -103,6 +110,9 @@ export const NextPage = ({ feedbackValue }) => {
       errorText = 'Please fill in the field';
       feedbackBody = { other: feedbackValue };
       break;
+    case '7':
+      errorText = 'Please complete all fields';
+      feedbackBody = { experience: feedbackValue };
   }
 
   return (
@@ -115,7 +125,7 @@ export const NextPage = ({ feedbackValue }) => {
         ''
       )}
       <DialogActions classes={{ root: classes.feedbackActions }}>
-        {pageNumber > 1 ? (
+        {pageNumber > 1 && pageNumber < 7 ? (
           <PrevPage pageNumber={pageNumber} interviewId={interviewId} />
         ) : (
           ''
@@ -126,7 +136,7 @@ export const NextPage = ({ feedbackValue }) => {
           color='primary'
           autoFocus
         >
-          NEXT QUESTION
+          {pageNumber < 6 ? 'NEXT QUESTION' : 'SUBMIT'}
         </NextQuestionButton>
       </DialogActions>
     </>

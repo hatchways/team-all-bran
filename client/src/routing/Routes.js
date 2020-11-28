@@ -9,7 +9,6 @@ import PrivateRoute from './PrivateRoute';
 import Signup from '../pages/Signup';
 import Lobby from '../pages/Lobby';
 import Interview from '../pages/Interview';
-import FeedbackDialog from '../components/FeedbackDialog';
 
 const Routes = () => {
   return (

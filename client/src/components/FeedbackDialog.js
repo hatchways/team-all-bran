@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogContent, FormControl } from '@material-ui/core/';
+import { Rating } from '@material-ui/lab';
 import { useStyles } from '../themes/theme';
 import { useParams } from 'react-router-dom';
 import {
@@ -10,10 +11,12 @@ import {
   FormFive,
   FormSix,
 } from './FeedbackForms';
+import { FormSeven } from './FeedbackForms';
 
 const FeedbackDialog = () => {
   const { pageNumber } = useParams();
   const classes = useStyles();
+  const [experienceRating, setExperienceRating] = useState(0);
 
   let question;
   let questionNumber;
@@ -53,6 +56,14 @@ const FeedbackDialog = () => {
       questionNumber = '6';
       formContent = <FormSix />;
       break;
+    case '7':
+      question = 'Describe your experience:';
+      formContent = (
+        <FormSeven
+          experienceRating={experienceRating}
+          setExperienceRating={setExperienceRating}
+        />
+      );
   }
   return (
     <Dialog
@@ -63,23 +74,80 @@ const FeedbackDialog = () => {
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
     >
-      <h2 className={classes.feedbackDialogTitle}>Give us your Feedback</h2>
-      <h3 className={classes.feedbackDialogSubheading}>
-        Please leave your comments here
-      </h3>
+      {pageNumber < 7 ? (
+        <>
+          <h2 className={classes.feedbackDialogTitle}>Give us your Feedback</h2>
+          <h3 className={classes.feedbackDialogSubheading}>
+            Please leave your comments here
+          </h3>
+        </>
+      ) : (
+        <ExperienceContent
+          setExperience={setExperienceRating}
+          experienceRating={experienceRating}
+        />
+      )}
       <DialogContent>
-        <div className={classes.feedbackDialogQuestionNumber}>
-          <div
-            className={classes.feedbackNumber}
-          >{`Question ${questionNumber} `}</div>
-          <div className={classes.feedbackRemainder}>/ 6</div>
-        </div>
+        {pageNumber < 7 && (
+          <div className={classes.feedbackDialogQuestionNumber}>
+            <div
+              className={classes.feedbackNumber}
+            >{`Question ${questionNumber} `}</div>
+            <div className={classes.feedbackRemainder}>/ 6</div>
+          </div>
+        )}
 
         <div className={classes.feedbackQuestion}>{question}</div>
 
         <FormControl>{formContent}</FormControl>
       </DialogContent>
     </Dialog>
+  );
+};
+
+const ExperienceContent = ({ setExperience, experienceRating }) => {
+  const classes = useStyles();
+  const [hoverExperience, setHoverExperience] = useState(-1);
+
+  const changeRating = (e, value) => {
+    setExperience(Number(value));
+  };
+
+  const changeRatingHover = (e, value) => {
+    setHoverExperience(Number(value));
+  };
+
+  let experienceRatingValues = {
+    0: '',
+    1: 'BAD!',
+    2: 'OK!',
+    3: 'GOOD!',
+    4: 'GREAT!',
+    5: 'AMAZING!',
+  };
+
+  return (
+    <>
+      <h2 className={classes.feedbackDialogTitle}>
+        Rate & review your experience with your match:
+      </h2>
+
+      <div className={classes.feedbackExperienceRatingDesc}>
+        {
+          experienceRatingValues[
+            hoverExperience !== -1 ? hoverExperience : experienceRating
+          ]
+        }
+      </div>
+      <Rating
+        name='feedbackExperience'
+        classes={{ root: classes.feedbackExperienceRating }}
+        value={experienceRating}
+        onChange={changeRating}
+        onChangeActive={changeRatingHover}
+        size='large'
+      />
+    </>
   );
 };
 
