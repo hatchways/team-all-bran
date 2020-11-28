@@ -9,9 +9,11 @@ import {
 import { useStyles } from '../themes/theme';
 import { getFeedbackCreator } from '../utils/apiFunctions';
 import { NextPage } from './FeedbackButtons';
-const interviewId = '5fbfcab4d54a3f7654ae5684'; // For testing purposes. To be changed later to pull from params
+import { useParams } from 'react-router-dom';
+//const interviewId = '5fbfcab4d54a3f7654ae5684'; // For testing purposes. To be changed later to pull from params
 
 export function FormOne() {
+  const interviewId = useParams().id;
   const classes = useStyles();
   const ratingValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
@@ -68,6 +70,7 @@ export function FormOne() {
 }
 
 export function FormTwo() {
+  const interviewId = useParams().id;
   const classes = useStyles();
   const [categoryRatings, setCategories] = useState({});
 
@@ -202,6 +205,7 @@ export function FormTwo() {
 }
 
 export function FormThree() {
+  const interviewId = useParams().id;
   const classes = useStyles();
   const [strengths, setStrength] = useState();
 
@@ -239,6 +243,7 @@ export function FormThree() {
 }
 
 export function FormFour() {
+  const interviewId = useParams().id;
   const classes = useStyles();
   const [improvements, setImprovements] = useState();
 
@@ -276,6 +281,7 @@ export function FormFour() {
 }
 
 export function FormFive() {
+  const interviewId = useParams().id;
   const classes = useStyles();
   const [resources, setResources] = useState();
 
@@ -313,6 +319,7 @@ export function FormFive() {
 }
 
 export function FormSix() {
+  const interviewId = useParams().id;
   const classes = useStyles();
   const [other, setOther] = useState();
 

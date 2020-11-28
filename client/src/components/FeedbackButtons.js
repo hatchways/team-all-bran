@@ -9,7 +9,8 @@ import { DialogActions } from '@material-ui/core/';
 const interviewId = '5fbfcab4d54a3f7654ae5684'; // For testing purposes. To be changed later to pull from params
 
 export const NextPage = ({ feedbackValue }) => {
-  const { pageNumber } = useParams();
+  const { id, pageNumber } = useParams();
+  const interviewId = id;
   const classes = useStyles();
   const history = useHistory();
   const [error, setError] = useState(false);
@@ -67,7 +68,7 @@ export const NextPage = ({ feedbackValue }) => {
     }
 
     if (pageNumber < 6) {
-      history.push(`/interview/feedback/${Number(pageNumber) + 1}`);
+      history.push(`/interview/${interviewId}/feedback/${Number(pageNumber) + 1}`);
     } else {
       history.push(`/dashboard`);
     }
@@ -85,7 +86,7 @@ export const NextPage = ({ feedbackValue }) => {
       feedbackBody = { performanceLevel: feedbackValue };
       break;
     case '2':
-      errorText = 'Please select a rating from all catergories';
+      errorText = 'Please select a rating from all categories';
       feedbackBody = { categories: feedbackValue };
       break;
     case '3':
@@ -116,7 +117,11 @@ export const NextPage = ({ feedbackValue }) => {
         ''
       )}
       <DialogActions classes={{ root: classes.feedbackActions }}>
-        {pageNumber > 1 ? <PrevPage pageNumber={pageNumber} /> : ''}
+        {pageNumber > 1 ? (
+          <PrevPage pageNumber={pageNumber} interviewId={interviewId} />
+        ) : (
+          ''
+        )}
         <NextQuestionButton
           variant='outlined'
           onClick={nextPage}
@@ -130,10 +135,10 @@ export const NextPage = ({ feedbackValue }) => {
   );
 };
 
-function PrevPage({ pageNumber }) {
+function PrevPage({ pageNumber, interviewId }) {
   const history = useHistory();
   const goBack = () => {
-    history.push(`/interview/feedback/${Number(pageNumber) - 1}`);
+    history.push(`/interview/${interviewId}/feedback/${Number(pageNumber) - 1}`);
   };
 
   return (

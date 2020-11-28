@@ -22,10 +22,9 @@ const Routes = () => {
         <PrivateRoute exact path='/faq' component={Faq} />
         <PrivateRoute exact path='/lobby/:id' component={Lobby} />
         <PrivateRoute exact path='/interview/:id' component={Interview} />
-        <PrivateRoute exact path='/interview' component={Interview} />
         <PrivateRoute
           exact
-          path='/interview/feedback/:pageNumber'
+          path='/interview/:id/feedback/:pageNumber'
           component={Interview}
         />
         <Route path='/' component={Signup} />

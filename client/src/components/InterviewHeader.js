@@ -9,7 +9,8 @@ import FeedbackDialog from '../components/FeedbackDialog';
 const InterviewHeader = ({ language, setLanguage }) => {
   const classes = useStyles();
   const history = useHistory();
-  const { pageNumber } = useParams();
+  const { id, pageNumber } = useParams();
+  const interviewId = id;
 
   const [openFeedback, setOpenFeedback] = useState(false);
 
@@ -25,7 +26,7 @@ const InterviewHeader = ({ language, setLanguage }) => {
 
   const exitInterview = () => {
     setOpenFeedback(true);
-    history.push('/interview/feedback/1');
+    history.push(`/interview/${interviewId}/feedback/1`);
   };
 
   return (

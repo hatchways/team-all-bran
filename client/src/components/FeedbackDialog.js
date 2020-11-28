@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Dialog, DialogContent, FormControl } from '@material-ui/core/';
 import { useStyles } from '../themes/theme';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   FormOne,
   FormTwo,
