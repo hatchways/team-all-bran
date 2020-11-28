@@ -55,11 +55,18 @@ const getInterviewsByUserId = async (req, res) => {
   res.json(interviews);
 }
 
+const cancelInterviewById = async (req, res) => {
+  const { id } = req.params
+  const interviews = await Interview.findByIdAndDelete(id)
+  res.json(interviews);
+}
+
 module.exports = {
   cInterview,
   endInterview,
   addUser,
   getInterview,
   startInterview,
-  getInterviewsByUserId
+  getInterviewsByUserId,
+  cancelInterviewById
 };

@@ -9,6 +9,7 @@ import { useStyles } from '../themes/theme';
 import { getStandardTime } from '../utils/timeFunctions'
 import { CustomButton } from './Buttons'
 import { useHistory } from 'react-router';
+import { cancelInterview } from '../utils/apiFunctions';
 
 const UpcomingInterviewTable = ({ interviews }) => {
   const [upcomingInterviews, setUpcomingInterviews] = useState(null);
@@ -16,6 +17,11 @@ const UpcomingInterviewTable = ({ interviews }) => {
   useEffect(() => {
     createUpcomingInterviewsTable(interviews)
   }, []);
+
+  const cancelInterviewById = async (roomId) => {
+    await cancelInterview(roomId);
+    window.location.reload();
+  }
 
   const createUpcomingInterviewsTable = (interviews) => {
     const upcomingInterviews = []
@@ -64,7 +70,7 @@ const UpcomingInterviewTable = ({ interviews }) => {
                   </a>}
               </TableCell>
               <TableCell align='right'>
-                <CustomButton classField={classes.interviewActionButton} text="Cancel" />
+                <CustomButton onClick={() => cancelInterviewById(interview.roomId)} classField={classes.interviewActionButton} text="Cancel" />
                 <CustomButton
                   onClick={interview.questionTitle ?
                     () => history.push({ pathname: `/interview/${interview.roomId}` }) :
