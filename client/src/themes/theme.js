@@ -496,6 +496,11 @@ export const useStyles = makeStyles((theme) => ({
     color: colors.darkBlue,
     fontSize: '16px',
     fontWeight: 'bold',
+  },
+  interviewNotStartedText: {
+    color: 'black',
+    fontSize: '16px',
+    fontWeight: 'bold',
   }
 }));
 

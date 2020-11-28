@@ -41,7 +41,14 @@ const DashBoard = () => {
             lastName: u.data.user.lastName,
             questionTitle: q.data.title,
             questionDescription: q.data.description
-          })
+          });
+        } else {
+          if (user.user === userId) {
+            interviews.push({
+              createdAt: interview.createdAt,
+              interviewId: interview._id,
+            });
+          }
         }
       }
     }
@@ -53,7 +60,6 @@ const DashBoard = () => {
   }
 
   useEffect(() => {
-    console.log(state)
     fetchInterviews(state.user._id)
   }, []);
 

@@ -55,15 +55,21 @@ const UpcomingInterviewTable = ({ interviews }) => {
                 <div>{interview.created.time}</div>
               </TableCell>
               <TableCell align='center'>
-                <a className={classes.interviewQuestionTitle}>
-                  {interview.questionTitle}
-                </a>
+                {interview.questionTitle ?
+                  <a className={classes.interviewQuestionTitle}>
+                    {interview.questionTitle}
+                  </a> :
+                  <a className={classes.interviewNotStartedText}>
+                    (Interview not started)
+                  </a>}
               </TableCell>
               <TableCell align='right'>
                 <CustomButton classField={classes.interviewActionButton} text="Cancel" />
                 <CustomButton
-                  onClick={() => history.push({ pathname: `/interview/${interview.roomId}` })}
-                  classField={classes.interviewActionButton} text="Join"
+                  onClick={interview.questionTitle ?
+                    () => history.push({ pathname: `/interview/${interview.roomId}` }) :
+                    () => history.push({ pathname: `/lobby/${interview.roomId}` })}
+                  classField={classes.interviewActionButton} text={interview.questionTitle ? "Join" : 'Lobby'}
                 />
               </TableCell>
             </TableRow>
