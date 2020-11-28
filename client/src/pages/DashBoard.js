@@ -29,26 +29,27 @@ const DashBoard = () => {
     const interviews = [];
     for (const interview of userInterviews) {
       for (const user of interview.users) {
-        if (user.user === userId && user.question !== undefined) {
-          const u = await getUser(user);
-          const q = await getQuestion(user.question);
+        if (user.user === userId) {
+          const {
+            _id: userId,
+            firstName,
+            lastName
+          } = (await getUser(user)).data.user;
+
+          const {
+            title: questionTitle,
+            description: questionDescription
+          } = user.question ? (await getQuestion(user.question)).data : {};
 
           interviews.push({
             createdAt: interview.createdAt,
             interviewId: interview._id,
-            userId: u.data.user._id,
-            firstName: u.data.user.firstName,
-            lastName: u.data.user.lastName,
-            questionTitle: q.data.title,
-            questionDescription: q.data.description
+            userId,
+            firstName,
+            lastName,
+            questionTitle,
+            questionDescription,
           });
-        } else {
-          if (user.user === userId) {
-            interviews.push({
-              createdAt: interview.createdAt,
-              interviewId: interview._id,
-            });
-          }
         }
       }
     }
