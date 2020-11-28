@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-
 import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
 import UpcomingInterviewTable from '../components/UpcomingInterviewTable'
 import { store } from '../context/store';
-
 import { useHistory } from 'react-router';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
-
 import UserInformation from '../components/UserInformation';
 import { createInterview, getQuestion, getUser, getUserInterviews } from '../utils/apiFunctions';
 import { CustomButton } from '../components/Buttons';
