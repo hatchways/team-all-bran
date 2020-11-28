@@ -1,5 +1,5 @@
 import React from 'react';
-import { RunCodeButton } from './Buttons';
+import { CustomButton } from './Buttons';
 import { useStyles } from '../themes/theme';
 
 const OutputConsole = (props) => {
@@ -9,9 +9,7 @@ const OutputConsole = (props) => {
     <div className={classes.interviewOutput}>
       <div className={classes.interviewOutputHeader}>
         <div className={classes.consoleText}>Console</div>
-        <div onClick={props.runCode}>
-          <RunCodeButton text='RUN CODE' />
-        </div>
+        <CustomButton onClick={props.runCode} classField={classes.runCodeButton} text='RUN CODE' />
       </div>
       <div className={classes.outputText}>
         <pre>{props.codeResult}</pre>

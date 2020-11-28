@@ -80,7 +80,7 @@ const FeedbackDialog = () => {
 
         <div className={classes.feedbackQuestion}>{question}</div>
 
-        <FormControl classes={{ root: classes.one }}>{formContent}</FormControl>
+        <FormControl>{formContent}</FormControl>
       </DialogContent>
     </Dialog>
   );

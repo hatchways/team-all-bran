@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { InterviewDetailButton } from '../components/Buttons'
 import { useStyles } from '../themes/theme';
-import { AnswerButton } from './Buttons'
+import { CustomButton, InterviewDetailButton } from './Buttons'
 import { generateKey } from '../utils/generateRandomKey'
 
 const InterviewQuestionDetails = ({ questions }) => {
@@ -75,9 +74,10 @@ const InterviewQuestionDetails = ({ questions }) => {
         <p className={classes.questionTopicText}>{questionSet[questionDisplayed].title}</p>
         {parsedQuestionDescription(questionSet[questionDisplayed])}
         <div className={classes.answerButtonContainer}>
-          <div onClick={() => window.open(`${questionSet[questionDisplayed].url}/discuss`, "_blank")}>
-            <AnswerButton text="View Answer" />
-          </div>
+          <CustomButton
+            onClick={() => window.open(`${questionSet[questionDisplayed].url}/discuss`, "_blank")}
+            classField={classes.answerButton} text="View Answer"
+          />
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import LanguageSelectMenu from './LanguageSelectMenu';
-import { ExitInterviewButton } from '../components/Buttons';
+import { CustomButton } from '../components/Buttons';
 import { useHistory, useParams } from 'react-router-dom';
 import FeedbackDialog from '../components/FeedbackDialog';
 
@@ -37,9 +37,11 @@ const InterviewHeader = ({ language, setLanguage }) => {
           handleLanguageChange={handleLanguageChange}
           language={language}
         />
-        <div onClick={exitInterview}>
-          <ExitInterviewButton text='End Interview' />
-        </div>
+        <CustomButton
+          onClick={exitInterview}
+          classField={classes.exitInterviewButton}
+          text='End Interview'
+        />
       </div>
       {openFeedback ? <FeedbackDialog /> : ''}
     </Grid>

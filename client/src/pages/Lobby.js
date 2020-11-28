@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import { ContinueButton } from '../components/Buttons';
+import { CopyButton, CustomButton } from '../components/Buttons';
 import { TextField } from '@material-ui/core';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -152,9 +152,9 @@ const Lobby = (props) => {
               onCopy={() => setCopied(true)}
               text={URL + history.location.pathname}
             >
-              <ContinueButton disabled={copied} color='primary'>
+              <CopyButton disabled={copied} color='primary'>
                 {!copied ? 'COPY' : 'COPIED!'}
-              </ContinueButton>
+              </CopyButton>
             </CopyToClipboard>
           </DialogActions>
           <DialogContent>
@@ -166,9 +166,7 @@ const Lobby = (props) => {
             handleClose={handleClose}
           />
           {!alert && creatorId && getUserLobbyCountFull() && (
-            <ContinueButton onClick={handleStartInterview} color='primary'>
-              Start
-            </ContinueButton>
+            <CustomButton onClick={handleStartInterview} classField={classes.continueButton} text='Start' color='primary' />
           )}
         </div>
       </Dialog>
