@@ -10,7 +10,6 @@ import { useStyles } from '../themes/theme';
 import { getFeedbackCreator } from '../utils/apiFunctions';
 import { NextPage } from './FeedbackButtons';
 import { useParams } from 'react-router-dom';
-//const interviewId = '5fbfcab4d54a3f7654ae5684'; // For testing purposes. To be changed later to pull from params
 
 export function FormOne() {
   const interviewId = useParams().id;

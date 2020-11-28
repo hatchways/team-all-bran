@@ -6,8 +6,6 @@ import { NextQuestionButton, PreviousQuestionButton } from './Buttons';
 import { createFeedback } from '../utils/apiFunctions';
 import { DialogActions } from '@material-ui/core/';
 
-const interviewId = '5fbfcab4d54a3f7654ae5684'; // For testing purposes. To be changed later to pull from params
-
 export const NextPage = ({ feedbackValue }) => {
   const { id, pageNumber } = useParams();
   const interviewId = id;

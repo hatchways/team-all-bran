@@ -63,9 +63,6 @@ const FeedbackDialog = () => {
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
     >
-      {/* <DialogTitle classes={{ root: classes.feedbackDialogTitle }}>
-        Give us your Feedback
-      </DialogTitle> */}
       <h2 className={classes.feedbackDialogTitle}>Give us your Feedback</h2>
       <h3 className={classes.feedbackDialogSubheading}>
         Please leave your comments here
