@@ -51,3 +51,7 @@ export const createFeedback = (interviewId, formData) => {
 export const getFeedbackCreator = (interviewId) => {
   return api.get(`/interviews/${interviewId}/feedback/creator`);
 };
+
+export const endInterview = (interviewId) => {
+  return api.put(`/interviews/${interviewId}/end`);
+};

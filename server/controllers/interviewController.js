@@ -12,14 +12,17 @@ const cInterview = async (req, res) => {
 };
 
 const endInterview = async (req, res) => {
-  const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id))
+  const { interviewId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(interviewId))
     res.status(400).json({ msg: 'Invalid ID' });
 
-  const interviewDoc = await Interview.findById(id);
-  interviewDoc.endTime = Math.floor(Date.now() / 1000);
-  await interviewDoc.save(); // what constitutes a completed interview?
-  res.json(interviewDoc); // Feedback submitted? Review period ended?
+  const interview = await interviewModel.endInterview(interviewId);
+
+  if (interview.error) {
+    res.json({ error: interview.error });
+  } else {
+    res.json(interview);
+  }
 };
 
 const addUser = async (req, res) => {
@@ -42,16 +45,16 @@ async function getInterview(req, res) {
 }
 
 const startInterview = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
-  const interview = await interviewModel.addInterviewQuestions(id)
+  const interview = await interviewModel.addInterviewQuestions(id);
 
-  res.json(interview)
-}
+  res.json(interview);
+};
 module.exports = {
   cInterview,
   endInterview,
   addUser,
   getInterview,
-  startInterview
+  startInterview,
 };

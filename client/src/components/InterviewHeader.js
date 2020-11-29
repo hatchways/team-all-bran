@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import LanguageSelectMenu from './LanguageSelectMenu';
 import { CustomButton } from '../components/Buttons';
 import { useHistory, useParams } from 'react-router-dom';
+import { endInterview } from '../utils/apiFunctions';
 import FeedbackDialog from '../components/FeedbackDialog';
 
 const InterviewHeader = ({ language, setLanguage }) => {
@@ -24,7 +25,12 @@ const InterviewHeader = ({ language, setLanguage }) => {
     setLanguage(event.target.value);
   };
 
-  const exitInterview = () => {
+  const exitInterview = async () => {
+    try {
+      await endInterview(interviewId);
+    } catch (error) {
+      console.error(error);
+    }
     setOpenFeedback(true);
     history.push(`/interview/${interviewId}/feedback/1`);
   };

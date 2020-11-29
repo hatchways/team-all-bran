@@ -11,12 +11,6 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   interviewController.cInterview
 );
-router.patch(
-  '/:id',
-  passport.authenticate('jwt', { session: false }),
-  interviewController.endInterview
-);
-
 router.put(
   '/:id/user',
   passport.authenticate('jwt', { session: false }),
@@ -45,6 +39,12 @@ router.get(
   '/:interviewId/feedback/creator',
   passport.authenticate('jwt', { session: false }),
   feedbackController.getFeedbackCreator
+);
+
+router.put(
+  '/:interviewId/end',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.endInterview
 );
 
 module.exports = router;
