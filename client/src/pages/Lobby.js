@@ -15,6 +15,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { useStyles } from '../themes/theme';
 import SocketContext from '../context/socket';
+import Interview from './Interview';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -27,10 +28,10 @@ const Lobby = () => {
   const URL = `http://localhost:3000`;
   const classes = useStyles();
   const history = useHistory();
+  const [startButtonPushed, setStartButtonPushed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState(null);
-  const [creatorId, setCreatorId] = useState(null);
   const [localState, setLocalState] = useState({
     alert: false,
     vertical: 'bottom',
@@ -58,45 +59,32 @@ const Lobby = () => {
   };
 
   const handleStartInterview = () => {
+    setStartButtonPushed(true);
     socket.emit('start_interview', roomId);
   };
 
   useEffect(() => {
-    let isMounted = true;
     console.log('joining_room: ', roomId);
-    if (state.user && isMounted) {
+    if (state.user) {
       socket.emit('create_room', { user: state.user, roomId });
     }
+    socket.on('lobby_users', ({ users }) => {
+      setUserData(users);
+    });
 
     return () => {
-      isMounted = false;
       console.log('left room: ', roomId);
     };
   }, [socket, roomId, state.user]);
 
   useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      socket.on('lobby_users', ({ users }) => {
-        setUserData(users);
-      });
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [socket, userData]);
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      socket.on('join_interview_room', () => {
-        history.push(`/interview/${roomId}`);
-      });
-    }
-  }, [socket, history, roomId]);
+    socket.on('join_interview_room', () => {
+      setStartButtonPushed(true);
+    });
+  }, [socket]);
 
   if (!open) return <Redirect to='/dashboard' />;
-  return (
+  return !startButtonPushed ? (
     <>
       <Dialog
         className={classes.waitingRoomDialogue}
@@ -164,38 +152,9 @@ const Lobby = () => {
         </Snackbar>
       )}
     </>
+  ) : (
+    <Interview userData={userData} />
   );
 };
 
 export default Lobby;
-
-// useEffect(() => {
-//   let mounted = true;
-
-//   socket.on('users', (users) => {
-//     if (users === 'full') {
-//       if (mounted) {
-//         showAlert({ message: 'This lobby is currently full' });
-//       }
-//       return;
-//     }
-//     if (Object.values(users).length === 1) {
-//       if (mounted) {
-//         setCreatorId(Object.values(users)[0]._id);
-//       }
-//     }
-//     if (mounted) {
-//       setUserData(Object.values(users));
-//     }
-//   });
-//   socket.on('join_interview_room', (users) => {
-//     if (mounted) {
-//       history.push(`/interview/${roomId}`);
-//     }
-//   });
-
-//   return () => {
-//     mounted = false;
-//     socket.emit('waiting_room_disconnect');
-//   };
-// }, [state.user]);

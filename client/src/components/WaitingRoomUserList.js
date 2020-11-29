@@ -1,6 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
-import { ContinueButton } from '../components/Buttons';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,7 +8,6 @@ import { useStyles } from '../themes/theme';
 
 const WaitingRoomUserList = ({ userData, showStartButton }) => {
   const classes = useStyles();
-  const history = useHistory();
 
   return (
     <Grid>

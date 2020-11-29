@@ -23,11 +23,11 @@ const DashBoard = () => {
 
   useEffect(() => {
     socket.emit('logged_in', state.user._id);
-
-    return () => {
-      socket.emit('logged_out');
-    };
   }, [state.user, socket]);
+
+  useEffect(() => {
+    socket.emit('check_rooms', { userId: state.user._id });
+  }, [socket, state.user]);
 
   const handleClickOpen = () => {
     setOpen(true);

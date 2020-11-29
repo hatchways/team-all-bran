@@ -1,15 +1,30 @@
 const socketToUsers = new Map();
 const usersToSockets = new Map();
 const rooms = {};
-
 module.exports = (server) => {
   // const http = require('http').createServer(server);
-  const io = require('socket.io')(server, { origins: '*:*' });
+  const io = require('socket.io')(server, { origins: '*:*', path: '/sockets' });
   io.on('connection', (socket) => {
-    const { id } = socket.client;
+    const { id } = socket;
+    console.log('JOINED! SOCKET ID', socket.id);
+
+    socket.on('check_rooms', ({ userId }) => {
+      console.log(userId);
+    });
+
+    socket.on('get_partner_name', ({ firstName, lastName, roomId }) => {
+      console.log('tight feedback loop', firstName, lastName, roomId);
+      socket.broadcast
+        .to(roomId)
+        .emit('set_partner_name', { firstName, lastName });
+    });
 
     socket.on('start_interview', (roomId) => {
-      io.emit('join_interview_room', socketToUsers[roomId]);
+      // console.log(rooms[roomId]);
+      socket.broadcast.to(roomId).emit('join_interview_room');
+      console.log('STARTING INTERVIEW, ROOMS @ ROOMID: ', {
+        users: rooms[roomId],
+      });
     });
 
     socket.on('create_room', ({ user, roomId }) => {
@@ -18,23 +33,27 @@ module.exports = (server) => {
           rooms[roomId][user._id] = user;
           socket.roomId = roomId;
           socket.join(roomId);
-          io.to(socket.roomId).emit('lobby_users', {
-            users: Object.values(rooms[roomId]),
-          });
+          // io.to(socket.roomId).emit('lobby_users', {
+          //   users: Object.values(rooms[roomId]),
+          // });
         }
       } else {
         console.log('GETTING HERE IN THE ELSE', roomId);
         const userId = user._id;
+        user.isOwner = true;
         rooms[roomId] = {
           [user._id]: user,
         };
         socket.roomId = roomId;
         console.log('joining room: ', roomId);
         socket.join(roomId);
-        io.to(socket.roomId).emit('lobby_users', {
-          users: Object.values(rooms[roomId]),
-        });
+        // io.to(socket.roomId).emit('lobby_users', {
+        //   users: Object.values(rooms[roomId]),
+        // });
       }
+      io.to(socket.roomId).emit('lobby_users', {
+        users: Object.values(rooms[roomId]),
+      });
     });
 
     socket.on('leave_room', ({ userId, roomId }) => {
@@ -74,12 +93,10 @@ module.exports = (server) => {
     });
 
     socket.on('disconnect', () => {
-      console.log(id, socket.userId);
       delete usersToSockets[id];
       delete socketToUsers[socket.userId];
       console.log(`User ${id} disconnected`);
     });
-    console.log('io.sockets.adapter.rooms: ', io.sockets.adapter.rooms);
   });
   return io;
 };

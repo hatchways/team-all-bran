@@ -1,23 +1,16 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useStyles } from '../themes/theme';
-import { store } from '../context/store';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
 import TextEditor from '../components/TextEditor';
 import InterviewHeader from '../components/InterviewHeader';
 import OutputConsole from '../components/OutputConsole';
 import axios from 'axios';
-import { useParams } from 'react-router';
 import SocketContext from '../context/socket';
 
-const Interview = () => {
+const Interview = ({ userData }) => {
   const classes = useStyles();
-
-  const { id } = useParams();
-
-  const { state } = useContext(store);
   const socket = useContext(SocketContext);
-
   const handleCodeSnippetChange = (codeSnippet) => {
     setCode(codeSnippet);
   };
@@ -25,12 +18,6 @@ const Interview = () => {
   const [code, setCode] = useState('');
   const [value, setValue] = useState('');
   const [codeResult, setCodeResult] = useState('');
-
-  // useEffect(() => {
-  //   if (id !== undefined) {
-  //     socket.emit('create_room', { user: state.user, id });
-  //   }
-  // }, [socket, state.user, id]);
 
   useEffect(() => {
     socket.emit('change_text', code);
@@ -76,7 +63,11 @@ const Interview = () => {
   return (
     <div className={classes.interviewContainer}>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
-        <InterviewHeader language={language} setLanguage={handleLanguageChange} />
+        <InterviewHeader
+          language={language}
+          userData={userData}
+          setLanguage={handleLanguageChange}
+        />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           <InterviewQuestionDetails />
         </Grid>
