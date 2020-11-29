@@ -1,5 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { useStyles } from '../themes/theme';
+import { useParams } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
 import TextEditor from '../components/TextEditor';
@@ -21,7 +22,8 @@ const Interview = ({ userData }) => {
   const [value, setValue] = useState('');
   const [codeResult, setCodeResult] = useState('');
   const history = useHistory();
-  const roomId = history.location.pathname.split('/')[2];
+  // const roomId = history.location.pathname.split('/')[2];
+  const { id: roomId } = useParams();
 
   useEffect(() => {
     socket.emit('change_text', code);
@@ -43,17 +45,20 @@ const Interview = ({ userData }) => {
     },
   });
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     try {
       const { data } = await getInterview(roomId);
+      console.log(data);
       const { interview: userData } = data;
       const { users: interviewUsers } = userData;
       const questions = [];
 
       for (let user of interviewUsers) {
+        console.log(user, 'USER IN FETCH QUESTIONS');
         const questionId = user.question;
-        const question = await getQuestion(questionId).then((res) => res.data);
-        questions.push(question);
+        const { data } = await getQuestion(questionId);
+
+        questions.push(data.question);
       }
       setPageData({
         isLoaded: true,
@@ -65,9 +70,10 @@ const Interview = ({ userData }) => {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [pageData, userData]);
 
   useEffect(() => {
+    console.log('in fetch question useEffect');
     fetchQuestions();
   }, []);
 
@@ -108,7 +114,7 @@ const Interview = ({ userData }) => {
           setLanguage={handleLanguageChange}
         />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
-          {pageData.isLoaded ? (
+          {pageData.questions.questionOne ? (
             <InterviewQuestionDetails questions={pageData.questions} />
           ) : (
             <div>Loading question...</div>

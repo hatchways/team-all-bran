@@ -62,7 +62,7 @@ const Lobby = () => {
   };
 
   const handleStartInterview = () => {
-    setStartButtonPushed(true);
+    setStartInterview(true);
     socket.emit('start_interview', roomId);
   };
 
@@ -73,6 +73,9 @@ const Lobby = () => {
     }
     socket.on('lobby_users', ({ users }) => {
       setUserData(users);
+      if (Object.values(users).length === 1) {
+        setCreatorId(Object.values(users)[0]._id);
+      }
     });
 
     socket.on('room_full', () => {
@@ -105,9 +108,11 @@ const Lobby = () => {
         }
       }
     }
-    history.push({
-      pathname: `/interview/${roomId}`,
-    });
+    setStartButtonPushed(true);
+
+    // history.push({
+    //   pathname: `/interview/${roomId}`,
+    // });
   };
 
   if (startInterview) {

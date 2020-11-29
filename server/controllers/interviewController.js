@@ -42,16 +42,16 @@ async function getInterview(req, res) {
 }
 
 const startInterview = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
-  const interview = await interviewModel.addInterviewQuestions(id)
+  const interview = await interviewModel.addInterviewQuestions(id);
 
-  res.json(interview)
-}
+  res.json(interview);
+};
 module.exports = {
   cInterview,
   endInterview,
   addUser,
   getInterview,
-  startInterview
+  startInterview,
 };
