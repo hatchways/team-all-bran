@@ -72,6 +72,10 @@ const Lobby = () => {
       setUserData(users);
     });
 
+    socket.on('room_full', () => {
+      showAlert({ message: 'Room is full, start your own?' });
+    });
+
     return () => {
       console.log('left room: ', roomId);
     };

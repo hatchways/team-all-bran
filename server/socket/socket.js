@@ -2,25 +2,22 @@ const socketToUsers = new Map();
 const usersToSockets = new Map();
 const rooms = {};
 module.exports = (server) => {
-  // const http = require('http').createServer(server);
   const io = require('socket.io')(server, { origins: '*:*', path: '/sockets' });
   io.on('connection', (socket) => {
     const { id } = socket;
-    console.log('JOINED! SOCKET ID', socket.id);
+    console.log('LOGGED IN! SOCKET ID', socket.id);
 
     socket.on('check_rooms', ({ userId }) => {
       console.log(userId);
     });
 
     socket.on('get_partner_name', ({ firstName, lastName, roomId }) => {
-      console.log('tight feedback loop', firstName, lastName, roomId);
       socket.broadcast
         .to(roomId)
         .emit('set_partner_name', { firstName, lastName });
     });
 
     socket.on('start_interview', (roomId) => {
-      // console.log(rooms[roomId]);
       socket.broadcast.to(roomId).emit('join_interview_room');
       console.log('STARTING INTERVIEW, ROOMS @ ROOMID: ', {
         users: rooms[roomId],
@@ -30,15 +27,16 @@ module.exports = (server) => {
     socket.on('create_room', ({ user, roomId }) => {
       if (rooms[roomId]) {
         if (Object.keys(rooms[roomId]).length < 2) {
+          console.log('joining room: ', roomId);
+
           rooms[roomId][user._id] = user;
           socket.roomId = roomId;
           socket.join(roomId);
-          // io.to(socket.roomId).emit('lobby_users', {
-          //   users: Object.values(rooms[roomId]),
-          // });
+        } else {
+          // room is full
+          io.to(socket.id).emit('room_full', null);
         }
       } else {
-        console.log('GETTING HERE IN THE ELSE', roomId);
         const userId = user._id;
         user.isOwner = true;
         rooms[roomId] = {
@@ -47,11 +45,8 @@ module.exports = (server) => {
         socket.roomId = roomId;
         console.log('joining room: ', roomId);
         socket.join(roomId);
-        // io.to(socket.roomId).emit('lobby_users', {
-        //   users: Object.values(rooms[roomId]),
-        // });
       }
-      io.to(socket.roomId).emit('lobby_users', {
+      io.to(roomId).emit('lobby_users', {
         users: Object.values(rooms[roomId]),
       });
     });
@@ -100,39 +95,3 @@ module.exports = (server) => {
   });
   return io;
 };
-
-// let connectedUser;
-// let room;
-// let isRoomFull = false;
-
-// const waitingRoomFull = () => {
-//   return Object.keys(socketToUsers[room]).length === 2;
-// };
-
-// socket.on('join_room', ({ user, roomId }) => {
-//   connectedUser = user._id;
-//   room = roomId;
-
-//   if (socketToUsers[room]) {
-//     if (waitingRoomFull()) {
-//       isRoomFull = true;
-//       socket.emit('users', 'full');
-//       return;
-//     }
-//     socketToUsers[room][connectedUser] = user;
-//   } else {
-//     user['isOwner'] = true;
-//     socketToUsers[room] = {
-//       [connectedUser]: user,
-//     };
-//   }
-//   io.emit('users', socketToUsers[room]);
-// });
-
-// socket.on('waiting_room_disconnect', () => {
-//   if (!isRoomFull) {
-//     delete socketToUsers[room][connectedUser];
-//     isRoomFull = false;
-//     io.emit('users', socketToUsers[room]);
-//   }
-// });
