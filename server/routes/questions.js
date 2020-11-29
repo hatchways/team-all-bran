@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const questionController = require('../controllers/questionController');
 
-// Get all current users interviews
-// GET /interviews/me
-router.post('/', questionController.create);
+
+router.get('/:questionId', questionController.getQuestion);
+
+router.post('/', questionController.createQuestion);
 
 module.exports = router;

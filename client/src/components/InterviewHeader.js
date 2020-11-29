@@ -2,7 +2,7 @@ import React from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import LanguageSelectMenu from './LanguageSelectMenu';
-import { ExitInterviewButton } from '../components/Buttons';
+import { CustomButton } from '../components/Buttons';
 import { useHistory } from 'react-router-dom';
 
 const InterviewHeader = ({ language, setLanguage }) => {
@@ -22,9 +22,7 @@ const InterviewHeader = ({ language, setLanguage }) => {
       <div className={classes.interviewWithText}>Interview with </div>
       <div className={classes.languageExitInterviewContainer}>
         <LanguageSelectMenu handleLanguageChange={handleLanguageChange} language={language} />
-        <div onClick={exitInterview}>
-          <ExitInterviewButton text="End Interview" />
-        </div>
+        <CustomButton onClick={exitInterview} classField={classes.exitInterviewButton} text="End Interview" />
       </div>
     </Grid>
   );
