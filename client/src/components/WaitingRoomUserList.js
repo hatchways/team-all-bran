@@ -7,9 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import avatar from '../images/avatar.png';
 import { useStyles } from '../themes/theme';
 
-const WaitingRoomUserList = ({ userData, showStartButton }) => {
+const WaitingRoomUserList = ({ userData }) => {
   const classes = useStyles();
-  const history = useHistory();
 
   return (
     <Grid>
@@ -17,20 +16,16 @@ const WaitingRoomUserList = ({ userData, showStartButton }) => {
         <div className={classes.demo}>
           <List>
             <div>
-              {userData ? (
-                userData.map(({ firstName, lastName, isOwner }, index) => {
-                  return (
-                    <ListItem className={classes.waitingRoomUser} key={index}>
-                      <Avatar alt='Avatar' src={avatar} />
-                      <div
-                        className={classes.waitingRoomUserName}
-                      >{`${firstName} ${lastName} ${isOwner ? '(Owner)' : ''}`}</div>
-                    </ListItem>
-                  );
-                })
-              ) : (
-                  <p>Waiting Room Full</p>
-                )}
+              {userData.map(({ firstName, lastName, isOwner }, index) => {
+                return (
+                  <ListItem className={classes.waitingRoomUser} key={index}>
+                    <Avatar alt='Avatar' src={avatar} />
+                    <div
+                      className={classes.waitingRoomUserName}
+                    >{`${firstName} ${lastName} ${isOwner ? '(Owner)' : ''}`}</div>
+                  </ListItem>
+                );
+              })}
             </div>
           </List>
         </div>

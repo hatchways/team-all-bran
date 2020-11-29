@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
@@ -11,6 +11,7 @@ import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
 import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
+import SocketContext from '../context/socket';
 
 const DashBoard = () => {
   const classes = useStyles();
@@ -18,6 +19,15 @@ const DashBoard = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState('Medium');
   const { state } = useContext(store);
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    socket.emit('logged_in', state.user._id);
+  }, [state.user, socket]);
+
+  useEffect(() => {
+    socket.emit('check_rooms', { userId: state.user._id });
+  }, [socket, state.user]);
 
   const handleClickOpen = () => {
     setOpen(true);
