@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import { ContinueButton } from '../components/Buttons';
+import { CopyButton, CustomButton } from '../components/Buttons';
 import { TextField } from '@material-ui/core';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -16,6 +16,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { useStyles } from '../themes/theme';
 import SocketContext from '../context/socket';
 import Interview from './Interview';
+import { addUserToInterview, addInterviewQuestions } from '../utils/apiFunctions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -31,7 +32,9 @@ const Lobby = () => {
   const [startButtonPushed, setStartButtonPushed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(true);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
+  const [creatorId, setCreatorId] = useState(null);
+  const [startInterview, setStartInterview] = useState(false);
   const [localState, setLocalState] = useState({
     alert: false,
     vertical: 'bottom',
@@ -88,6 +91,29 @@ const Lobby = () => {
   }, [socket]);
 
   if (!open) return <Redirect to='/dashboard' />;
+
+  const getUserLobbyCountFull = () => {
+    return Object.keys(userData).length === 2;
+  };
+
+  const addUserAndQuestions = async () => {
+    if (creatorId) {
+      for (const user of userData) {
+        if (user._id !== creatorId) {
+          await addUserToInterview({ userId: user._id, roomId });
+          await addInterviewQuestions(roomId);
+        }
+      }
+    }
+    history.push({
+      pathname: `/interview/${roomId}`,
+    });
+  };
+
+  if (startInterview) {
+    addUserAndQuestions();
+  }
+
   return !startButtonPushed ? (
     <>
       <Dialog
@@ -116,25 +142,26 @@ const Lobby = () => {
               onCopy={() => setCopied(true)}
               text={URL + history.location.pathname}
             >
-              <ContinueButton disabled={copied} color='primary'>
+              <CopyButton disabled={copied} color='primary'>
                 {!copied ? 'COPY' : 'COPIED!'}
-              </ContinueButton>
+              </CopyButton>
             </CopyToClipboard>
           </DialogActions>
           <DialogContent>
             <DialogContentText>Participants</DialogContentText>
           </DialogContent>
-          {userData && (
-            <WaitingRoomUserList
-              showStartButton={!alert}
-              userData={userData}
-              handleClose={handleClose}
+          <WaitingRoomUserList
+            showStartButton={!alert}
+            userData={userData}
+            handleClose={handleClose}
+          />
+          {!alert && creatorId && getUserLobbyCountFull() && (
+            <CustomButton
+              onClick={handleStartInterview}
+              classField={classes.continueButton}
+              text='Start'
+              color='primary'
             />
-          )}
-          {!alert && (
-            <ContinueButton onClick={handleStartInterview} color='primary'>
-              Start
-            </ContinueButton>
           )}
         </div>
       </Dialog>

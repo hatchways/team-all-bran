@@ -9,7 +9,7 @@ import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 
 import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
-import { StartDashboardButton } from '../components/Buttons';
+import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import SocketContext from '../context/socket';
 
@@ -44,7 +44,9 @@ const DashBoard = () => {
   const createInt = async () => {
     try {
       const { data } = await createInterview({ difficulty: selectedValue });
-      history.push(`/lobby/${data.interview._id}`);
+      history.push({
+        pathname: `/lobby/${data.interview._id}`
+      })
     } catch (err) {
       console.error('OUTPUT: SimpleDialog -> err', err);
     }
@@ -57,13 +59,7 @@ const DashBoard = () => {
   return (
     !state.loading && (
       <div className={classes.dashboardContainer}>
-        <StartDashboardButton
-          variant='outlined'
-          color='primary'
-          onClick={handleClickOpen}
-        >
-          START
-        </StartDashboardButton>
+        <CustomButton onClick={handleClickOpen} text='START' classField={classes.startDashboardButton} />
         <Dialog
           onClose={handleClose}
           aria-labelledby='simple-dialog-title'
@@ -80,7 +76,7 @@ const DashBoard = () => {
               selectedValue={selectedValue}
               handleChange={handleChange}
             />
-            <StartDashboardButton onClick={createInt}>Create</StartDashboardButton>
+            <CustomButton onClick={createInt} classField={classes.startDashboardButton} text='CREATE' />
           </div>
         </Dialog>
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
