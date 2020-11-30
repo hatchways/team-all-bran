@@ -34,7 +34,9 @@ const InterviewQuestionDetails = ({ questions }) => {
               <div key={generateKey()}></div>
             )}
             {line.startsWith('Example ') ? (
-              <p className={classes.questionDescExampleText}>{line}</p>
+              <p key={index} className={classes.questionDescExampleText}>
+                {line}
+              </p>
             ) : (
               <Fragment key={index}></Fragment>
             )}
@@ -44,7 +46,11 @@ const InterviewQuestionDetails = ({ questions }) => {
         return codeDiv;
       } else if (!mainDescriptionParsed) {
         if (line.length !== 0) {
-          return <p className={classes.questionDescText}>{line}</p>;
+          return (
+            <p key={index} className={classes.questionDescText}>
+              {line}
+            </p>
+          );
         }
         return <Fragment key={index}></Fragment>;
       } else {
