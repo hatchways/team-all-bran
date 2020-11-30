@@ -23,7 +23,7 @@ const DashBoard = () => {
   });
 
   const getInterviews = async () => {
-    const interviews = await fetchInterviews(state.user._id, state.user)
+    const interviews = await fetchInterviews(state.user._id)
 
     setPageData({
       pageLoaded: true,
