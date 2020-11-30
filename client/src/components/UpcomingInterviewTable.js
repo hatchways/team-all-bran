@@ -69,8 +69,10 @@ const UpcomingInterviewTable = ({ interviews }) => {
                     (Interview not started)
                   </a>}
               </TableCell>
-              <TableCell align='right'>
-                <CustomButton onClick={() => cancelInterviewById(interview.roomId)} classField={classes.interviewActionButton} text="Cancel" />
+              <TableCell align='center'>
+                {!interview.questionTitle &&
+                  <CustomButton onClick={() => cancelInterviewById(interview.roomId)} classField={classes.interviewActionButton} text="Cancel" />
+                }
                 <CustomButton
                   onClick={interview.questionTitle ?
                     () => history.push({ pathname: `/interview/${interview.roomId}` }) :
