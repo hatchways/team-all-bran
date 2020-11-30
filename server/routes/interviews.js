@@ -29,6 +29,12 @@ router.get(
   interviewController.getInterview
 );
 
+router.get(
+  '/user/:userId',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.getInterviewsByUserId
+);
+
 router.post(
   '/:id/start',
   passport.authenticate('jwt', { session: false }),
@@ -47,4 +53,9 @@ router.put(
   interviewController.endInterview
 );
 
+router.post(
+  '/:id/cancel',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.cancelInterviewById
+);
 module.exports = router;

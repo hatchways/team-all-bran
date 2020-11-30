@@ -593,6 +593,26 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: '2px',
     paddingRight: '2px',
   },
+  interviewActionButton: {
+    borderRadius: 35,
+    height: 20,
+    width: 100,
+    color: colors.darkGray,
+    padding: '18px 36px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    margin: '5px',
+  },
+  interviewQuestionTitle: {
+    color: colors.darkBlue,
+    fontSize: '16px',
+    fontWeight: 'bold',
+  },
+  interviewNotStartedText: {
+    color: 'black',
+    fontSize: '16px',
+    fontWeight: 'bold',
+  },
 }));
 
 export const GlobalCss = withStyles({

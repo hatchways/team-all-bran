@@ -55,3 +55,11 @@ export const getFeedbackCreator = (interviewId) => {
 export const endInterview = (interviewId) => {
   return api.put(`/interviews/${interviewId}/end`);
 };
+
+export const getUserInterviews = (userId) => {
+  return api.get(`/interviews/user/${userId}`);
+};
+
+export const cancelInterview = (userId) => {
+  return api.post(`/interviews/${userId}/cancel`);
+};
