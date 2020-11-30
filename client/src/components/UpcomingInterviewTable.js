@@ -1,31 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import React, { useState, useEffect } from 'react';
 import { useStyles } from '../themes/theme';
 import { getStandardTime } from '../utils/timeFunctions'
 import { CustomButton } from './Buttons'
 import { useHistory } from 'react-router';
 import { cancelInterview } from '../utils/apiFunctions';
-import { fetchInterviews } from '../utils/fetchInterviews';
-import { store } from '../context/store';
-import Typography from '@material-ui/core/Typography';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
+} from '@material-ui/core';
 
 const UpcomingInterviewTable = ({ interviews }) => {
   const [upcomingInterviews, setUpcomingInterviews] = useState([]);
-  const { state } = useContext(store);
 
   useEffect(() => {
     createUpcomingInterviewsTable(interviews);
   }, []);
 
-  const cancelInterviewById = async (roomId) => {
-    await cancelInterview(roomId);
-    const interviews = await fetchInterviews(state.user._id, state.user);
-    createUpcomingInterviewsTable(interviews);
+  const cancelInterviewById = async (roomId, i) => {
+
+    const res = await cancelInterview(roomId);
+    if (res.status === 200) {
+      const interviewsCopy = [...upcomingInterviews];
+      interviewsCopy.splice(i, 1);
+      setUpcomingInterviews(interviewsCopy);
+    }
   }
 
   const createUpcomingInterviewsTable = (interviews) => {
@@ -76,7 +79,7 @@ const UpcomingInterviewTable = ({ interviews }) => {
               </TableCell>
               <TableCell align='center'>
                 {!interview.questionTitle &&
-                  <CustomButton onClick={() => cancelInterviewById(interview.roomId)} classField={classes.interviewActionButton} text="Cancel" />
+                  <CustomButton onClick={() => cancelInterviewById(interview.roomId, i)} classField={classes.interviewActionButton} text="Cancel" />
                 }
                 <CustomButton
                   onClick={interview.questionTitle ?
