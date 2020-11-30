@@ -12,6 +12,7 @@ import { useHistory } from 'react-router';
 import { cancelInterview } from '../utils/apiFunctions';
 import { fetchInterviews } from '../utils/fetchInterviews';
 import { store } from '../context/store';
+import Typography from '@material-ui/core/Typography';
 
 const UpcomingInterviewTable = ({ interviews }) => {
   const [upcomingInterviews, setUpcomingInterviews] = useState([]);
@@ -66,12 +67,12 @@ const UpcomingInterviewTable = ({ interviews }) => {
               </TableCell>
               <TableCell align='center'>
                 {interview.questionTitle ?
-                  <a className={classes.interviewQuestionTitle}>
+                  <Typography className={classes.interviewQuestionTitle}>
                     {interview.questionTitle}
-                  </a> :
-                  <a className={classes.interviewNotStartedText}>
+                  </Typography> :
+                  <Typography className={classes.interviewNotStartedText}>
                     (Interview not started)
-                  </a>}
+                  </Typography>}
               </TableCell>
               <TableCell align='center'>
                 {!interview.questionTitle &&
