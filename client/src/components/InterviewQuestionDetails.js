@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useStyles } from '../themes/theme';
 import { CustomButton, InterviewDetailButton } from './Buttons';
 import { generateKey } from '../utils/generateRandomKey';
@@ -23,7 +23,7 @@ const InterviewQuestionDetails = ({ questions }) => {
       if (mainDescriptionWasParsed(line, index, lineCount)) {
         mainDescriptionParsed = true;
         const codeDiv = (
-          <>
+          <Fragment key={index}>
             {codeBlockTexts.length > 0 ? (
               <div className={classes.questionDescCodeBlock}>
                 {codeBlockTexts.map((text) => {
@@ -36,9 +36,9 @@ const InterviewQuestionDetails = ({ questions }) => {
             {line.startsWith('Example ') ? (
               <p className={classes.questionDescExampleText}>{line}</p>
             ) : (
-              <></>
+              <Fragment key={index}></Fragment>
             )}
-          </>
+          </Fragment>
         );
         codeBlockTexts = [];
         return codeDiv;
@@ -46,7 +46,7 @@ const InterviewQuestionDetails = ({ questions }) => {
         if (line.length !== 0) {
           return <p className={classes.questionDescText}>{line}</p>;
         }
-        return <></>;
+        return <Fragment key={index}></Fragment>;
       } else {
         codeBlockTexts.push(line);
       }
