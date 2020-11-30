@@ -6,9 +6,10 @@ import { store } from '../context/store';
 import { useHistory } from 'react-router';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 import UserInformation from '../components/UserInformation';
-import { createInterview, getQuestion, getUser, getUserInterviews } from '../utils/apiFunctions';
+import { createInterview } from '../utils/apiFunctions';
 import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
+import { fetchInterviews } from '../utils/fetchInterviews';
 
 const DashBoard = () => {
   const classes = useStyles();
@@ -21,35 +22,8 @@ const DashBoard = () => {
     interviews: null
   });
 
-  const fetchInterviews = async (userId) => {
-    const { data: userInterviews } = await getUserInterviews(userId);
-    const interviews = [];
-    for (const interview of userInterviews) {
-      for (const user of interview.users) {
-        if (user.user === userId) {
-          const {
-            _id: userId,
-            firstName,
-            lastName
-          } = (await getUser(user)).data.user;
-
-          const {
-            title: questionTitle,
-            description: questionDescription
-          } = user.question ? (await getQuestion(user.question)).data : {};
-
-          interviews.push({
-            createdAt: interview.createdAt,
-            interviewId: interview._id,
-            userId,
-            firstName,
-            lastName,
-            questionTitle,
-            questionDescription,
-          });
-        }
-      }
-    }
+  const getInterviews = async () => {
+    const interviews = await fetchInterviews(state.user._id, state.user)
 
     setPageData({
       pageLoaded: true,
@@ -58,7 +32,7 @@ const DashBoard = () => {
   }
 
   useEffect(() => {
-    fetchInterviews(state.user._id)
+    getInterviews()
   }, []);
 
   const handleClickOpen = () => {

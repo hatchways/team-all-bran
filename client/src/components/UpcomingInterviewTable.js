@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,28 +10,32 @@ import { getStandardTime } from '../utils/timeFunctions'
 import { CustomButton } from './Buttons'
 import { useHistory } from 'react-router';
 import { cancelInterview } from '../utils/apiFunctions';
+import { fetchInterviews } from '../utils/fetchInterviews';
+import { store } from '../context/store';
 
 const UpcomingInterviewTable = ({ interviews }) => {
-  const [upcomingInterviews, setUpcomingInterviews] = useState(null);
+  const [upcomingInterviews, setUpcomingInterviews] = useState([]);
+  const { state } = useContext(store);
 
   useEffect(() => {
-    createUpcomingInterviewsTable(interviews)
+    createUpcomingInterviewsTable(interviews);
   }, []);
 
   const cancelInterviewById = async (roomId) => {
     await cancelInterview(roomId);
-    window.location.reload();
+    const interviews = await fetchInterviews(state.user._id, state.user);
+    createUpcomingInterviewsTable(interviews);
   }
 
   const createUpcomingInterviewsTable = (interviews) => {
-    const upcomingInterviews = []
+    const upcomingInterviews = [];
     for (const interview of interviews) {
-      const created = getStandardTime(interview.createdAt)
-      const questionTitle = interview.questionTitle
-      const roomId = interview.interviewId
-      upcomingInterviews.push({ created, questionTitle, roomId })
+      const created = getStandardTime(interview.createdAt);
+      const questionTitle = interview.questionTitle;
+      const roomId = interview.interviewId;
+      upcomingInterviews.push({ created, questionTitle, roomId });
     }
-    setUpcomingInterviews(upcomingInterviews)
+    setUpcomingInterviews(upcomingInterviews);
   }
 
   const classes = useStyles();
