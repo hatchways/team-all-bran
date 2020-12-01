@@ -46,6 +46,7 @@ const Lobby = () => {
 
   const handleClose = () => {
     setOpen(false);
+    socket.emit('leave_lobby', { userId: state.user._id, roomId });
   };
 
   const showAlert = ({ message }) => {
@@ -63,7 +64,6 @@ const Lobby = () => {
 
   const handleStartInterview = () => {
     setStartInterview(true);
-    socket.emit('start_interview', roomId);
   };
 
   useEffect(() => {
@@ -105,10 +105,10 @@ const Lobby = () => {
         if (user._id !== creatorId) {
           await addUserToInterview({ userId: user._id, roomId });
           await addInterviewQuestions(roomId);
+          socket.emit('start_interview', roomId);
         }
       }
     }
-    setStartButtonPushed(true);
   };
 
   if (startInterview) {

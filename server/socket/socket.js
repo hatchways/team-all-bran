@@ -8,7 +8,7 @@ module.exports = (server) => {
     console.log('LOGGED IN! SOCKET ID', socket.id);
 
     socket.on('start_interview', (roomId) => {
-      socket.broadcast.to(roomId).emit('join_interview_room');
+      io.to(roomId).emit('join_interview_room');
     });
 
     socket.on('create_room', ({ user, roomId }) => {
@@ -24,8 +24,10 @@ module.exports = (server) => {
           // room is full
           if (rooms[roomId][user._id]) {
             socket.join(roomId);
+            user.isOwner = true;
+          } else {
+            io.to(socket.id).emit('room_full', null);
           }
-          io.to(socket.id).emit('room_full', null);
         }
       } else {
         const userId = user._id;
@@ -51,10 +53,13 @@ module.exports = (server) => {
       );
     });
 
-    socket.on('leave_room', ({ userId, roomId }) => {
+    socket.on('leave_lobby', ({ userId, roomId }) => {
       delete rooms[roomId][userId];
       socket.leave(roomId);
-      console.log(`${userId} is leaving room: ${roomId}`);
+      io.to(roomId).emit('lobby_users', {
+        users: Object.values(rooms[roomId]),
+      });
+      console.log(`${userId} is leaving lobbyId: ${roomId}`);
     });
 
     socket.on('code_result', (codeResult) => {

@@ -63,7 +63,7 @@ const Interview = () => {
       for (let i = 0; i < 2; i++) {
         const user = interviewUsers[i];
 
-        const questionId = user.question;
+        const questionId = user.question._id;
         const { data } = await getQuestion(questionId);
 
         questions.push(data.question);
