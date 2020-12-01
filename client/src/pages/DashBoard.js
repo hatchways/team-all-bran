@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
-import UpcomingInterviewTable from '../components/UpcomingInterviewTable'
+import UpcomingInterviewTable from '../components/UpcomingInterviewTable';
 import { store } from '../context/store';
 import { useHistory } from 'react-router';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 import UserInformation from '../components/UserInformation';
-import { createInterview, getQuestion, getUser, getUserInterviews } from '../utils/apiFunctions';
+import {
+  createInterview,
+  getQuestion,
+  getUser,
+  getUserInterviews,
+} from '../utils/apiFunctions';
 import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
 
@@ -18,7 +23,7 @@ const DashBoard = () => {
   const { state } = useContext(store);
   const [pageData, setPageData] = useState({
     pageLoaded: false,
-    interviews: null
+    interviews: null,
   });
 
   const fetchInterviews = async (userId) => {
@@ -27,25 +32,26 @@ const DashBoard = () => {
     for (const interview of userInterviews) {
       for (const user of interview.users) {
         if (user.user === userId) {
-          const {
-            _id: userId,
-            firstName,
-            lastName
-          } = (await getUser(user)).data.user;
+          const { _id: userId, firstName, lastName } = (
+            await getUser(user)
+          ).data.user;
 
           const {
             title: questionTitle,
-            description: questionDescription
+            description: questionDescription,
+            _id: questionId,
           } = user.question ? (await getQuestion(user.question)).data : {};
 
           interviews.push({
             createdAt: interview.createdAt,
             interviewId: interview._id,
+            endTime: interview.endTime,
             userId,
             firstName,
             lastName,
             questionTitle,
             questionDescription,
+            questionId,
           });
         }
       }
@@ -53,12 +59,12 @@ const DashBoard = () => {
 
     setPageData({
       pageLoaded: true,
-      interviews: interviews
+      interviews: interviews,
     });
-  }
+  };
 
   useEffect(() => {
-    fetchInterviews(state.user._id)
+    fetchInterviews(state.user._id);
   }, []);
 
   const handleClickOpen = () => {
@@ -77,8 +83,8 @@ const DashBoard = () => {
     try {
       const { data } = await createInterview({ difficulty: selectedValue });
       history.push({
-        pathname: `/lobby/${data.interview._id}`
-      })
+        pathname: `/lobby/${data.interview._id}`,
+      });
     } catch (err) {
       console.error('OUTPUT: SimpleDialog -> err', err);
     }
@@ -89,9 +95,14 @@ const DashBoard = () => {
   }
 
   return (
-    !state.loading && pageData.pageLoaded && (
+    !state.loading &&
+    pageData.pageLoaded && (
       <div className={classes.dashboardContainer}>
-        <CustomButton onClick={handleClickOpen} text='START' classField={classes.startDashboardButton} />
+        <CustomButton
+          onClick={handleClickOpen}
+          text='START'
+          classField={classes.startDashboardButton}
+        />
         <Dialog
           onClose={handleClose}
           aria-labelledby='simple-dialog-title'
@@ -108,13 +119,17 @@ const DashBoard = () => {
               selectedValue={selectedValue}
               handleChange={handleChange}
             />
-            <CustomButton onClick={createInt} classField={classes.startDashboardButton} text='CREATE' />
+            <CustomButton
+              onClick={createInt}
+              classField={classes.startDashboardButton}
+              text='CREATE'
+            />
           </div>
         </Dialog>
         <p className={classes.pastPracticesText}>Upcoming Practice Interviews</p>
         <UpcomingInterviewTable interviews={pageData.interviews} />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
-        <PastInterviewTable />
+        <PastInterviewTable interviews={pageData.interviews} />
       </div>
     )
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, FormControl } from '@material-ui/core/';
 import { Rating } from '@material-ui/lab';
 import { useStyles } from '../themes/theme';
@@ -12,11 +12,28 @@ import {
   FormSix,
 } from './FeedbackForms';
 import { FormSeven } from './FeedbackForms';
+import { getFeedbackById } from '../utils/apiFunctions';
 
 const FeedbackDialog = () => {
-  const { pageNumber } = useParams();
+  const { pageNumber, feedbackId } = useParams();
   const classes = useStyles();
   const [experienceRating, setExperienceRating] = useState(0);
+  const [viewFeedback, setViewFeedback] = useState();
+
+  useEffect(() => {
+    async function setFeedbackById() {
+      try {
+        const feedback = await getFeedbackById(feedbackId);
+        setViewFeedback(feedback.data.feedback);
+      } catch (error) {
+        setViewFeedback({ error: 'incorrect feedback Id' });
+      }
+    }
+
+    if (feedbackId) {
+      setFeedbackById();
+    }
+  }, []);
 
   let question;
   let questionNumber;
@@ -26,35 +43,35 @@ const FeedbackDialog = () => {
     case '1':
       question = 'Overall, how well did this person do in the interview?';
       questionNumber = '1';
-      formContent = <FormOne />;
+      formContent = <FormOne viewFeedback={viewFeedback} />;
       break;
     case '2':
       question = 'Submit a review of the candidate in the following categories:';
       questionNumber = '2';
-      formContent = <FormTwo />;
+      formContent = <FormTwo viewFeedback={viewFeedback} />;
       break;
     case '3':
       question =
         'What are some things this candidate did well (the more specific the better)';
       questionNumber = '3';
-      formContent = <FormThree />;
+      formContent = <FormThree viewFeedback={viewFeedback} />;
       break;
     case '4':
       question =
         'What are some things this candidate can improve on (the more specific the better)';
       questionNumber = '4';
-      formContent = <FormFour />;
+      formContent = <FormFour viewFeedback={viewFeedback} />;
       break;
     case '5':
       question =
         'Any recommendations on resources that can help the candidate improve?';
       questionNumber = '5';
-      formContent = <FormFive />;
+      formContent = <FormFive viewFeedback={viewFeedback} />;
       break;
     case '6':
       question = 'Anything else?';
       questionNumber = '6';
-      formContent = <FormSix />;
+      formContent = <FormSix viewFeedback={viewFeedback} />;
       break;
     case '7':
       question = 'Describe your experience:';
@@ -62,9 +79,15 @@ const FeedbackDialog = () => {
         <FormSeven
           experienceRating={experienceRating}
           setExperienceRating={setExperienceRating}
+          viewFeedback={viewFeedback}
         />
       );
   }
+
+  if (viewFeedback && viewFeedback.error) {
+    return <div>incorrect feedback Id</div>;
+  }
+
   return (
     <Dialog
       PaperProps={{ classes: { root: classes.feedbackDialog } }}
@@ -76,15 +99,20 @@ const FeedbackDialog = () => {
     >
       {pageNumber < 7 ? (
         <>
-          <h2 className={classes.feedbackDialogTitle}>Give us your Feedback</h2>
+          <h2 className={classes.feedbackDialogTitle}>
+            {!viewFeedback ? 'Give us your Feedback' : 'Your Feedback'}
+          </h2>
           <h3 className={classes.feedbackDialogSubheading}>
-            Please leave your comments here
+            {!viewFeedback
+              ? 'Please leave your comments here'
+              : 'These are the comments left by your interivewer'}
           </h3>
         </>
       ) : (
         <ExperienceContent
           setExperience={setExperienceRating}
           experienceRating={experienceRating}
+          viewFeedback={viewFeedback}
         />
       )}
       <DialogContent>
@@ -99,7 +127,7 @@ const FeedbackDialog = () => {
 
         <div className={classes.feedbackQuestion}>{question}</div>
 
-        <FormControl>{formContent}</FormControl>
+        <FormControl disabled={viewFeedback}>{formContent}</FormControl>
       </DialogContent>
     </Dialog>
   );

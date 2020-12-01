@@ -11,7 +11,7 @@ import { getFeedbackCreator } from '../utils/apiFunctions';
 import { NextPage } from './FeedbackButtons';
 import { useParams } from 'react-router-dom';
 
-export function FormOne() {
+export function FormOne({ viewFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const ratingValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
@@ -42,7 +42,11 @@ export function FormOne() {
           aria-label='performanceLevel'
           name='performanceLevel'
           onChange={changeLevel}
-          value={String(performanceLevel)}
+          value={
+            !viewFeedback
+              ? String(performanceLevel)
+              : String(viewFeedback.performanceLevel)
+          }
         >
           {ratingValues.map((ratingValue, index) => {
             return (
@@ -59,13 +63,13 @@ export function FormOne() {
         <FormLabel className={classes.feedbackFormLabel}>Perfect</FormLabel>
       </div>
       <div>
-        <NextPage feedbackValue={performanceLevel} />
+        <NextPage feedbackValue={performanceLevel} viewFeedback={viewFeedback} />
       </div>
     </>
   );
 }
 
-export function FormTwo() {
+export function FormTwo({ viewFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [categoryRatings, setCategories] = useState({});
@@ -77,7 +81,11 @@ export function FormTwo() {
         setCategories(result.data.feedback.categories);
       }
     }
-    setUserFeedback();
+    if (viewFeedback) {
+      setCategories(viewFeedback.categories);
+    } else {
+      setUserFeedback();
+    }
   }, []);
 
   const changeCategories = (e) => {
@@ -194,13 +202,13 @@ export function FormTwo() {
         })}
       </div>
       <div>
-        <NextPage feedbackValue={categoryRatings} />
+        <NextPage feedbackValue={categoryRatings} viewFeedback={viewFeedback} />
       </div>
     </>
   );
 }
 
-export function FormThree() {
+export function FormThree({ viewFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [strengths, setStrength] = useState();
@@ -228,17 +236,22 @@ export function FormThree() {
         rows={8}
         name='strength'
         onChange={changeStrengths}
-        defaultValue={strengths}
+        disabled={viewFeedback}
+        defaultValue={!viewFeedback ? strengths : viewFeedback.strengths}
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage strengths={strengths} feedbackValue={strengths} />
+        <NextPage
+          strengths={strengths}
+          feedbackValue={strengths}
+          viewFeedback={viewFeedback}
+        />
       </div>
     </>
   );
 }
 
-export function FormFour() {
+export function FormFour({ viewFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [improvements, setImprovements] = useState();
@@ -266,17 +279,18 @@ export function FormFour() {
         rows={8}
         name='improvements'
         onChange={changeImprovements}
-        defaultValue={improvements}
+        disabled={viewFeedback}
+        defaultValue={!viewFeedback ? improvements : viewFeedback.improvements}
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage feedbackValue={improvements} />
+        <NextPage feedbackValue={improvements} viewFeedback={viewFeedback} />
       </div>
     </>
   );
 }
 
-export function FormFive() {
+export function FormFive({ viewFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [resources, setResources] = useState();
@@ -304,17 +318,22 @@ export function FormFive() {
         rows={8}
         name='resources'
         onChange={changeResources}
-        defaultValue={resources}
+        disabled={viewFeedback}
+        defaultValue={!viewFeedback ? resources : viewFeedback.resources}
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage resources={resources} feedbackValue={resources} />
+        <NextPage
+          resources={resources}
+          feedbackValue={resources}
+          viewFeedback={viewFeedback}
+        />
       </div>
     </>
   );
 }
 
-export function FormSix() {
+export function FormSix({ viewFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [other, setOther] = useState();
@@ -342,17 +361,18 @@ export function FormSix() {
         rows={8}
         name='other'
         onChange={changeOther}
-        defaultValue={other}
+        disabled={viewFeedback}
+        defaultValue={!viewFeedback ? other : viewFeedback.other}
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage feedbackValue={other} />
+        <NextPage feedbackValue={other} viewFeedback={viewFeedback} />
       </div>
     </>
   );
 }
 
-export function FormSeven({ experienceRating, setExperienceRating }) {
+export function FormSeven({ experienceRating, setExperienceRating, viewFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [experienceDescription, setExperienceDescription] = useState();
@@ -386,11 +406,16 @@ export function FormSeven({ experienceRating, setExperienceRating }) {
         rows={8}
         name='experience'
         onChange={changeDescription}
-        defaultValue={experienceDescription}
+        disabled={viewFeedback}
+        defaultValue={
+          viewFeedback && viewFeedback.experience
+            ? viewFeedback.experience.experienceDescription
+            : experienceDescription
+        }
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage feedbackValue={experience} />
+        <NextPage feedbackValue={experience} viewFeedback={viewFeedback} />
       </div>
     </>
   );

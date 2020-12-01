@@ -6,7 +6,7 @@ import { NextQuestionButton, PreviousQuestionButton } from './Buttons';
 import { createFeedback } from '../utils/apiFunctions';
 import { DialogActions } from '@material-ui/core/';
 
-export const NextPage = ({ feedbackValue }) => {
+export const NextPage = ({ feedbackValue, viewFeedback }) => {
   const { id, pageNumber } = useParams();
   const interviewId = id;
   const classes = useStyles();
@@ -81,8 +81,15 @@ export const NextPage = ({ feedbackValue }) => {
 
   const nextPage = async (e) => {
     e.preventDefault();
-
-    createUpdateFeedback();
+    if (viewFeedback) {
+      if (pageNumber < 7) {
+        history.push(`/feedback/${viewFeedback._id}/${Number(pageNumber) + 1}`);
+      } else {
+        history.push(`/dashboard`);
+      }
+    } else {
+      createUpdateFeedback();
+    }
   };
 
   switch (pageNumber) {
@@ -126,7 +133,11 @@ export const NextPage = ({ feedbackValue }) => {
       )}
       <DialogActions classes={{ root: classes.feedbackActions }}>
         {pageNumber > 1 && pageNumber < 7 ? (
-          <PrevPage pageNumber={pageNumber} interviewId={interviewId} />
+          <PrevPage
+            pageNumber={pageNumber}
+            interviewId={interviewId}
+            viewFeedback={viewFeedback}
+          />
         ) : (
           ''
         )}
@@ -136,17 +147,21 @@ export const NextPage = ({ feedbackValue }) => {
           color='primary'
           autoFocus
         >
-          {pageNumber < 6 ? 'NEXT QUESTION' : 'SUBMIT'}
+          {pageNumber < 7 ? 'NEXT QUESTION' : !viewFeedback ? 'SUBMIT' : 'DASHBOARD'}
         </NextQuestionButton>
       </DialogActions>
     </>
   );
 };
 
-function PrevPage({ pageNumber, interviewId }) {
+function PrevPage({ pageNumber, interviewId, viewFeedback }) {
   const history = useHistory();
   const goBack = () => {
-    history.push(`/interview/${interviewId}/feedback/${Number(pageNumber) - 1}`);
+    if (viewFeedback) {
+      history.push(`/feedback/${viewFeedback._id}/${Number(pageNumber) - 1}`);
+    } else {
+      history.push(`/interview/${interviewId}/feedback/${Number(pageNumber) - 1}`);
+    }
   };
 
   return (

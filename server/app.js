@@ -10,16 +10,18 @@ const connectDB = require('./config/db');
 const indexRouter = require('./routes/index');
 const pingRouter = require('./routes/ping');
 
+// Connect to MongoDB
+connectDB();
+
 const users = require('./routes/users');
 const interviews = require('./routes/interviews');
 const questions = require('./routes/questions');
+const feedback = require('./routes/feedback');
 const executeCode = require('./routes/executeCode');
 
 const { json, urlencoded } = express;
 
 var app = express();
-// Connect to MongoDB
-connectDB();
 
 require('./config/passport')(passport);
 
@@ -40,6 +42,7 @@ app.use('/ping', pingRouter);
 app.use('/users', users);
 app.use('/interviews', interviews);
 app.use('/questions', questions);
+app.use('/feedback', feedback);
 app.use('/runCode', executeCode);
 
 // catch 404 and forward to error handler

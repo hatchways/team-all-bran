@@ -44,12 +44,24 @@ export const getQuestion = (questionId) => {
   return api.get(`/questions/${questionId}`);
 };
 
+export const getQuestionInterview = (questionId, interviewId) => {
+  return api.get(`/interviews/${interviewId}/question/${questionId}`);
+};
+
 export const createFeedback = (interviewId, formData) => {
   return api.put(`/interviews/${interviewId}/feedback/`, formData);
 };
 
 export const getFeedbackCreator = (interviewId) => {
   return api.get(`/interviews/${interviewId}/feedback/creator`);
+};
+
+export const getFeedbackReciever = (interviewId) => {
+  return api.get(`/interviews/${interviewId}/feedback/reciever`);
+};
+
+export const getFeedbackById = (feedbackId) => {
+  return api.get(`/feedback/${feedbackId}`);
 };
 
 export const endInterview = (interviewId) => {

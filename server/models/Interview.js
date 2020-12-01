@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { path } = require('../app');
 const Schema = mongoose.Schema;
 const User = mongoose.model('User');
 const Question = require('../models/Question');
@@ -122,6 +123,28 @@ const endInterview = async (interviewId) => {
   }
 };
 
+const getQuestionFromInterview = async (questionId, interviewId, user) => {
+  try {
+    const interview = await Interview.findById(interviewId);
+
+    if (
+      interview.users[0].user.equals(user._id) &&
+      interview.users[0].question._id.equals(questionId)
+    ) {
+      return interview.users[0].question;
+    } else if (
+      interview.users[1].user.equals(user._id) &&
+      interview.users[1].question._id.equals(questionId)
+    ) {
+      return interview.users[1].question;
+    } else {
+      return { error: 'question not found' };
+    }
+  } catch {
+    return { error: 'question not found' };
+  }
+};
+
 const Interview = mongoose.model('Interview', InterviewSchema);
 
 module.exports = {
@@ -131,4 +154,5 @@ module.exports = {
   getInterview,
   addInterviewQuestions,
   endInterview,
+  getQuestionFromInterview,
 };

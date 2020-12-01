@@ -180,8 +180,43 @@ async function getFeedbackCreator(interviewId, user) {
   }
 }
 
+async function getFeedbackReciever(interviewId, user) {
+  const interview = await Interview.findOne({ _id: interviewId }).populate(
+    'users.feedback'
+  );
+
+  if (
+    interview.users[0].feedback &&
+    interview.users[0].feedback.feedbackReciever.equals(user._id)
+  ) {
+    return { feedback: interview.users[0].feedback };
+  } else if (
+    interview.users[1].feedback &&
+    interview.users[1].feedback.feedbackReciever.equals(user._id)
+  ) {
+    return { feedback: interview.users[1].feedback };
+  } else {
+    return { error: 'Could not find feedback for user' };
+  }
+}
+
+async function getFeedbackById(feedbackId, user) {
+  try {
+    const feedback = await Feedback.findOne({ _id: feedbackId });
+    if (feedback.feedbackReciever.equals(user._id)) {
+      return { feedback: feedback };
+    } else {
+      return { error: 'Feedback not found' };
+    }
+  } catch (error) {
+    return { error: 'Feedback not found' };
+  }
+}
+
 module.exports = {
   Feedback,
   addFeedback,
   getFeedbackCreator,
+  getFeedbackReciever,
+  getFeedbackById,
 };

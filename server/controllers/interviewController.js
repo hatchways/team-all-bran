@@ -65,6 +65,20 @@ const cancelInterviewById = async (req, res) => {
   res.json(interviews);
 };
 
+const getQuestionFromInterview = async (req, res) => {
+  const { questionId, interviewId } = req.params;
+  const question = await interviewModel.getQuestionFromInterview(
+    questionId,
+    interviewId,
+    req.user
+  );
+  if (question.error) {
+    res.status(404).json({ error: question.error });
+  } else {
+    res.redirect(`/questions/${questionId}`);
+  }
+};
+
 module.exports = {
   cInterview,
   endInterview,
@@ -73,4 +87,5 @@ module.exports = {
   startInterview,
   getInterviewsByUserId,
   cancelInterviewById,
+  getQuestionFromInterview,
 };

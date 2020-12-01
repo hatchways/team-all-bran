@@ -47,6 +47,12 @@ router.get(
   feedbackController.getFeedbackCreator
 );
 
+router.get(
+  '/:interviewId/feedback/reciever',
+  passport.authenticate('jwt', { session: false }),
+  feedbackController.getFeedbackReciever
+);
+
 router.put(
   '/:interviewId/end',
   passport.authenticate('jwt', { session: false }),
@@ -58,4 +64,11 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   interviewController.cancelInterviewById
 );
+
+router.get(
+  '/:interviewId/question/:questionId/',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.getQuestionFromInterview
+);
+
 module.exports = router;
