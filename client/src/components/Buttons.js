@@ -43,9 +43,43 @@ export const InterviewDetailButton = (props) => {
     >
       {text}
     </Button>
-  )
+  );
 };
 
 export const CustomButton = ({ classField, text, onClick }) => {
-  return <Button variant="outlined" className={classField} onClick={onClick}>{text}</Button>
+  return (
+    <Button variant='outlined' className={classField} onClick={onClick}>
+      {text}
+    </Button>
+  );
 };
+
+export const NextQuestionButton = withStyles({
+  root: {
+    borderRadius: 35,
+    height: 48,
+    backgroundColor: colors.darkBlue,
+    padding: '0 30px',
+    width: '200px',
+    color: 'white',
+    alignSelf: 'center',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+})(Button);
+
+export const PreviousQuestionButton = withStyles({
+  root: {
+    borderRadius: 35,
+    borderColor: colors.lightGray,
+    height: 48,
+    backgroundColor: 'white',
+    padding: '0 30px',
+    width: '215px',
+    color: colors.lightGray,
+    alignSelf: 'center',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginRight: '25px',
+  },
+})(Button);

@@ -11,12 +11,6 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   interviewController.cInterview
 );
-router.patch(
-  '/:id',
-  passport.authenticate('jwt', { session: false }),
-  interviewController.endInterview
-);
-
 router.put(
   '/:id/user',
   passport.authenticate('jwt', { session: false }),
@@ -47,9 +41,34 @@ router.post(
   interviewController.startInterview
 );
 
+router.get(
+  '/:interviewId/feedback/creator',
+  passport.authenticate('jwt', { session: false }),
+  feedbackController.getFeedbackCreator
+);
+
+router.get(
+  '/:interviewId/feedback/reciever',
+  passport.authenticate('jwt', { session: false }),
+  feedbackController.getFeedbackReciever
+);
+
+router.put(
+  '/:interviewId/end',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.endInterview
+);
+
 router.post(
   '/:id/cancel',
   passport.authenticate('jwt', { session: false }),
   interviewController.cancelInterviewById
 );
+
+router.get(
+  '/:interviewId/question/:questionId/',
+  passport.authenticate('jwt', { session: false }),
+  interviewController.getQuestionFromInterview
+);
+
 module.exports = router;

@@ -249,7 +249,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: `rgba(67, 67, 125)`,
+    //backgroundColor: `rgba(67, 67, 125)`,
   },
   background: {
     width: '50%',
@@ -285,7 +285,7 @@ export const useStyles = makeStyles((theme) => ({
     color: colors.darkBlue,
     fontSize: '35px',
     marginBottom: '40px',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   funcDescText: {
     fontWeight: 'bold',
@@ -295,22 +295,23 @@ export const useStyles = makeStyles((theme) => ({
     color: 'gray',
     fontSize: '18px',
     paddingLeft: '20px',
-    paddingRight: '20px'
+    paddingRight: '20px',
   },
   questionDescExampleText: {
     color: colors.darkBlue,
     fontWeight: 'bold',
     fontSize: '20px',
-    padding: '20px'
+    padding: '20px',
   },
   questionDescCodeBlock: {
     padding: '20px',
     color: 'black',
     backgroundColor: colors.lighterGray,
     fontSize: '18px',
-    fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace',
+    fontFamily:
+      'SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace',
     padding: '20px',
-    width: '85%'
+    width: '85%',
   },
   answerSolutionContainer: {
     marginTop: '30px',
@@ -324,7 +325,7 @@ export const useStyles = makeStyles((theme) => ({
     color: colors.darkBlue,
     marginRight: '15px',
     boxShadow: `0 1px 5px 2px ${colors.shadow}`,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   questionAnswerButtonUnhighlighted: {
     borderRadius: 35,
@@ -449,12 +450,12 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '18px',
     borderWidth: 2,
-    padding: '2px 20px'
+    padding: '2px 20px',
   },
   answerButtonContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   continueButton: {
     background: colors.darkBlue,
@@ -482,6 +483,116 @@ export const useStyles = makeStyles((theme) => ({
     color: 'white',
     marginTop: '30px',
   },
+  feedbackDialog: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  feedbackDialogTitle: {
+    color: colors.darkBlue,
+    width: '450px',
+    textAlign: 'center',
+    fontWeight: '400',
+    fontSize: '30px',
+    marginBottom: '12px',
+  },
+  feedbackDialogSubheading: {
+    marginTop: 0,
+    color: colors.lightGray,
+    fontWeight: '350',
+    fontStyle: 'italic',
+  },
+  feedbackDialogQuestionNumber: {
+    display: 'flex',
+    marginBottom: '8px',
+  },
+  feedbackNumber: {
+    color: colors.darkBlue,
+    fontWeight: 'bold',
+    fontSize: '16px',
+    marginRight: '2px',
+  },
+  feedbackRemainder: {
+    color: colors.lightGray,
+    fontSize: '16px',
+  },
+  feedbackQuestion: {
+    color: colors.darkGraySolid,
+    fontWeight: 'bold',
+    fontSize: '16px',
+    marginBottom: '30px',
+  },
+  feedbackFormContainer: {
+    display: 'flex',
+    marginTop: '20px',
+    marginBottom: '20px',
+  },
+  feedbackFormLabel: {
+    marginTop: 'auto',
+    paddingBottom: '12px',
+    color: colors.darkBlue,
+    fontWeight: 'bold',
+    fontSize: '16px',
+  },
+  formRadioOne: {
+    marginLeft: '20px',
+    marginRight: '20px',
+  },
+  feedbackCategoryRatingsContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginBottom: '20px',
+  },
+  feedbackCategoryRatings: {
+    textAlign: 'center',
+    width: '82px',
+    fontSize: '12px',
+    marginLeft: '20px',
+    marginTop: 'auto',
+    color: colors.darkBlue,
+    fontWeight: '600',
+  },
+  feedbackFormContainerRadio: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  feedbackFormRadio: {
+    alignSelf: 'flex-end',
+  },
+  feedbackFormContainerLabel: {
+    marginLeft: '45px',
+  },
+  feedbackFormCategoryContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100vh',
+  },
+  feedbackActions: {
+    justifyContent: 'center',
+    marginBottom: '25px',
+    marginTop: '30px',
+  },
+  feedbackText: {
+    width: '90vh',
+  },
+  feedbackError: {
+    color: 'red',
+    textAlign: 'center',
+  },
+  feedbackExperienceRating: {
+    marginBottom: '50px',
+  },
+  feedbackExperienceRatingDesc: {
+    marginTop: '20px',
+    marginBottom: '20px',
+    color: colors.darkBlue,
+    borderRadius: '15px',
+    boxShadow: '-4px -4px 4px #eae5e5',
+    paddingLeft: '2px',
+    paddingRight: '2px',
+  },
   interviewActionButton: {
     borderRadius: 35,
     height: 20,
@@ -490,7 +601,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '18px 36px',
     fontSize: '18px',
     fontWeight: 'bold',
-    margin: '5px'
+    margin: '5px',
   },
   interviewQuestionTitle: {
     color: colors.darkBlue,
@@ -501,7 +612,7 @@ export const useStyles = makeStyles((theme) => ({
     color: 'black',
     fontSize: '16px',
     fontWeight: 'bold',
-  }
+  },
 }));
 
 export const GlobalCss = withStyles({

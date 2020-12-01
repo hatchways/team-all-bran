@@ -33,11 +33,11 @@ const QuestionSchema = new Schema(
     url: {
       type: String,
       required: true,
-    }
+    },
   },
   opts
 );
 
 const Question = mongoose.model('Question', QuestionSchema);
 
-module.exports = Question;
+module.exports = { Question };

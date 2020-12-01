@@ -102,9 +102,11 @@ const DashBoard = () => {
           </div>
         </Dialog>
         <p className={classes.pastPracticesText}>Upcoming Practice Interviews</p>
-        <UpcomingInterviewTable interviews={pageData.interviews} />
+        <UpcomingInterviewTable
+          interviews={pageData.interviews.upcomingInterviews}
+        />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
-        <PastInterviewTable />
+        <PastInterviewTable interviews={pageData.interviews.pastInterviews} />
       </div>
     )
   );

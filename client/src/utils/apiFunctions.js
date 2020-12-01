@@ -4,8 +4,8 @@ export const getUser = () => {
   return api.get('/users');
 };
 
-export const updateUser = (id) => {
-  return api.put(`/users/update/${id}`);
+export const updateUser = (id, userData) => {
+  return api.put(`/users/update/${id}`, userData);
 };
 
 export const signUpUser = (formData) => {
@@ -44,10 +44,34 @@ export const getQuestion = (questionId) => {
   return api.get(`/questions/${questionId}`);
 };
 
+export const getQuestionInterview = (questionId, interviewId) => {
+  return api.get(`/interviews/${interviewId}/question/${questionId}`);
+};
+
+export const createFeedback = (interviewId, formData) => {
+  return api.put(`/interviews/${interviewId}/feedback/`, formData);
+};
+
+export const getFeedbackCreator = (interviewId) => {
+  return api.get(`/interviews/${interviewId}/feedback/creator`);
+};
+
+export const getFeedbackReciever = (interviewId) => {
+  return api.get(`/interviews/${interviewId}/feedback/reciever`);
+};
+
+export const getFeedbackById = (feedbackId) => {
+  return api.get(`/feedback/${feedbackId}`);
+};
+
+export const endInterview = (interviewId) => {
+  return api.put(`/interviews/${interviewId}/end`);
+};
+
 export const getUserInterviews = (userId) => {
   return api.get(`/interviews/user/${userId}`);
-}
+};
 
 export const cancelInterview = (userId) => {
   return api.post(`/interviews/${userId}/cancel`);
-}
+};

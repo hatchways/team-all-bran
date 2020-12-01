@@ -70,7 +70,7 @@ const UserInformation = (props) => {
     const id = props.user._id;
 
     try {
-      const result = await updateUser(id);
+      const result = await updateUser(id, userData);
       dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
     } catch (error) {

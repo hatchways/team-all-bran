@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment';
 
 export const getStandardTime = (time) => {
   const epochTime = time;
@@ -7,6 +7,6 @@ export const getStandardTime = (time) => {
 
   return {
     date: date.toDateString(),
-    time: moment(date.toTimeString().split(' ')[0], 'HH:mm:ss').format('h:mm: A')
-  }
-}
+    time: moment(date.toTimeString().split(' ')[0], 'HH:mm:ss').format('h:mm: A'),
+  };
+};
