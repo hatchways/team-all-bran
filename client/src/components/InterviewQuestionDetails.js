@@ -29,15 +29,15 @@ const InterviewQuestionDetails = ({ questions }) => {
                 })}
               </div>
             ) : (
-                <div key={generateKey()}></div>
-              )}
+              <div key={generateKey()}></div>
+            )}
             {line.startsWith('Example ') ? (
               <p key={index} className={classes.questionDescExampleText}>
                 {line}
               </p>
             ) : (
-                <Fragment key={index}></Fragment>
-              )}
+              <Fragment key={index}></Fragment>
+            )}
           </Fragment>
         );
         codeBlockTexts = [];

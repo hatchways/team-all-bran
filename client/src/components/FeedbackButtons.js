@@ -6,7 +6,7 @@ import { NextQuestionButton, PreviousQuestionButton } from './Buttons';
 import { createFeedback } from '../utils/apiFunctions';
 import { DialogActions } from '@material-ui/core/';
 
-export const NextPage = ({ feedbackValue, viewFeedback }) => {
+export const NextPage = ({ feedbackValue, viewFeedback, changeCreatorFeedback }) => {
   const { id, pageNumber } = useParams();
   const interviewId = id;
   const classes = useStyles();
@@ -137,6 +137,7 @@ export const NextPage = ({ feedbackValue, viewFeedback }) => {
             pageNumber={pageNumber}
             interviewId={interviewId}
             viewFeedback={viewFeedback}
+            changeCreatorFeedback={changeCreatorFeedback}
           />
         ) : (
           ''
@@ -154,12 +155,13 @@ export const NextPage = ({ feedbackValue, viewFeedback }) => {
   );
 };
 
-function PrevPage({ pageNumber, interviewId, viewFeedback }) {
+function PrevPage({ pageNumber, interviewId, viewFeedback, changeCreatorFeedback }) {
   const history = useHistory();
-  const goBack = () => {
+  const goBack = async () => {
     if (viewFeedback) {
       history.push(`/feedback/${viewFeedback._id}/${Number(pageNumber) - 1}`);
     } else {
+      await changeCreatorFeedback();
       history.push(`/interview/${interviewId}/feedback/${Number(pageNumber) - 1}`);
     }
   };

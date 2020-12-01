@@ -11,22 +11,16 @@ import { getFeedbackCreator } from '../utils/apiFunctions';
 import { NextPage } from './FeedbackButtons';
 import { useParams } from 'react-router-dom';
 
-export function FormOne({ viewFeedback }) {
-  const interviewId = useParams().id;
+export function FormOne({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
   const classes = useStyles();
   const ratingValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-
   const [performanceLevel, setperformanceLevel] = useState();
 
   useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback.performanceLevel) {
-        setperformanceLevel(result.data.feedback.performanceLevel);
-      }
+    if (creatorFeedback && creatorFeedback.performanceLevel) {
+      setperformanceLevel(creatorFeedback.performanceLevel);
     }
-    setUserFeedback();
-  }, []);
+  }, [creatorFeedback]);
 
   const changeLevel = (e) => {
     setperformanceLevel(Number(e.target.value));
@@ -63,30 +57,29 @@ export function FormOne({ viewFeedback }) {
         <FormLabel className={classes.feedbackFormLabel}>Perfect</FormLabel>
       </div>
       <div>
-        <NextPage feedbackValue={performanceLevel} viewFeedback={viewFeedback} />
+        <NextPage
+          feedbackValue={performanceLevel}
+          viewFeedback={viewFeedback}
+          changeCreatorFeedback={changeCreatorFeedback}
+        />
       </div>
     </>
   );
 }
 
-export function FormTwo({ viewFeedback }) {
-  const interviewId = useParams().id;
+export function FormTwo({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
   const classes = useStyles();
   const [categoryRatings, setCategories] = useState({});
 
   useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback.categories) {
-        setCategories(result.data.feedback.categories);
-      }
-    }
     if (viewFeedback) {
       setCategories(viewFeedback.categories);
     } else {
-      setUserFeedback();
+      if (creatorFeedback && creatorFeedback.categories) {
+        setCategories(creatorFeedback.categories);
+      }
     }
-  }, []);
+  }, [creatorFeedback]);
 
   const changeCategories = (e) => {
     switch (e.target.name) {
@@ -202,26 +195,25 @@ export function FormTwo({ viewFeedback }) {
         })}
       </div>
       <div>
-        <NextPage feedbackValue={categoryRatings} viewFeedback={viewFeedback} />
+        <NextPage
+          feedbackValue={categoryRatings}
+          viewFeedback={viewFeedback}
+          changeCreatorFeedback={changeCreatorFeedback}
+        />
       </div>
     </>
   );
 }
 
-export function FormThree({ viewFeedback }) {
-  const interviewId = useParams().id;
+export function FormThree({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
   const classes = useStyles();
   const [strengths, setStrength] = useState();
 
   useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback.strengths) {
-        setStrength(result.data.feedback.strengths);
-      }
+    if (creatorFeedback && creatorFeedback.strengths) {
+      setStrength(creatorFeedback.strengths);
     }
-    setUserFeedback();
-  }, []);
+  }, [creatorFeedback]);
 
   const changeStrengths = (e) => {
     setStrength(e.target.value);
@@ -245,26 +237,23 @@ export function FormThree({ viewFeedback }) {
           strengths={strengths}
           feedbackValue={strengths}
           viewFeedback={viewFeedback}
+          changeCreatorFeedback={changeCreatorFeedback}
         />
       </div>
     </>
   );
 }
 
-export function FormFour({ viewFeedback }) {
+export function FormFour({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [improvements, setImprovements] = useState();
 
   useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback.improvements) {
-        setImprovements(result.data.feedback.improvements);
-      }
+    if (creatorFeedback && creatorFeedback.improvements) {
+      setImprovements(creatorFeedback.improvements);
     }
-    setUserFeedback();
-  }, []);
+  }, [creatorFeedback]);
 
   const changeImprovements = (e) => {
     setImprovements(e.target.value);
@@ -284,26 +273,25 @@ export function FormFour({ viewFeedback }) {
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage feedbackValue={improvements} viewFeedback={viewFeedback} />
+        <NextPage
+          feedbackValue={improvements}
+          viewFeedback={viewFeedback}
+          changeCreatorFeedback={changeCreatorFeedback}
+        />
       </div>
     </>
   );
 }
 
-export function FormFive({ viewFeedback }) {
-  const interviewId = useParams().id;
+export function FormFive({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
   const classes = useStyles();
   const [resources, setResources] = useState();
 
   useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback.resources) {
-        setResources(result.data.feedback.resources);
-      }
+    if (creatorFeedback && creatorFeedback.resources) {
+      setResources(creatorFeedback.resources);
     }
-    setUserFeedback();
-  }, []);
+  }, [creatorFeedback]);
 
   const changeResources = (e) => {
     setResources(e.target.value);
@@ -327,26 +315,23 @@ export function FormFive({ viewFeedback }) {
           resources={resources}
           feedbackValue={resources}
           viewFeedback={viewFeedback}
+          changeCreatorFeedback={changeCreatorFeedback}
         />
       </div>
     </>
   );
 }
 
-export function FormSix({ viewFeedback }) {
+export function FormSix({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [other, setOther] = useState();
 
   useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback.other) {
-        setOther(result.data.feedback.other);
-      }
+    if (creatorFeedback && creatorFeedback.other) {
+      setOther(creatorFeedback.other);
     }
-    setUserFeedback();
-  }, []);
+  }, [creatorFeedback]);
 
   const changeOther = (e) => {
     setOther(e.target.value);
@@ -366,27 +351,33 @@ export function FormSix({ viewFeedback }) {
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage feedbackValue={other} viewFeedback={viewFeedback} />
+        <NextPage
+          feedbackValue={other}
+          viewFeedback={viewFeedback}
+          changeCreatorFeedback={changeCreatorFeedback}
+        />
       </div>
     </>
   );
 }
 
-export function FormSeven({ experienceRating, setExperienceRating, viewFeedback }) {
+export function FormSeven({
+  experienceRating,
+  setExperienceRating,
+  viewFeedback,
+  creatorFeedback,
+  changeCreatorFeedback,
+}) {
   const interviewId = useParams().id;
   const classes = useStyles();
   const [experienceDescription, setExperienceDescription] = useState();
 
   useEffect(() => {
-    async function setUserFeedback() {
-      let result = await getFeedbackCreator(interviewId);
-      if (result.data.feedback.experience) {
-        setExperienceDescription(result.data.feedback.experience.description);
-        setExperienceRating(result.data.feedback.experience.rating);
-      }
+    if (creatorFeedback && creatorFeedback.experience) {
+      setExperienceDescription(creatorFeedback.experience.description);
+      setExperienceRating(creatorFeedback.experience.rating);
     }
-    setUserFeedback();
-  }, []);
+  }, [creatorFeedback]);
 
   const changeDescription = (e) => {
     setExperienceDescription(e.target.value);
@@ -409,13 +400,17 @@ export function FormSeven({ experienceRating, setExperienceRating, viewFeedback 
         disabled={viewFeedback}
         defaultValue={
           viewFeedback && viewFeedback.experience
-            ? viewFeedback.experience.experienceDescription
+            ? viewFeedback.experience.description
             : experienceDescription
         }
         classes={{ root: classes.feedbackText }}
       />
       <div>
-        <NextPage feedbackValue={experience} viewFeedback={viewFeedback} />
+        <NextPage
+          feedbackValue={experience}
+          viewFeedback={viewFeedback}
+          changeCreatorFeedback={changeCreatorFeedback}
+        />
       </div>
     </>
   );

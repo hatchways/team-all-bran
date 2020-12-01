@@ -6,7 +6,7 @@ import TextEditor from '../components/TextEditor';
 import InterviewHeader from '../components/InterviewHeader';
 import OutputConsole from '../components/OutputConsole';
 import axios from 'axios';
-import { getInterview, getQuestion } from '../utils/apiFunctions'
+import { getInterview, getQuestion } from '../utils/apiFunctions';
 import { useHistory } from 'react-router';
 
 const Interview = () => {
@@ -24,38 +24,37 @@ const Interview = () => {
     isLoaded: false,
     questions: {
       questionOne: null,
-      questionTwo: null
-    }
+      questionTwo: null,
+    },
   });
 
   const fetchQuestions = async () => {
     try {
-      const { data } = await getInterview(roomId)
+      const { data } = await getInterview(roomId);
       const { interview: userData } = data;
       const { users: interviewUsers } = userData;
       const questions = [];
 
       for (let user of interviewUsers) {
         const questionId = user.question;
-        const question = await getQuestion(questionId).then(res => res.data);
+        const question = await getQuestion(questionId).then((res) => res.data);
         questions.push(question);
       }
       setPageData({
         isLoaded: true,
         questions: {
           questionOne: questions[0],
-          questionTwo: questions[1]
-        }
-      })
+          questionTwo: questions[1],
+        },
+      });
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   useEffect(() => {
     fetchQuestions();
   }, []);
-
 
   const handleCodeSnippetChange = (codeSnippet) => {
     setCodeData({ ...codeData, code: codeSnippet });
@@ -79,7 +78,11 @@ const Interview = () => {
       <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader language={language} setLanguage={handleLanguageChange} />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
-          {pageData.isLoaded ? <InterviewQuestionDetails questions={pageData.questions} /> : <div>Loading question...</div>}
+          {pageData.isLoaded ? (
+            <InterviewQuestionDetails questions={pageData.questions} />
+          ) : (
+            <div>Loading question...</div>
+          )}
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor

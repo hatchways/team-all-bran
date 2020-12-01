@@ -11,7 +11,6 @@ import { useHistory, useParams } from 'react-router';
 import { getStandardTime } from '../utils/timeFunctions';
 import { CustomButton } from './Buttons';
 import { getFeedbackReciever } from '../utils/apiFunctions';
-import FeedbackDialog from '../components/FeedbackDialog';
 
 const PastInterviewTable = ({ interviews }) => {
   const [pastInterviews, setPastInterviews] = useState(null);
@@ -47,9 +46,8 @@ const PastInterviewTable = ({ interviews }) => {
           debugging,
           problemSolving,
         } = feedback.categories;
-        codingRating = Math.floor(
-          (codeEfficiency + codeOrganization + debugging + problemSolving) / 4
-        );
+        codingRating =
+          (codeEfficiency + codeOrganization + debugging + problemSolving) / 4;
         communicationRating = communication;
       }
 
@@ -114,10 +112,11 @@ const PastInterviewTable = ({ interviews }) => {
                     <Rating
                       name='read-only'
                       value={interview.codingRating}
+                      precision={0.5}
                       readOnly
                     />
                   ) : (
-                    <div>Feedback hasn't been reported yet</div>
+                    <div>Not recieved</div>
                   )}
                 </TableCell>
                 <TableCell align='right'>
@@ -125,6 +124,7 @@ const PastInterviewTable = ({ interviews }) => {
                     <Rating
                       name='read-only'
                       value={interview.communicationRating}
+                      precision={0.5}
                       readOnly
                     />
                   ) : (
@@ -132,24 +132,24 @@ const PastInterviewTable = ({ interviews }) => {
                   )}
                 </TableCell>
                 <TableCell align='right'>
+                  <CustomButton
+                    onClick={() =>
+                      viewMyQuestion(interview.questionId, interview.interviewId)
+                    }
+                    classField={classes.interviewActionButton}
+                    text='VIEW'
+                  />
+                </TableCell>
+                <TableCell align='right'>
                   {interview.feedback ? (
                     <CustomButton
-                      onClick={() =>
-                        viewMyQuestion(interview.questionId, interview.interviewId)
-                      }
+                      onClick={() => viewMyFeedback(interview.feedback)}
                       classField={classes.interviewActionButton}
                       text='VIEW'
                     />
                   ) : (
                     <div>Not recieved</div>
                   )}
-                </TableCell>
-                <TableCell align='right'>
-                  <CustomButton
-                    onClick={() => viewMyFeedback(interview.feedback)}
-                    classField={classes.interviewActionButton}
-                    text='VIEW'
-                  />
                 </TableCell>
               </TableRow>
             ))}
