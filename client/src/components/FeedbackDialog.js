@@ -259,7 +259,11 @@ const ExperienceContent = ({ setExperience, experienceRating, viewFeedback }) =>
         name='feedbackExperience'
         readOnly={viewFeedback}
         classes={{ root: classes.feedbackExperienceRating }}
-        value={!viewFeedback ? experienceRating : viewFeedback.experience.rating}
+        value={
+          !viewFeedback
+            ? experienceRating
+            : viewFeedback.experience && viewFeedback.experience.rating
+        }
         onChange={changeRating}
         onChangeActive={changeRatingHover}
         size='large'
