@@ -69,8 +69,6 @@ const DashBoard = () => {
     return <UserInformation user={state.user} />;
   }
 
-  console.log(pageData.interviews);
-
   return (
     !state.loading &&
     pageData.pageLoaded && (

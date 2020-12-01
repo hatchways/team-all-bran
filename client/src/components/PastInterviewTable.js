@@ -70,7 +70,6 @@ const PastInterviewTable = ({ interviews }) => {
   const viewMyQuestion = (questionId, interviewId) => {
     history.push(`/question/${questionId}/${interviewId}`);
   };
-  console.log(pastInterviews);
 
   return (
     <TableContainer>

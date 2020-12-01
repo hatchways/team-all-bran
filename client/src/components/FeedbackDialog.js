@@ -162,7 +162,7 @@ const FeedbackDialog = () => {
       setCreatorFeedback(feedback.data.feedback);
     }
   };
-  console.log(pageNumber);
+
   const changeExperience = (experience) => {
     setExperienceRating(experience);
   };

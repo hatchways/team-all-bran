@@ -32,7 +32,7 @@ const QuestionDialog = ({ questiond }) => {
         const question = await getQuestionInterview(questionId, interviewId);
         setQuestion(question.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setQuestion({ error: 'could not find question' });
       }
     }
