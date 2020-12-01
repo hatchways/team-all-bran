@@ -7,10 +7,7 @@ import {
   TextField,
 } from '@material-ui/core/';
 import { useStyles } from '../themes/theme';
-import { getFeedbackCreator } from '../utils/apiFunctions';
 import { NextPage } from './FeedbackButtons';
-import { useParams } from 'react-router-dom';
-
 export function FormOne({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
   const classes = useStyles();
   const ratingValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
@@ -245,7 +242,6 @@ export function FormThree({ viewFeedback, creatorFeedback, changeCreatorFeedback
 }
 
 export function FormFour({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
-  const interviewId = useParams().id;
   const classes = useStyles();
   const [improvements, setImprovements] = useState();
 
@@ -323,7 +319,6 @@ export function FormFive({ viewFeedback, creatorFeedback, changeCreatorFeedback 
 }
 
 export function FormSix({ viewFeedback, creatorFeedback, changeCreatorFeedback }) {
-  const interviewId = useParams().id;
   const classes = useStyles();
   const [other, setOther] = useState();
 
@@ -368,7 +363,6 @@ export function FormSeven({
   creatorFeedback,
   changeCreatorFeedback,
 }) {
-  const interviewId = useParams().id;
   const classes = useStyles();
   const [experienceDescription, setExperienceDescription] = useState();
 
