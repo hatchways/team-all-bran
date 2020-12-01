@@ -80,7 +80,7 @@ async function addUserToInterview(req) {
 
 async function getInterview(interviewId) {
   const interview = await Interview.findOne({ _id: interviewId }).populate(
-    'users.feedback users.user users.questions'
+    'users.feedback users.user users.question'
   );
   return { interview: interview };
 }

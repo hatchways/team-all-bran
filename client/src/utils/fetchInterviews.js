@@ -11,7 +11,7 @@ export const fetchInterviews = async (userId) => {
           title: questionTitle,
           description: questionDescription,
           _id: questionId,
-        } = user.question ? (await getQuestion(user.question)).data : {};
+        } = user.question ? (await getQuestion(user.question)).data.question : {};
 
         if (interview.endTime) {
           pastInterviews.push({
