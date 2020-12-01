@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { useStyles } from '../themes/theme';
 import { getStandardTime } from '../utils/timeFunctions';
 import { CustomButton } from './Buttons';
 import { useHistory } from 'react-router';
 import { cancelInterview } from '../utils/apiFunctions';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
 
 const UpcomingInterviewTable = ({ interviews }) => {
-  const [upcomingInterviews, setUpcomingInterviews] = useState(null);
+  const [upcomingInterviews, setUpcomingInterviews] = useState([]);
 
   useEffect(() => {
     createUpcomingInterviewsTable(interviews);
   }, []);
 
-  const cancelInterviewById = async (roomId) => {
-    await cancelInterview(roomId);
-    window.location.reload();
+  const cancelInterviewById = async (roomId, i) => {
+    const res = await cancelInterview(roomId);
+    if (res.status === 200) {
+      const interviewsCopy = [...upcomingInterviews];
+      interviewsCopy.splice(i, 1);
+      setUpcomingInterviews(interviewsCopy);
+    }
   };
 
   const createUpcomingInterviewsTable = (interviews) => {
@@ -65,21 +72,23 @@ const UpcomingInterviewTable = ({ interviews }) => {
                 </TableCell>
                 <TableCell align='center'>
                   {interview.questionTitle ? (
-                    <a className={classes.interviewQuestionTitle}>
+                    <Typography className={classes.interviewQuestionTitle}>
                       {interview.questionTitle}
-                    </a>
+                    </Typography>
                   ) : (
-                    <a className={classes.interviewNotStartedText}>
+                    <Typography className={classes.interviewNotStartedText}>
                       (Interview not started)
-                    </a>
+                    </Typography>
                   )}
                 </TableCell>
-                <TableCell align='right'>
-                  <CustomButton
-                    onClick={() => cancelInterviewById(interview.roomId)}
-                    classField={classes.interviewActionButton}
-                    text='Cancel'
-                  />
+                <TableCell align='center'>
+                  {!interview.questionTitle && (
+                    <CustomButton
+                      onClick={() => cancelInterviewById(interview.roomId, i)}
+                      classField={classes.interviewActionButton}
+                      text='Cancel'
+                    />
+                  )}
                   <CustomButton
                     onClick={
                       interview.questionTitle

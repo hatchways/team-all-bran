@@ -15,7 +15,6 @@ import FeedbackDialog from '../components/FeedbackDialog';
 
 const PastInterviewTable = ({ interviews }) => {
   const [pastInterviews, setPastInterviews] = useState(null);
-
   const { pageNumber } = useParams();
   const history = useHistory();
   const classes = useStyles();
