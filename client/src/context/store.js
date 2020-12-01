@@ -1,5 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react';
-import socketIOClient from 'socket.io-client';
+import React, { createContext, useReducer } from 'react';
 
 import {
   AUTH_ERROR,
@@ -9,26 +8,16 @@ import {
   LOGIN_SUCCESS,
 } from './types';
 
-const ENDPOINT = '/';
-let socket;
-
 const initialState = {
-  token: null,
   isAuthenticated: false,
   loading: false,
   user: {},
-  socket,
 };
 
 const store = createContext(initialState);
 const { Provider } = store;
 
 const StateProvider = ({ children }) => {
-
-  useEffect(() => {
-    socket = socketIOClient(ENDPOINT);
-  }, []);
-
   const [state, dispatch] = useReducer(({ state }, { type, payload }) => {
     switch (type) {
       case USER_LOADED:
@@ -37,7 +26,6 @@ const StateProvider = ({ children }) => {
           isAuthenticated: true,
           loading: false,
           user: payload,
-          socket
         };
       case REGISTER_SUCCESS:
         return {
@@ -45,7 +33,6 @@ const StateProvider = ({ children }) => {
           ...payload,
           isAuthenticated: true,
           loading: false,
-          socket
         };
       case LOGIN_SUCCESS:
         return {
@@ -53,7 +40,6 @@ const StateProvider = ({ children }) => {
           ...payload,
           isAuthenticated: true,
           loading: false,
-          socket
         };
       case AUTH_ERROR:
       case LOGOUT:
@@ -65,7 +51,7 @@ const StateProvider = ({ children }) => {
           user: null,
         };
       default:
-        throw new Error();
+        return state;
     }
   }, initialState);
 

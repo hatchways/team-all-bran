@@ -80,7 +80,7 @@ async function addUserToInterview(req) {
 
 async function getInterview(interviewId) {
   const interview = await Interview.findOne({ _id: interviewId }).populate(
-    'users.feedback'
+    'users.feedback users.user users.questions'
   );
   return { interview: interview };
 }
@@ -98,7 +98,7 @@ async function addInterviewQuestions(id) {
 }
 
 const getRandomQuestionsByDifficulty = async (difficulty) => {
-  const count = await Question.count({ difficulty });
+  const count = await Question.countDocuments({ difficulty });
 
   const questionOne = await Question.findOne({ difficulty }).skip(
     Math.floor(Math.random() * count)
@@ -144,6 +144,10 @@ const getQuestionFromInterview = async (questionId, interviewId, user) => {
     return { error: 'question not found' };
   }
 };
+const loadInterview = async (id) => {
+  const interview = await Interview.findById(id).populate('users');
+  return { interview };
+};
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
@@ -155,4 +159,5 @@ module.exports = {
   addInterviewQuestions,
   endInterview,
   getQuestionFromInterview,
+  loadInterview,
 };

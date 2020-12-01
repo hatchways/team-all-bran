@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect, useHistory, useParams } from 'react-router';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,17 +14,23 @@ import WaitingRoomUserList from '../components/WaitingRoomUserList';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { useStyles } from '../themes/theme';
-import { addUserToInterview, addInterviewQuestions } from '../utils/apiFunctions'
+import SocketContext from '../context/socket';
+import Interview from './Interview';
+import { addUserToInterview, addInterviewQuestions } from '../utils/apiFunctions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const Lobby = (props) => {
+const Lobby = () => {
+  const { state } = useContext(store);
+  const socket = useContext(SocketContext);
+  const { id: roomId } = useParams();
   const URL = `http://localhost:3000`;
   const classes = useStyles();
+  const history = useHistory();
+  const [startButtonPushed, setStartButtonPushed] = useState(false);
   const [copied, setCopied] = useState(false);
-
   const [open, setOpen] = useState(true);
   const [userData, setUserData] = useState([]);
   const [creatorId, setCreatorId] = useState(null);
@@ -36,16 +42,11 @@ const Lobby = (props) => {
     message: null,
   });
 
-  const history = useHistory();
-  const roomId = history.location.pathname.split('/')[2];
-  const { state } = useContext(store);
-  const socket = state.socket;
+  const { vertical, horizontal, alert, message } = localState;
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const { vertical, horizontal, alert, message } = localState;
 
   const showAlert = ({ message }) => {
     setLocalState({
@@ -61,50 +62,42 @@ const Lobby = (props) => {
   };
 
   const handleStartInterview = () => {
+    setStartInterview(true);
     socket.emit('start_interview', roomId);
   };
 
   useEffect(() => {
-    let mounted = true;
-
-    socket.emit('join_room', { user: state.user, roomId });
-    socket.on('users', (users) => {
-      if (users === 'full') {
-        if (mounted) {
-          showAlert({ message: 'This lobby is currently full' });
-        }
-        return;
-      }
+    console.log('joining_room: ', roomId);
+    if (state.user) {
+      socket.emit('create_room', { user: state.user, roomId });
+    }
+    socket.on('lobby_users', ({ users }) => {
+      setUserData(users);
       if (Object.values(users).length === 1) {
-        if (mounted) {
-          setCreatorId(Object.values(users)[0]._id);
-        }
-      }
-      if (mounted) {
-        setUserData(Object.values(users));
+        setCreatorId(Object.values(users)[0]._id);
       }
     });
-    socket.on('waiting_room_disconnect_user', (users) => {
-      if (mounted) {
-        setUserData(Object.values(users));
-      }
-    })
-    socket.on('join_interview_room', (users) => {
-      if (mounted) {
-        setStartInterview(true);
-      }
+
+    socket.on('room_full', () => {
+      showAlert({ message: 'Room is full, start your own?' });
     });
+
     return () => {
-      mounted = false;
-      socket.emit('waiting_room_disconnect');
+      console.log('left room: ', roomId);
     };
-  }, [state.user]);
+  }, [socket, roomId, state.user]);
+
+  useEffect(() => {
+    socket.on('join_interview_room', () => {
+      setStartButtonPushed(true);
+    });
+  }, [socket]);
 
   if (!open) return <Redirect to='/dashboard' />;
 
   const getUserLobbyCountFull = () => {
-    return (Object.keys(userData).length === 2);
-  }
+    return Object.keys(userData).length === 2;
+  };
 
   const addUserAndQuestions = async () => {
     if (creatorId) {
@@ -115,13 +108,15 @@ const Lobby = (props) => {
         }
       }
     }
-    history.push({
-      pathname: `/interview/${roomId}`
-    });
-  }
+    setStartButtonPushed(true);
+  };
 
   if (startInterview) {
     addUserAndQuestions();
+  }
+
+  if (startButtonPushed) {
+    return <Redirect to={`/interview/${roomId}`} />;
   }
 
   return (
@@ -166,7 +161,12 @@ const Lobby = (props) => {
             handleClose={handleClose}
           />
           {!alert && creatorId && getUserLobbyCountFull() && (
-            <CustomButton onClick={handleStartInterview} classField={classes.continueButton} text='Start' color='primary' />
+            <CustomButton
+              onClick={handleStartInterview}
+              classField={classes.continueButton}
+              text='Start'
+              color='primary'
+            />
           )}
         </div>
       </Dialog>

@@ -9,6 +9,7 @@ const InterviewQuestionDetails = ({ questions }) => {
     questionOne: true,
     questionTwo: false,
   });
+
   const questionSet = [...Object.values(questions)];
   const [questionDisplayed, setQuestionDisplayed] = useState(0);
 

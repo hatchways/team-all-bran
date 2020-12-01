@@ -74,7 +74,7 @@ const UserInformation = (props) => {
       dispatch({ type: USER_LOADED, payload: result.data.user });
       history.push('/dashboard');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -104,11 +104,19 @@ const UserInformation = (props) => {
             onChange={changeExperience}
             value={experience}
           >
-            {Array.from(experienceList, (item) => {
+            {Array.from(experienceList, (item, idx) => {
               if (item < 10) {
-                return <MenuItem value={item}>{item} </MenuItem>;
+                return (
+                  <MenuItem key={idx} value={item}>
+                    {item}{' '}
+                  </MenuItem>
+                );
               } else {
-                return <MenuItem value={item}>10 or more</MenuItem>;
+                return (
+                  <MenuItem key={idx} value={item}>
+                    10 or more
+                  </MenuItem>
+                );
               }
             })}
           </Select>
