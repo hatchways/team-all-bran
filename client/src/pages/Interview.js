@@ -1,88 +1,136 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { useStyles } from '../themes/theme';
+import { useParams } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import InterviewQuestionDetails from '../components/InterviewQuestionDetails';
 import TextEditor from '../components/TextEditor';
 import InterviewHeader from '../components/InterviewHeader';
 import OutputConsole from '../components/OutputConsole';
 import axios from 'axios';
-import { getInterview, getQuestion } from '../utils/apiFunctions'
-import { useHistory } from 'react-router';
+import SocketContext from '../context/socket';
+import { getInterview, getQuestion } from '../utils/apiFunctions';
+import { store } from '../context/store';
 
 const Interview = () => {
   const classes = useStyles();
-  const history = useHistory();
-  const roomId = history.location.pathname.split('/')[2];
-
-  const [codeData, setCodeData] = useState({
-    language: 'javascript',
-    code: '//write your code here',
-  });
-
+  const socket = useContext(SocketContext);
+  const handleCodeSnippetChange = (codeSnippet) => {
+    setCode(codeSnippet);
+  };
+  const [language, setLanguage] = useState('javascript');
+  const [code, setCode] = useState('');
+  const [value, setValue] = useState('');
   const [codeResult, setCodeResult] = useState('');
+  const [partner, setPartner] = useState([]);
+  const { state } = useContext(store);
+  const { id: roomId } = useParams();
+
+  useEffect(() => {
+    socket.emit('create_interview', { user: state.user, roomId });
+  }, [socket, state.user, roomId]);
+
+  useEffect(() => {
+    socket.emit('change_text', code);
+  }, [code, socket]);
+
+  useEffect(() => {
+    socket.on('new_content', (data) => setValue(data));
+  }, [socket]);
+
+  useEffect(() => {
+    socket.emit('code_result', codeResult);
+  }, [codeResult, socket]);
+
   const [pageData, setPageData] = useState({
     isLoaded: false,
     questions: {
       questionOne: null,
-      questionTwo: null
-    }
+      questionTwo: null,
+    },
   });
 
-  const fetchQuestions = async () => {
+  const fetchInterview = useCallback(async () => {
     try {
-      const { data } = await getInterview(roomId)
+      const { data } = await getInterview(roomId);
+      data.interview.users.forEach(({ user }) => {
+        if (user._id !== state.user._id) setPartner(user);
+      });
+
       const { interview: userData } = data;
       const { users: interviewUsers } = userData;
       const questions = [];
 
-      for (let user of interviewUsers) {
+      for (let i = 0; i < 2; i++) {
+        const user = interviewUsers[i];
+
         const questionId = user.question;
-        const question = await getQuestion(questionId).then(res => res.data);
-        questions.push(question);
+        const { data } = await getQuestion(questionId);
+
+        questions.push(data.question);
       }
       setPageData({
         isLoaded: true,
         questions: {
           questionOne: questions[0],
-          questionTwo: questions[1]
-        }
-      })
+          questionTwo: questions[1],
+        },
+      });
     } catch (e) {
       console.error(e);
     }
-  }
+  }, [roomId, state.user._id]);
 
   useEffect(() => {
-    fetchQuestions();
-  }, []);
+    fetchInterview();
+  }, [fetchInterview]);
 
-
-  const handleCodeSnippetChange = (codeSnippet) => {
-    setCodeData({ ...codeData, code: codeSnippet });
-  };
+  useEffect(() => {
+    socket.on('result_code', (data) => {
+      setCodeResult(data);
+    });
+  }, [socket]);
 
   const handleLanguageChange = (language) => {
-    setCodeData({ ...codeData, language: language });
+    setLanguage(language);
   };
+
+  useEffect(() => {
+    socket.emit('change_language', language);
+  }, [language, socket]);
+
+  useEffect(() => {
+    socket.on('language_change', (data) => {
+      setLanguage(data);
+    });
+  }, [socket]);
 
   const runCode = async () => {
     try {
-      const result = await axios.post(`/runCode`, codeData);
+      const result = await axios.post(`/runCode`, { language, code });
       setCodeResult(result.data);
     } catch (error) {
       console.error(error);
     }
   };
-  const { language, code } = codeData;
+
   return (
     <div className={classes.interviewContainer}>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
-        <InterviewHeader language={language} setLanguage={handleLanguageChange} />
+        <InterviewHeader
+          partner={partner}
+          language={language}
+          setLanguage={handleLanguageChange}
+        />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
-          {pageData.isLoaded ? <InterviewQuestionDetails questions={pageData.questions} /> : <div>Loading question...</div>}
+          {pageData.questions.questionOne ? (
+            <InterviewQuestionDetails questions={pageData.questions} />
+          ) : (
+            <div>Loading question...</div>
+          )}
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
+            value={value}
             language={language}
             handleCodeSnippetChange={handleCodeSnippetChange}
           />

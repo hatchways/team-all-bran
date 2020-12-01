@@ -9,6 +9,7 @@ const InterviewQuestionDetails = ({ questions }) => {
     questionOne: true,
     questionTwo: false,
   });
+
   const questionSet = [...Object.values(questions)];
   const [questionDisplayed, setQuestionDisplayed] = useState(0);
 
@@ -29,15 +30,15 @@ const InterviewQuestionDetails = ({ questions }) => {
                 })}
               </div>
             ) : (
-                <div key={generateKey()}></div>
-              )}
+              <div key={generateKey()}></div>
+            )}
             {line.startsWith('Example ') ? (
               <p key={index} className={classes.questionDescExampleText}>
                 {line}
               </p>
             ) : (
-                <Fragment key={index}></Fragment>
-              )}
+              <Fragment key={index}></Fragment>
+            )}
           </Fragment>
         );
         codeBlockTexts = [];

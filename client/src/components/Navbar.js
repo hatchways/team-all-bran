@@ -3,7 +3,7 @@ import avatar from '../images/avatar.png';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { store } from '../context/store';
-import { logoutUser } from '../utils/apiFunctions'
+import { logoutUser } from '../utils/apiFunctions';
 
 import {
   AppBar,
@@ -20,6 +20,7 @@ import { Home } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import { LOGOUT } from '../context/types';
 import { useStyles } from '../themes/theme';
+import SocketContext from '../context/socket';
 
 const navLinks = [
   { title: `Dashboard`, path: `/dashboard` },
@@ -28,6 +29,7 @@ const navLinks = [
 ];
 
 const Navbar = (props) => {
+  const socket = useContext(SocketContext);
   const classes = useStyles();
   const { state, dispatch } = useContext(store);
 
@@ -47,6 +49,7 @@ const Navbar = (props) => {
     if (route === '/signup') {
       dispatch({ type: LOGOUT });
       logoutUser();
+      socket.emit('logged_out');
     }
   };
 

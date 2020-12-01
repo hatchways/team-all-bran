@@ -42,24 +42,25 @@ async function getInterview(req, res) {
 }
 
 const startInterview = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
-  const interview = await interviewModel.addInterviewQuestions(id)
+  const interview = await interviewModel.addInterviewQuestions(id);
 
-  res.json(interview)
-}
+  res.json(interview);
+};
 
 const getInterviewsByUserId = async (req, res) => {
   const email = req.user.email;
-  const interviews = (await User.findOne({ email }).populate('interviews')).interviews;
+  const interviews = (await User.findOne({ email }).populate('interviews'))
+    .interviews;
   res.json(interviews);
-}
+};
 
 const cancelInterviewById = async (req, res) => {
-  const { id } = req.params
-  const interviews = await Interview.findByIdAndDelete(id)
+  const { id } = req.params;
+  const interviews = await Interview.findByIdAndDelete(id);
   res.json(interviews);
-}
+};
 
 module.exports = {
   cInterview,
@@ -68,5 +69,5 @@ module.exports = {
   getInterview,
   startInterview,
   getInterviewsByUserId,
-  cancelInterviewById
+  cancelInterviewById,
 };
