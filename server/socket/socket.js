@@ -23,6 +23,9 @@ module.exports = (server) => {
           socket.join(roomId);
         } else {
           // room is full
+          if (rooms[roomId][user._id]) {
+            socket.join(roomId);
+          }
           io.to(socket.id).emit('room_full', null);
         }
       } else {
@@ -49,7 +52,7 @@ module.exports = (server) => {
     });
 
     socket.on('leave_room', ({ userId, roomId }) => {
-      // delete rooms[roomId][userId];
+      delete rooms[roomId][userId];
       socket.leave(roomId);
       console.log('leaving room: ', roomId);
       console.log(userId);

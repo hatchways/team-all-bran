@@ -25,16 +25,7 @@ const Interview = () => {
   const [codeResult, setCodeResult] = useState('');
   const [partner, setPartner] = useState([]);
   const { state } = useContext(store);
-  const history = useHistory();
-  // const roomId = history.location.pathname.split('/')[2];
   const { id: roomId } = useParams();
-
-  // const fetchInterview = async () => {
-  //   const { data } = await api.get(`/interviews/${roomId}/load`);
-  //   console.log(data);
-  //   // setInterviewData(interview.users);
-  //   // console.log(interviewData);
-  // };
 
   useEffect(() => {
     socket.emit('create_interview', { user: state.user, roomId });
@@ -46,7 +37,7 @@ const Interview = () => {
 
   useEffect(() => {
     socket.on('new_content', (data) => setValue(data));
-  });
+  }, [socket]);
 
   useEffect(() => {
     socket.emit('code_result', codeResult);
