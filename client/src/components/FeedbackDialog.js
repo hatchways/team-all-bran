@@ -10,9 +10,72 @@ import {
   FormFour,
   FormFive,
   FormSix,
+  FormSeven,
 } from './FeedbackForms';
-import { FormSeven } from './FeedbackForms';
 import { getFeedbackById } from '../utils/apiFunctions';
+
+const questionData = [
+  {
+    question: 'Overall, how well did this person do in the interview?',
+    formContent: (viewFeedback) => {
+      return <FormOne viewFeedback={viewFeedback} />;
+    },
+  },
+  {
+    question: 'Submit a review of the candidate in the following categories:',
+    formContent: (viewFeedback) => {
+      return <FormTwo viewFeedback={viewFeedback} />;
+    },
+  },
+  {
+    question:
+      'What are some things this candidate did well (the more specific the better)',
+    formContent: (viewFeedback) => {
+      return <FormThree viewFeedback={viewFeedback} />;
+    },
+  },
+  {
+    question:
+      'What are some things this candidate can improve on (the more specific the better)',
+    formContent: (viewFeedback) => {
+      return <FormFour viewFeedback={viewFeedback} />;
+    },
+  },
+  {
+    question:
+      'Any recommendations on resources that can help the candidate improve?',
+    formContent: (viewFeedback) => {
+      return <FormFive viewFeedback={viewFeedback} />;
+    },
+  },
+  {
+    question: 'Anything else?',
+    formContent: (viewFeedback) => {
+      return <FormSix viewFeedback={viewFeedback} />;
+    },
+  },
+  {
+    question: 'Overall, how well did this person do in the interview?',
+    formContent: (experienceRating, setExperienceRating, viewFeedback) => {
+      return (
+        <FormSeven
+          experienceRating={experienceRating}
+          setExperienceRating={setExperienceRating}
+          viewFeedback={viewFeedback}
+        />
+      );
+    },
+  },
+];
+
+const experienceRatingValues = {
+  0: '',
+  1: 'BAD!',
+  2: 'OK!',
+  3: 'GOOD!',
+  4: 'GREAT!',
+  5: 'AMAZING!',
+};
 
 const FeedbackDialog = () => {
   const { pageNumber, feedbackId } = useParams();
@@ -35,54 +98,61 @@ const FeedbackDialog = () => {
     }
   }, []);
 
-  let question;
-  let questionNumber;
-  let formContent;
+  const changeExperience = (experience) => {
+    setExperienceRating(experience);
+  };
 
-  switch (pageNumber) {
-    case '1':
-      question = 'Overall, how well did this person do in the interview?';
-      questionNumber = '1';
-      formContent = <FormOne viewFeedback={viewFeedback} />;
-      break;
-    case '2':
-      question = 'Submit a review of the candidate in the following categories:';
-      questionNumber = '2';
-      formContent = <FormTwo viewFeedback={viewFeedback} />;
-      break;
-    case '3':
-      question =
-        'What are some things this candidate did well (the more specific the better)';
-      questionNumber = '3';
-      formContent = <FormThree viewFeedback={viewFeedback} />;
-      break;
-    case '4':
-      question =
-        'What are some things this candidate can improve on (the more specific the better)';
-      questionNumber = '4';
-      formContent = <FormFour viewFeedback={viewFeedback} />;
-      break;
-    case '5':
-      question =
-        'Any recommendations on resources that can help the candidate improve?';
-      questionNumber = '5';
-      formContent = <FormFive viewFeedback={viewFeedback} />;
-      break;
-    case '6':
-      question = 'Anything else?';
-      questionNumber = '6';
-      formContent = <FormSix viewFeedback={viewFeedback} />;
-      break;
-    case '7':
-      question = 'Describe your experience:';
-      formContent = (
-        <FormSeven
-          experienceRating={experienceRating}
-          setExperienceRating={setExperienceRating}
-          viewFeedback={viewFeedback}
-        />
-      );
-  }
+  const question = questionData[pageNumber - 1].question;
+  //const question = 'A question';
+
+  // let question;
+  // let questionNumber;
+  // let formContent;
+
+  // switch (pageNumber) {
+  //   case '1':
+  //     question = 'Overall, how well did this person do in the interview?';
+  //     questionNumber = '1';
+  //     formContent = <FormOne viewFeedback={viewFeedback} />;
+  //     break;
+  //   case '2':
+  //     question = 'Submit a review of the candidate in the following categories:';
+  //     questionNumber = '2';
+  //     formContent = <FormTwo viewFeedback={viewFeedback} />;
+  //     break;
+  //   case '3':
+  //     question =
+  //       'What are some things this candidate did well (the more specific the better)';
+  //     questionNumber = '3';
+  //     formContent = <FormThree viewFeedback={viewFeedback} />;
+  //     break;
+  //   case '4':
+  //     question =
+  //       'What are some things this candidate can improve on (the more specific the better)';
+  //     questionNumber = '4';
+  //     formContent = <FormFour viewFeedback={viewFeedback} />;
+  //     break;
+  //   case '5':
+  //     question =
+  //       'Any recommendations on resources that can help the candidate improve?';
+  //     questionNumber = '5';
+  //     formContent = <FormFive viewFeedback={viewFeedback} />;
+  //     break;
+  //   case '6':
+  //     question = 'Anything else?';
+  //     questionNumber = '6';
+  //     formContent = <FormSix viewFeedback={viewFeedback} />;
+  //     break;
+  //   case '7':
+  //     question = 'Describe your experience:';
+  //     formContent = (
+  //       <FormSeven
+  //         experienceRating={experienceRating}
+  //         setExperienceRating={setExperienceRating}
+  //         viewFeedback={viewFeedback}
+  //       />
+  //     );
+  // }
 
   if (viewFeedback && viewFeedback.error) {
     return <div>incorrect feedback Id</div>;
@@ -110,7 +180,7 @@ const FeedbackDialog = () => {
         </>
       ) : (
         <ExperienceContent
-          setExperience={setExperienceRating}
+          setExperience={changeExperience}
           experienceRating={experienceRating}
           viewFeedback={viewFeedback}
         />
@@ -118,22 +188,31 @@ const FeedbackDialog = () => {
       <DialogContent>
         {pageNumber < 7 && (
           <div className={classes.feedbackDialogQuestionNumber}>
-            <div
-              className={classes.feedbackNumber}
-            >{`Question ${questionNumber} `}</div>
+            <div className={classes.feedbackNumber}>{`Question ${pageNumber} `}</div>
             <div className={classes.feedbackRemainder}>/ 6</div>
           </div>
         )}
 
         <div className={classes.feedbackQuestion}>{question}</div>
 
-        <FormControl disabled={viewFeedback}>{formContent}</FormControl>
+        <FormControl disabled={viewFeedback}>
+          {
+            pageNumber < 7
+              ? questionData[pageNumber - 1].formContent(viewFeedback)
+              : questionData[6].formContent(
+                  experienceRating,
+                  changeExperience,
+                  viewFeedback
+                )
+            //formContent
+          }
+        </FormControl>
       </DialogContent>
     </Dialog>
   );
 };
 
-const ExperienceContent = ({ setExperience, experienceRating }) => {
+const ExperienceContent = ({ setExperience, experienceRating, viewFeedback }) => {
   const classes = useStyles();
   const [hoverExperience, setHoverExperience] = useState(-1);
 
@@ -143,15 +222,6 @@ const ExperienceContent = ({ setExperience, experienceRating }) => {
 
   const changeRatingHover = (e, value) => {
     setHoverExperience(Number(value));
-  };
-
-  let experienceRatingValues = {
-    0: '',
-    1: 'BAD!',
-    2: 'OK!',
-    3: 'GOOD!',
-    4: 'GREAT!',
-    5: 'AMAZING!',
   };
 
   return (
@@ -169,8 +239,9 @@ const ExperienceContent = ({ setExperience, experienceRating }) => {
       </div>
       <Rating
         name='feedbackExperience'
+        readOnly={viewFeedback}
         classes={{ root: classes.feedbackExperienceRating }}
-        value={experienceRating}
+        value={!viewFeedback ? experienceRating : viewFeedback.experience.rating}
         onChange={changeRating}
         onChangeActive={changeRatingHover}
         size='large'

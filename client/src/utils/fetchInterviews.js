@@ -4,7 +4,6 @@ export const fetchInterviews = async (userId) => {
   const { data: userInterviews } = await getUserInterviews(userId);
   const upcomingInterviews = [];
   const pastInterviews = [];
-  console.log(userInterviews);
   for (const interview of userInterviews) {
     for (const user of interview.users) {
       if (user.user === userId) {

@@ -36,9 +36,7 @@ const UpcomingInterviewTable = ({ interviews }) => {
       const created = getStandardTime(interview.createdAt);
       const questionTitle = interview.questionTitle;
       const roomId = interview.interviewId;
-      if (!interview.endTime) {
-        upcomingInterviews.push({ created, questionTitle, roomId });
-      }
+      upcomingInterviews.push({ created, questionTitle, roomId });
     }
     setUpcomingInterviews(upcomingInterviews);
   };

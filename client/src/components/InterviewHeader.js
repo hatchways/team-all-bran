@@ -31,8 +31,8 @@ const InterviewHeader = ({ language, setLanguage }) => {
     } catch (error) {
       console.error(error);
     }
+    await history.push(`/interview/${interviewId}/feedback/1`);
     setOpenFeedback(true);
-    history.push(`/interview/${interviewId}/feedback/1`);
   };
 
   return (

@@ -62,6 +62,8 @@ const DashBoard = () => {
     return <UserInformation user={state.user} />;
   }
 
+  console.log(pageData.interviews);
+
   return (
     !state.loading &&
     pageData.pageLoaded && (
@@ -95,9 +97,11 @@ const DashBoard = () => {
           </div>
         </Dialog>
         <p className={classes.pastPracticesText}>Upcoming Practice Interviews</p>
-        <UpcomingInterviewTable interviews={pageData.interviews} />
+        <UpcomingInterviewTable
+          interviews={pageData.interviews.upcomingInterviews}
+        />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
-        <PastInterviewTable interviews={pageData.interviews} />
+        <PastInterviewTable interviews={pageData.interviews.pastInterviews} />
       </div>
     )
   );

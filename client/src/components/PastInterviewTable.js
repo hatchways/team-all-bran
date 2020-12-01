@@ -28,41 +28,40 @@ const PastInterviewTable = ({ interviews }) => {
     for (const interview of interviews) {
       const created = getStandardTime(interview.createdAt);
       const { questionId, interviewId } = interview;
-      if (interview.endTime) {
-        const ended = getStandardTime(interview.endTime);
-        let feedback;
-        let codingRating;
-        let communicationRating;
-        try {
-          feedback = (await getFeedbackReciever(interviewId)).data.feedback;
-        } catch (error) {
-          console.error(error);
-        }
 
-        if (feedback && feedback.categories) {
-          const {
-            communication,
-            codeEfficiency,
-            codeOrganization,
-            debugging,
-            problemSolving,
-          } = feedback.categories;
-          codingRating = Math.floor(
-            (codeEfficiency + codeOrganization + debugging + problemSolving) / 4
-          );
-          communicationRating = communication;
-        }
-
-        pastInterviews.push({
-          created,
-          ended,
-          questionId,
-          interviewId,
-          feedback: feedback,
-          codingRating,
-          communicationRating,
-        });
+      const ended = getStandardTime(interview.endedTime);
+      let feedback;
+      let codingRating;
+      let communicationRating;
+      try {
+        feedback = (await getFeedbackReciever(interviewId)).data.feedback;
+      } catch (error) {
+        console.error(error);
       }
+
+      if (feedback && feedback.categories) {
+        const {
+          communication,
+          codeEfficiency,
+          codeOrganization,
+          debugging,
+          problemSolving,
+        } = feedback.categories;
+        codingRating = Math.floor(
+          (codeEfficiency + codeOrganization + debugging + problemSolving) / 4
+        );
+        communicationRating = communication;
+      }
+
+      pastInterviews.push({
+        created,
+        ended,
+        questionId,
+        interviewId,
+        feedback: feedback,
+        codingRating,
+        communicationRating,
+      });
     }
     setPastInterviews(pastInterviews);
   };
@@ -74,8 +73,6 @@ const PastInterviewTable = ({ interviews }) => {
   const viewMyQuestion = (questionId, interviewId) => {
     history.push(`/question/${questionId}/${interviewId}`);
   };
-
-  console.log(pastInterviews);
 
   return (
     <TableContainer>
