@@ -49,10 +49,17 @@ const startInterview = async (req, res) => {
   res.json(interview);
 };
 
-const loadInterview = async (req, res) => {
+const getInterviewsByUserId = async (req, res) => {
+  const email = req.user.email;
+  const interviews = (await User.findOne({ email }).populate('interviews'))
+    .interviews;
+  res.json(interviews);
+};
+
+const cancelInterviewById = async (req, res) => {
   const { id } = req.params;
-  const interview = await interviewModel.loadInterview(id);
-  res.json(interview);
+  const interviews = await Interview.findByIdAndDelete(id);
+  res.json(interviews);
 };
 
 module.exports = {
@@ -61,5 +68,6 @@ module.exports = {
   addUser,
   getInterview,
   startInterview,
-  loadInterview,
+  getInterviewsByUserId,
+  cancelInterviewById,
 };

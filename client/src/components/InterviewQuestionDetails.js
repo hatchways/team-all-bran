@@ -5,7 +5,6 @@ import { generateKey } from '../utils/generateRandomKey';
 
 const InterviewQuestionDetails = ({ questions }) => {
   const classes = useStyles();
-
   const [questionHighlightToggle, setQuestionHighlightToggle] = useState({
     questionOne: true,
     questionTwo: false,
@@ -68,6 +67,7 @@ const InterviewQuestionDetails = ({ questions }) => {
   };
 
   const { questionOne, questionTwo } = questionHighlightToggle;
+
   return (
     <div className={classes.interviewDetailsContainer}>
       <div className={classes.questionAnswerButtonContainer}>

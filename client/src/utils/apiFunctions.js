@@ -37,9 +37,17 @@ export const logoutUser = () => {
 };
 
 export const getInterview = (roomId) => {
-  return api.get(`/interviews/${roomId}`)
+  return api.get(`/interviews/${roomId}`);
 };
 
 export const getQuestion = (questionId) => {
-  return api.get(`/questions/${questionId}`)
+  return api.get(`/questions/${questionId}`);
 };
+
+export const getUserInterviews = (userId) => {
+  return api.get(`/interviews/user/${userId}`);
+}
+
+export const cancelInterview = (userId) => {
+  return api.post(`/interviews/${userId}/cancel`);
+}

@@ -1,23 +1,22 @@
-import React, { useContext, useEffect } from 'react';
-
+import React, { useContext, useEffect, useState } from 'react';
 import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
+import UpcomingInterviewTable from '../components/UpcomingInterviewTable';
 import { store } from '../context/store';
-
 import { useHistory } from 'react-router';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
-
 import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
 import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import SocketContext from '../context/socket';
+import { fetchInterviews } from '../utils/fetchInterviews';
 
 const DashBoard = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState('Medium');
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('Medium');
   const { state } = useContext(store);
   const socket = useContext(SocketContext);
 
@@ -25,9 +24,23 @@ const DashBoard = () => {
     socket.emit('logged_in', state.user._id);
   }, [state.user, socket]);
 
+  const [pageData, setPageData] = useState({
+    pageLoaded: false,
+    interviews: null,
+  });
+
+  const getInterviews = async () => {
+    const interviews = await fetchInterviews(state.user._id);
+
+    setPageData({
+      pageLoaded: true,
+      interviews: interviews,
+    });
+  };
+
   useEffect(() => {
-    socket.emit('check_rooms', { userId: state.user._id });
-  }, [socket, state.user]);
+    getInterviews();
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,8 +58,8 @@ const DashBoard = () => {
     try {
       const { data } = await createInterview({ difficulty: selectedValue });
       history.push({
-        pathname: `/lobby/${data.interview._id}`
-      })
+        pathname: `/lobby/${data.interview._id}`,
+      });
     } catch (err) {
       console.error('OUTPUT: SimpleDialog -> err', err);
     }
@@ -57,9 +70,14 @@ const DashBoard = () => {
   }
 
   return (
-    !state.loading && (
+    !state.loading &&
+    pageData.pageLoaded && (
       <div className={classes.dashboardContainer}>
-        <CustomButton onClick={handleClickOpen} text='START' classField={classes.startDashboardButton} />
+        <CustomButton
+          onClick={handleClickOpen}
+          text='START'
+          classField={classes.startDashboardButton}
+        />
         <Dialog
           onClose={handleClose}
           aria-labelledby='simple-dialog-title'
@@ -76,9 +94,15 @@ const DashBoard = () => {
               selectedValue={selectedValue}
               handleChange={handleChange}
             />
-            <CustomButton onClick={createInt} classField={classes.startDashboardButton} text='CREATE' />
+            <CustomButton
+              onClick={createInt}
+              classField={classes.startDashboardButton}
+              text='CREATE'
+            />
           </div>
         </Dialog>
+        <p className={classes.pastPracticesText}>Upcoming Practice Interviews</p>
+        <UpcomingInterviewTable interviews={pageData.interviews} />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable />
       </div>
