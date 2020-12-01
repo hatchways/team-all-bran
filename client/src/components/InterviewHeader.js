@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { endInterview } from '../utils/apiFunctions';
 import FeedbackDialog from '../components/FeedbackDialog';
 
-const InterviewHeader = ({ language, setLanguage }) => {
+const InterviewHeader = ({ language, setLanguage, partner }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id, pageNumber } = useParams();
@@ -37,7 +37,9 @@ const InterviewHeader = ({ language, setLanguage }) => {
 
   return (
     <Grid className={classes.interviewHeader} item xs={12}>
-      <div className={classes.interviewWithText}>Interview with </div>
+      <div className={classes.interviewWithText}>
+        Interview with {`${partner.firstName || ''} ${partner.lastName || ''} `}{' '}
+      </div>
       <div className={classes.languageExitInterviewContainer}>
         <LanguageSelectMenu
           handleLanguageChange={handleLanguageChange}
