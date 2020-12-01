@@ -109,17 +109,17 @@ const Lobby = () => {
       }
     }
     setStartButtonPushed(true);
-
-    // history.push({
-    //   pathname: `/interview/${roomId}`,
-    // });
   };
 
   if (startInterview) {
     addUserAndQuestions();
   }
 
-  return !startButtonPushed ? (
+  if (startButtonPushed) {
+    return <Redirect to={`/interview/${roomId}`} />;
+  }
+
+  return (
     <>
       <Dialog
         className={classes.waitingRoomDialogue}
@@ -188,8 +188,6 @@ const Lobby = () => {
         </Snackbar>
       )}
     </>
-  ) : (
-    <Interview userData={userData} />
   );
 };
 

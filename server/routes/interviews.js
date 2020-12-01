@@ -41,4 +41,10 @@ router.post(
   interviewController.startInterview
 );
 
+router.get(
+  `/:id/load`,
+  passport.authenticate('jwt', { session: false }),
+  interviewController.loadInterview
+);
+
 module.exports = router;

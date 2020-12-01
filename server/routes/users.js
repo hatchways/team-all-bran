@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController'); // import controller
-const auth = require('../config/auth');
-//const passport = require('../config/passport');
 const passport = require('passport');
 
 // POST /users/register

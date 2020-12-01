@@ -79,7 +79,7 @@ async function addUserToInterview(req) {
 
 async function getInterview(interviewId) {
   const interview = await Interview.findOne({ _id: interviewId }).populate(
-    'users.feedback'
+    'users.feedback users.user users.questions'
   );
   return { interview: interview };
 }
@@ -89,9 +89,9 @@ async function addInterviewQuestions(id) {
   const { difficulty } = interview;
   const questions = await getRandomQuestionsByDifficulty(difficulty);
 
-  interview.users.forEach(user => {
+  interview.users.forEach((user) => {
     user.question = questions.pop();
-  })
+  });
   interview.save();
   return interview;
 }
@@ -99,13 +99,22 @@ async function addInterviewQuestions(id) {
 const getRandomQuestionsByDifficulty = async (difficulty) => {
   const count = await Question.count({ difficulty });
 
-  const questionOne = await Question.findOne({ difficulty }).skip(Math.floor(Math.random() * count));
-  const questionTwo = await Question.findOne({ difficulty }).skip(Math.floor(Math.random() * count));
+  const questionOne = await Question.findOne({ difficulty }).skip(
+    Math.floor(Math.random() * count)
+  );
+  const questionTwo = await Question.findOne({ difficulty }).skip(
+    Math.floor(Math.random() * count)
+  );
   if (questionOne.index === questionTwo.index) {
-    getRandomQuestionByDifficulty(difficulty)
+    getRandomQuestionByDifficulty(difficulty);
   }
-  return [questionOne, questionTwo]
-}
+  return [questionOne, questionTwo];
+};
+
+const loadInterview = async (id) => {
+  const interview = await Interview.findById(id).populate('users');
+  return { interview };
+};
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
@@ -114,5 +123,6 @@ module.exports = {
   createInterview,
   addUserToInterview,
   getInterview,
-  addInterviewQuestions
+  addInterviewQuestions,
+  loadInterview,
 };

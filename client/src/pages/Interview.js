@@ -10,8 +10,10 @@ import axios from 'axios';
 import SocketContext from '../context/socket';
 import { getInterview, getQuestion } from '../utils/apiFunctions';
 import { useHistory } from 'react-router';
+import api from '../utils/api';
+import { store } from '../context/store';
 
-const Interview = ({ userData }) => {
+const Interview = () => {
   const classes = useStyles();
   const socket = useContext(SocketContext);
   const handleCodeSnippetChange = (codeSnippet) => {
@@ -21,9 +23,22 @@ const Interview = ({ userData }) => {
   const [code, setCode] = useState('');
   const [value, setValue] = useState('');
   const [codeResult, setCodeResult] = useState('');
+  const [partner, setPartner] = useState([]);
+  const { state } = useContext(store);
   const history = useHistory();
   // const roomId = history.location.pathname.split('/')[2];
   const { id: roomId } = useParams();
+
+  // const fetchInterview = async () => {
+  //   const { data } = await api.get(`/interviews/${roomId}/load`);
+  //   console.log(data);
+  //   // setInterviewData(interview.users);
+  //   // console.log(interviewData);
+  // };
+
+  useEffect(() => {
+    socket.emit('create_interview', { user: state.user, roomId });
+  }, []);
 
   useEffect(() => {
     socket.emit('change_text', code);
@@ -45,16 +60,20 @@ const Interview = ({ userData }) => {
     },
   });
 
-  const fetchQuestions = useCallback(async () => {
+  const fetchInterview = useCallback(async () => {
     try {
       const { data } = await getInterview(roomId);
-      console.log(data);
+      data.interview.users.forEach(({ user }) => {
+        if (user._id !== state.user._id) setPartner(user);
+      });
+
       const { interview: userData } = data;
       const { users: interviewUsers } = userData;
       const questions = [];
 
-      for (let user of interviewUsers) {
-        console.log(user, 'USER IN FETCH QUESTIONS');
+      for (let i = 0; i < 2; i++) {
+        const user = interviewUsers[i];
+
         const questionId = user.question;
         const { data } = await getQuestion(questionId);
 
@@ -70,11 +89,10 @@ const Interview = ({ userData }) => {
     } catch (e) {
       console.error(e);
     }
-  }, [pageData, userData]);
+  }, [pageData]);
 
   useEffect(() => {
-    console.log('in fetch question useEffect');
-    fetchQuestions();
+    fetchInterview();
   }, []);
 
   useEffect(() => {
@@ -105,12 +123,13 @@ const Interview = ({ userData }) => {
       console.error(error);
     }
   };
+
   return (
     <div className={classes.interviewContainer}>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader
+          partner={partner}
           language={language}
-          userData={userData}
           setLanguage={handleLanguageChange}
         />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>

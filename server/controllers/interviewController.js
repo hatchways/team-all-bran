@@ -48,10 +48,18 @@ const startInterview = async (req, res) => {
 
   res.json(interview);
 };
+
+const loadInterview = async (req, res) => {
+  const { id } = req.params;
+  const interview = await interviewModel.loadInterview(id);
+  res.json(interview);
+};
+
 module.exports = {
   cInterview,
   endInterview,
   addUser,
   getInterview,
   startInterview,
+  loadInterview,
 };

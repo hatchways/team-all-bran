@@ -27,7 +27,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
         <div className={classes.interviewLevelDiv}>Intermediate </div>
         <div className={classes.interviewLevelDesc}>
           Had a few job interviews but need more practice
-       </div>
+        </div>
       </>
     );
   } else {
@@ -36,7 +36,7 @@ const InterviewLevelInfo = ({ interviewLevel }) => {
         <div className={classes.interviewLevelDiv}>Experienced </div>
         <div className={classes.interviewLevelDesc}>
           Used to job interviews and looking for a challenge
-       </div>
+        </div>
       </>
     );
   }
@@ -98,24 +98,32 @@ const UserInformation = (props) => {
 
           <div className={classes.infoFormDiv}>
             Years of professional experience:
-         </div>
+          </div>
           <Select
             className={classes.infoDropdown}
             onChange={changeExperience}
             value={experience}
           >
-            {Array.from(experienceList, (item) => {
+            {Array.from(experienceList, (item, idx) => {
               if (item < 10) {
-                return <MenuItem value={item}>{item} </MenuItem>;
+                return (
+                  <MenuItem key={idx} value={item}>
+                    {item}{' '}
+                  </MenuItem>
+                );
               } else {
-                return <MenuItem value={item}>10 or more</MenuItem>;
+                return (
+                  <MenuItem key={idx} value={item}>
+                    10 or more
+                  </MenuItem>
+                );
               }
             })}
           </Select>
 
           <div className={classes.infoFormDiv}>
             What is your level at job interviews?
-         </div>
+          </div>
 
           <Rating
             name='interviewLevel'
@@ -128,7 +136,7 @@ const UserInformation = (props) => {
         </form>
         <NextStepButton type='submit' form='backgroundForm' onClick={onSubmit}>
           Next Step
-       </NextStepButton>
+        </NextStepButton>
       </div>
     </div>
   );

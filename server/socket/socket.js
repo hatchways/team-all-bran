@@ -7,24 +7,13 @@ module.exports = (server) => {
     const { id } = socket;
     console.log('LOGGED IN! SOCKET ID', socket.id);
 
-    socket.on('check_rooms', ({ userId }) => {
-      console.log(userId);
-    });
-
-    socket.on('get_partner_name', ({ firstName, lastName, roomId }) => {
-      socket.broadcast
-        .to(roomId)
-        .emit('set_partner_name', { firstName, lastName });
-    });
-
     socket.on('start_interview', (roomId) => {
       socket.broadcast.to(roomId).emit('join_interview_room');
-      console.log('STARTING INTERVIEW, ROOMS @ ROOMID: ', {
-        users: rooms[roomId],
-      });
     });
 
     socket.on('create_room', ({ user, roomId }) => {
+      console.log('GOT HERE IN THE ROOM CREATE');
+      console.log(rooms[roomId]);
       if (rooms[roomId]) {
         if (Object.keys(rooms[roomId]).length < 2) {
           console.log('joining room: ', roomId);
@@ -49,6 +38,14 @@ module.exports = (server) => {
       io.to(roomId).emit('lobby_users', {
         users: Object.values(rooms[roomId]),
       });
+    });
+
+    socket.on('create_interview', ({ user, roomId }) => {
+      socket.join(roomId);
+      socket.roomId = roomId;
+      console.log(
+        `CREATE_INTERVIEW: FROM ${user.firstName} ${user.lastName} on socket: ${socket.id} to ROOM ${roomId}`
+      );
     });
 
     socket.on('leave_room', ({ userId, roomId }) => {
