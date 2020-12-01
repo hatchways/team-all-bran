@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import { Link, useHistory } from 'react-router-dom';
 import { CustomButton } from '../components/Buttons';
 import { useStyles } from '../themes/theme';
-import axios from 'axios';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -92,7 +91,11 @@ const LoginForm = () => {
               value={formData.password}
               onChange={onChange}
             />
-            <CustomButton onClick={onSubmit} classField={classes.continueButton} text="Continue" />
+            <CustomButton
+              onClick={onSubmit}
+              classField={classes.continueButton}
+              text='Continue'
+            />
           </form>
         </div>
       </div>

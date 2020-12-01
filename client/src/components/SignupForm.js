@@ -6,7 +6,6 @@ import { useStyles } from '../themes/theme';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { store } from '../context/store';
-import axios from 'axios';
 import { USER_LOADED } from '../context/types';
 import { signUpUser } from '../utils/apiFunctions';
 
@@ -186,7 +185,11 @@ const SignupForm = () => {
             onChange={onChange}
             color='primary'
           />
-          <CustomButton onClick={continueClicked} classField={classes.continueButton} text="Continue" />
+          <CustomButton
+            onClick={continueClicked}
+            classField={classes.continueButton}
+            text='Continue'
+          />
         </form>
       </div>
       {open && (

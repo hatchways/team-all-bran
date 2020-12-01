@@ -1,16 +1,14 @@
 import React, { useContext, useCallback, useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router';
 import { store } from '../context/store';
-import { USER_LOADED } from '../context/types'
-import { getUser } from '../utils/apiFunctions'
+import { USER_LOADED } from '../context/types';
+import { getUser } from '../utils/apiFunctions';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-
-  const { dispatch, state } = useContext(store);
+  const { dispatch } = useContext(store);
   const [isBusy, setBusy] = useState(true);
 
   const getUserInfo = useCallback(async () => {
-
     try {
       const result = await getUser();
       dispatch({
@@ -32,7 +30,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     state: { isAuthenticated },
   } = useContext(store);
   if (isBusy) {
-    return null
+    return null;
   }
   return (
     <Route

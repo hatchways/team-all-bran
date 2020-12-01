@@ -16,8 +16,13 @@ module.exports = {
   },
   getQuestion: async (req, res) => {
     const { questionId } = req.params;
-    const question = await Question.findById(questionId);
-
-    res.status(200).json(question);
+    console.log(questionId);
+    try {
+      const question = await Question.findById(questionId);
+      res.status(200).json({ question });
+    } catch (err) {
+      console.error(err);
+      res.json({ err });
+    }
   },
 };
