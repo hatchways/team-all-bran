@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { path } = require('../app');
 const Schema = mongoose.Schema;
 const User = mongoose.model('User');
-const Question = require('../models/Question');
+const { Question } = require('../models/Question');
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -31,7 +31,7 @@ const InterviewSchema = new Schema(
         },
         question: {
           type: Schema.Types.ObjectId,
-          ref: 'Question,',
+          ref: 'Question',
         },
       },
     ],
@@ -125,7 +125,9 @@ const endInterview = async (interviewId) => {
 
 const getQuestionFromInterview = async (questionId, interviewId, user) => {
   try {
-    const interview = await Interview.findById(interviewId);
+    const interview = await await Interview.findById(interviewId).populate(
+      'users.question'
+    );
 
     if (
       interview.users[0].user.equals(user._id) &&

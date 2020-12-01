@@ -75,7 +75,7 @@ const getQuestionFromInterview = async (req, res) => {
   if (question.error) {
     res.status(404).json({ error: question.error });
   } else {
-    res.redirect(`/questions/${questionId}`);
+    res.json(question);
   }
 };
 
