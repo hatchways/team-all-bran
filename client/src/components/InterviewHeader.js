@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import LanguageSelectMenu from './LanguageSelectMenu';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { CustomButton } from '../components/Buttons';
 
 const InterviewHeader = ({ language, setLanguage, partner }) => {

@@ -3,6 +3,7 @@ import { ControlledEditor } from '@monaco-editor/react';
 
 const TextEditor = ({ value, language, handleCodeSnippetChange }) => {
   const [isEditorReady, setIsEditorReady] = useState(false);
+  console.log(isEditorReady);
 
   const editorRef = useRef();
 

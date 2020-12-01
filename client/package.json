@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@monaco-editor/react": "^3.7.0",
     "axios": "^0.21.0",
+    "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
