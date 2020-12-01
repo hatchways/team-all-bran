@@ -12,8 +12,7 @@ module.exports = (server) => {
     });
 
     socket.on('create_room', ({ user, roomId }) => {
-      console.log('GOT HERE IN THE ROOM CREATE');
-      console.log(rooms[roomId]);
+      socket.user = user._id;
       if (rooms[roomId]) {
         if (Object.keys(rooms[roomId]).length < 2) {
           console.log('joining room: ', roomId);
@@ -45,6 +44,7 @@ module.exports = (server) => {
 
     socket.on('create_interview', ({ user, roomId }) => {
       socket.join(roomId);
+      socket.user = user._id;
       socket.roomId = roomId;
       console.log(
         `CREATE_INTERVIEW: FROM ${user.firstName} ${user.lastName} on socket: ${socket.id} to ROOM ${roomId}`
@@ -54,8 +54,7 @@ module.exports = (server) => {
     socket.on('leave_room', ({ userId, roomId }) => {
       delete rooms[roomId][userId];
       socket.leave(roomId);
-      console.log('leaving room: ', roomId);
-      console.log(userId);
+      console.log(`${userId} is leaving room: ${roomId}`);
     });
 
     socket.on('code_result', (codeResult) => {
@@ -83,6 +82,8 @@ module.exports = (server) => {
     });
 
     socket.on('logged_out', () => {
+      socket.disconnect();
+      // socket.leave(socket.roomId);
       delete usersToSockets[socket.userId];
       delete socketToUsers[id];
     });

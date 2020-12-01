@@ -9,8 +9,6 @@ import OutputConsole from '../components/OutputConsole';
 import axios from 'axios';
 import SocketContext from '../context/socket';
 import { getInterview, getQuestion } from '../utils/apiFunctions';
-import { useHistory } from 'react-router';
-import api from '../utils/api';
 import { store } from '../context/store';
 
 const Interview = () => {
@@ -29,7 +27,7 @@ const Interview = () => {
 
   useEffect(() => {
     socket.emit('create_interview', { user: state.user, roomId });
-  }, []);
+  }, [socket, state.user, roomId]);
 
   useEffect(() => {
     socket.emit('change_text', code);
@@ -80,11 +78,11 @@ const Interview = () => {
     } catch (e) {
       console.error(e);
     }
-  }, [pageData]);
+  }, [roomId, state.user._id]);
 
   useEffect(() => {
     fetchInterview();
-  }, []);
+  }, [fetchInterview]);
 
   useEffect(() => {
     socket.on('result_code', (data) => {

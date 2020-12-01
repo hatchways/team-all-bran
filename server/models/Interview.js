@@ -97,7 +97,7 @@ async function addInterviewQuestions(id) {
 }
 
 const getRandomQuestionsByDifficulty = async (difficulty) => {
-  const count = await Question.count({ difficulty });
+  const count = await Question.countDocuments({ difficulty });
 
   const questionOne = await Question.findOne({ difficulty }).skip(
     Math.floor(Math.random() * count)
