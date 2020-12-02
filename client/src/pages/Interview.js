@@ -52,6 +52,7 @@ const Interview = () => {
   const fetchInterview = useCallback(async () => {
     try {
       const { data } = await getInterview(roomId);
+
       data.interview.users.forEach(({ user }) => {
         if (user._id !== state.user._id) setPartner(user);
       });
@@ -62,10 +63,8 @@ const Interview = () => {
 
       for (let i = 0; i < 2; i++) {
         const user = interviewUsers[i];
-
-        const questionId = user.question;
+        const questionId = user.question._id;
         const { data } = await getQuestion(questionId);
-
         questions.push(data.question);
       }
       setPageData({
