@@ -177,7 +177,7 @@ const FeedbackDialog = () => {
   const question = questionData[pageNumber - 1].question;
 
   if (viewFeedback && viewFeedback.error) {
-    return <div>incorrect feedback Id</div>;
+    return <div></div>;
   }
 
   return (
