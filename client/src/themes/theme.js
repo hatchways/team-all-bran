@@ -613,6 +613,13 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     fontWeight: 'bold',
   },
+  profileContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '90vh',
+  },
 }));
 
 export const GlobalCss = withStyles({
