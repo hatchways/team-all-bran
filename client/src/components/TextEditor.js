@@ -41,7 +41,7 @@ const TextEditor = (
         <Draggable>
           <div className={classes.videoStreamContainer}>
             <video className={classes.videoChatBoxUser} playsInline muted ref={userVideo} autoPlay />
-            <video className={classes.videoChatBoxPartner} playsInline muted ref={partnerVideo} autoPlay />
+            <video className={classes.videoChatBoxPartner} playsInline ref={partnerVideo} autoPlay />
           </div>
         </Draggable>
       </div>
