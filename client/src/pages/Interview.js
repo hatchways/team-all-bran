@@ -203,12 +203,12 @@ const Interview = () => {
 
   return (
     <div className={classes.interviewContainer}>
-      <button onClick={() => callPeer(partner._id)}>Call {`${partner.firstName} ${partner.lastName} `}</button>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader
           partner={partner}
           language={language}
           setLanguage={handleLanguageChange}
+          callPeer={() => callPeer(partner._id)}
         />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           {pageData.questions.questionOne ? (

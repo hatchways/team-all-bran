@@ -501,7 +501,13 @@ export const useStyles = makeStyles((theme) => ({
     color: 'black',
     fontSize: '16px',
     fontWeight: 'bold',
-  }
+  },
+  videoCallIcon: {
+    height: '50px',
+    width: '50px',
+    color: 'white',
+    marginRight: '20px',
+  },
 }));
 
 export const GlobalCss = withStyles({

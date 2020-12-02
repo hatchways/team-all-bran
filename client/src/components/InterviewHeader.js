@@ -4,8 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import LanguageSelectMenu from './LanguageSelectMenu';
 import { useHistory } from 'react-router-dom';
 import { CustomButton } from '../components/Buttons';
+import VideoCallIcon from '@material-ui/icons/VideoCall';
+import IconButton from '@material-ui/core/IconButton';
 
-const InterviewHeader = ({ language, setLanguage, partner }) => {
+const InterviewHeader = (
+  {
+    language,
+    setLanguage,
+    partner,
+    callPeer
+  }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -27,6 +35,9 @@ const InterviewHeader = ({ language, setLanguage, partner }) => {
           handleLanguageChange={handleLanguageChange}
           language={language}
         />
+        <IconButton onClick={callPeer}>
+          <VideoCallIcon className={classes.videoCallIcon} />
+        </IconButton>
         <CustomButton
           onClick={exitInterview}
           classField={classes.exitInterviewButton}
