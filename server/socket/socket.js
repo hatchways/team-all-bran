@@ -1,8 +1,15 @@
+const cookieParser = require('socket.io-cookie-parser');
+const { authorization } = require('./authorization');
+
 const socketToUsers = new Map();
 const usersToSockets = new Map();
 const rooms = {};
+const roomies = new Map();
 module.exports = (server) => {
   const io = require('socket.io')(server, { origins: '*:*', path: '/sockets' });
+  io.use(cookieParser());
+  io.use(authorization);
+
   io.on('connection', (socket) => {
     const { id } = socket;
     console.log('LOGGED IN! SOCKET ID', socket.id);
