@@ -613,6 +613,9 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     fontWeight: 'bold',
   },
+  links: {
+    textDecoration: 'none',
+  },
 }));
 
 export const GlobalCss = withStyles({

@@ -3,7 +3,7 @@ import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
 import UpcomingInterviewTable from '../components/UpcomingInterviewTable';
 import { store } from '../context/store';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
@@ -15,6 +15,7 @@ import { fetchInterviews } from '../utils/fetchInterviews';
 const DashBoard = () => {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('Medium');
   const { state } = useContext(store);

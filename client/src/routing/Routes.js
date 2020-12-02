@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, useLocation } from 'react-router';
 import Navbar from '../components/Navbar';
 import Blog from '../pages/Blog';
 import DashBoard from '../pages/DashBoard';
@@ -13,6 +13,11 @@ import FeedbackDialog from '../components/FeedbackDialog';
 import QuestionDialog from '../components/QuestionDialog';
 
 const Routes = () => {
+  const location = useLocation();
+  const question = location.state && location.state.question;
+  const feedback = location.state && location.state.feedback;
+  const lobby = location.state && location.state.lobby;
+
   return (
     <>
       <Navbar />
@@ -31,15 +36,33 @@ const Routes = () => {
         <PrivateRoute
           exact
           path='/feedback/:feedbackId/:pageNumber'
-          component={FeedbackDialog}
+          component={DashBoard}
         />
+        <PrivateRoute
+          exact
+          path='/question/:questionId/:interviewId'
+          component={DashBoard}
+        />
+        <Route path='/' component={Signup} />
+      </Switch>
+
+      {question && (
         <PrivateRoute
           exact
           path='/question/:questionId/:interviewId'
           component={QuestionDialog}
         />
-        <Route path='/' component={Signup} />
-      </Switch>
+      )}
+
+      {feedback && (
+        <PrivateRoute
+          exact
+          path='/feedback/:feedbackId/:pageNumber'
+          component={FeedbackDialog}
+        />
+      )}
+
+      {/* {lobby && <PrivateRoute exact path='/lobby/:id' component={Lobby} />} */}
     </>
   );
 };
