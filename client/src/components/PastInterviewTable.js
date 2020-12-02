@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { useStyles } from '../themes/theme';
 import Rating from '@material-ui/lab/Rating';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { getStandardTime } from '../utils/timeFunctions';
 import { CustomButton } from './Buttons';
 import { getFeedbackReciever } from '../utils/apiFunctions';
@@ -15,7 +15,6 @@ import { getFeedbackReciever } from '../utils/apiFunctions';
 const PastInterviewTable = ({ interviews }) => {
   const [pastInterviews, setPastInterviews] = useState(null);
   const history = useHistory();
-  const location = useLocation();
   const classes = useStyles();
 
   useEffect(() => {

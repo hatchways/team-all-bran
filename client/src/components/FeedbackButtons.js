@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormHelperText } from '@material-ui/core/';
 import { useStyles } from '../themes/theme';
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { NextQuestionButton, PreviousQuestionButton } from './Buttons';
 import { createFeedback } from '../utils/apiFunctions';
 import { DialogActions } from '@material-ui/core/';
@@ -11,7 +11,6 @@ export const NextPage = ({ feedbackValue, viewFeedback, changeCreatorFeedback })
   const interviewId = id;
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
   const [error, setError] = useState(false);
   let errorText;
   let feedbackBody;
@@ -158,7 +157,6 @@ export const NextPage = ({ feedbackValue, viewFeedback, changeCreatorFeedback })
 
 function PrevPage({ pageNumber, interviewId, viewFeedback, changeCreatorFeedback }) {
   const history = useHistory();
-  const location = useLocation();
 
   const goBack = async () => {
     if (viewFeedback) {
