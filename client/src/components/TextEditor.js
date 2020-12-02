@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { ControlledEditor } from '@monaco-editor/react';
+import { Dialog, DialogTitle } from '@material-ui/core';
+import { useStyles } from '../themes/theme';
+import { CustomButton } from '../components/Buttons';
 
 const TextEditor = (
   {
@@ -11,9 +14,12 @@ const TextEditor = (
     handleCodeSnippetChange,
     userVideo,
     partnerVideo,
-    callAccepted
+    callAccepted,
+    partnerName
   }) => {
   const [isEditorReady, setIsEditorReady] = useState(false);
+  const [open, setOpen] = useState(true);
+  const classes = useStyles();
 
   const editorRef = useRef();
 
@@ -25,16 +31,40 @@ const TextEditor = (
   const handleCodeChange = (_, value) => {
     handleCodeSnippetChange(value);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <div>
         <video playsInline muted ref={userVideo} autoPlay />
         <video playsInline muted ref={partnerVideo} autoPlay />
         {receivingCall ?
-          <div>
-            <h1>Tim Rines is calling you</h1>
-            <button onClick={handleAcceptCall}>Accept</button>
-          </div>
+          <Dialog
+            onClose={handleClose}
+            aria-labelledby='receiving-call'
+            open={open}
+          >
+            <div className={classes.createInterviewDialog}>
+              <DialogTitle
+                id='receiving-from'
+              >
+                {`Receiving call from ${partnerName}`}
+              </DialogTitle>
+              <CustomButton
+                onClick={handleAcceptCall}
+                classField={classes.startDashboardButton}
+                text='ACCEPT'
+              />
+              <CustomButton
+                onClick={() => setOpen(false)}
+                classField={classes.startDashboardButton}
+                text='CANCEL'
+              />
+            </div>
+          </Dialog>
           :
           <div>
             <button onClick={handleEndCall}>End</button>
