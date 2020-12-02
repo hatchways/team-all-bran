@@ -16,7 +16,6 @@ const Routes = () => {
   const location = useLocation();
   const question = location.state && location.state.question;
   const feedback = location.state && location.state.feedback;
-  const lobby = location.state && location.state.lobby;
 
   return (
     <>
@@ -26,7 +25,7 @@ const Routes = () => {
         <PrivateRoute exact path='/dashboard' component={DashBoard} />
         <PrivateRoute exact path='/blog' component={Blog} />
         <PrivateRoute exact path='/faq' component={Faq} />
-        <PrivateRoute exact path='/lobby/:id' component={Lobby} />
+        <PrivateRoute exact path='/lobby/:id' component={DashBoard} />
         <PrivateRoute exact path='/interview/:id' component={Interview} />
         <PrivateRoute
           exact
@@ -61,8 +60,6 @@ const Routes = () => {
           component={FeedbackDialog}
         />
       )}
-
-      {/* {lobby && <PrivateRoute exact path='/lobby/:id' component={Lobby} />} */}
     </>
   );
 };

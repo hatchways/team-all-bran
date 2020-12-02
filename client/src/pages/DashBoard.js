@@ -3,7 +3,7 @@ import { useStyles } from '../themes/theme';
 import PastInterviewTable from '../components/PastInterviewTable';
 import UpcomingInterviewTable from '../components/UpcomingInterviewTable';
 import { store } from '../context/store';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
@@ -11,11 +11,12 @@ import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import SocketContext from '../context/socket';
 import { fetchInterviews } from '../utils/fetchInterviews';
+import Lobby from './Lobby';
 
 const DashBoard = () => {
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('Medium');
   const { state } = useContext(store);
@@ -58,6 +59,7 @@ const DashBoard = () => {
   const createInt = async () => {
     try {
       const { data } = await createInterview({ difficulty: selectedValue });
+      setOpen(false);
       history.push({
         pathname: `/lobby/${data.interview._id}`,
       });
@@ -108,6 +110,7 @@ const DashBoard = () => {
         />
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable interviews={pageData.interviews.pastInterviews} />
+        {id && <Lobby />}
       </div>
     )
   );

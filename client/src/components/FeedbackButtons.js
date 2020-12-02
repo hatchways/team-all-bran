@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormHelperText } from '@material-ui/core/';
 import { useStyles } from '../themes/theme';
-import { useHistory, useParams, Link, useLocation } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { NextQuestionButton, PreviousQuestionButton } from './Buttons';
 import { createFeedback } from '../utils/apiFunctions';
 import { DialogActions } from '@material-ui/core/';
