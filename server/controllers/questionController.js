@@ -1,4 +1,5 @@
-const Question = require('../models/Question');
+const questionModel = require('../models/Question');
+const { Question } = questionModel;
 
 module.exports = {
   createQuestion: async (req, res) => {

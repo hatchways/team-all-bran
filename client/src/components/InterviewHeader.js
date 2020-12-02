@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import LanguageSelectMenu from './LanguageSelectMenu';
-import { useHistory } from 'react-router-dom';
 import { CustomButton } from '../components/Buttons';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import IconButton from '@material-ui/core/IconButton';
+import { useHistory, useParams } from 'react-router-dom';
+import { endInterview } from '../utils/apiFunctions';
+import FeedbackDialog from '../components/FeedbackDialog';
 
 const InterviewHeader = (
   {
@@ -16,13 +18,29 @@ const InterviewHeader = (
   }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { id, pageNumber } = useParams();
+  const interviewId = id;
+
+  const [openFeedback, setOpenFeedback] = useState(false);
+
+  useEffect(() => {
+    if (pageNumber) {
+      setOpenFeedback(true);
+    }
+  }, []);
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
   };
 
-  const exitInterview = () => {
-    history.push('/dashboard');
+  const exitInterview = async () => {
+    try {
+      await endInterview(interviewId);
+    } catch (error) {
+      console.error(error);
+    }
+    await history.push(`/interview/${interviewId}/feedback/1`);
+    setOpenFeedback(true);
   };
 
   return (
@@ -44,6 +62,7 @@ const InterviewHeader = (
           text='End Interview'
         />
       </div>
+      {openFeedback ? <FeedbackDialog /> : ''}
     </Grid>
   );
 };

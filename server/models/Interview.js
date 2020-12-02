@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { path } = require('../app');
 const Schema = mongoose.Schema;
 const User = mongoose.model('User');
-const Question = require('../models/Question');
+const { Question } = require('../models/Question');
 
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -30,7 +31,7 @@ const InterviewSchema = new Schema(
         },
         question: {
           type: Schema.Types.ObjectId,
-          ref: 'Question,',
+          ref: 'Question',
         },
       },
     ],
@@ -79,7 +80,7 @@ async function addUserToInterview(req) {
 
 async function getInterview(interviewId) {
   const interview = await Interview.findOne({ _id: interviewId }).populate(
-    'users.feedback users.user users.questions'
+    'users.feedback users.user users.question'
   );
   return { interview: interview };
 }
@@ -111,6 +112,40 @@ const getRandomQuestionsByDifficulty = async (difficulty) => {
   return [questionOne, questionTwo];
 };
 
+const endInterview = async (interviewId) => {
+  const interview = await Interview.findOne({ _id: interviewId });
+  if (!interview.endTime) {
+    interview.endTime = Math.floor(Date.now() / 1000);
+    await interview.save();
+    return interview;
+  } else {
+    return { error: 'interview already ended' };
+  }
+};
+
+const getQuestionFromInterview = async (questionId, interviewId, user) => {
+  try {
+    const interview = await await Interview.findById(interviewId).populate(
+      'users.question'
+    );
+
+    if (
+      interview.users[0].user.equals(user._id) &&
+      interview.users[0].question._id.equals(questionId)
+    ) {
+      return interview.users[0].question;
+    } else if (
+      interview.users[1].user.equals(user._id) &&
+      interview.users[1].question._id.equals(questionId)
+    ) {
+      return interview.users[1].question;
+    } else {
+      return { error: 'question not found' };
+    }
+  } catch {
+    return { error: 'question not found' };
+  }
+};
 const loadInterview = async (id) => {
   const interview = await Interview.findById(id).populate('users');
   return { interview };
@@ -124,5 +159,7 @@ module.exports = {
   addUserToInterview,
   getInterview,
   addInterviewQuestions,
+  endInterview,
+  getQuestionFromInterview,
   loadInterview,
 };

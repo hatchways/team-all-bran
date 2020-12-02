@@ -12,14 +12,17 @@ const cInterview = async (req, res) => {
 };
 
 const endInterview = async (req, res) => {
-  const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id))
+  const { interviewId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(interviewId))
     res.status(400).json({ msg: 'Invalid ID' });
 
-  const interviewDoc = await Interview.findById(id);
-  interviewDoc.endTime = Math.floor(Date.now() / 1000);
-  await interviewDoc.save(); // what constitutes a completed interview?
-  res.json(interviewDoc); // Feedback submitted? Review period ended?
+  const interview = await interviewModel.endInterview(interviewId);
+
+  if (interview.error) {
+    res.json({ error: interview.error });
+  } else {
+    res.json(interview);
+  }
 };
 
 const addUser = async (req, res) => {
@@ -62,6 +65,20 @@ const cancelInterviewById = async (req, res) => {
   res.json(interviews);
 };
 
+const getQuestionFromInterview = async (req, res) => {
+  const { questionId, interviewId } = req.params;
+  const question = await interviewModel.getQuestionFromInterview(
+    questionId,
+    interviewId,
+    req.user
+  );
+  if (question.error) {
+    res.status(404).json({ error: question.error });
+  } else {
+    res.json(question);
+  }
+};
+
 module.exports = {
   cInterview,
   endInterview,
@@ -70,4 +87,5 @@ module.exports = {
   startInterview,
   getInterviewsByUserId,
   cancelInterviewById,
+  getQuestionFromInterview,
 };
