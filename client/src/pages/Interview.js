@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { useStyles } from '../themes/theme';
 import { useParams } from 'react-router';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import SocketContext from '../context/socket';
 import { getInterview, getQuestion } from '../utils/apiFunctions';
 import { store } from '../context/store';
+import Peer from "simple-peer";
 
 const Interview = () => {
   const classes = useStyles();
@@ -80,9 +81,29 @@ const Interview = () => {
     }
   }, [roomId, state.user._id]);
 
+  const [stream, setStream] = useState();
+  const userVideo = useRef();
+  const partnerVideo = useRef();
+  const [receivingCall, setReceivingCall] = useState(false);
+  const [caller, setCaller] = useState("");
+  const [callerSignal, setCallerSignal] = useState();
+  const [callAccepted, setCallAccepted] = useState(false);
+
   useEffect(() => {
     fetchInterview();
   }, [fetchInterview]);
+
+  useEffect(() => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+      setStream(stream);
+    })
+
+    socket.on("start_call", (data) => {
+      setReceivingCall(true);
+      setCaller(data.from);
+      setCallerSignal(data.signal);
+    })
+  }, []);
 
   useEffect(() => {
     socket.on('result_code', (data) => {
@@ -104,6 +125,73 @@ const Interview = () => {
     });
   }, [socket]);
 
+  if (callAccepted) {
+    if (userVideo.current) {
+      userVideo.current.srcObject = stream;
+    }
+    setCallAccepted(false);
+  }
+
+  const acceptCall = () => {
+    setCallAccepted(true);
+    setReceivingCall(false);
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream: stream,
+    });
+    peer.on("signal", data => {
+      socket.emit("accept_call", { signal: data, to: caller });
+    })
+
+    peer.on("stream", stream => {
+      partnerVideo.current.srcObject = stream;
+    });
+
+    peer.signal(callerSignal);
+  }
+
+  const endCall = () => {
+    userVideo.current.srcObject = null;
+    partnerVideo.current.srcObject = null;
+  }
+
+  const callPeer = (id) => {
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }
+        ]
+      },
+      stream: stream,
+    });
+
+    peer.on("signal", data => {
+      socket.emit(
+        "call_user",
+        {
+          roomId: roomId,
+          userToCall: id,
+          signalData: data,
+          from: state.user._id
+        });
+    });
+
+    peer.on("stream", stream => {
+      if (partnerVideo.current) {
+        partnerVideo.current.srcObject = stream;
+      }
+    });
+
+    socket.on("call_accepted", signal => {
+      setCallAccepted(true);
+      peer.signal(signal);
+    })
+  }
+
   const runCode = async () => {
     try {
       const result = await axios.post(`/runCode`, { language, code });
@@ -115,6 +203,7 @@ const Interview = () => {
 
   return (
     <div className={classes.interviewContainer}>
+      <button onClick={() => callPeer(partner._id)}>Call {`${partner.firstName} ${partner.lastName} `}</button>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
         <InterviewHeader
           partner={partner}
@@ -123,16 +212,22 @@ const Interview = () => {
         />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           {pageData.questions.questionOne ? (
-            <InterviewQuestionDetails questions={pageData.questions} />
+            <InterviewQuestionDetails userVideo={userVideo} partnerVideo={partnerVideo} questions={pageData.questions} />
           ) : (
-            <div>Loading question...</div>
-          )}
+              <div>Loading question...</div>
+            )}
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
             value={value}
             language={language}
             handleCodeSnippetChange={handleCodeSnippetChange}
+            userVideo={userVideo}
+            receivingCall={receivingCall}
+            handleAcceptCall={acceptCall}
+            partnerVideo={partnerVideo}
+            handleEndCall={endCall}
+            callAccepted={callAccepted}
           />
           <OutputConsole runCode={runCode} codeResult={codeResult} />
         </Grid>

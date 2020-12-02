@@ -11,6 +11,14 @@ module.exports = (server) => {
       socket.broadcast.to(roomId).emit('join_interview_room');
     });
 
+    socket.on("call_user", (data) => {
+      io.to(usersToSockets[data.userToCall]).emit('start_call', { signal: data.signalData, from: data.from });
+    })
+
+    socket.on("accept_call", (data) => {
+      io.emit('call_accepted', data.signal);
+    })
+
     socket.on('create_room', ({ user, roomId }) => {
       socket.user = user._id;
       if (rooms[roomId]) {
@@ -37,6 +45,8 @@ module.exports = (server) => {
         console.log('joining room: ', roomId);
         socket.join(roomId);
       }
+      usersToSockets[user._id] = id;
+      socketToUsers[id] = user._id;
       io.to(roomId).emit('lobby_users', {
         users: Object.values(rooms[roomId]),
       });
@@ -77,8 +87,10 @@ module.exports = (server) => {
 
     socket.on('logged_in', (userId) => {
       socket.userId = userId;
-      usersToSockets[userId] = id;
-      socketToUsers[id] = userId;
+      if (!usersToSockets.has(userId)) {
+        usersToSockets[userId] = id;
+        socketToUsers[id] = userId;
+      }
     });
 
     socket.on('logged_out', () => {
