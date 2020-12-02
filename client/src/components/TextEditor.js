@@ -3,6 +3,7 @@ import { ControlledEditor } from '@monaco-editor/react';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import { useStyles } from '../themes/theme';
 import { CustomButton } from '../components/Buttons';
+import Draggable from 'react-draggable';
 
 const TextEditor = (
   {
@@ -39,10 +40,12 @@ const TextEditor = (
   return (
     <div>
       <div className={classes.videoChatMainContainer}>
-        <div className={classes.videoStreamContainer}>
-          <video className={classes.videoChatBoxUser} playsInline muted ref={userVideo} autoPlay />
-          <video className={classes.videoChatBoxPartner} playsInline muted ref={partnerVideo} autoPlay />
-        </div>
+        <Draggable>
+          <div className={classes.videoStreamContainer}>
+            <video className={classes.videoChatBoxUser} playsInline muted ref={userVideo} autoPlay />
+            <video className={classes.videoChatBoxPartner} playsInline muted ref={partnerVideo} autoPlay />
+          </div>
+        </Draggable>
       </div>
       {receivingCall &&
         <Dialog
