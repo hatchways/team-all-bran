@@ -226,8 +226,6 @@ const Interview = () => {
             receivingCall={receivingCall}
             handleAcceptCall={acceptCall}
             partnerVideo={partnerVideo}
-            handleEndCall={endCall}
-            callAccepted={callAccepted}
             partnerName={`${partner.firstName} ${partner.lastName}`}
           />
           <OutputConsole runCode={runCode} codeResult={codeResult} />

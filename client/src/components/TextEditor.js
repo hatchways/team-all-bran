@@ -7,7 +7,6 @@ import Draggable from 'react-draggable';
 
 const TextEditor = (
   {
-    handleEndCall,
     handleAcceptCall,
     receivingCall,
     value,
@@ -15,7 +14,6 @@ const TextEditor = (
     handleCodeSnippetChange,
     userVideo,
     partnerVideo,
-    callAccepted,
     partnerName
   }) => {
   const [isEditorReady, setIsEditorReady] = useState(false);
