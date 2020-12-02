@@ -8,13 +8,16 @@ import IconButton from '@material-ui/core/IconButton';
 import { useHistory, useParams } from 'react-router-dom';
 import { endInterview } from '../utils/apiFunctions';
 import FeedbackDialog from '../components/FeedbackDialog';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
 const InterviewHeader = (
   {
     language,
     setLanguage,
     partner,
-    callPeer
+    callPeer,
+    endCall,
+    callAccepted,
   }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -33,6 +36,13 @@ const InterviewHeader = (
     setLanguage(event.target.value);
   };
 
+  const handleVideoToggle = () => {
+    if (callAccepted) {
+      endCall();
+    } else {
+      callPeer();
+    }
+  }
   const exitInterview = async () => {
     try {
       await endInterview(interviewId);
@@ -53,8 +63,12 @@ const InterviewHeader = (
           handleLanguageChange={handleLanguageChange}
           language={language}
         />
-        <IconButton onClick={callPeer}>
-          <VideoCallIcon className={classes.videoCallIcon} />
+        <IconButton onClick={handleVideoToggle}>
+          {callAccepted ?
+            <VideocamOffIcon className={classes.videoCallIcon} /> :
+            <VideoCallIcon className={classes.videoCallIcon} />
+          }
+
         </IconButton>
         <CustomButton
           onClick={exitInterview}

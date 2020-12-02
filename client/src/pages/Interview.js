@@ -103,6 +103,9 @@ const Interview = () => {
       setCaller(data.from);
       setCallerSignal(data.signal);
     })
+    socket.on("call_accepted", signal => {
+      setCallAccepted(true);
+    })
   }, []);
 
   useEffect(() => {
@@ -129,7 +132,6 @@ const Interview = () => {
     if (userVideo.current) {
       userVideo.current.srcObject = stream;
     }
-    setCallAccepted(false);
   }
 
   const acceptCall = () => {
@@ -154,6 +156,7 @@ const Interview = () => {
   const endCall = () => {
     userVideo.current.srcObject = null;
     partnerVideo.current.srcObject = null;
+    setCallAccepted(false)
   }
 
   const callPeer = (id) => {
@@ -187,7 +190,6 @@ const Interview = () => {
     });
 
     socket.on("call_accepted", signal => {
-      setCallAccepted(true);
       peer.signal(signal);
     })
   }
@@ -209,6 +211,8 @@ const Interview = () => {
           language={language}
           setLanguage={handleLanguageChange}
           callPeer={() => callPeer(partner._id)}
+          endCall={endCall}
+          callAccepted={callAccepted}
         />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           {pageData.questions.questionOne ? (
