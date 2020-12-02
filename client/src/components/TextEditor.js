@@ -38,39 +38,36 @@ const TextEditor = (
 
   return (
     <div>
-      <div>
-        <video playsInline muted ref={userVideo} autoPlay />
-        <video playsInline muted ref={partnerVideo} autoPlay />
-        {receivingCall ?
-          <Dialog
-            onClose={handleClose}
-            aria-labelledby='receiving-call'
-            open={open}
-          >
-            <div className={classes.createInterviewDialog}>
-              <DialogTitle
-                id='receiving-from'
-              >
-                {`Receiving call from ${partnerName}`}
-              </DialogTitle>
-              <CustomButton
-                onClick={handleAcceptCall}
-                classField={classes.startDashboardButton}
-                text='ACCEPT'
-              />
-              <CustomButton
-                onClick={() => setOpen(false)}
-                classField={classes.startDashboardButton}
-                text='CANCEL'
-              />
-            </div>
-          </Dialog>
-          :
-          <div>
-            <button onClick={handleEndCall}>End</button>
-          </div>
-        }
+      <div className={classes.videoChatMainContainer}>
+        <div className={classes.videoStreamContainer}>
+          <video className={classes.videoChatBoxUser} playsInline muted ref={userVideo} autoPlay />
+          <video className={classes.videoChatBoxPartner} playsInline muted ref={partnerVideo} autoPlay />
+        </div>
       </div>
+      {receivingCall &&
+        <Dialog
+          onClose={handleClose}
+          aria-labelledby='receiving-call'
+          open={open}
+        >
+          <div className={classes.createInterviewDialog}>
+            <DialogTitle
+              id='receiving-from'
+            >
+              {`Receiving call from ${partnerName}`}
+            </DialogTitle>
+            <CustomButton
+              onClick={handleAcceptCall}
+              classField={classes.startDashboardButton}
+              text='ACCEPT'
+            />
+            <CustomButton
+              onClick={() => setOpen(false)}
+              classField={classes.startDashboardButton}
+              text='CANCEL'
+            />
+          </div>
+        </Dialog>}
       <div>
         <ControlledEditor
           height='90vh'
