@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, useLocation } from 'react-router';
+import { Switch, Route } from 'react-router';
 import Navbar from '../components/Navbar';
 import Blog from '../pages/Blog';
 import DashBoard from '../pages/DashBoard';
@@ -7,16 +7,9 @@ import Faq from '../pages/Faq';
 import Profile from '../pages/Profile';
 import PrivateRoute from './PrivateRoute';
 import Signup from '../pages/Signup';
-import Lobby from '../pages/Lobby';
 import Interview from '../pages/Interview';
-import FeedbackDialog from '../components/FeedbackDialog';
-import QuestionDialog from '../components/QuestionDialog';
 
 const Routes = () => {
-  const location = useLocation();
-  const question = location.state && location.state.question;
-  const feedback = location.state && location.state.feedback;
-
   return (
     <>
       <Navbar />
@@ -44,22 +37,6 @@ const Routes = () => {
         />
         <Route path='/' component={Signup} />
       </Switch>
-
-      {question && (
-        <PrivateRoute
-          exact
-          path='/question/:questionId/:interviewId'
-          component={QuestionDialog}
-        />
-      )}
-
-      {feedback && (
-        <PrivateRoute
-          exact
-          path='/feedback/:feedbackId/:pageNumber'
-          component={FeedbackDialog}
-        />
-      )}
     </>
   );
 };

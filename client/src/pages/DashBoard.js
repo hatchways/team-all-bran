@@ -12,11 +12,13 @@ import { Dialog, DialogTitle } from '@material-ui/core';
 import SocketContext from '../context/socket';
 import { fetchInterviews } from '../utils/fetchInterviews';
 import Lobby from './Lobby';
+import FeedbackDialog from '../components/FeedbackDialog';
+import QuestionDialog from '../components/QuestionDialog';
 
 const DashBoard = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { id } = useParams();
+  const { id, questionId, feedbackId } = useParams();
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('Medium');
   const { state } = useContext(store);
@@ -111,6 +113,8 @@ const DashBoard = () => {
         <p className={classes.pastPracticesText}>Past Practice Interviews</p>
         <PastInterviewTable interviews={pageData.interviews.pastInterviews} />
         {id && <Lobby />}
+        {questionId && <QuestionDialog />}
+        {feedbackId && <FeedbackDialog />}
       </div>
     )
   );

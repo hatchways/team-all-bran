@@ -84,10 +84,7 @@ export const NextPage = ({ feedbackValue, viewFeedback, changeCreatorFeedback })
     e.preventDefault();
     if (viewFeedback) {
       if (pageNumber < 7) {
-        history.push({
-          pathname: `/feedback/${viewFeedback._id}/${Number(pageNumber) + 1}`,
-          state: { feedback: location },
-        });
+        history.push(`/feedback/${viewFeedback._id}/${Number(pageNumber) + 1}`);
       } else {
         history.push(`/dashboard`);
       }
@@ -165,10 +162,7 @@ function PrevPage({ pageNumber, interviewId, viewFeedback, changeCreatorFeedback
 
   const goBack = async () => {
     if (viewFeedback) {
-      history.push({
-        pathname: `/feedback/${viewFeedback._id}/${Number(pageNumber) - 1}`,
-        state: { feedback: location },
-      });
+      history.push(`/feedback/${viewFeedback._id}/${Number(pageNumber) - 1}`);
     } else {
       await changeCreatorFeedback();
       history.push(`/interview/${interviewId}/feedback/${Number(pageNumber) - 1}`);

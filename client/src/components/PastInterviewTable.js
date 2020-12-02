@@ -8,7 +8,6 @@ import TableRow from '@material-ui/core/TableRow';
 import { useStyles } from '../themes/theme';
 import Rating from '@material-ui/lab/Rating';
 import { useHistory, useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import { getStandardTime } from '../utils/timeFunctions';
 import { CustomButton } from './Buttons';
 import { getFeedbackReciever } from '../utils/apiFunctions';
@@ -66,17 +65,11 @@ const PastInterviewTable = ({ interviews }) => {
   };
 
   const viewMyFeedback = (feedback) => {
-    history.push({
-      pathname: `/feedback/${feedback._id}/1`,
-      state: { feedback: location },
-    });
+    history.push(`/feedback/${feedback._id}/1`);
   };
 
   const viewMyQuestion = (questionId, interviewId) => {
-    history.push({
-      pathname: `/question/${questionId}/${interviewId}`,
-      state: { question: location },
-    });
+    history.push(`/question/${questionId}/${interviewId}`);
   };
 
   return (
