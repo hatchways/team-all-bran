@@ -71,7 +71,7 @@ async function updateProfilePic(req, res) {
 
   singleUpload(req, res, async (err) => {
     if (err) {
-      return res.json({ errors: err });
+      return res.status(400).json({ errors: err });
     }
 
     try {
@@ -80,7 +80,7 @@ async function updateProfilePic(req, res) {
       await user.save();
       res.json({ user: user });
     } catch (err) {
-      res.json({ error: err });
+      res.status(400).json({ error: err });
     }
   });
 }

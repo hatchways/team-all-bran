@@ -7,7 +7,10 @@ import { USER_LOADED } from '../context/types';
 import { Rating } from '@material-ui/lab';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { updateUser } from '../utils/apiFunctions';
+import { updateUser, updateProfilePic } from '../utils/apiFunctions';
+import Avatar from '@material-ui/core/Avatar';
+import avatar from '../images/avatar.png';
+import Button from '@material-ui/core/Button';
 
 const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -49,6 +52,7 @@ const Profile = () => {
   const history = useHistory();
 
   const [userData, setUserData] = useState();
+  const [profilePic, setProfilePic] = useState();
 
   useEffect(() => {
     setUserData({
@@ -56,6 +60,9 @@ const Profile = () => {
       experience: user.experience,
       interviewLevel: user.interviewLevel,
     });
+    if (user.profilePicture) {
+      setProfilePic(user.profilePicture);
+    }
   }, []);
 
   const changeRating = (e) => {
@@ -83,9 +90,24 @@ const Profile = () => {
     }
   };
 
+  const picUpload = async (e) => {
+    if (e.target.files) {
+      const imageData = new FormData();
+      imageData.append('image', e.target.files[0]);
+
+      try {
+        const result = await updateProfilePic(imageData);
+        dispatch({ type: USER_LOADED, payload: result.data.user });
+        setProfilePic(result.data.user.profilePicture);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   return userData ? (
     <div className={classes.profileContainer}>
-      <h1 className={classes.backgroundHeader}>Your Profile</h1>
+      <h1 className={classes.profileHeader}>Your Profile</h1>
 
       <form className={classes.backgroundForm} id='backgroundForm'>
         <div className={classes.infoFormDiv}>Your Language:</div>
@@ -132,6 +154,28 @@ const Profile = () => {
           defaultValue={user.interviewLevel}
         />
         <InterviewLevelInfo interviewLevel={userData.interviewLevel} />
+        <div className={classes.profilePictureContainer}>
+          <div className={classes.infoFormDiv}>Profile Picture:</div>
+          <Avatar
+            alt='Avatar'
+            src={!profilePic ? avatar : profilePic}
+            classes={{ root: classes.profileAvatar }}
+          />
+
+          <Button
+            variant='contained'
+            component='label'
+            classes={{ root: classes.changeAvatarButton }}
+          >
+            Upload New Profile Picture
+            <input
+              onChange={picUpload}
+              type='file'
+              accept='image/png, image/jpeg'
+              hidden
+            />
+          </Button>
+        </div>
       </form>
       <NextStepButton type='submit' form='backgroundForm' onClick={onSubmit}>
         Update Profile

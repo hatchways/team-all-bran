@@ -70,7 +70,7 @@ const DashBoard = () => {
     }
   };
 
-  if (state.user.experience === undefined) {
+  if (!state.user.experience) {
     return <UserInformation user={state.user} />;
   }
 
