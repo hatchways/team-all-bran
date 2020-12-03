@@ -115,9 +115,9 @@ const Lobby = () => {
     const creator = interview.users && interview.users[0].user._id;
     setCreatorId(creator);
 
-    if (creatorId) {
+    if (creator) {
       for (const user of userData) {
-        if (user._id !== creatorId) {
+        if (user._id !== creator) {
           await addUserToInterview({ userId: user._id, roomId });
           await addInterviewQuestions(roomId);
         }
