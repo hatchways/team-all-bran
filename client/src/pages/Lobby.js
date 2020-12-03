@@ -1,22 +1,29 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+  TextField,
+  Snackbar,
+  SnackbarContent,
+} from '@material-ui/core/';
+
 import { CopyButton, CustomButton } from '../components/Buttons';
-import { TextField } from '@material-ui/core';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import WaitingRoomUserList from '../components/WaitingRoomUserList';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { useStyles } from '../themes/theme';
 import SocketContext from '../context/socket';
-import Interview from './Interview';
-import { addUserToInterview, addInterviewQuestions } from '../utils/apiFunctions';
+
+import {
+  addUserToInterview,
+  addInterviewQuestions,
+  getInterview,
+} from '../utils/apiFunctions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -61,8 +68,9 @@ const Lobby = () => {
     setLocalState({ ...localState, alert: false });
   };
 
-  const handleStartInterview = () => {
+  const handleStartInterview = async () => {
     setStartInterview(true);
+    await addUserAndQuestions();
     socket.emit('start_interview', roomId);
   };
 
@@ -72,7 +80,8 @@ const Lobby = () => {
       socket.emit('create_room', { user: state.user, roomId });
     }
     socket.on('lobby_users', ({ users }) => {
-      setUserData(users);
+      setUserData(Object.values(users));
+
       if (Object.values(users).length === 1) {
         setCreatorId(Object.values(users)[0]._id);
       }
@@ -100,9 +109,15 @@ const Lobby = () => {
   };
 
   const addUserAndQuestions = async () => {
-    if (creatorId) {
+    const {
+      data: { interview },
+    } = await getInterview(roomId);
+    const creator = interview.users && interview.users[0].user._id;
+    setCreatorId(creator);
+
+    if (creator) {
       for (const user of userData) {
-        if (user._id !== creatorId) {
+        if (user._id !== creator) {
           await addUserToInterview({ userId: user._id, roomId });
           await addInterviewQuestions(roomId);
         }
@@ -110,10 +125,6 @@ const Lobby = () => {
     }
     setStartButtonPushed(true);
   };
-
-  if (startInterview) {
-    addUserAndQuestions();
-  }
 
   if (startButtonPushed) {
     return <Redirect to={`/interview/${roomId}`} />;

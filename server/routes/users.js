@@ -28,4 +28,10 @@ router.put(
   userController.editUser
 );
 
+router.put(
+  '/profilePicture',
+  passport.authenticate('jwt', { session: false }),
+  userController.updateProfilePic
+);
+
 module.exports = router;

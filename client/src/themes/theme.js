@@ -249,7 +249,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: `rgba(67, 67, 125)`,
+    backgroundColor: `rgba(67, 67, 125)`,
   },
   background: {
     width: '50%',
@@ -646,7 +646,35 @@ export const useStyles = makeStyles((theme) => ({
     position: 'relative',
     width: '100%',
     height: '100%',
-  }
+  },
+  profileContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '90vh',
+  },
+  profilePictureContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  profileAvatar: {
+    width: '60px',
+    height: '60px',
+    marginLeft: '15px',
+  },
+  changeAvatarButton: {
+    marginLeft: 'auto',
+  },
+  profileHeader: {
+    color: `${colors.darkBlue}`,
+    fontSize: '25px',
+    fontWeight: '600',
+    width: '50%',
+    marginTop: '40px',
+    marginBottom: '40px',
+    textAlign: 'center',
+  },
 }));
 
 export const GlobalCss = withStyles({

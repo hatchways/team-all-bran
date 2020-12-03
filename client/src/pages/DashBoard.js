@@ -9,7 +9,7 @@ import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
 import { CustomButton } from '../components/Buttons';
 import { Dialog, DialogTitle } from '@material-ui/core';
-import SocketContext from '../context/socket';
+
 import { fetchInterviews } from '../utils/fetchInterviews';
 import Lobby from './Lobby';
 import FeedbackDialog from '../components/FeedbackDialog';
@@ -22,11 +22,6 @@ const DashBoard = () => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('Medium');
   const { state } = useContext(store);
-  const socket = useContext(SocketContext);
-
-  useEffect(() => {
-    socket.emit('logged_in', state.user._id);
-  }, [state.user, socket]);
 
   const [pageData, setPageData] = useState({
     pageLoaded: false,
@@ -70,7 +65,7 @@ const DashBoard = () => {
     }
   };
 
-  if (state.user.experience === undefined) {
+  if (!state.user.experience) {
     return <UserInformation user={state.user} />;
   }
 

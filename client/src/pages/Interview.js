@@ -31,7 +31,17 @@ const Interview = () => {
   }, [socket, state.user, roomId]);
 
   useEffect(() => {
-    socket.emit('change_text', code);
+    socket.on('user_left', ({ roomId }) => {
+      console.log(`user left the room! ${roomId}`);
+    });
+
+    return () => {
+      socket.emit('leave_interview', { roomId });
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    socket.emit('change_text', { code, roomId });
   }, [code, socket]);
 
   useEffect(() => {
@@ -53,6 +63,9 @@ const Interview = () => {
   const fetchInterview = useCallback(async () => {
     try {
       const { data } = await getInterview(roomId);
+      if (data.interview.code !== '') {
+        setValue(data.interview.code);
+      }
 
       data.interview.users.forEach(({ user }) => {
         if (user._id !== state.user._id) setPartner(user);
