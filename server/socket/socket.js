@@ -16,7 +16,11 @@ module.exports = (server) => {
     })
 
     socket.on("accept_call", (data) => {
-      io.emit('call_accepted', data.signal);
+      io.to(usersToSockets[data.to]).emit('call_accepted', data.signal);
+    })
+
+    socket.on("end_call", ({ roomId }) => {
+      io.in(roomId).emit("end_call");
     })
 
     socket.on('create_room', ({ user, roomId }) => {

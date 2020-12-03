@@ -103,9 +103,22 @@ const Interview = () => {
       setCaller(data.from);
       setCallerSignal(data.signal);
     })
-    socket.on("call_accepted", signal => {
-      setCallAccepted(true);
-    })
+
+    socket.on("end_call", () => {
+      if (userVideo.current) {
+        userVideo.current.srcObject = null;
+      }
+      if (partnerVideo.current) {
+        partnerVideo.current.srcObject = null;
+      }
+      socket.removeAllListeners("call_accepted");
+
+      setCallAccepted(false);
+      setCallerSignal(null);
+    });
+    return () => {
+      socket.emit("end_call", { roomId });
+    }
   }, []);
 
   useEffect(() => {
@@ -154,9 +167,7 @@ const Interview = () => {
   }
 
   const endCall = () => {
-    userVideo.current.srcObject = null;
-    partnerVideo.current.srcObject = null;
-    setCallAccepted(false)
+    socket.emit("end_call", { roomId });
   }
 
   const callPeer = (id) => {
@@ -190,6 +201,7 @@ const Interview = () => {
     });
 
     socket.on("call_accepted", signal => {
+      setCallAccepted(true);
       peer.signal(signal);
     })
   }
