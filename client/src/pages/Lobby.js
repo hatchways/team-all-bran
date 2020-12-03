@@ -10,13 +10,14 @@ import {
   TextField,
   Snackbar,
   SnackbarContent,
+  Box,
 } from '@material-ui/core/';
 
 import { CopyButton, CustomButton } from '../components/Buttons';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import WaitingRoomUserList from '../components/WaitingRoomUserList';
-import { useStyles } from '../themes/theme';
+import { theme, useStyles } from '../themes/theme';
 import SocketContext from '../context/socket';
 
 import {
@@ -142,7 +143,12 @@ const Lobby = () => {
         aria-describedby='alert-dialog-slide-description'
       >
         <div className={classes.formControlWaitingRoom}>
-          <DialogTitle id='alert-dialog-slide-title'>Waiting Room</DialogTitle>
+          <DialogTitle
+            className={classes.feedbackDialogTitle}
+            id='alert-dialog-slide-title'
+          >
+            Waiting Room
+          </DialogTitle>
           <p>
             <strong>Share link</strong>
           </p>
@@ -163,14 +169,14 @@ const Lobby = () => {
               </CopyButton>
             </CopyToClipboard>
           </DialogActions>
-          <DialogContent>
-            <DialogContentText>Participants</DialogContentText>
-          </DialogContent>
-          <WaitingRoomUserList
-            showStartButton={!alert}
-            userData={userData}
-            handleClose={handleClose}
-          />
+          <div className={classes.feedbackDialogTitle}>Participants</div>
+          <Box border={1}>
+            <WaitingRoomUserList
+              showStartButton={!alert}
+              userData={userData}
+              handleClose={handleClose}
+            />
+          </Box>
           {!alert && creatorId && getUserLobbyCountFull() && (
             <CustomButton
               onClick={handleStartInterview}
