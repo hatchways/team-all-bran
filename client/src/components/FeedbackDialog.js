@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, FormControl } from '@material-ui/core/';
 import { Rating } from '@material-ui/lab';
 import { useStyles } from '../themes/theme';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   FormOne,
   FormTwo,
@@ -123,11 +123,13 @@ const experienceRatingValues = {
 
 const FeedbackDialog = () => {
   const { pageNumber, feedbackId, id } = useParams();
+  const history = useHistory();
   const interviewId = id;
   const classes = useStyles();
   const [experienceRating, setExperienceRating] = useState(0);
   const [viewFeedback, setViewFeedback] = useState();
   const [creatorFeedback, setCreatorFeedback] = useState();
+  const [viewFeedbackOpen, setViewFeedbackOpen] = useState(true);
 
   useEffect(() => {
     async function setFeedbackById() {
@@ -167,6 +169,11 @@ const FeedbackDialog = () => {
     setExperienceRating(experience);
   };
 
+  const handleClose = () => {
+    setViewFeedbackOpen(false);
+    history.push('/dashboard');
+  };
+
   const question = questionData[pageNumber - 1].question;
 
   if (viewFeedback && viewFeedback.error) {
@@ -176,11 +183,12 @@ const FeedbackDialog = () => {
   return (
     <Dialog
       PaperProps={{ classes: { root: classes.feedbackDialog } }}
-      open={true}
+      open={!viewFeedback ? true : viewFeedbackOpen}
       fullWidth={true}
       maxWidth='lg'
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
+      onClose={viewFeedback && handleClose}
     >
       {pageNumber < 7 ? (
         <>
