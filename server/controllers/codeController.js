@@ -36,7 +36,7 @@ const executeCode = (req, res) => {
       res.json(codeOutput);
     })
     .catch(function (error) {
-      console.error(error);
+      console.error(error.message);
     });
 };
 

@@ -16,7 +16,6 @@ module.exports = {
   },
   getQuestion: async (req, res) => {
     const { questionId } = req.params;
-    console.log(questionId);
     try {
       const question = await Question.findById(questionId);
       res.status(200).json({ question });
