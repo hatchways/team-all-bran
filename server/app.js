@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
 const indexRouter = require('./routes/index');
 const pingRouter = require('./routes/ping');
+const cors = require('cors');
 
 // Connect to MongoDB
 connectDB();
@@ -25,6 +26,7 @@ var app = express();
 
 require('./config/passport')(passport);
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));

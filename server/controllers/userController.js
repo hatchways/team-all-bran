@@ -4,6 +4,10 @@ const validateLogin = require('../user-validation/login');
 const { secretKey } = process.env;
 const jwt = require('jsonwebtoken');
 
+const { User } = require('../models/User');
+const upload = require('../services/ImageUpload');
+const singleUpload = upload.single('image');
+
 function register(req, res) {
   const { errors, isValid } = validateRegister(req.body);
 
@@ -54,12 +58,31 @@ function editUser(req, res) {
       res.json({ user: data });
     })
     .catch((err) => {
-      res.json({ error: 'User id not found' });
+      res.json({ error: err });
     });
 }
 
 function getUser(req, res) {
   res.status(200).json({ user: req.user });
+}
+
+async function updateProfilePic(req, res) {
+  const userId = req.user._id;
+
+  singleUpload(req, res, async (err) => {
+    if (err) {
+      return res.json({ errors: err });
+    }
+
+    try {
+      const user = await User.findById(userId);
+      user.profilePicture = req.file.location;
+      await user.save();
+      res.json({ user: user });
+    } catch (err) {
+      res.json({ error: err });
+    }
+  });
 }
 
 function createTokenResponse(user, res) {
@@ -80,4 +103,11 @@ function createTokenResponse(user, res) {
   );
 }
 
-module.exports = { register, login, editUser, getUser, logout };
+module.exports = {
+  register,
+  login,
+  editUser,
+  getUser,
+  logout,
+  updateProfilePic,
+};
