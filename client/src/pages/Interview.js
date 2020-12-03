@@ -128,10 +128,15 @@ const Interview = () => {
       setCallAccepted(false);
       setCallerSignal(null);
     });
+
     return () => {
       socket.emit("end_call", { roomId });
     }
   }, []);
+
+  window.onbeforeunload = () => {
+    socket.emit("end_call", { roomId });
+  };
 
   useEffect(() => {
     socket.on('result_code', (data) => {
@@ -175,6 +180,10 @@ const Interview = () => {
       partnerVideo.current.srcObject = stream;
     });
 
+    peer.on('error', err => {
+      console.error(err);
+    })
+
     peer.signal(callerSignal);
   }
 
@@ -211,6 +220,10 @@ const Interview = () => {
         partnerVideo.current.srcObject = stream;
       }
     });
+
+    peer.on('error', err => {
+      console.error(err);
+    })
 
     socket.on("call_accepted", signal => {
       setCallAccepted(true);

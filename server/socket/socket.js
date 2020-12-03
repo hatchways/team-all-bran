@@ -77,8 +77,6 @@ module.exports = (server) => {
         socket.roomId = roomId;
         socket.join(roomId);
       }
-      usersToSockets[user._id] = id;
-      socketToUsers[id] = user._id;
       io.to(roomId).emit('lobby_users', {
         users: Object.values(rooms[roomId]),
       });
