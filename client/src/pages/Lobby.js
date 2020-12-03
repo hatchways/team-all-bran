@@ -109,7 +109,7 @@ const Lobby = () => {
     const {
       data: { interview },
     } = await getInterview(roomId);
-    const creator = interview.users[0].user._id;
+    const creator = interview.users && interview.users[0].user._id;
     setCreatorId(creator);
 
     if (creatorId) {

@@ -19,11 +19,6 @@ module.exports = (server) => {
     );
     socketToUsers[id] = socket.userId;
     usersToSockets[socket.userId] = socket.id;
-    console.log(
-      `user added to keys: ${JSON.stringify(
-        usersToSockets
-      )}  socketsToUsers: ${JSON.stringify(socketToUsers)}`
-    );
 
     socket.on('start_interview', (roomId) => {
       io.to(roomId).emit('join_interview_room');
@@ -67,7 +62,7 @@ module.exports = (server) => {
       socket.user = user._id;
       socket.roomId = roomId;
       console.log(
-        `CREATE_INTERVIEW: FROM ${user.firstName} ${user.lastName} on socket: ${socket.id} to ROOM ${roomId}`
+        `${user.firstName} ${user.lastName} ${socket.userId} created or joined a room on socket: ${socket.id} to ROOM ${roomId}`
       );
     });
 
