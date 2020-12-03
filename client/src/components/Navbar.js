@@ -92,7 +92,10 @@ const Navbar = (props) => {
             aria-controls='simple-menu'
             aria-haspopup='true'
           >
-            <Avatar alt='Avatar' src={avatar} />
+            <Avatar
+              alt='Avatar'
+              src={state.user.profilePicture ? state.user.profilePicture : avatar}
+            />
             <div
               className={classes.userNameDiv}
             >{`${state.user.firstName} ${state.user.lastName}`}</div>

@@ -22,7 +22,6 @@ export const NextStepButton = withStyles({
     height: 48,
     backgroundColor: colors.darkBlue,
     padding: '0 30px',
-    width: '150px',
     color: 'white',
     alignSelf: 'center',
     marginTop: 'auto',

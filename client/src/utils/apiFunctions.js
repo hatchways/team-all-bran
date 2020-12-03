@@ -8,6 +8,10 @@ export const updateUser = (id, userData) => {
   return api.put(`/users/update/${id}`, userData);
 };
 
+export const updateProfilePic = (formData) => {
+  return api.put(`/users/profilePicture`, formData);
+};
+
 export const signUpUser = (formData) => {
   return api.post(`/users/register`, formData);
 };

@@ -50,6 +50,9 @@ const UserSchema = new Schema(
     interviewLevel: {
       type: Number,
     },
+    profilePicture: {
+      type: String,
+    },
     interviews: [
       {
         type: Schema.Types.ObjectId,
@@ -106,29 +109,33 @@ async function loginUser(req) {
   }
 }
 
-function updateUser(id, req) {
+async function updateUser(id, req) {
   const userId = id;
   const lang = req.body.language;
   const experience = req.body.experience;
   const interviewLevel = req.body.interviewLevel;
 
-  return User.findOneAndUpdate(
-    { _id: userId },
-    {
-      $set: {
-        language: lang,
-        experience: experience,
-        interviewLevel: interviewLevel,
-      },
-    },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        return err;
-      }
-      return { user: doc };
+  try {
+    const user = await User.findOne({ _id: userId });
+
+    if (lang) {
+      user.language = lang;
     }
-  );
+
+    if (experience) {
+      user.experience = experience;
+    }
+
+    if (interviewLevel) {
+      user.interviewLevel = interviewLevel;
+    }
+
+    await user.save();
+
+    return user;
+  } catch (err) {
+    return err;
+  }
 }
 
 module.exports = { User, registerUser, loginUser, updateUser };
