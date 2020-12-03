@@ -1,6 +1,7 @@
 const cookieParser = require('socket.io-cookie-parser');
 const { authorization } = require('./authorization');
-const jwt = require('jsonwebtoken');
+
+const { Interview } = require('../models/Interview');
 
 const socketToUsers = new Map();
 const usersToSockets = new Map();
@@ -19,6 +20,28 @@ module.exports = (server) => {
     );
     socketToUsers[id] = socket.userId;
     usersToSockets[socket.userId] = socket.id;
+
+    socket.on('load_code', ({ roomId, code }) => {
+      socket.broadcast.to(roomId).emit('load_old_code', { code });
+    });
+
+    socket.on('leave_interview', ({ roomId }) => {
+      console.log('second person leaving!!!!', Object.keys(rooms[roomId]));
+
+      if (Object.keys(rooms[roomId]).length === 2) {
+        console.log(rooms[roomId].code);
+        Interview.findByIdAndUpdate(
+          { _id: roomId },
+          { code: rooms[roomId].code },
+          { upsert: true }
+        ).then((_) => delete rooms[roomId]);
+      } else {
+        console.log('first PERSON LEAVING!', socket.userId);
+        delete rooms[roomId][socket.userId];
+      }
+      socket.leave(roomId);
+      socket.emit('user_left', { roomId });
+    });
 
     socket.on('start_interview', (roomId) => {
       io.to(roomId).emit('join_interview_room');
@@ -61,6 +84,11 @@ module.exports = (server) => {
       socket.join(roomId);
       socket.user = user._id;
       socket.roomId = roomId;
+      if (rooms[roomId]) rooms[roomId][user._id] = user;
+      else
+        rooms[roomId] = {
+          [user._id]: user,
+        };
       console.log(
         `${user.firstName} ${user.lastName} ${socket.userId} created or joined a room on socket: ${socket.id} to ROOM ${roomId}`
       );
@@ -79,8 +107,10 @@ module.exports = (server) => {
       socket.broadcast.to(socket.roomId).emit('result_code', codeResult);
     });
 
-    socket.on('change_text', (code) => {
-      socket.broadcast.to(socket.roomId).emit('new_content', code);
+    socket.on('change_text', ({ code, roomId }) => {
+      const room = rooms[roomId];
+      room['code'] = code;
+      socket.broadcast.to(roomId).emit('new_content', code);
     });
 
     socket.on('change_language', (language) => {

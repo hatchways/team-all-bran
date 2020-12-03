@@ -24,13 +24,24 @@ const Interview = () => {
   const [partner, setPartner] = useState([]);
   const { state } = useContext(store);
   const { id: roomId } = useParams();
+  const [oldCode, setOldCode] = useState('');
 
   useEffect(() => {
     socket.emit('create_interview', { user: state.user, roomId });
   }, [socket, state.user, roomId]);
 
   useEffect(() => {
-    socket.emit('change_text', code);
+    socket.on('user_left', ({ roomId }) => {
+      console.log(`user left the room! ${roomId}`);
+    });
+
+    return () => {
+      socket.emit('leave_interview', { roomId });
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    socket.emit('change_text', { code, roomId });
   }, [code, socket]);
 
   useEffect(() => {
@@ -52,6 +63,16 @@ const Interview = () => {
   const fetchInterview = useCallback(async () => {
     try {
       const { data } = await getInterview(roomId);
+      if (data.interview.code) {
+        /* This means a few things:
+        At some point both users disconnected
+        We need to call this only once
+        we need to emit this to all in the room, so their code can update at same time
+        Should we replace this code on next disconnect, or should we erase after we call it
+
+        */
+        // setCode(data.interview.code);
+      }
 
       data.interview.users.forEach(({ user }) => {
         if (user._id !== state.user._id) setPartner(user);
@@ -112,6 +133,18 @@ const Interview = () => {
     }
   };
 
+  useEffect(() => {
+    if (oldCode) {
+      socket.emit('load_code', { roomId, code: oldCode });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on('load_old_code', ({ code }) => {
+      handleCodeSnippetChange(null, code);
+    });
+  }, [socket]);
+
   return (
     <div className={classes.interviewContainer}>
       <Grid className={classes.gridSpacingThree} container spacing={3}>
@@ -129,6 +162,7 @@ const Interview = () => {
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
+            oldCode={oldCode}
             value={value}
             language={language}
             handleCodeSnippetChange={handleCodeSnippetChange}

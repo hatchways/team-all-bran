@@ -38,6 +38,9 @@ const InterviewSchema = new Schema(
     difficulty: {
       type: String,
     },
+    code: {
+      type: String,
+    },
   },
   opts
 );
@@ -146,10 +149,6 @@ const getQuestionFromInterview = async (questionId, interviewId, user) => {
     return { error: 'question not found' };
   }
 };
-const loadInterview = async (id) => {
-  const interview = await Interview.findById(id).populate('users');
-  return { interview };
-};
 
 const Interview = mongoose.model('Interview', InterviewSchema);
 
@@ -161,5 +160,4 @@ module.exports = {
   addInterviewQuestions,
   endInterview,
   getQuestionFromInterview,
-  loadInterview,
 };
