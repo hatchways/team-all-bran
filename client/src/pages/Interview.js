@@ -63,15 +63,8 @@ const Interview = () => {
   const fetchInterview = useCallback(async () => {
     try {
       const { data } = await getInterview(roomId);
-      if (data.interview.code) {
-        /* This means a few things:
-        At some point both users disconnected
-        We need to call this only once
-        we need to emit this to all in the room, so their code can update at same time
-        Should we replace this code on next disconnect, or should we erase after we call it
-
-        */
-        // setCode(data.interview.code);
+      if (data.interview.code !== '') {
+        setValue(data.interview.code);
       }
 
       data.interview.users.forEach(({ user }) => {
@@ -132,18 +125,6 @@ const Interview = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    if (oldCode) {
-      socket.emit('load_code', { roomId, code: oldCode });
-    }
-  }, [socket]);
-
-  useEffect(() => {
-    socket.on('load_old_code', ({ code }) => {
-      handleCodeSnippetChange(null, code);
-    });
-  }, [socket]);
 
   return (
     <div className={classes.interviewContainer}>

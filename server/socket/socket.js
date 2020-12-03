@@ -21,10 +21,6 @@ module.exports = (server) => {
     socketToUsers[id] = socket.userId;
     usersToSockets[socket.userId] = socket.id;
 
-    socket.on('load_code', ({ roomId, code }) => {
-      socket.broadcast.to(roomId).emit('load_old_code', { code });
-    });
-
     socket.on('leave_interview', ({ roomId }) => {
       console.log('second person leaving!!!!', Object.keys(rooms[roomId]));
 
