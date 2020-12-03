@@ -23,7 +23,6 @@ module.exports = (server) => {
 
     socket.on('leave_interview', ({ roomId }) => {
       if (Object.keys(rooms[roomId]).length === 2) {
-        console.log(rooms[roomId].code);
         Interview.findByIdAndUpdate(
           { _id: roomId },
           { code: rooms[roomId].code },
