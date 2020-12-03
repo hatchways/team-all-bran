@@ -252,7 +252,7 @@ const Interview = () => {
         />
         <Grid className={classes.interviewDetailsContainer} item xs={4}>
           {pageData.questions.questionOne ? (
-            <InterviewQuestionDetails userVideo={userVideo} partnerVideo={partnerVideo} questions={pageData.questions} />
+            <InterviewQuestionDetails questions={pageData.questions} />
           ) : (
               <div>Loading question...</div>
             )}
