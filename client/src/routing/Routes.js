@@ -7,10 +7,7 @@ import Faq from '../pages/Faq';
 import Profile from '../pages/Profile';
 import PrivateRoute from './PrivateRoute';
 import Signup from '../pages/Signup';
-import Lobby from '../pages/Lobby';
 import Interview from '../pages/Interview';
-import FeedbackDialog from '../components/FeedbackDialog';
-import QuestionDialog from '../components/QuestionDialog';
 
 const Routes = () => {
   return (
@@ -21,7 +18,7 @@ const Routes = () => {
         <PrivateRoute exact path='/dashboard' component={DashBoard} />
         <PrivateRoute exact path='/blog' component={Blog} />
         <PrivateRoute exact path='/faq' component={Faq} />
-        <PrivateRoute exact path='/lobby/:id' component={Lobby} />
+        <PrivateRoute exact path='/lobby/:id' component={DashBoard} />
         <PrivateRoute exact path='/interview/:id' component={Interview} />
         <PrivateRoute
           exact
@@ -31,12 +28,12 @@ const Routes = () => {
         <PrivateRoute
           exact
           path='/feedback/:feedbackId/:pageNumber'
-          component={FeedbackDialog}
+          component={DashBoard}
         />
         <PrivateRoute
           exact
           path='/question/:questionId/:interviewId'
-          component={QuestionDialog}
+          component={DashBoard}
         />
         <Route path='/' component={Signup} />
       </Switch>

@@ -157,6 +157,7 @@ export const NextPage = ({ feedbackValue, viewFeedback, changeCreatorFeedback })
 
 function PrevPage({ pageNumber, interviewId, viewFeedback, changeCreatorFeedback }) {
   const history = useHistory();
+
   const goBack = async () => {
     if (viewFeedback) {
       history.push(`/feedback/${viewFeedback._id}/${Number(pageNumber) - 1}`);
