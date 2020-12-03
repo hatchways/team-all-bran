@@ -25,6 +25,13 @@ const Interview = () => {
   const [partner, setPartner] = useState([]);
   const { state } = useContext(store);
   const { id: roomId } = useParams();
+  const [stream, setStream] = useState();
+  const userVideo = useRef();
+  const partnerVideo = useRef();
+  const [receivingCall, setReceivingCall] = useState(false);
+  const [caller, setCaller] = useState("");
+  const [callerSignal, setCallerSignal] = useState();
+  const [callAccepted, setCallAccepted] = useState(false);
 
   useEffect(() => {
     socket.emit('create_interview', { user: state.user, roomId });
@@ -92,14 +99,6 @@ const Interview = () => {
       console.error(e);
     }
   }, [roomId, state.user._id]);
-
-  const [stream, setStream] = useState();
-  const userVideo = useRef();
-  const partnerVideo = useRef();
-  const [receivingCall, setReceivingCall] = useState(false);
-  const [caller, setCaller] = useState("");
-  const [callerSignal, setCallerSignal] = useState();
-  const [callAccepted, setCallAccepted] = useState(false);
 
   useEffect(() => {
     fetchInterview();
