@@ -24,7 +24,6 @@ const Interview = () => {
   const [partner, setPartner] = useState([]);
   const { state } = useContext(store);
   const { id: roomId } = useParams();
-  const [oldCode, setOldCode] = useState('');
 
   useEffect(() => {
     socket.emit('create_interview', { user: state.user, roomId });
@@ -143,7 +142,6 @@ const Interview = () => {
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
-            oldCode={oldCode}
             value={value}
             language={language}
             handleCodeSnippetChange={handleCodeSnippetChange}

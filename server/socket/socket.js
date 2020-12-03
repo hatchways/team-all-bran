@@ -22,8 +22,6 @@ module.exports = (server) => {
     usersToSockets[socket.userId] = socket.id;
 
     socket.on('leave_interview', ({ roomId }) => {
-      console.log('second person leaving!!!!', Object.keys(rooms[roomId]));
-
       if (Object.keys(rooms[roomId]).length === 2) {
         console.log(rooms[roomId].code);
         Interview.findByIdAndUpdate(
@@ -32,7 +30,6 @@ module.exports = (server) => {
           { upsert: true }
         ).then((_) => delete rooms[roomId]);
       } else {
-        console.log('first PERSON LEAVING!', socket.userId);
         delete rooms[roomId][socket.userId];
       }
       socket.leave(roomId);
@@ -62,13 +59,11 @@ module.exports = (server) => {
           }
         }
       } else {
-        const userId = user._id;
         user.isOwner = true;
         rooms[roomId] = {
           [user._id]: user,
         };
         socket.roomId = roomId;
-        console.log('joining room: ', roomId);
         socket.join(roomId);
       }
       io.to(roomId).emit('lobby_users', {
@@ -96,7 +91,6 @@ module.exports = (server) => {
       io.to(roomId).emit('lobby_users', {
         users: Object.values(rooms[roomId]),
       });
-      console.log(`${userId} is leaving lobbyId: ${roomId}`);
     });
 
     socket.on('code_result', (codeResult) => {
@@ -121,7 +115,7 @@ module.exports = (server) => {
 
     socket.on('logged_out', () => {
       socket.disconnect();
-      // socket.leave(socket.roomId);
+      socket.leave(socket.roomId);
       delete usersToSockets[socket.userId];
       delete socketToUsers[id];
     });
@@ -129,7 +123,6 @@ module.exports = (server) => {
     socket.on('disconnect', () => {
       delete usersToSockets[id];
       delete socketToUsers[socket.userId];
-      console.log(`User ${id} disconnected`);
     });
   });
   return io;

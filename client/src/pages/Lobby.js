@@ -1,21 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+  TextField,
+  Snackbar,
+  SnackbarContent,
+} from '@material-ui/core/';
+
 import { CopyButton, CustomButton } from '../components/Buttons';
-import { TextField } from '@material-ui/core';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import WaitingRoomUserList from '../components/WaitingRoomUserList';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { useStyles } from '../themes/theme';
 import SocketContext from '../context/socket';
-import Interview from './Interview';
+
 import {
   addUserToInterview,
   addInterviewQuestions,
