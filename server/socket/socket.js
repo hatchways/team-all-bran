@@ -1,18 +1,29 @@
 const cookieParser = require('socket.io-cookie-parser');
 const { authorization } = require('./authorization');
+const jwt = require('jsonwebtoken');
 
 const socketToUsers = new Map();
 const usersToSockets = new Map();
 const rooms = {};
-const roomies = new Map();
+
 module.exports = (server) => {
-  const io = require('socket.io')(server, { origins: '*:*', path: '/sockets' });
+  const io = require('socket.io')(server, { path: '/sockets' });
   io.use(cookieParser());
   io.use(authorization);
 
   io.on('connection', (socket) => {
     const { id } = socket;
-    console.log('LOGGED IN! SOCKET ID', socket.id);
+
+    console.log(
+      `Connected and authorized, SOCKET ID: ${id} USERID: ${socket.userId}`
+    );
+    socketToUsers[id] = socket.userId;
+    usersToSockets[socket.userId] = socket.id;
+    console.log(
+      `user added to keys: ${JSON.stringify(
+        usersToSockets
+      )}  socketsToUsers: ${JSON.stringify(socketToUsers)}`
+    );
 
     socket.on('start_interview', (roomId) => {
       io.to(roomId).emit('join_interview_room');
@@ -85,12 +96,6 @@ module.exports = (server) => {
       socket.broadcast
         .to(socket.roomId)
         .emit('updated_position', { lineNumber, column });
-    });
-
-    socket.on('logged_in', (userId) => {
-      socket.userId = userId;
-      usersToSockets[userId] = id;
-      socketToUsers[id] = userId;
     });
 
     socket.on('logged_out', () => {

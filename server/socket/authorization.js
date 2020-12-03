@@ -6,6 +6,7 @@ function authorization(socket, next) {
 
   try {
     const { userId } = jwt.verify(token, process.env.secretKey);
+    socket.userId = userId;
     if (mongoose.Types.ObjectId.isValid(userId)) {
       return next();
     }
