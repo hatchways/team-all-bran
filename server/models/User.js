@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
-const upload = require('../services/ImageUpload');
-const { any } = require('../services/ImageUpload');
-const singleUpload = upload.single('image');
-
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
   timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },

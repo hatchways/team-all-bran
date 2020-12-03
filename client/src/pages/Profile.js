@@ -5,12 +5,9 @@ import { useStyles } from '../themes/theme';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import { Rating } from '@material-ui/lab';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import { Select, MenuItem, Avatar, Button } from '@material-ui/core';
 import { updateUser, updateProfilePic } from '../utils/apiFunctions';
-import Avatar from '@material-ui/core/Avatar';
 import avatar from '../images/avatar.png';
-import Button from '@material-ui/core/Button';
 
 const experienceList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -52,7 +49,7 @@ const Profile = () => {
   const history = useHistory();
 
   const [userData, setUserData] = useState();
-  const [profilePic, setProfilePic] = useState();
+  const [profilePic, setProfilePic] = useState(user.profilePicture);
 
   useEffect(() => {
     setUserData({
@@ -60,9 +57,6 @@ const Profile = () => {
       experience: user.experience,
       interviewLevel: user.interviewLevel,
     });
-    if (user.profilePicture) {
-      setProfilePic(user.profilePicture);
-    }
   }, []);
 
   const changeRating = (e) => {
@@ -125,11 +119,11 @@ const Profile = () => {
           onChange={changeExperience}
           value={userData.experience}
         >
-          {Array.from(experienceList, (item, idx) => {
+          {experienceList.map((item, idx) => {
             if (item < 10) {
               return (
                 <MenuItem key={idx} value={item}>
-                  {item}{' '}
+                  {item}
                 </MenuItem>
               );
             } else {

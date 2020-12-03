@@ -26,13 +26,7 @@ const upload = multer({
   storage: multerS3({
     acl: 'public-read',
     s3,
-    bucket: 'mock-interview-profile-pictures', //Bucket Name
-    metadata: function (req, file, callback) {
-      callback(null, { fieldName: 'TESTING_METADATA' });
-    },
-    key: function (req, file, callback) {
-      callback(null, Date.now().toString());
-    },
+    bucket: process.env.S3_BUCKET_NAME,
   }),
 });
 

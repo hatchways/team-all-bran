@@ -3,10 +3,6 @@ const router = express.Router();
 const userController = require('../controllers/userController'); // import controller
 const passport = require('passport');
 
-const { User } = require('../models/User');
-const upload = require('../services/ImageUpload');
-const singleUpload = upload.single('image');
-
 // POST /users/register
 router.post('/register', userController.register);
 
