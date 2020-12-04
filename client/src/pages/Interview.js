@@ -16,7 +16,7 @@ const Interview = () => {
   const classes = useStyles();
   const socket = useContext(SocketContext);
   const handleCodeSnippetChange = (codeSnippet) => {
-    socket.emit('change_text', { code: codeSnippet, roomId });
+    setCode(codeSnippet);
   };
   const [language, setLanguage] = useState('javascript');
   const [code, setCode] = useState('');
@@ -47,9 +47,9 @@ const Interview = () => {
     };
   }, [socket]);
 
-  // useEffect(() => {
-  //   socket.emit('change_text', { code, roomId });
-  // }, [code, socket]);
+  useEffect(() => {
+    socket.emit('change_text', { code, roomId });
+  }, [code, socket]);
 
   useEffect(() => {
     socket.on('new_content', (data) => setValue(data));

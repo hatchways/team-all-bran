@@ -114,7 +114,7 @@ module.exports = (server) => {
     socket.on('change_text', ({ code, roomId }) => {
       const room = rooms[roomId];
       room['code'] = code;
-      io.to(roomId).emit('new_content', code);
+      socket.broadcast.to(roomId).emit('new_content', code);
     });
 
     socket.on('change_language', (language) => {
