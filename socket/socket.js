@@ -39,17 +39,20 @@ module.exports = (server) => {
       io.to(roomId).emit('join_interview_room');
     });
 
-    socket.on("call_user", (data) => {
-      io.to(usersToSockets[data.userToCall]).emit('start_call', { signal: data.signalData, from: data.from });
-    })
+    socket.on('call_user', (data) => {
+      io.to(usersToSockets[data.userToCall]).emit('start_call', {
+        signal: data.signalData,
+        from: data.from,
+      });
+    });
 
-    socket.on("accept_call", (data) => {
+    socket.on('accept_call', (data) => {
       io.to(usersToSockets[data.to]).emit('call_accepted', data.signal);
-    })
+    });
 
-    socket.on("end_call", ({ roomId }) => {
-      io.in(roomId).emit("end_call");
-    })
+    socket.on('end_call', ({ roomId }) => {
+      io.in(roomId).emit('end_call');
+    });
 
     socket.on('create_room', ({ user, roomId }) => {
       socket.user = user._id;
@@ -111,7 +114,7 @@ module.exports = (server) => {
     socket.on('change_text', ({ code, roomId }) => {
       const room = rooms[roomId];
       room['code'] = code;
-      socket.broadcast.to(roomId).emit('new_content', code);
+      io.to(roomId).emit('new_content', code);
     });
 
     socket.on('change_language', (language) => {
