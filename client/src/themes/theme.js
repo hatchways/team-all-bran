@@ -762,6 +762,44 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: `12px`,
     fontWeight: `bold`,
   },
+  receivingCallText: {
+    fontSize: '35px',
+    fontFamily: 'Helvetica',
+    fontWeight: 'bold',
+    color: colors.darkBlue,
+    marginBottom: '20px'
+  },
+  receivingCallNameAndAvatar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  videoCallerName: {
+    fontSize: '24px'
+  },
+  acceptCancelVideoButton: {
+    borderRadius: 35,
+    height: 40,
+    width: 100,
+    backgroundColor: colors.darkBlue,
+    padding: '18px 50px',
+    fontSize: '14px',
+    color: 'white',
+    marginTop: '5px',
+    '&:hover': {
+      backgroundColor: colors.darkBlue,
+    },
+  },
+  receivingCallDialog: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: '30px',
+    minHeight: 300,
+    minWidth: 325
+  }
 }));
 
 export const GlobalCss = withStyles({
