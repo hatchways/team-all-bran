@@ -8,7 +8,8 @@ import InterviewDifficultyMenu from './InterviewDifficultyMenu';
 import UserInformation from '../components/UserInformation';
 import { createInterview } from '../utils/apiFunctions';
 import { CustomButton } from '../components/Buttons';
-import { Dialog, DialogTitle } from '@material-ui/core';
+import { Dialog, DialogTitle, IconButton, Typography } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { fetchInterviews } from '../utils/fetchInterviews';
 import Lobby from './Lobby';
@@ -78,25 +79,28 @@ const DashBoard = () => {
           text='START'
           classField={classes.startDashboardButton}
         />
-        <Dialog
-          onClose={handleClose}
-          aria-labelledby='simple-dialog-title'
-          open={open}
-        >
+        <Dialog aria-labelledby='simple-dialog-title' open={open}>
           <div className={classes.createInterviewDialog}>
-            <DialogTitle
-              id='simple-dialog-title'
-              className={classes.pastPracticesText}
+            <IconButton
+              aria-label='close'
+              className={classes.closeButton}
+              onClick={handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography
+              // id='simple-dialog-title'
+              className={classes.createInterviewTitle}
             >
               Create
-            </DialogTitle>
+            </Typography>
             <InterviewDifficultyMenu
               selectedValue={selectedValue}
               handleChange={handleChange}
             />
             <CustomButton
               onClick={createInt}
-              classField={classes.startDashboardButton}
+              classField={classes.createWaitingRoomButton}
               text='CREATE'
             />
           </div>
