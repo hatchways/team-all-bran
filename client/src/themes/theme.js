@@ -126,12 +126,10 @@ export const useStyles = makeStyles(
       flexDirection: 'column',
       fontFamily: 'Roboto',
       color: colors.charcoalGray,
-    },
-    loginSignupWrapperRoot: {
-      overflow: 'hidden',
       height: '100vh',
       width: '100vw',
       position: 'relative',
+      overflowY: 'auto',
     },
     formField: {
       display: 'flex',
@@ -429,21 +427,6 @@ export const useStyles = makeStyles(
       flexDirection: 'column',
       fontStyle: 'italic',
     },
-    loginSignupWrapperRoot: {
-      flexGrow: 1,
-      overflow: 'hidden',
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      fontFamily: 'Roboto',
-      color: colors.charcoalGray,
-    },
-    loginSignupWrapperRoot: {
-      overflow: 'hidden',
-      height: '100vh',
-      width: '100vw',
-      position: 'relative',
-    },
     gridSpacingThree: {
       height: '93vh',
       width: '100%',
@@ -486,21 +469,6 @@ export const useStyles = makeStyles(
       justifyContent: 'center',
       flexDirection: 'column',
       fontStyle: 'italic',
-    },
-    loginSignupWrapperRoot: {
-      flexGrow: 1,
-      overflow: 'hidden',
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      fontFamily: 'Roboto',
-      color: colors.charcoalGray,
-    },
-    loginSignupWrapperRoot: {
-      overflow: 'hidden',
-      height: '100vh',
-      width: '100vw',
-      position: 'relative',
     },
     formField: {
       display: 'flex',
