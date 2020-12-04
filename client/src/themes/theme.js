@@ -244,14 +244,6 @@ export const useStyles = makeStyles(
       color: 'white',
       fontSize: '30px',
     },
-    backgroundContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: `rgba(67, 67, 125)`,
-      height: '100vh',
-    },
     background: {
       width: '50%',
       height: '80%',
@@ -564,7 +556,7 @@ export const useStyles = makeStyles(
       fontSize: '30px',
     },
     backgroundContainer: {
-      height: '100%',
+      height: '100vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
