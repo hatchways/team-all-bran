@@ -32,7 +32,10 @@ const Lobby = () => {
   const { state } = useContext(store);
   const socket = useContext(SocketContext);
   const { id: roomId } = useParams();
-  const URL = `http://localhost:3000`;
+  const URL =
+    process.env.NODE_ENV === 'production'
+      ? `https://mock-interview-platform.herokuapp.com`
+      : `http://localhost:3000`;
   const classes = useStyles();
   const history = useHistory();
   const [startButtonPushed, setStartButtonPushed] = useState(false);

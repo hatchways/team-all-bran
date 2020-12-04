@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { NextStepButton } from '../components/Buttons';
-import { useStyles, GlobalCss } from '../themes/theme';
+import { useStyles } from '../themes/theme';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import { Rating } from '@material-ui/lab';
@@ -82,7 +82,6 @@ const UserInformation = (props) => {
 
   return (
     <div className={classes.backgroundContainer}>
-      <GlobalCss />
       <div className={classes.background}>
         <h1 className={classes.backgroundHeader}>Tell us about your Background</h1>
 

@@ -5,7 +5,7 @@ function authorization(socket, next) {
   const { token } = socket.request.cookies;
 
   try {
-    const { userId } = jwt.verify(token, process.env.secretKey);
+    const { userId } = jwt.verify(token, process.env.SECRET_KEY);
     socket.userId = userId;
     if (mongoose.Types.ObjectId.isValid(userId)) {
       return next();

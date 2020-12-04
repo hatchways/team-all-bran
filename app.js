@@ -34,10 +34,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(join(__dirname, 'public')));
 // Passport middleware
 app.use(passport.initialize());
-// Passport config
 
 app.use('/', indexRouter);
 app.use('/ping', pingRouter);
@@ -46,6 +44,14 @@ app.use('/interviews', interviews);
 app.use('/questions', questions);
 app.use('/feedback', feedback);
 app.use('/runCode', executeCode);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(join(__dirname, 'client/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(join(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

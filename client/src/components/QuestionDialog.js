@@ -80,7 +80,7 @@ const QuestionDialog = () => {
   };
 
   if (question && question.error) {
-    return <div></div>;
+    return <></>;
   }
 
   return (

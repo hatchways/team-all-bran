@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const interviewModel = require('../models/Interview');
 
-const { secretKey } = process.env;
+const { SECRET_KEY } = process.env;
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/User.js');
 const { Interview } = require('../models/Interview');

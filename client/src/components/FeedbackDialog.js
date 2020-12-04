@@ -177,7 +177,15 @@ const FeedbackDialog = () => {
   const question = questionData[pageNumber - 1].question;
 
   if (viewFeedback && viewFeedback.error) {
-    return <div></div>;
+    return <></>;
+  }
+
+  if (pageNumber > 7 || pageNumber < 1) {
+    if (viewFeedback) {
+      history.push(`/feedback/${viewFeedback._id}/feedback/1`);
+    } else {
+      history.push(`/interview/${interviewId}/feedback/1`);
+    }
   }
 
   return (

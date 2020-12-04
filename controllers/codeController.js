@@ -23,7 +23,7 @@ const executeCode = (req, res) => {
     method: 'post',
     url: `https://run.glot.io/languages/${language}/latest`,
     headers: {
-      Authorization: process.env.glotToken,
+      Authorization: process.env.GLOT_TOKEN,
       'Content-type': 'application/json',
     },
     data: data,
