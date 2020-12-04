@@ -34,10 +34,16 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(join(__dirname, 'client', 'build')));
 // Passport middleware
 app.use(passport.initialize());
-// Passport config
+
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    else next();
+  });
+}
 
 app.use('/', indexRouter);
 app.use('/ping', pingRouter);
@@ -47,7 +53,8 @@ app.use('/questions', questions);
 app.use('/feedback', feedback);
 app.use('/runCode', executeCode);
 
-app.get('*', (req, res) => {
+app.use(express.static(join(__dirname, 'client', 'build')));
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
