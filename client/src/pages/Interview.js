@@ -158,7 +158,7 @@ const Interview = () => {
   }, [socket]);
 
   if (callAccepted) {
-    if (userVideo.current) {
+    if (userVideo.current && !userVideo.current.srcObject) {
       userVideo.current.srcObject = stream;
     }
   }
@@ -266,7 +266,7 @@ const Interview = () => {
             receivingCall={receivingCall}
             handleAcceptCall={acceptCall}
             partnerVideo={partnerVideo}
-            partnerName={`${partner.firstName} ${partner.lastName}`}
+            partner={partner}
           />
           <OutputConsole runCode={runCode} codeResult={codeResult} />
         </Grid>

@@ -2,21 +2,20 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router';
 import {
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Slide,
   TextField,
   Snackbar,
   SnackbarContent,
+  Box,
+  IconButton,
 } from '@material-ui/core/';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { CopyButton, CustomButton } from '../components/Buttons';
 import { store } from '../context/store';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import WaitingRoomUserList from '../components/WaitingRoomUserList';
-import { useStyles } from '../themes/theme';
+import { colors, useStyles } from '../themes/theme';
 import SocketContext from '../context/socket';
 
 import {
@@ -55,6 +54,7 @@ const Lobby = () => {
   const { vertical, horizontal, alert, message } = localState;
 
   const handleClose = () => {
+    socket.emit('leave_lobby', { userId: state.user._id, roomId });
     setOpen(false);
   };
 
@@ -136,22 +136,32 @@ const Lobby = () => {
   return (
     <>
       <Dialog
-        className={classes.waitingRoomDialogue}
+        maxWidth='md'
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
         aria-labelledby='alert-dialog-slide-title'
         aria-describedby='alert-dialog-slide-description'
       >
         <div className={classes.formControlWaitingRoom}>
-          <DialogTitle id='alert-dialog-slide-title'>Waiting Room</DialogTitle>
-          <p>
-            <strong>Share link</strong>
-          </p>
-          <DialogActions>
+          <IconButton
+            aria-label='close'
+            className={classes.closeButton}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>
+          <div className={classes.waitingRoomDialogueTitle}>Waiting Room</div>
+          <p className={classes.shareLink}>Share link</p>
+          <div className={classes.linkAndCopy}>
             <TextField
-              fullWidth
+              maxWidth='lg'
+              className={classes.urlBox}
+              InputProps={{
+                classes: {
+                  input: classes.urlLink,
+                },
+              }}
               value={URL + history.location.pathname}
               id='outlined-basic'
               variant='outlined'
@@ -161,23 +171,27 @@ const Lobby = () => {
               onCopy={() => setCopied(true)}
               text={URL + history.location.pathname}
             >
-              <CopyButton disabled={copied} color='primary'>
+              <CopyButton size='large' disabled={copied} color='primary'>
                 {!copied ? 'COPY' : 'COPIED!'}
               </CopyButton>
             </CopyToClipboard>
-          </DialogActions>
-          <DialogContent>
-            <DialogContentText>Participants</DialogContentText>
-          </DialogContent>
-          <WaitingRoomUserList
-            showStartButton={!alert}
-            userData={userData}
-            handleClose={handleClose}
-          />
+          </div>
+          <div className={classes.participantsTitle}>Participants</div>
+          <Box
+            className={classes.participantsBox}
+            border={1}
+            color={colors.lightGray}
+          >
+            <WaitingRoomUserList
+              showStartButton={!alert}
+              userData={userData}
+              handleClose={handleClose}
+            />
+          </Box>
           {!alert && creatorId && getUserLobbyCountFull() && (
             <CustomButton
               onClick={handleStartInterview}
-              classField={classes.continueButton}
+              classField={classes.startInterviewButton}
               text='Start'
               color='primary'
             />
