@@ -38,7 +38,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         !isAuthenticated ? (
-          <Redirect to='/signup' />
+          <Redirect to='signup' />
         ) : user.experience !== undefined ? (
           <Component {...props} />
         ) : (

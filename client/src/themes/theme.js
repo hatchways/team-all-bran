@@ -802,6 +802,11 @@ export const useStyles = makeStyles(
       fontFamily: `Helvetica`,
       marginBottom: `30px`,
     },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 250,
+      minHeight: 100,
+    },
 
     createWaitingRoomButton: {
       fontSize: `14px`,
@@ -1461,7 +1466,19 @@ export const useStyles = makeStyles(
       justifyContent: `space-between`,
       alignContent: `left`,
     },
-
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 450,
+      minHeight: 100,
+    },
+    formControlWaitingRoom: {
+      margin: theme.spacing(1),
+      minWidth: 500,
+      minHeight: 100,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
     answerButton: {
       color: colors.darkBlue,
       borderColor: colors.lightGray,
@@ -1733,10 +1750,17 @@ export const useStyles = makeStyles(
     },
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 250,
+      minWidth: 450,
       minHeight: 100,
     },
-
+    formControlWaitingRoom: {
+      margin: theme.spacing(1),
+      minWidth: 500,
+      minHeight: 100,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
     answerButton: {
       color: colors.darkBlue,
       borderColor: colors.lightGray,
