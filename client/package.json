@@ -12,9 +12,11 @@
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
+    "react-draggable": "^4.4.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.3",
+    "simple-peer": "^9.9.3",
     "socket.io-client": "^3.0.1"
   },
   "scripts": {

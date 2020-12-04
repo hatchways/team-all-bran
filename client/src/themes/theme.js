@@ -613,6 +613,40 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     fontWeight: 'bold',
   },
+  videoCallIcon: {
+    height: '50px',
+    width: '50px',
+    color: 'white',
+    marginRight: '20px',
+  },
+  videoChatBoxUser: {
+    height: '100%',
+    right: '0px',
+    "z-index": 2,
+    borderRadius: 15,
+    bottom: '0px',
+    position: 'absolute'
+  },
+  videoChatBoxPartner: {
+    height: '100px',
+    right: '0px',
+    bottom: '0px',
+    "z-index": 3,
+    borderRadius: 15,
+    position: 'absolute'
+  },
+  videoChatMainContainer: {
+    right: "0px",
+    "z-index": "1",
+    position: "absolute",
+    width: "300px",
+    height: "225px",
+  },
+  videoStreamContainer: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+  },
   profileContainer: {
     display: 'flex',
     flexDirection: 'column',

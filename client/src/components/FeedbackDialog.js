@@ -202,12 +202,12 @@ const FeedbackDialog = () => {
           </h3>
         </>
       ) : (
-        <ExperienceContent
-          setExperience={changeExperience}
-          experienceRating={experienceRating}
-          viewFeedback={viewFeedback}
-        />
-      )}
+          <ExperienceContent
+            setExperience={changeExperience}
+            experienceRating={experienceRating}
+            viewFeedback={viewFeedback}
+          />
+        )}
       <DialogContent>
         {pageNumber < 7 && (
           <div className={classes.feedbackDialogQuestionNumber}>
@@ -221,17 +221,17 @@ const FeedbackDialog = () => {
         <FormControl disabled={viewFeedback}>
           {pageNumber < 7
             ? questionData[pageNumber - 1].formContent(
-                viewFeedback,
-                creatorFeedback,
-                changeCreatorFeedback
-              )
+              viewFeedback,
+              creatorFeedback,
+              changeCreatorFeedback
+            )
             : questionData[6].formContent(
-                experienceRating,
-                changeExperience,
-                viewFeedback,
-                creatorFeedback,
-                changeCreatorFeedback
-              )}
+              experienceRating,
+              changeExperience,
+              viewFeedback,
+              creatorFeedback,
+              changeCreatorFeedback
+            )}
         </FormControl>
       </DialogContent>
     </Dialog>
@@ -259,7 +259,7 @@ const ExperienceContent = ({ setExperience, experienceRating, viewFeedback }) =>
       <div className={classes.feedbackExperienceRatingDesc}>
         {
           experienceRatingValues[
-            hoverExperience !== -1 ? hoverExperience : experienceRating
+          hoverExperience !== -1 ? hoverExperience : experienceRating
           ]
         }
       </div>
