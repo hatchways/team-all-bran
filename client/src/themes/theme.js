@@ -80,11 +80,6 @@ export const useStyles = makeStyles(
       width: '100%',
       margin: 0,
     },
-    signUpForm: {
-      marginLeft: '40px',
-      display: 'flex',
-      width: '30%',
-    },
     loginImage: {
       float: 'left',
       paddingRight: '40px',
@@ -388,11 +383,6 @@ export const useStyles = makeStyles(
       height: '93vh',
       width: '100%',
       margin: 0,
-    },
-    signUpForm: {
-      marginLeft: '40px',
-      display: 'flex',
-      width: '30%',
     },
     loginImage: {
       float: 'left',
