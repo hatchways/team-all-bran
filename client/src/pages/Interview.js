@@ -158,7 +158,7 @@ const Interview = () => {
   }, [socket]);
 
   if (callAccepted) {
-    if (userVideo.current) {
+    if (userVideo.current && !userVideo.current.srcObject) {
       userVideo.current.srcObject = stream;
     }
   }
