@@ -123,7 +123,7 @@ const Profile = () => {
             if (item < 10) {
               return (
                 <MenuItem key={idx} value={item}>
-                  {item}
+                  {item}{' '}
                 </MenuItem>
               );
             } else {

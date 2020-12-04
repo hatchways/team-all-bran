@@ -65,7 +65,7 @@ const DashBoard = () => {
     }
   };
 
-  if (!state.user.experience) {
+  if (state.user.experience === undefined) {
     return <UserInformation user={state.user} />;
   }
 

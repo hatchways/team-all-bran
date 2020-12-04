@@ -122,7 +122,7 @@ async function updateUser(id, req) {
       user.language = lang;
     }
 
-    if (experience) {
+    if (!isNaN(experience)) {
       user.experience = experience;
     }
 
