@@ -35,7 +35,7 @@ const Lobby = () => {
   const { id: roomId } = useParams();
   const URL =
     process.env.NODE_ENV === 'production'
-      ? `https://mock-interview-platform.herokuapp.com/`
+      ? `https://mock-interview-platform.herokuapp.com`
       : `http://localhost:3000`;
   const classes = useStyles();
   const history = useHistory();
