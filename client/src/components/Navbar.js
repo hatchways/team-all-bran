@@ -55,7 +55,7 @@ const Navbar = (props) => {
 
   const [selected, setSelected] = useState(0);
 
-  return state.isAuthenticated ? (
+  return state.isAuthenticated && state.user.experience !== undefined ? (
     <AppBar color='default' position='static'>
       <Toolbar className={classes.navBarContainer}>
         <div>

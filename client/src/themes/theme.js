@@ -245,7 +245,7 @@ export const useStyles = makeStyles(
       fontSize: '30px',
     },
     backgroundContainer: {
-      height: '100%',
+      height: '100vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -645,23 +645,6 @@ export const useStyles = makeStyles(
   }),
   { index: 1 }
 );
-
-export const GlobalCss = withStyles({
-  '@global': {
-    body: {
-      height: '100vh',
-    },
-    '#root': {
-      height: '100%',
-    },
-    header: {
-      display: 'none',
-    },
-    '.MuiAppBar-root': {
-      display: 'none',
-    },
-  },
-})(() => null);
 
 export const colors = {
   darkBlue: '#516BF6',

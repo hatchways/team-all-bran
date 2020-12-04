@@ -3,6 +3,7 @@ import { Redirect, Route } from 'react-router';
 import { store } from '../context/store';
 import { USER_LOADED } from '../context/types';
 import { getUser } from '../utils/apiFunctions';
+import Dashboard from '../pages/DashBoard';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { dispatch } = useContext(store);
@@ -27,7 +28,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   }, [getUserInfo]);
 
   const {
-    state: { isAuthenticated },
+    state: { isAuthenticated, user },
   } = useContext(store);
   if (isBusy) {
     return null;
@@ -36,7 +37,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to='/signup' />
+        !isAuthenticated ? (
+          <Redirect to='signup' />
+        ) : user.experience !== undefined ? (
+          <Component {...props} />
+        ) : (
+          <Dashboard />
+        )
       }
     />
   );
