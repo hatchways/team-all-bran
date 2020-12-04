@@ -1,7 +1,7 @@
 const userModel = require('../models/User');
 const validateRegister = require('../user-validation/register');
 const validateLogin = require('../user-validation/login');
-const { secretKey } = process.env;
+const { SECRET_KEY } = process.env;
 const jwt = require('jsonwebtoken');
 
 const { User } = require('../models/User');
@@ -89,7 +89,7 @@ function createTokenResponse(user, res) {
   const payload = { userId: user._id };
   return jwt.sign(
     payload,
-    secretKey,
+    SECRET_KEY,
     {
       expiresIn: 2629744, // 1 month in seconds
     },

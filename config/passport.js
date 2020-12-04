@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const User = mongoose.model('User');
 require('dotenv').config();
-const { secretKey } = process.env;
+const { SECRET_KEY } = process.env;
 
 let cookieExtractor = (req) => {
   let token = null;
@@ -15,7 +15,7 @@ let cookieExtractor = (req) => {
 
 const opts = {};
 opts.jwtFromRequest = cookieExtractor;
-opts.secretOrKey = secretKey;
+opts.secretOrKey = SECRET_KEY;
 
 module.exports = (passport) => {
   passport.use(
