@@ -3,11 +3,22 @@ import { useStyles } from '../themes/theme';
 import Grid from '@material-ui/core/Grid';
 import LanguageSelectMenu from './LanguageSelectMenu';
 import { CustomButton } from '../components/Buttons';
+import VideoCallIcon from '@material-ui/icons/VideoCall';
+import IconButton from '@material-ui/core/IconButton';
 import { useHistory, useParams } from 'react-router-dom';
 import { endInterview } from '../utils/apiFunctions';
 import FeedbackDialog from '../components/FeedbackDialog';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
-const InterviewHeader = ({ language, setLanguage, partner }) => {
+const InterviewHeader = (
+  {
+    language,
+    setLanguage,
+    partner,
+    callPeer,
+    endCall,
+    callAccepted,
+  }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id, pageNumber } = useParams();
@@ -25,6 +36,13 @@ const InterviewHeader = ({ language, setLanguage, partner }) => {
     setLanguage(event.target.value);
   };
 
+  const handleVideoToggle = () => {
+    if (callAccepted) {
+      endCall();
+    } else {
+      callPeer();
+    }
+  }
   const exitInterview = async () => {
     try {
       await endInterview(interviewId);
@@ -45,6 +63,13 @@ const InterviewHeader = ({ language, setLanguage, partner }) => {
           handleLanguageChange={handleLanguageChange}
           language={language}
         />
+        <IconButton onClick={handleVideoToggle}>
+          {callAccepted ?
+            <VideocamOffIcon className={classes.videoCallIcon} /> :
+            <VideoCallIcon className={classes.videoCallIcon} />
+          }
+
+        </IconButton>
         <CustomButton
           onClick={exitInterview}
           classField={classes.exitInterviewButton}
