@@ -420,27 +420,51 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: `column`,
     justifyContent: `space-around`,
     alignItems: `center`,
-    padding: `45px`,
+    padding: `80px`,
+    height: `250px`,
+    width: `400px`,
+  },
+
+  createInterviewTitle: {
+    fontSize: `28px`,
+    color: colors.darkBlue,
+    fontWeight: 700,
+    fontFamily: `Helvetica`,
+    marginBottom: `30px`,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 250,
+    minHeight: 100,
+  },
+
+  createWaitingRoomButton: {
+    fontSize: `14px`,
+    backgroundColor: colors.darkBlue,
+    color: 'white',
+    borderRadius: 25,
+    height: `55px`,
+    padding: `10px 50px`,
+    fontWeight: 750,
   },
   waitingRoomDialogue: {
     display: `flex`,
     flexDirection: `column`,
-    justifyContent: `space-between`,
+
     alignContent: `left`,
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 450,
-    minHeight: 100,
-  },
   formControlWaitingRoom: {
+    padding: `40px`,
     margin: theme.spacing(1),
-    minWidth: 500,
-    minHeight: 100,
+    minWidth: 700,
+    minHeight: 300,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+    textAlign: `center`,
+    fontWeight: 650,
   },
+
   answerButton: {
     color: colors.darkBlue,
     borderColor: colors.lightGray,
@@ -465,6 +489,9 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: '0 3px 5px 2px rgba(125, 123, 135, .3)',
     marginLeft: '10px',
     borderRadius: 25,
+    '&:hover': {
+      backgroundColor: colors.darkBlue,
+    },
   },
   redirectPageButton: {
     color: colors.darkGray,
@@ -482,6 +509,9 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '18px',
     color: 'white',
     marginTop: '30px',
+    '&:hover': {
+      backgroundColor: colors.darkBlue,
+    },
   },
   feedbackDialog: {
     display: 'flex',
@@ -622,25 +652,25 @@ export const useStyles = makeStyles((theme) => ({
   videoChatBoxUser: {
     height: '100%',
     right: '0px',
-    "z-index": 2,
+    'z-index': 2,
     borderRadius: 15,
     bottom: '0px',
-    position: 'absolute'
+    position: 'absolute',
   },
   videoChatBoxPartner: {
     height: '100px',
     right: '0px',
     bottom: '0px',
-    "z-index": 3,
+    'z-index': 3,
     borderRadius: 15,
-    position: 'absolute'
+    position: 'absolute',
   },
   videoChatMainContainer: {
-    right: "0px",
-    "z-index": "1",
-    position: "absolute",
-    width: "300px",
-    height: "225px",
+    right: '0px',
+    'z-index': '1',
+    position: 'absolute',
+    width: '300px',
+    height: '225px',
   },
   videoStreamContainer: {
     position: 'relative',
@@ -674,6 +704,63 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: '40px',
     marginBottom: '40px',
     textAlign: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: colors.darkGray,
+  },
+  waitingRoomUserName: {
+    color: colors.charcoalGray,
+    fontSize: `14px`,
+    fontFamily: `Helvetica`,
+  },
+  waitingRoomAvatar: { marginRight: `10px` },
+  linkAndCopy: { display: `flex` },
+  waitingRoomDialogueTitle: {
+    color: colors.darkBlue,
+    fontSize: `25px`,
+    marginBottom: `20px`,
+    fontWeight: `bold`,
+    fontFamily: `Helvetica`,
+  },
+  shareLink: {
+    marginBottom: `5px`,
+    fontWeight: `bold`,
+  },
+  urlLink: {
+    fontFamily: `Helvetica`,
+    fontSize: `14px`,
+    padding: `25px`,
+
+    // width: `50%`,
+  },
+  urlBox: {
+    width: `60%`,
+    // height: `100%`,
+    marginBottom: `20px`,
+  },
+  participantsTitle: {
+    color: colors.darkBlue,
+    fontSize: `22px`,
+    marginBottom: `20px`,
+    fontWeight: `bold`,
+    fontFamily: `Helvetica`,
+  },
+  participantsBox: {
+    padding: `25px`,
+    borderRadius: 4,
+  },
+  startInterviewButton: {
+    marginTop: `25px`,
+    backgroundColor: colors.darkBlue,
+    height: `55px`,
+    padding: `10px 50px`,
+    color: `white`,
+    borderRadius: 25,
+    fontSize: `12px`,
+    fontWeight: `bold`,
   },
 }));
 

@@ -23,6 +23,7 @@ const WaitingRoomUserList = ({ userData, showStartButton }) => {
                   return (
                     <ListItem className={classes.waitingRoomUser} key={index}>
                       <Avatar
+                        className={classes.waitingRoomAvatar}
                         alt='Avatar'
                         src={profilePicture ? profilePicture : avatar}
                       />

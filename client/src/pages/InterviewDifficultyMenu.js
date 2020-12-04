@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyles } from '../themes/theme';
-import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core/';
+import { InputLabel, MenuItem, FormControl, Select, Box } from '@material-ui/core/';
 
 export default function SimpleSelect({ handleChange, selectedValue }) {
   const classes = useStyles();
@@ -12,6 +12,7 @@ export default function SimpleSelect({ handleChange, selectedValue }) {
           Difficulty level
         </InputLabel>
         <Select
+          variant='outlined'
           labelId='demo-simple-select-placeholder-label-label'
           id='demo-simple-select-placeholder-label'
           value={selectedValue}
