@@ -10,13 +10,13 @@ import axios from 'axios';
 import SocketContext from '../context/socket';
 import { getInterview, getQuestion } from '../utils/apiFunctions';
 import { store } from '../context/store';
-import Peer from "simple-peer";
+import Peer from 'simple-peer';
 
 const Interview = () => {
   const classes = useStyles();
   const socket = useContext(SocketContext);
   const handleCodeSnippetChange = (codeSnippet) => {
-    setCode(codeSnippet);
+    socket.emit('change_text', { code: codeSnippet, roomId });
   };
   const [language, setLanguage] = useState('javascript');
   const [code, setCode] = useState('');
@@ -29,7 +29,7 @@ const Interview = () => {
   const userVideo = useRef();
   const partnerVideo = useRef();
   const [receivingCall, setReceivingCall] = useState(false);
-  const [caller, setCaller] = useState("");
+  const [caller, setCaller] = useState('');
   const [callerSignal, setCallerSignal] = useState();
   const [callAccepted, setCallAccepted] = useState(false);
 
@@ -47,9 +47,9 @@ const Interview = () => {
     };
   }, [socket]);
 
-  useEffect(() => {
-    socket.emit('change_text', { code, roomId });
-  }, [code, socket]);
+  // useEffect(() => {
+  //   socket.emit('change_text', { code, roomId });
+  // }, [code, socket]);
 
   useEffect(() => {
     socket.on('new_content', (data) => setValue(data));
@@ -105,36 +105,38 @@ const Interview = () => {
   }, [fetchInterview]);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-      setStream(stream);
-    })
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setStream(stream);
+      });
 
-    socket.on("start_call", (data) => {
+    socket.on('start_call', (data) => {
       setReceivingCall(true);
       setCaller(data.from);
       setCallerSignal(data.signal);
-    })
+    });
 
-    socket.on("end_call", () => {
+    socket.on('end_call', () => {
       if (userVideo.current) {
         userVideo.current.srcObject = null;
       }
       if (partnerVideo.current) {
         partnerVideo.current.srcObject = null;
       }
-      socket.removeAllListeners("call_accepted");
+      socket.removeAllListeners('call_accepted');
 
       setCallAccepted(false);
       setCallerSignal(null);
     });
 
     return () => {
-      socket.emit("end_call", { roomId });
-    }
+      socket.emit('end_call', { roomId });
+    };
   }, []);
 
   window.onbeforeunload = () => {
-    socket.emit("end_call", { roomId });
+    socket.emit('end_call', { roomId });
   };
 
   useEffect(() => {
@@ -171,24 +173,24 @@ const Interview = () => {
       trickle: false,
       stream: stream,
     });
-    peer.on("signal", data => {
-      socket.emit("accept_call", { signal: data, to: caller });
-    })
+    peer.on('signal', (data) => {
+      socket.emit('accept_call', { signal: data, to: caller });
+    });
 
-    peer.on("stream", stream => {
+    peer.on('stream', (stream) => {
       partnerVideo.current.srcObject = stream;
     });
 
-    peer.on('error', err => {
+    peer.on('error', (err) => {
       console.error(err);
-    })
+    });
 
     peer.signal(callerSignal);
-  }
+  };
 
   const endCall = () => {
-    socket.emit("end_call", { roomId });
-  }
+    socket.emit('end_call', { roomId });
+  };
 
   const callPeer = (id) => {
     const peer = new Peer({
@@ -197,38 +199,36 @@ const Interview = () => {
       config: {
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }
-        ]
+          { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+        ],
       },
       stream: stream,
     });
 
-    peer.on("signal", data => {
-      socket.emit(
-        "call_user",
-        {
-          roomId: roomId,
-          userToCall: id,
-          signalData: data,
-          from: state.user._id
-        });
+    peer.on('signal', (data) => {
+      socket.emit('call_user', {
+        roomId: roomId,
+        userToCall: id,
+        signalData: data,
+        from: state.user._id,
+      });
     });
 
-    peer.on("stream", stream => {
+    peer.on('stream', (stream) => {
       if (partnerVideo.current) {
         partnerVideo.current.srcObject = stream;
       }
     });
 
-    peer.on('error', err => {
+    peer.on('error', (err) => {
       console.error(err);
-    })
+    });
 
-    socket.on("call_accepted", signal => {
+    socket.on('call_accepted', (signal) => {
       setCallAccepted(true);
       peer.signal(signal);
-    })
-  }
+    });
+  };
 
   const runCode = async () => {
     try {
@@ -254,8 +254,8 @@ const Interview = () => {
           {pageData.questions.questionOne ? (
             <InterviewQuestionDetails questions={pageData.questions} />
           ) : (
-              <div>Loading question...</div>
-            )}
+            <div>Loading question...</div>
+          )}
         </Grid>
         <Grid className={classes.interviewTextEditor} item xs={8}>
           <TextEditor
