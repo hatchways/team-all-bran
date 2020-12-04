@@ -81,64 +81,66 @@ const UserInformation = (props) => {
   const { language, experience, interviewLevel } = userData;
 
   return (
-    <div className={classes.backgroundContainer}>
-      <GlobalCss />
-      <div className={classes.background}>
-        <h1 className={classes.backgroundHeader}>Tell us about your Background</h1>
+    <>
+      <div className={classes.backgroundContainer}>
+        <div className={classes.background}>
+          <h1 className={classes.backgroundHeader}>Tell us about your Background</h1>
 
-        <form className={classes.backgroundForm} id='backgroundForm'>
-          <div className={classes.infoFormDiv}>Your Language:</div>
-          <Select
-            className={classes.infoDropdown}
-            onChange={changeLanguage}
-            value={language}
-          >
-            <MenuItem value='English'>English</MenuItem>
-          </Select>
+          <form className={classes.backgroundForm} id='backgroundForm'>
+            <div className={classes.infoFormDiv}>Your Language:</div>
+            <Select
+              className={classes.infoDropdown}
+              onChange={changeLanguage}
+              value={language}
+            >
+              <MenuItem value='English'>English</MenuItem>
+            </Select>
 
-          <div className={classes.infoFormDiv}>
-            Years of professional experience:
-          </div>
-          <Select
-            className={classes.infoDropdown}
-            onChange={changeExperience}
-            value={experience}
-          >
-            {Array.from(experienceList, (item, idx) => {
-              if (item < 10) {
-                return (
-                  <MenuItem key={idx} value={item}>
-                    {item}{' '}
-                  </MenuItem>
-                );
-              } else {
-                return (
-                  <MenuItem key={idx} value={item}>
-                    10 or more
-                  </MenuItem>
-                );
-              }
-            })}
-          </Select>
+            <div className={classes.infoFormDiv}>
+              Years of professional experience:
+            </div>
+            <Select
+              className={classes.infoDropdown}
+              onChange={changeExperience}
+              value={experience}
+            >
+              {Array.from(experienceList, (item, idx) => {
+                if (item < 10) {
+                  return (
+                    <MenuItem key={idx} value={item}>
+                      {item}{' '}
+                    </MenuItem>
+                  );
+                } else {
+                  return (
+                    <MenuItem key={idx} value={item}>
+                      10 or more
+                    </MenuItem>
+                  );
+                }
+              })}
+            </Select>
 
-          <div className={classes.infoFormDiv}>
-            What is your level at job interviews?
-          </div>
+            <div className={classes.infoFormDiv}>
+              What is your level at job interviews?
+            </div>
 
-          <Rating
-            name='interviewLevel'
-            className={classes.starRating}
-            onChange={changeRating}
-            size='large'
-            defaultValue={1}
-          />
-          <InterviewLevelInfo interviewLevel={interviewLevel} />
-        </form>
-        <NextStepButton type='submit' form='backgroundForm' onClick={onSubmit}>
-          Next Step
-        </NextStepButton>
+            <Rating
+              name='interviewLevel'
+              className={classes.starRating}
+              onChange={changeRating}
+              size='large'
+              defaultValue={1}
+            />
+            <InterviewLevelInfo interviewLevel={interviewLevel} />
+          </form>
+          <NextStepButton type='submit' form='backgroundForm' onClick={onSubmit}>
+            Next Step
+          </NextStepButton>
+        </div>
       </div>
-    </div>
+      <GlobalCss />
+    </>
   );
 };
 
