@@ -266,7 +266,7 @@ const Interview = () => {
             receivingCall={receivingCall}
             handleAcceptCall={acceptCall}
             partnerVideo={partnerVideo}
-            partnerName={`${partner.firstName} ${partner.lastName}`}
+            partner={partner}
           />
           <OutputConsole runCode={runCode} codeResult={codeResult} />
         </Grid>

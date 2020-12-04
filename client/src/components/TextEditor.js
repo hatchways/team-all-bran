@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ControlledEditor } from '@monaco-editor/react';
-import { Dialog, DialogTitle } from '@material-ui/core';
+import { Dialog, DialogTitle, Typography, Avatar } from '@material-ui/core';
 import { useStyles } from '../themes/theme';
 import { CustomButton } from '../components/Buttons';
 import Draggable from 'react-draggable';
@@ -14,7 +14,7 @@ const TextEditor = (
     handleCodeSnippetChange,
     userVideo,
     partnerVideo,
-    partnerName
+    partner
   }) => {
   const [isEditorReady, setIsEditorReady] = useState(false);
   const [open, setOpen] = useState(true);
@@ -51,20 +51,30 @@ const TextEditor = (
           aria-labelledby='receiving-call'
           open={open}
         >
-          <div className={classes.createInterviewDialog}>
+          <div className={classes.receivingCallDialog}>
             <DialogTitle
               id='receiving-from'
             >
-              {`Receiving call from ${partnerName}`}
+              <Typography className={classes.receivingCallText}>
+                Receiving call from:
+                </Typography>
+              <div className={classes.receivingCallNameAndAvatar}>
+                <Avatar
+                  className={classes.waitingRoomAvatar}
+                  alt='Avatar'
+                  src={partner.profilePicture}
+                />
+                <Typography className={classes.videoCallerName}>{`${partner.firstName} ${partner.lastName}`}</Typography>
+              </div>
             </DialogTitle>
             <CustomButton
               onClick={handleAcceptCall}
-              classField={classes.startDashboardButton}
+              classField={classes.acceptCancelVideoButton}
               text='ACCEPT'
             />
             <CustomButton
               onClick={() => setOpen(false)}
-              classField={classes.startDashboardButton}
+              classField={classes.acceptCancelVideoButton}
               text='CANCEL'
             />
           </div>
