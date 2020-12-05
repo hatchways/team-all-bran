@@ -80,11 +80,6 @@ export const useStyles = makeStyles(
       width: '100%',
       margin: 0,
     },
-    signUpForm: {
-      marginLeft: '40px',
-      display: 'flex',
-      width: '30%',
-    },
     loginImage: {
       float: 'left',
       paddingRight: '40px',
@@ -126,12 +121,10 @@ export const useStyles = makeStyles(
       flexDirection: 'column',
       fontFamily: 'Roboto',
       color: colors.charcoalGray,
-    },
-    loginSignupWrapperRoot: {
-      overflow: 'hidden',
       height: '100vh',
       width: '100vw',
       position: 'relative',
+      overflowY: 'auto',
     },
     formField: {
       display: 'flex',
@@ -391,11 +384,6 @@ export const useStyles = makeStyles(
       width: '100%',
       margin: 0,
     },
-    signUpForm: {
-      marginLeft: '40px',
-      display: 'flex',
-      width: '30%',
-    },
     loginImage: {
       float: 'left',
       paddingRight: '40px',
@@ -428,21 +416,6 @@ export const useStyles = makeStyles(
       justifyContent: 'center',
       flexDirection: 'column',
       fontStyle: 'italic',
-    },
-    loginSignupWrapperRoot: {
-      flexGrow: 1,
-      overflow: 'hidden',
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      fontFamily: 'Roboto',
-      color: colors.charcoalGray,
-    },
-    loginSignupWrapperRoot: {
-      overflow: 'hidden',
-      height: '100vh',
-      width: '100vw',
-      position: 'relative',
     },
     gridSpacingThree: {
       height: '93vh',
@@ -486,21 +459,6 @@ export const useStyles = makeStyles(
       justifyContent: 'center',
       flexDirection: 'column',
       fontStyle: 'italic',
-    },
-    loginSignupWrapperRoot: {
-      flexGrow: 1,
-      overflow: 'hidden',
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      fontFamily: 'Roboto',
-      color: colors.charcoalGray,
-    },
-    loginSignupWrapperRoot: {
-      overflow: 'hidden',
-      height: '100vh',
-      width: '100vw',
-      position: 'relative',
     },
     formField: {
       display: 'flex',
