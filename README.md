@@ -12,7 +12,25 @@ Features include:
 [Kevin Yi](https://github.com/kyi193), [Nafis Uddin](https://github.com/nuddin175), [Tim Rines](https://github.com/tsrines)
 
 ## Installation:
-(To do)
+You can try the application at [mock-interview-platform.herokuapp.com](https://mock-interview-platform.herokuapp.com/).  
+If you want to run it locally follow the instructions below:
+1. Clone repository
+2. Install Dependencies - Run ```npm install``` in the root directory and client directory
+3. Create a file with the name ```.env```
+4. Add the application secret key for authentication using ```SECRET_KEY``` to ```.env```
+5. Add the application mongo uri ```MONGO_LOCAL_URI``` to ```.env```. Additional information to run mongoDB locally can be found [here](https://docs.mongodb.com/manual/installation/). Alternatively you can use Mongo Atlas [here](https://www.mongodb.com/cloud/atlas).
+6. To run code from the code editor, create an account on [glot.io](https://glot.io/). You can find your api key after registering [here](https://glot.io/account/token). Add glot token ```GLOT_TOKEN``` to ```.env```.
+7. Sign up for [AWS S3](https://aws.amazon.com/s3/) and add ```S3_ACCESS_KEY```, ```S3_ACCESS_SECRET``` and ```S3_BUCKET_NAME``` to ```.env```
+8. Final ```.env``` should like below: 
+```
+SECRET_KEY=<Secret key for passport.js>
+MONGO_LOCAL_URI=<Your mongo uri>
+GLOT_TOKEN="Token <Your glot token>"
+S3_ACCESS_KEY=<Your S3 access key>
+S3_ACCESS_SECRET=<Your S3 secret>
+S3_BUCKET_NAME=<Your bucket name>
+```
+9. Run ```npm run dev``` to start the server on the root directory and ```npm start``` on client to start the application
 
 ## Features:
 ### Login/Signup Authentication:
