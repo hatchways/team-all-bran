@@ -1,5 +1,7 @@
 # Mock Interview Platform
-This app was designed to help both aspiring and current programmers improve their technical coding skills by pairing two users to perform a mock interview with each other. Once the interview has finished, both users will provide feedback for the other user on their strengths and weaknesses. 
+This app was designed to help both aspiring and current programmers improve their technical coding skills by pairing two users to perform a mock interview with each other. Once the interview has finished, both users will provide feedback for the other user on their strengths and weaknesses.
+  
+Try out the application at [mock-interview-platform.herokuapp.com](https://mock-interview-platform.herokuapp.com/)!
 <br><br>
 
 ## Contributors:
@@ -24,7 +26,7 @@ This app was designed to help both aspiring and current programmers improve thei
 * Upcoming/past practice interview dashboard for easy user experience.
 
 ## Installation:
-You can try the application at [mock-interview-platform.herokuapp.com](https://mock-interview-platform.herokuapp.com/).  
+A live version of the application can be found [here](https://mock-interview-platform.herokuapp.com/)  
 If you want to run it locally follow the instructions below:
 1. Clone repository
 2. Install Dependencies - Run ```npm install``` in the root directory and client directory
