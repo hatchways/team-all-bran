@@ -26,8 +26,8 @@ Try out the application at [mock-interview-platform.herokuapp.com](https://mock-
 * Upcoming/past practice interview dashboard for easy user experience.
 
 ## Installation:
-A live version of the application can be found [here](https://mock-interview-platform.herokuapp.com/)  
-If you want to run it locally follow the instructions below:
+A live version of the application can be found [here](https://mock-interview-platform.herokuapp.com/).  
+If you want to run the application locally, follow the instructions below:
 1. Clone repository
 2. Install Dependencies - Run ```npm install``` in the root directory and client directory
 3. Create a file with the name ```.env```
