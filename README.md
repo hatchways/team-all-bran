@@ -49,13 +49,13 @@ S3_BUCKET_NAME=<Your bucket name>
 
 ## Features:
 ### Login/Signup Authentication:
-![](https://media4.giphy.com/media/oSnlEVJ3J7kSeQQTqC/giphy.gif)
+![alt text](https://github.com/hatchways/team-all-bran/blob/dev/client/src/images/login.gif)
 <br>
 ### Real time code changes/video chat
 <img src="https://i.imgur.com/mVP1OPk.png" width="750" height="425">
 
 ### Check your past practice interview details and feedback
-<img src="https://media0.giphy.com/media/tT2R1pMsyZTGD9lgV7/giphy.gif" width="600" height="341">
+![alt text](https://github.com/hatchways/team-all-bran/blob/dev/client/src/images/feedback.gif)
 
 ### Deployed with:
 * [Heroku](https://www.heroku.com/)
