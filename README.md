@@ -36,7 +36,7 @@ If you want to run the application locally, follow the instructions below:
 5. Add the application mongo uri ```MONGO_LOCAL_URI``` to ```.env```. Additional information to run mongoDB locally can be found [here](https://docs.mongodb.com/manual/installation/). Alternatively you can use Mongo Atlas [here](https://www.mongodb.com/cloud/atlas).
 6. To run code from the code editor, create an account on [glot.io](https://glot.io/). You can find your api key after registering [here](https://glot.io/account/token). Add glot token ```GLOT_TOKEN``` to ```.env```.
 7. Sign up for [AWS S3](https://aws.amazon.com/s3/) and add ```S3_ACCESS_KEY```, ```S3_ACCESS_SECRET``` and ```S3_BUCKET_NAME``` to ```.env```
-8. Final ```.env``` should like below: 
+8. Final ```.env``` appear should like below: 
 ```
 SECRET_KEY=<Secret key for passport.js>
 MONGO_LOCAL_URI=<Your mongo uri>
