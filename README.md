@@ -7,13 +7,13 @@ Try out the application at [mock-interview-platform.herokuapp.com](https://mock-
 ## Contributors:
 [Kevin Yi](https://github.com/kyi193), [Nafis Uddin](https://github.com/nuddin175), [Tim Rines](https://github.com/tsrines)
 
-## Built With
-### Frontend:
+## Built With:
+### Frontend
 * [React](https://reactjs.org/) - The framework used for developing the components and UI.
 * [Material UI](https://material-ui.com/) - Javascript framework for styling and CSS compartmentalization.
 * [Simple Peer](https://github.com/feross/simple-peer) - WebRTC wrapper used to create 2 way video chat connection.
 
-### Backend: 
+### Backend 
 * [Node JS](https://reactjs.org/)/[Express JS](https://expressjs.com/) - Backend used for our API routes.
 * [Mongo DB/Atlas](https://www.mongodb.com/) - Database used to store our user and application data.
 * [Socket.IO](https://socket.io/) - JavaScript library for creating real-time lobby and interview rooms.
