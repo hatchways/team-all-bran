@@ -48,7 +48,7 @@ S3_BUCKET_NAME=<Your bucket name>
 9. Run ```npm run dev``` to start the server on the root directory and ```npm start``` on client to start the application
 
 ## Features:
-### Login/Signup Authentication:
+### Login/Signup Authentication
 ![alt text](https://github.com/hatchways/team-all-bran/blob/dev/client/src/images/login.gif)
 <br>
 ### Real time code changes/video chat
