@@ -1919,6 +1919,48 @@ export const useStyles = makeStyles(
       marginBottom: '40px',
       textAlign: 'center',
     },
+    faqHeaderBar: {
+      backgroundColor: `${colors.darkBlue}`,
+      height: '13vh',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+      marginBottom: '30px'
+    },
+    faqIcon: {
+      height: '100px',
+      width: '150px',
+      color: 'white'
+    },
+    faqHeaderTextIconContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    faqHeaderText: {
+      flexDirection: 'column',
+      display: 'flex',
+      justifyContent: 'center',
+      color: 'white',
+      fontSize: '50px'
+    },
+    faqMidBarContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: '100%',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    faqMidBar: {
+      height: '10px',
+      width: '35vw',
+      backgroundColor: `${colors.darkBlue}`,
+    },
+    faqMidBarText: {
+      fontSize: '30px',
+      fontFamily: 'Helvetica',
+    }
   }),
   { index: 1 }
 );
