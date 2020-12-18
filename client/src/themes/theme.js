@@ -1950,16 +1950,49 @@ export const useStyles = makeStyles(
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginBottom: '30px'
     },
     faqMidBar: {
-      height: '10px',
+      height: '5px',
       width: '35vw',
       backgroundColor: `${colors.darkBlue}`,
+      marginBottom: '5px'
     },
     faqMidBarText: {
       fontSize: '30px',
       fontFamily: 'Helvetica',
+    },
+    faqDoubleMidBarContainer: {
+      display: 'flex',
+      flexDirection: 'column'
+    },
+    faqAccordionQuestionText: {
+      fontWeight: 'bold',
+      fontSize: '24px',
+      color: `${colors.darkBlue}`
+    },
+    faqAccordionAnswerText: {
+      fontSize: '20px',
+      marginLeft: '20px'
+    },
+    faqAccordionItem: {
+      width: '60%',
+    },
+    faqAccordionItemHighlighted: {
+      width: '60%',
+      ['border-left']: `10px solid ${colors.darkBlue}`
+    },
+    faqAccordionContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    faqAccordion: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
     }
   }),
   { index: 1 }
