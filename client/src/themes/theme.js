@@ -1921,17 +1921,16 @@ export const useStyles = makeStyles(
     },
     faqHeaderBar: {
       backgroundColor: `${colors.darkBlue}`,
-      height: '13vh',
+      height: '7vh',
       width: '100%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      marginBottom: '30px'
     },
     faqIcon: {
-      height: '100px',
-      width: '150px',
+      height: '75px',
+      width: '112px',
       color: 'white'
     },
     faqHeaderTextIconContainer: {
@@ -1943,7 +1942,7 @@ export const useStyles = makeStyles(
       display: 'flex',
       justifyContent: 'center',
       color: 'white',
-      fontSize: '50px'
+      fontSize: '30px'
     },
     faqMidBarContainer: {
       display: 'flex',
@@ -1993,7 +1992,25 @@ export const useStyles = makeStyles(
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center'
-    }
+    },
+    faqSearchbarContainer: {
+      backgroundColor: `rgba(3, 169, 244, .4)`,
+      height: '15vh',
+      width: '100%',
+      marginBottom: '20px',
+      display: 'flex',
+      justifyContent: 'space-around',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    faqSearchbar: {
+      width: '30%',
+      backgroundColor: 'white',
+      borderRadius: 30,
+      paddingLeft: '20px',
+      height: '50px',
+      justifyContent: 'center'
+    },
   }),
   { index: 1 }
 );

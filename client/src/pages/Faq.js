@@ -5,7 +5,8 @@ import {
   Typography,
   Accordion,
   AccordionSummary,
-  AccordionDetails
+  AccordionDetails,
+  TextField
 } from '@material-ui/core';
 import { faqData } from '../utils/faqData';
 
@@ -30,6 +31,18 @@ const Faq = () => {
         <Computer className={classes.faqIcon} />
         <Typography className={classes.faqHeaderText}>Mock Interview Platform</Typography>
       </div>
+    </div>
+    <div className={classes.faqSearchbarContainer}>
+      <Typography>How may we help you?</Typography>
+      <TextField
+        required
+        defaultValue="Hello World"
+        className={classes.faqSearchbar}
+        InputProps={{
+          disableUnderline: true,
+        }}
+      />
+      <Typography>You can also browse the topics below to find what you are looking for.</Typography>
     </div>
     <div className={classes.faqMidBarContainer}>
       <div className={classes.faqDoubleMidBarContainer}>
