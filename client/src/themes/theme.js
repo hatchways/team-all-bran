@@ -2004,13 +2004,28 @@ export const useStyles = makeStyles(
       alignItems: 'center'
     },
     faqSearchbar: {
-      width: '30%',
+      width: '100%',
       backgroundColor: 'white',
       borderRadius: 30,
       paddingLeft: '20px',
       height: '50px',
       justifyContent: 'center'
     },
+    faqSearchBarAndButton: {
+      width: '30%',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center'
+    },
+    faqSearchButton: {
+      height: '30px',
+      width: '90px',
+      color: 'white',
+      backgroundColor: `${colors.darkBlue}`,
+      padding: '10px',
+      borderRadius: 10,
+      marginLeft: '20px'
+    }
   }),
   { index: 1 }
 );

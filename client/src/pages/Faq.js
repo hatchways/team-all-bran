@@ -13,6 +13,8 @@ import { faqData } from '../utils/faqData';
 const Faq = () => {
   const classes = useStyles();
   const [expandedSet, setExpandedSet] = useState(new Set());
+  const [searchList, setSearchList] = useState(faqData);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleExpandClick = (panel) => {
     const expandedSetCopy = expandedSet;
@@ -25,6 +27,36 @@ const Faq = () => {
     }
   }
 
+  const filterSearchResults = (event) => {
+    if (event.key === "Enter") {
+      const filteredSearchResults = [];
+      const filterSearchTerm = searchTerm.toLowerCase();
+      for (const faq of faqData) {
+        const question = faq.question.split(' ').map(word => word = word.toLowerCase());
+        const answer = faq.answer.split(' ').map(word => word = word.toLowerCase());
+        const wordsToFilter = question.join(" ") + answer.join(" ");
+
+        if (wordsToFilter.includes(filterSearchTerm)) {
+          filteredSearchResults.push(faq)
+        }
+      }
+      if (filteredSearchResults.length > 0) {
+        setSearchList(filteredSearchResults);
+      } else {
+        setSearchList(faqData)
+      }
+    }
+  }
+
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value;
+
+    setSearchTerm(searchTerm)
+    if (!searchTerm) {
+      setSearchList(faqData)
+    }
+  }
+
   return <div>
     <div className={classes.faqHeaderBar}>
       <div className={classes.faqHeaderTextIconContainer}>
@@ -34,14 +66,18 @@ const Faq = () => {
     </div>
     <div className={classes.faqSearchbarContainer}>
       <Typography>How may we help you?</Typography>
-      <TextField
-        required
-        defaultValue="Hello World"
-        className={classes.faqSearchbar}
-        InputProps={{
-          disableUnderline: true,
-        }}
-      />
+      <div className={classes.faqSearchBarAndButton}>
+        <TextField
+          required
+          placeholder="What would you like to search?"
+          className={classes.faqSearchbar}
+          InputProps={{
+            disableUnderline: true,
+          }}
+          onKeyPress={filterSearchResults}
+          onChange={handleSearchChange}
+        />
+      </div>
       <Typography>You can also browse the topics below to find what you are looking for.</Typography>
     </div>
     <div className={classes.faqMidBarContainer}>
@@ -57,7 +93,7 @@ const Faq = () => {
     </div>
     <div className={classes.faqAccordionContainer}>
       <div className={classes.faqAccordion}>
-        {faqData.map((faq, index) => {
+        {searchList.map((faq, index) => {
           return (
             <Accordion
               className={expandedSet.has(`panel${index}`) ? classes.faqAccordionItemHighlighted : classes.faqAccordionItem}
