@@ -1921,17 +1921,16 @@ export const useStyles = makeStyles(
     },
     faqHeaderBar: {
       backgroundColor: `${colors.darkBlue}`,
-      height: '13vh',
+      height: '7vh',
       width: '100%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      marginBottom: '30px'
     },
     faqIcon: {
-      height: '100px',
-      width: '150px',
+      height: '75px',
+      width: '112px',
       color: 'white'
     },
     faqHeaderTextIconContainer: {
@@ -1943,7 +1942,7 @@ export const useStyles = makeStyles(
       display: 'flex',
       justifyContent: 'center',
       color: 'white',
-      fontSize: '50px'
+      fontSize: '30px'
     },
     faqMidBarContainer: {
       display: 'flex',
@@ -1987,12 +1986,77 @@ export const useStyles = makeStyles(
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
+      height: '100%'
     },
     faqAccordion: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    faqSearchbarContainer: {
+      backgroundColor: `rgba(3, 169, 244, .25)`,
+      height: '15vh',
+      width: '100%',
+      marginBottom: '20px',
+      display: 'flex',
+      justifyContent: 'space-around',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '10px 0 30px 0'
+    },
+    faqSearchbar: {
+      width: '100%',
+      backgroundColor: 'white',
+      borderRadius: 30,
+      paddingLeft: '20px',
+      height: '50px',
+      justifyContent: 'center'
+    },
+    faqSearchBarAndButton: {
+      width: '30%',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center'
+    },
+    faqSearchButton: {
+      height: '30px',
+      width: '90px',
+      color: 'white',
+      backgroundColor: `${colors.darkBlue}`,
+      padding: '10px',
+      borderRadius: 10,
+      marginLeft: '20px'
+    },
+    noSearchResultsContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: `${colors.lightBlueTransparent}`,
+      padding: '100px 200px 100px 200px',
+      borderRadius: 20,
+    },
+    faqNoSearchIcon: {
+      height: '200px',
+      width: '200px',
+      marginTop: '50px',
+      marginBottom: '20px',
+      color: 'white'
+    },
+    faqPleaseTryAgainText: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: '18px'
+    },
+    faqSearchbarHeaderText: {
+      fontSize: '35px',
+      color: `${colors.darkBlue}`,
+      fontWeight: 'bold'
+    },
+    faqSearchbarFooterText: {
+      fontSize: '18px',
+      color: `${colors.darkBlue}`,
     }
   }),
   { index: 1 }
@@ -2008,4 +2072,5 @@ export const colors = {
   darkGraySolid: 'rgba(105, 105, 105, 1)',
   lightGraySolid: 'rgba(76, 76, 76, 1)',
   lighterGray: 'rgba(247, 249, 250, 1)',
+  lightBlueTransparent: 'rgba(73, 145, 203, .5)',
 };
