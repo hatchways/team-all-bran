@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useStyles } from '../themes/theme';
-import { Computer, ExpandMore, SentimentDissatisfied } from '@material-ui/icons';
+import {
+  Computer,
+  ExpandMore,
+  SentimentDissatisfied
+} from '@material-ui/icons';
 import {
   Typography,
   Accordion,
@@ -33,8 +37,12 @@ const Faq = () => {
       const filteredSearchResults = [];
       const filterSearchTerm = searchTerm.toLowerCase();
       for (const faq of faqData) {
-        const question = faq.question.split(' ').map(word => word = word.toLowerCase());
-        const answer = faq.answer.split(' ').map(word => word = word.toLowerCase());
+        const question = faq.question
+          .split(' ')
+          .map(word => word = word.toLowerCase());
+        const answer = faq.answer
+          .split(' ')
+          .map(word => word = word.toLowerCase());
         const wordsToFilter = question.join(" ") + answer.join(" ");
 
         if (wordsToFilter.includes(filterSearchTerm)) {
@@ -64,11 +72,15 @@ const Faq = () => {
     <div className={classes.faqHeaderBar}>
       <div className={classes.faqHeaderTextIconContainer}>
         <Computer className={classes.faqIcon} />
-        <Typography className={classes.faqHeaderText}>Mock Interview Platform</Typography>
+        <Typography className={classes.faqHeaderText}>
+          Mock Interview Platform
+        </Typography>
       </div>
     </div>
     <div className={classes.faqSearchbarContainer}>
-      <Typography className={classes.faqSearchbarHeaderText}>How may we help you?</Typography>
+      <Typography className={classes.faqSearchbarHeaderText}>
+        How may we help you?
+      </Typography>
       <div className={classes.faqSearchBarAndButton}>
         <TextField
           required
@@ -81,14 +93,18 @@ const Faq = () => {
           onChange={handleSearchChange}
         />
       </div>
-      <Typography className={classes.faqSearchbarFooterText}>You can also browse the topics below to find what you are looking for.</Typography>
+      <Typography className={classes.faqSearchbarFooterText}>
+        You can also browse the topics below to find what you are looking for.
+      </Typography>
     </div>
     <div className={classes.faqMidBarContainer}>
       <div className={classes.faqDoubleMidBarContainer}>
         <div className={classes.faqMidBar} />
         <div className={classes.faqMidBar} />
       </div>
-      <Typography className={classes.faqMidBarText}>Frequently Asked Questions (FAQ)</Typography>
+      <Typography className={classes.faqMidBarText}>
+        Frequently Asked Questions (FAQ)
+      </Typography>
       <div className={classes.faqDoubleMidBarContainer}>
         <div className={classes.faqMidBar} />
         <div className={classes.faqMidBar} />
@@ -100,7 +116,9 @@ const Faq = () => {
           ? searchList.map((faq, index) => {
             return (
               <Accordion
-                className={expandedSet.has(`panel${index}`) ? classes.faqAccordionItemHighlighted : classes.faqAccordionItem}
+                className={expandedSet.has(`panel${index}`)
+                  ? classes.faqAccordionItemHighlighted
+                  : classes.faqAccordionItem}
                 key={index}
               >
                 <AccordionSummary
@@ -122,9 +140,13 @@ const Faq = () => {
             )
           })
           : <div className={classes.noSearchResultsContainer}>
-            <Typography className={classes.faqHeaderText}>NO SEARCH RESULTS FOUND</Typography>
+            <Typography className={classes.faqHeaderText}>
+              NO SEARCH RESULTS FOUND
+            </Typography>
             <SentimentDissatisfied className={classes.faqNoSearchIcon} />
-            <Typography className={classes.faqPleaseTryAgainText}>Please try using another search term.</Typography>
+            <Typography className={classes.faqPleaseTryAgainText}>
+              Please try using another search term.
+            </Typography>
           </div>}
       </div>
     </div>
