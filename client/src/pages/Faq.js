@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useStyles } from '../themes/theme';
-import { Computer, ExpandMore } from '@material-ui/icons';
+import { Computer, ExpandMore, SentimentDissatisfied } from '@material-ui/icons';
 import {
   Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import { faqData } from '../utils/faqData';
 
@@ -15,6 +15,7 @@ const Faq = () => {
   const [expandedSet, setExpandedSet] = useState(new Set());
   const [searchList, setSearchList] = useState(faqData);
   const [searchTerm, setSearchTerm] = useState("");
+  const [noResultsFound, setNoResultsFound] = useState(false);
 
   const handleExpandClick = (panel) => {
     const expandedSetCopy = expandedSet;
@@ -37,23 +38,25 @@ const Faq = () => {
         const wordsToFilter = question.join(" ") + answer.join(" ");
 
         if (wordsToFilter.includes(filterSearchTerm)) {
-          filteredSearchResults.push(faq)
+          filteredSearchResults.push(faq);
         }
       }
+
       if (filteredSearchResults.length > 0) {
+        setNoResultsFound(false);
         setSearchList(filteredSearchResults);
       } else {
-        setSearchList(faqData)
+        setNoResultsFound(true);
       }
     }
   }
 
   const handleSearchChange = (event) => {
     const searchTerm = event.target.value;
-
-    setSearchTerm(searchTerm)
+    setSearchTerm(searchTerm);
     if (!searchTerm) {
-      setSearchList(faqData)
+      setNoResultsFound(false);
+      setSearchList(faqData);
     }
   }
 
@@ -65,7 +68,7 @@ const Faq = () => {
       </div>
     </div>
     <div className={classes.faqSearchbarContainer}>
-      <Typography>How may we help you?</Typography>
+      <Typography className={classes.faqSearchbarHeaderText}>How may we help you?</Typography>
       <div className={classes.faqSearchBarAndButton}>
         <TextField
           required
@@ -78,7 +81,7 @@ const Faq = () => {
           onChange={handleSearchChange}
         />
       </div>
-      <Typography>You can also browse the topics below to find what you are looking for.</Typography>
+      <Typography className={classes.faqSearchbarFooterText}>You can also browse the topics below to find what you are looking for.</Typography>
     </div>
     <div className={classes.faqMidBarContainer}>
       <div className={classes.faqDoubleMidBarContainer}>
@@ -93,30 +96,36 @@ const Faq = () => {
     </div>
     <div className={classes.faqAccordionContainer}>
       <div className={classes.faqAccordion}>
-        {searchList.map((faq, index) => {
-          return (
-            <Accordion
-              className={expandedSet.has(`panel${index}`) ? classes.faqAccordionItemHighlighted : classes.faqAccordionItem}
-              key={index}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMore />}
-                aria-controls={`faq-question-${index}`}
-                id={`panel${index}a-header`}
-                onClick={() => handleExpandClick(`panel${index}`)}
+        {!noResultsFound
+          ? searchList.map((faq, index) => {
+            return (
+              <Accordion
+                className={expandedSet.has(`panel${index}`) ? classes.faqAccordionItemHighlighted : classes.faqAccordionItem}
+                key={index}
               >
-                <Typography className={classes.faqAccordionQuestionText}>
-                  {faq.question}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography className={classes.faqAccordionAnswerText}>
-                  {faq.answer}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          )
-        })}
+                <AccordionSummary
+                  expandIcon={<ExpandMore />}
+                  aria-controls={`faq-question-${index}`}
+                  id={`panel${index}a-header`}
+                  onClick={() => handleExpandClick(`panel${index}`)}
+                >
+                  <Typography className={classes.faqAccordionQuestionText}>
+                    {faq.question}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography className={classes.faqAccordionAnswerText}>
+                    {faq.answer}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            )
+          })
+          : <div className={classes.noSearchResultsContainer}>
+            <Typography className={classes.faqHeaderText}>NO SEARCH RESULTS FOUND</Typography>
+            <SentimentDissatisfied className={classes.faqNoSearchIcon} />
+            <Typography className={classes.faqPleaseTryAgainText}>Please try using another search term.</Typography>
+          </div>}
       </div>
     </div>
   </div>
